@@ -175,16 +175,18 @@ export default function ChatDashboard() {
                         {messages.map((msg) => {
                             const isSentByMe = msg.status !== 'received';
                             return (
-                                <div key={msg._id} className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
-                                    {msg.text}
-                                    <span className="message-time">
-                                        {formatTime(msg.timestamp)}
+                                <div className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
+                                    <div className="message-header-text">{msg.text}</div>
+                                    <div className="message-time-container">
+                                        <span className="message-time">
+                                            {formatTime(msg.timestamp)}
+                                        </span>
                                         {isSentByMe && (
                                             <span className={`message-status ${msg.status}`}>
                                                 {msg.status === 'read' ? ' ✓✓' : msg.status === 'delivered' ? ' ✓✓' : ' ✓'}
                                             </span>
                                         )}
-                                    </span>
+                                    </div>
                                 </div>
                             );
                         })}

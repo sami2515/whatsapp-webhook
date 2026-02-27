@@ -229,27 +229,30 @@ body {
   border-top-left-radius: 0;
 }
 
-.message-time {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 11px;
-  color: #667781;
-  margin-top: -10px;
-  margin-left: 10px;
-  float: right;
-}
-
-.message-bubble.sent .message-time {
-  margin-left: 20px;
-}
-
 .message-header-text {
   margin-bottom: 2px;
   word-wrap: break-word;
   white-space: pre-wrap;
-  padding-right: 45px;
-  /* space for time */
+  padding-right: 20px;
+}
+
+.message-time-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -10px;
+  margin-left: 10px;
+  float: right;
+  height: 15px;
+}
+
+.message-time {
+  font-size: 11px;
+  color: #667781;
+}
+
+.message-bubble.sent .message-time-container {
+  margin-left: 20px;
 }
 
 /* The double tick */
