@@ -113,11 +113,15 @@ export const sendWhatsAppMessage = async (req, res) => {
 
         // Save outgoing message locally to MongoDB
         if (response.data?.messages && response.data.messages.length > 0) {
+            const templateString = templateName === 'hello_world'
+                ? "Hello World\n\nWelcome and congratulations!! This message demonstrates your ability to send a WhatsApp message notification from the Cloud API, hosted by Meta. Thank you for taking the time to test with us."
+                : `[Template: ${templateName}]`;
+
             await Message.create({
                 from: phoneNumberId,
                 to,
                 messageId: response.data.messages[0].id,
-                text: type === 'text' ? textBody : `[Template: ${templateName}]`,
+                text: type === 'text' ? textBody : templateString,
                 status: 'sent'
             });
         }
