@@ -172,10 +172,10 @@ export default function ChatDashboard() {
                     </div>
 
                     <div className="messages-list">
-                        {messages.map((msg) => {
-                            const isSentByMe = msg.status !== 'received';
+                        {messages.map((msg, index) => {
+                            const isSentByMe = msg.from !== activeNumber;
                             return (
-                                <div className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
+                                <div key={msg._id || index} className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
                                     <div className="message-header-text">{msg.text}</div>
                                     <div className="message-time-container">
                                         <span className="message-time">
