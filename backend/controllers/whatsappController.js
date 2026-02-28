@@ -1,7 +1,11 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
+import ffmpeg from 'fluent-ffmpeg';
+import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 import Message from '../models/Message.js';
+
+ffmpeg.setFfmpegPath(ffmpegPath.path);
 
 // Verify Webhook for Meta API setup 
 export const verifyWebhook = (req, res) => {
@@ -285,16 +289,30 @@ export const uploadAndSendAudio = async (req, res) => {
         const token = process.env.WHATSAPP_TOKEN;
         const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
 
-        // 1. Upload Media
-        const formData = new FormData();
-        const mimeType = file.mimetype || 'audio/mp4';
-        const extension = mimeType.includes('mp4') ? 'mp4' : (mimeType.includes('webm') ? 'webm' : 'ogg');
+        // 1. Transcode Media to OGG Opus (Meta API Requirement)
+        const outputPath = `${file.path}.ogg`;
 
-        formData.append('file', fs.createReadStream(file.path), {
-            filename: `audio.${extension}`,
-            contentType: mimeType
+        await new Promise((resolve, reject) => {
+            ffmpeg(file.path)
+                .toFormat('ogg')
+                .audioCodec('libopus')
+                .on('end', () => resolve())
+                .on('error', (err) => {
+                    console.error('FFmpeg transcoding error:', err);
+                    reject(err);
+                })
+                .save(outputPath);
         });
-        formData.append('type', 'audio'); // Meta expects strictly 'audio', 'image', etc.
+
+        // 2. Upload Media
+        const formData = new FormData();
+        const fileBuffer = fs.readFileSync(outputPath);
+        formData.append('file', fileBuffer, {
+            filename: 'audio.ogg',
+            contentType: 'audio/ogg',
+            knownLength: fileBuffer.length
+        });
+        formData.append('type', 'audio'); // Meta expects strictly 'audio'
         formData.append('messaging_product', 'whatsapp');
 
         const uploadResponse = await axios.post(
@@ -310,8 +328,9 @@ export const uploadAndSendAudio = async (req, res) => {
 
         const mediaId = uploadResponse.data.id;
 
-        // Clean up uploaded file
+        // Clean up uploaded and transcoded files
         fs.unlinkSync(file.path);
+        fs.unlinkSync(outputPath);
 
         // 2. Send Media
         const payload = {
