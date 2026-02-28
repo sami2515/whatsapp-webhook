@@ -279,7 +279,10 @@ export const uploadAndSendAudio = async (req, res) => {
 
         // 1. Upload Media
         const formData = new FormData();
-        formData.append('file', fs.createReadStream(file.path));
+        formData.append('file', fs.createReadStream(file.path), {
+            filename: 'audio.ogg',
+            contentType: 'audio/ogg'
+        });
         formData.append('type', 'audio'); // Meta expects strictly 'audio', 'image', etc.
         formData.append('messaging_product', 'whatsapp');
 
