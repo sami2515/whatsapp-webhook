@@ -280,7 +280,7 @@ export const uploadAndSendAudio = async (req, res) => {
         // 1. Upload Media
         const formData = new FormData();
         formData.append('file', fs.createReadStream(file.path));
-        formData.append('type', 'audio/ogg');
+        formData.append('type', 'audio'); // Meta expects strictly 'audio', 'image', etc.
         formData.append('messaging_product', 'whatsapp');
 
         const uploadResponse = await axios.post(
@@ -334,9 +334,11 @@ export const uploadAndSendAudio = async (req, res) => {
         res.status(200).json({ success: true, response: response.data });
     } catch (error) {
         console.error('Error uploading/sending audio:', error.response?.data || error.message);
+        const metaError = error.response?.data?.error?.message || error.response?.data?.error?.error_user_msg || error.message;
+
         if (req.file && fs.existsSync(req.file.path)) {
             fs.unlinkSync(req.file.path);
         }
-        res.status(error.response?.status || 500).json({ error: error.response?.data || error.message });
+        res.status(error.response?.status || 500).json({ error: metaError });
     }
 };
