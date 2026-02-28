@@ -279,9 +279,12 @@ export const uploadAndSendAudio = async (req, res) => {
 
         // 1. Upload Media
         const formData = new FormData();
+        const mimeType = file.mimetype || 'audio/mp4';
+        const extension = mimeType.includes('mp4') ? 'mp4' : (mimeType.includes('webm') ? 'webm' : 'ogg');
+
         formData.append('file', fs.createReadStream(file.path), {
-            filename: 'audio.ogg',
-            contentType: 'audio/ogg'
+            filename: `audio.${extension}`,
+            contentType: mimeType
         });
         formData.append('type', 'audio'); // Meta expects strictly 'audio', 'image', etc.
         formData.append('messaging_product', 'whatsapp');
