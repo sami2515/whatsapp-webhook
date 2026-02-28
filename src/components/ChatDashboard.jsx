@@ -320,7 +320,7 @@ export default function ChatDashboard() {
                             <div className="recording-controls">
                                 <button type="button" className="cancel-btn" onClick={handleCancelRecording} title="Delete">
                                     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                        <path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13zM9 8h2v9H9zm4 0h2v9h-2z"></path>
+                                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
                                     </svg>
                                 </button>
                                 <button type="button" className="send-btn active-send" onClick={handleStopRecording} disabled={isLoading} title="Send">
@@ -338,7 +338,7 @@ export default function ChatDashboard() {
                         ) : (
                             <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading} title="Record Voice">
                                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                    <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
+                                    <path d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.468 2.349 8.468 4.35v7.061c0 2.001 1.53 3.531 3.531 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2.002z"></path>
                                 </svg>
                             </button>
                         )}
