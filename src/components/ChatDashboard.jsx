@@ -11,8 +11,11 @@ export default function ChatDashboard() {
 
     // Voice Recording State
     const [isRecording, setIsRecording] = useState(false);
+    const [recordingDuration, setRecordingDuration] = useState(0);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
+    const timerIntervalRef = useRef(null);
+    const isCancelledRef = useRef(false);
 
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,6 +99,7 @@ export default function ChatDashboard() {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorderRef.current = new MediaRecorder(stream);
             audioChunksRef.current = [];
+            isCancelledRef.current = false;
 
             mediaRecorderRef.current.ondataavailable = (event) => {
                 if (event.data.size > 0) {
@@ -104,12 +108,18 @@ export default function ChatDashboard() {
             };
 
             mediaRecorderRef.current.onstop = async () => {
-                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/ogg' });
-                await sendVoiceMessage(audioBlob);
+                if (!isCancelledRef.current) {
+                    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/ogg' });
+                    await sendVoiceMessage(audioBlob);
+                }
             };
 
             mediaRecorderRef.current.start();
             setIsRecording(true);
+            setRecordingDuration(0);
+            timerIntervalRef.current = setInterval(() => {
+                setRecordingDuration((prev) => prev + 1);
+            }, 1000);
         } catch (error) {
             console.error('Error accessing microphone:', error);
             alert('Could not access microphone. Please check permissions.');
@@ -120,11 +130,25 @@ export default function ChatDashboard() {
         e.preventDefault();
         if (mediaRecorderRef.current && isRecording) {
             mediaRecorderRef.current.stop();
-            setIsRecording(false);
-            // Stop tracks to release mic
-            if (mediaRecorderRef.current.stream) {
-                mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
-            }
+            cleanupRecording();
+        }
+    };
+
+    const handleCancelRecording = (e) => {
+        e.preventDefault();
+        if (mediaRecorderRef.current && isRecording) {
+            isCancelledRef.current = true;
+            mediaRecorderRef.current.stop();
+            cleanupRecording();
+        }
+    };
+
+    const cleanupRecording = () => {
+        setIsRecording(false);
+        clearInterval(timerIntervalRef.current);
+        setRecordingDuration(0);
+        if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
+            mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
         }
     };
 
@@ -273,34 +297,50 @@ export default function ChatDashboard() {
                     </div>
 
                     <form className="chat-input-area" onSubmit={handleSendText}>
-                        <input
-                            type="text"
-                            className="chat-input"
-                            placeholder={isRecording ? "Recording..." : "Type a message..."}
-                            value={inputText}
-                            onChange={(e) => setInputText(e.target.value)}
-                            disabled={isLoading || isRecording}
-                        />
-                        {inputText.trim() ? (
-                            <button type="submit" className="send-btn" disabled={isLoading}>
+                        {isRecording ? (
+                            <div className="recording-indicator">
+                                <span className="recording-pulse"></span>
+                                <span className="recording-timer">
+                                    {Math.floor(recordingDuration / 60).toString().padStart(2, '0')}:
+                                    {(recordingDuration % 60).toString().padStart(2, '0')}
+                                </span>
+                            </div>
+                        ) : (
+                            <input
+                                type="text"
+                                className="chat-input"
+                                placeholder="Type a message..."
+                                value={inputText}
+                                onChange={(e) => setInputText(e.target.value)}
+                                disabled={isLoading}
+                            />
+                        )}
+
+                        {isRecording ? (
+                            <div className="recording-controls">
+                                <button type="button" className="cancel-btn" onClick={handleCancelRecording} title="Delete">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13zM9 8h2v9H9zm4 0h2v9h-2z"></path>
+                                    </svg>
+                                </button>
+                                <button type="button" className="send-btn active-send" onClick={handleStopRecording} disabled={isLoading} title="Send">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        ) : inputText.trim() ? (
+                            <button type="submit" className="send-btn active-send" disabled={isLoading}>
                                 <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                                     <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                                 </svg>
                             </button>
                         ) : (
-                            isRecording ? (
-                                <button type="button" className="send-btn recording" onClick={handleStopRecording} disabled={isLoading} style={{ color: 'red' }}>
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                        <path d="M6 6h12v12H6z"></path>
-                                    </svg>
-                                </button>
-                            ) : (
-                                <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading}>
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                        <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
-                                    </svg>
-                                </button>
-                            )
+                            <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading} title="Record Voice">
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                    <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
+                                </svg>
+                            </button>
                         )}
                     </form>
                 </div>
