@@ -190,6 +190,33 @@ export default function ChatDashboard() {
         }
     };
 
+    const handleImageUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file || !activeNumber) return;
+
+        setIsLoading(true);
+        try {
+            const tempMsg = {
+                _id: Date.now().toString(),
+                type: 'image',
+                from: 'me',
+                status: 'sent',
+                timestamp: new Date().toISOString()
+            };
+            setMessages(prev => [...prev, tempMsg]);
+
+            await sendImageMessage(activeNumber, file);
+            await fetchMessages(activeNumber); // Refresh
+            await fetchConversations();
+        } catch (error) {
+            console.error('Failed to send image:', error);
+            alert(`Failed to send image: ${error.response?.data?.error?.message || error.message}`);
+        } finally {
+            setIsLoading(false);
+            if (fileInputRef.current) fileInputRef.current.value = '';
+        }
+    };
+
     const handleStartNewChat = async () => {
         if (!newPhoneNumber) return;
 
