@@ -316,6 +316,10 @@ body {
   border-radius: 50%;
 }
 
+.send-btn.active-send svg {
+  fill: white;
+}
+
 .send-btn.active-send:hover {
   background-color: #008f6f;
   color: white;
@@ -383,6 +387,10 @@ body {
   cursor: pointer;
   border-radius: 50%;
   transition: background-color 0.2s;
+}
+
+.cancel-btn svg {
+  fill: #ea0038;
 }
 
 .cancel-btn:hover {
