@@ -254,7 +254,7 @@ export default function ChatDashboard() {
                     {conversations.map((conv) => (
                         <div
                             key={conv._id}
-                            className={`conversation - item ${activeNumber === conv._id ? 'active' : ''} `}
+                            className={`conversation-item ${activeNumber === conv._id ? 'active' : ''}`}
                             onClick={() => setActiveNumber(conv._id)}
                         >
                             <div className="conv-header">
@@ -281,11 +281,11 @@ export default function ChatDashboard() {
                         {messages.map((msg, index) => {
                             const isSentByMe = msg.from !== activeNumber;
                             return (
-                                <div key={msg._id || index} className={`message - bubble ${isSentByMe ? 'sent' : 'received'} `}>
+                                <div key={msg._id || index} className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
                                     {msg.type === 'audio' ? (
                                         <div className="audio-message">
                                             {msg.mediaId ? (
-                                                <audio controls src={`${BASE_URL} /media/${msg.mediaId} `} style={{ maxWidth: '200px' }} />
+                                                <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} style={{ maxWidth: '200px' }} />
                                             ) : (
                                                 <span style={{ fontStyle: 'italic' }}>Sending audio...</span>
                                             )}
@@ -294,7 +294,7 @@ export default function ChatDashboard() {
                                         <div className="image-message">
                                             {msg.mediaId ? (
                                                 <img
-                                                    src={`${BASE_URL} /media/${msg.mediaId} `}
+                                                    src={`${BASE_URL}/media/${msg.mediaId}`}
                                                     alt="Photo"
                                                     style={{ maxWidth: '100%', borderRadius: '6px', marginBottom: '4px' }}
                                                 />
