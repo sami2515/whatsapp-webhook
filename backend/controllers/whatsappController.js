@@ -375,3 +375,87 @@ export const uploadAndSendAudio = async (req, res) => {
         res.status(error.response?.status || 500).json({ error: metaError });
     }
 };
+
+// Upload image to Meta and send it
+export const uploadAndSendImage = async (req, res) => {
+    try {
+        const { to } = req.body;
+        const file = req.file;
+
+        if (!to || !file) {
+            return res.status(400).json({ error: 'Phone number and image file are required.' });
+        }
+
+        const token = process.env.WHATSAPP_TOKEN;
+        const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+
+        // 1. Upload Media
+        const formData = new FormData();
+        const fileBuffer = fs.readFileSync(file.path);
+        formData.append('file', fileBuffer, {
+            filename: file.originalname,
+            contentType: file.mimetype,
+            knownLength: fileBuffer.length
+        });
+        formData.append('type', 'image');
+        formData.append('messaging_product', 'whatsapp');
+
+        const uploadResponse = await axios.post(
+            `https://graph.facebook.com/v21.0/${phoneNumberId}/media`,
+            formData,
+            {
+                headers: {
+                    ...formData.getHeaders(),
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const mediaId = uploadResponse.data.id;
+
+        // Clean up uploaded file
+        fs.unlinkSync(file.path);
+
+        // 2. Send Media
+        const payload = {
+            messaging_product: 'whatsapp',
+            to: to,
+            type: 'image',
+            image: {
+                id: mediaId
+            }
+        };
+
+        const response = await axios.post(
+            `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+            payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        if (response.data?.messages && response.data.messages.length > 0) {
+            await Message.create({
+                from: phoneNumberId,
+                to,
+                messageId: response.data.messages[0].id,
+                type: 'image',
+                mediaId: mediaId,
+                status: 'sent'
+            });
+        }
+
+        res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        console.error('Error uploading/sending image:', error.response?.data || error.message);
+        const metaError = error.response?.data?.error?.message || error.response?.data?.error?.error_user_msg || error.message;
+
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+        res.status(error.response?.status || 500).json({ error: metaError });
+    }
+};

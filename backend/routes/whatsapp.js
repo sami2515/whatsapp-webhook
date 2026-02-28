@@ -7,7 +7,8 @@ import {
     getConversations,
     getChatHistory,
     getMedia,
-    uploadAndSendAudio
+    uploadAndSendAudio,
+    uploadAndSendImage
 } from '../controllers/whatsappController.js';
 
 const router = express.Router();
@@ -24,6 +25,9 @@ router.post('/send', sendWhatsAppMessage);
 
 // Upload and send an audio file
 router.post('/send-audio', upload.single('audio'), uploadAndSendAudio);
+
+// Upload and send an image file
+router.post('/send-image', upload.single('image'), uploadAndSendImage);
 
 // Fetch media from Meta
 router.get('/media/:mediaId', getMedia);
