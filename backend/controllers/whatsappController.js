@@ -77,13 +77,16 @@ export const handleIncomingMessage = async (req, res) => {
                 body.entry[0].changes[0].value.statuses &&
                 body.entry[0].changes[0].value.statuses[0]
             ) {
-                // Handle message status updates (sent, delivered, read)
+                // Handle message status updates (sent, delivered, read, failed)
                 const statusObj = body.entry[0].changes[0].value.statuses[0];
                 await Message.findOneAndUpdate(
                     { messageId: statusObj.id },
                     { status: statusObj.status }
                 );
                 console.log(`Message ${statusObj.id} status updated to: ${statusObj.status}`);
+                if (statusObj.errors) {
+                    console.error("Meta Asynchronous Delivery Error Details:", JSON.stringify(statusObj.errors, null, 2));
+                }
             }
             res.sendStatus(200);
         } else {

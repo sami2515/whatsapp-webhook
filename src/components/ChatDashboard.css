@@ -306,6 +306,11 @@ body {
   transition: color 0.2s;
 }
 
+.send-btn svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
 .send-btn:hover {
   color: #111b21;
 }
@@ -391,6 +396,8 @@ body {
 
 .cancel-btn svg {
   fill: #ea0038;
+  width: 24px !important;
+  height: 24px !important;
 }
 
 .cancel-btn:hover {
