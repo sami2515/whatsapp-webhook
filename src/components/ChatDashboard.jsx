@@ -313,7 +313,7 @@ export default function ChatDashboard() {
                                             {formatTime(msg.timestamp)}
                                         </span>
                                         {isSentByMe && (
-                                            <span className={`message - status ${msg.status} `}>
+                                            <span className={`message-status ${msg.status}`}>
                                                 {msg.status === 'read' ? ' ✓✓' : msg.status === 'delivered' ? ' ✓✓' : ' ✓'}
                                             </span>
                                         )}
