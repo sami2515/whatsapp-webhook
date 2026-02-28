@@ -97,7 +97,14 @@ export default function ChatDashboard() {
         e.preventDefault();
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorderRef.current = new MediaRecorder(stream);
+
+            // Try explicit format useful for Meta/WhatsApp
+            let options = { mimeType: 'audio/mp4' };
+            if (!MediaRecorder.isTypeSupported('audio/mp4')) {
+                options = { mimeType: 'audio/webm' }; // Fallback for browsers like Chrome
+            }
+
+            mediaRecorderRef.current = new MediaRecorder(stream, options);
             audioChunksRef.current = [];
             isCancelledRef.current = false;
 
@@ -109,8 +116,14 @@ export default function ChatDashboard() {
 
             mediaRecorderRef.current.onstop = async () => {
                 if (!isCancelledRef.current) {
-                    const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/ogg' });
-                    await sendVoiceMessage(audioBlob);
+                    const mimeType = mediaRecorderRef.current.mimeType || 'audio/mp4';
+                    const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+
+                    // Create File object to pass explicitly
+                    const fileExtension = mimeType.includes('mp4') ? 'mp4' : 'webm';
+                    const audioFile = new File([audioBlob], `voice_message.${fileExtension}`, { type: mimeType });
+
+                    await sendVoiceMessage(audioFile);
                 }
             };
 
@@ -318,26 +331,26 @@ export default function ChatDashboard() {
 
                         {isRecording ? (
                             <div className="recording-controls">
-                                <button type="button" className="cancel-btn" onClick={handleCancelRecording} title="Delete">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <button type="button" className="cancel-btn" onClick={handleCancelRecording} title="Delete" style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
                                     </svg>
                                 </button>
-                                <button type="button" className="send-btn active-send" onClick={handleStopRecording} disabled={isLoading} title="Send">
-                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <button type="button" className="send-btn active-send" onClick={handleStopRecording} disabled={isLoading} title="Send" style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                                     </svg>
                                 </button>
                             </div>
                         ) : inputText.trim() ? (
-                            <button type="submit" className="send-btn active-send" disabled={isLoading}>
-                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <button type="submit" className="send-btn active-send" disabled={isLoading} style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
                                     <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                                 </svg>
                             </button>
                         ) : (
-                            <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading} title="Record Voice">
-                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                            <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading} title="Record Voice" style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
                                     <path d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.468 2.349 8.468 4.35v7.061c0 2.001 1.53 3.531 3.531 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2.002z"></path>
                                 </svg>
                             </button>

@@ -229,6 +229,31 @@ body {
   border-top-left-radius: 0;
 }
 
+/* Custom Audio Player Styling */
+.message-bubble.audio-message {
+  padding: 4px;
+}
+
+.audio-message audio {
+  height: 44px;
+  width: 260px;
+  outline: none;
+  border-radius: 22px;
+  background-color: transparent;
+}
+
+.message-bubble.sent .audio-message audio::-webkit-media-controls-panel {
+  background-color: #d9fdd3;
+}
+
+.message-bubble.received .audio-message audio::-webkit-media-controls-panel {
+  background-color: #ffffff;
+}
+
+.audio-message audio::-webkit-media-controls-enclosure {
+  border-radius: 22px;
+}
+
 .message-header-text {
   word-wrap: break-word;
   white-space: pre-wrap;
