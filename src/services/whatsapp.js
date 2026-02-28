@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://whatsapp-webhook-awel.onrender.com/api/whatsapp';
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://whatsapp-webhook-awel.onrender.com/api/whatsapp';
 
 // Fetch all unique conversations
 export const getConversations = async () => {
@@ -33,5 +33,19 @@ export const sendTextMessage = async (toPhoneNumber, textBody) => {
     textBody: textBody
   };
   const response = await axios.post(`${BASE_URL}/send`, payload);
+  return response.data;
+};
+
+// Send a voice/audio message
+export const sendAudioMessage = async (toPhoneNumber, audioBlob) => {
+  const formData = new FormData();
+  formData.append('audio', audioBlob, 'voice_message.ogg');
+  formData.append('to', toPhoneNumber);
+
+  const response = await axios.post(`${BASE_URL}/send-audio`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   return response.data;
 };

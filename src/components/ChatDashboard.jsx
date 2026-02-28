@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage } from '../services/whatsapp';
+import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, BASE_URL } from '../services/whatsapp';
 import './ChatDashboard.css';
 
 export default function ChatDashboard() {
@@ -8,6 +8,11 @@ export default function ChatDashboard() {
     const [messages, setMessages] = useState([]);
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    // Voice Recording State
+    const [isRecording, setIsRecording] = useState(false);
+    const mediaRecorderRef = useRef(null);
+    const audioChunksRef = useRef([]);
 
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,6 +84,70 @@ export default function ChatDashboard() {
             await fetchConversations();
         } catch (error) {
             alert(`Failed to send message: ${error.response?.data?.error?.message || error.message}`);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Voice Recording Logic
+    const handleStartRecording = async (e) => {
+        e.preventDefault();
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorderRef.current = new MediaRecorder(stream);
+            audioChunksRef.current = [];
+
+            mediaRecorderRef.current.ondataavailable = (event) => {
+                if (event.data.size > 0) {
+                    audioChunksRef.current.push(event.data);
+                }
+            };
+
+            mediaRecorderRef.current.onstop = async () => {
+                const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/ogg' });
+                await sendVoiceMessage(audioBlob);
+            };
+
+            mediaRecorderRef.current.start();
+            setIsRecording(true);
+        } catch (error) {
+            console.error('Error accessing microphone:', error);
+            alert('Could not access microphone. Please check permissions.');
+        }
+    };
+
+    const handleStopRecording = (e) => {
+        e.preventDefault();
+        if (mediaRecorderRef.current && isRecording) {
+            mediaRecorderRef.current.stop();
+            setIsRecording(false);
+            // Stop tracks to release mic
+            if (mediaRecorderRef.current.stream) {
+                mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+            }
+        }
+    };
+
+    const sendVoiceMessage = async (audioBlob) => {
+        if (!activeNumber) return;
+
+        setIsLoading(true);
+        try {
+            const tempMsg = {
+                _id: Date.now().toString(),
+                type: 'audio',
+                from: 'me',
+                status: 'sent',
+                timestamp: new Date().toISOString()
+            };
+            setMessages(prev => [...prev, tempMsg]);
+
+            await sendAudioMessage(activeNumber, audioBlob);
+            await fetchMessages(activeNumber); // Refresh
+            await fetchConversations();
+        } catch (error) {
+            console.error('Failed to send voice message:', error);
+            alert(`Failed to send voice message: ${error.response?.data?.error?.message || error.message}`);
         } finally {
             setIsLoading(false);
         }
@@ -176,7 +245,17 @@ export default function ChatDashboard() {
                             const isSentByMe = msg.from !== activeNumber;
                             return (
                                 <div key={msg._id || index} className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
-                                    <div className="message-header-text">{msg.text}</div>
+                                    {msg.type === 'audio' ? (
+                                        <div className="audio-message">
+                                            {msg.mediaId ? (
+                                                <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} style={{ maxWidth: '200px' }} />
+                                            ) : (
+                                                <span style={{ fontStyle: 'italic' }}>Sending audio...</span>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div className="message-header-text">{msg.text}</div>
+                                    )}
                                     <div className="message-time-container">
                                         <span className="message-time">
                                             {formatTime(msg.timestamp)}
@@ -197,16 +276,32 @@ export default function ChatDashboard() {
                         <input
                             type="text"
                             className="chat-input"
-                            placeholder="Type a message..."
+                            placeholder={isRecording ? "Recording..." : "Type a message..."}
                             value={inputText}
                             onChange={(e) => setInputText(e.target.value)}
-                            disabled={isLoading}
+                            disabled={isLoading || isRecording}
                         />
-                        <button type="submit" className="send-btn" disabled={!inputText.trim() || isLoading}>
-                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
-                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-                            </svg>
-                        </button>
+                        {inputText.trim() ? (
+                            <button type="submit" className="send-btn" disabled={isLoading}>
+                                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                                </svg>
+                            </button>
+                        ) : (
+                            isRecording ? (
+                                <button type="button" className="send-btn recording" onClick={handleStopRecording} disabled={isLoading} style={{ color: 'red' }}>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M6 6h12v12H6z"></path>
+                                    </svg>
+                                </button>
+                            ) : (
+                                <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading}>
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                        <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"></path>
+                                    </svg>
+                                </button>
+                            )
+                        )}
                     </form>
                 </div>
             ) : (

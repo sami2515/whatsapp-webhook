@@ -1,4 +1,6 @@
 import axios from 'axios';
+import FormData from 'form-data';
+import fs from 'fs';
 import Message from '../models/Message.js';
 
 // Verify Webhook for Meta API setup 
@@ -32,18 +34,38 @@ export const handleIncomingMessage = async (req, res) => {
                 body.entry[0].changes[0].value.messages &&
                 body.entry[0].changes[0].value.messages[0]
             ) {
+                const messageObj = body.entry[0].changes[0].value.messages[0];
                 const phoneNumberId = body.entry[0].changes[0].value.metadata.phone_number_id;
-                const from = body.entry[0].changes[0].value.messages[0].from;
-                const msgBody = body.entry[0].changes[0].value.messages[0].text.body;
-                const messageId = body.entry[0].changes[0].value.messages[0].id;
+                const from = messageObj.from;
+                const messageId = messageObj.id;
+                const msgType = messageObj.type || 'text';
 
-                console.log(`Received message from ${from}: ${msgBody}`);
+                let msgBody = '';
+                let mediaId = null;
+
+                if (msgType === 'text') {
+                    msgBody = messageObj.text?.body || '';
+                } else if (msgType === 'audio' || msgType === 'voice') {
+                    mediaId = messageObj.audio?.id || messageObj.voice?.id;
+                } else if (msgType === 'image') {
+                    mediaId = messageObj.image?.id;
+                } else if (msgType === 'video') {
+                    mediaId = messageObj.video?.id;
+                } else if (msgType === 'document') {
+                    mediaId = messageObj.document?.id;
+                } else {
+                    msgBody = `[Unsupported message type: ${msgType}]`;
+                }
+
+                console.log(`Received ${msgType} message from ${from}`);
 
                 // Save incoming message to MongoDB
                 await Message.create({
                     from,
                     to: phoneNumberId,
                     text: msgBody,
+                    type: msgType,
+                    mediaId,
                     messageId,
                     status: 'received'
                 });
@@ -98,6 +120,8 @@ export const sendWhatsAppMessage = async (req, res) => {
             };
         } else if (type === 'text') {
             payload.text = { body: textBody };
+        } else if (type === 'audio') {
+            payload.audio = { id: req.body.mediaId };
         }
 
         const response = await axios.post(
@@ -113,15 +137,20 @@ export const sendWhatsAppMessage = async (req, res) => {
 
         // Save outgoing message locally to MongoDB
         if (response.data?.messages && response.data.messages.length > 0) {
-            const templateString = templateName === 'hello_world'
-                ? "Hello World\n\nWelcome and congratulations!! This message demonstrates your ability to send a WhatsApp message notification from the Cloud API, hosted by Meta. Thank you for taking the time to test with us."
-                : `[Template: ${templateName}]`;
+            let templateString = '';
+            if (type === 'template') {
+                templateString = templateName === 'hello_world'
+                    ? "Hello World\n\nWelcome and congratulations!! This message demonstrates your ability to send a WhatsApp message notification from the Cloud API, hosted by Meta. Thank you for taking the time to test with us."
+                    : `[Template: ${templateName}]`;
+            }
 
             await Message.create({
                 from: phoneNumberId,
                 to,
                 messageId: response.data.messages[0].id,
+                type: type,
                 text: type === 'text' ? textBody : templateString,
+                mediaId: type === 'audio' ? req.body.mediaId : undefined,
                 status: 'sent'
             });
         }
@@ -192,5 +221,122 @@ export const getChatHistory = async (req, res) => {
     } catch (error) {
         console.error('Error fetching chat history:', error);
         res.status(500).json({ error: 'Failed to fetch chat history' });
+    }
+};
+
+// Fetch media from Meta API and stream it to frontend
+export const getMedia = async (req, res) => {
+    try {
+        const { mediaId } = req.params;
+        const token = process.env.WHATSAPP_TOKEN;
+
+        // 1. Get Media URL
+        const mediaResponse = await axios.get(
+            `https://graph.facebook.com/v21.0/${mediaId}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!mediaResponse.data || !mediaResponse.data.url) {
+            return res.status(404).json({ error: 'Media URL not found' });
+        }
+
+        const audioUrl = mediaResponse.data.url;
+        const mimeType = mediaResponse.data.mime_type;
+
+        // 2. Download Media and pipe to response
+        const audioStreamResponse = await axios.get(audioUrl, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            responseType: 'stream'
+        });
+
+        res.setHeader('Content-Type', mimeType);
+        audioStreamResponse.data.pipe(res);
+
+    } catch (error) {
+        console.error('Error fetching media:', error.message);
+        res.status(500).json({ error: 'Failed to fetch media' });
+    }
+};
+
+// Upload audio to Meta and send it
+export const uploadAndSendAudio = async (req, res) => {
+    try {
+        const { to } = req.body;
+        const file = req.file;
+
+        if (!to || !file) {
+            return res.status(400).json({ error: 'Phone number and audio file are required.' });
+        }
+
+        const token = process.env.WHATSAPP_TOKEN;
+        const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+
+        // 1. Upload Media
+        const formData = new FormData();
+        formData.append('file', fs.createReadStream(file.path));
+        formData.append('type', 'audio/ogg');
+        formData.append('messaging_product', 'whatsapp');
+
+        const uploadResponse = await axios.post(
+            `https://graph.facebook.com/v21.0/${phoneNumberId}/media`,
+            formData,
+            {
+                headers: {
+                    ...formData.getHeaders(),
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        const mediaId = uploadResponse.data.id;
+
+        // Clean up uploaded file
+        fs.unlinkSync(file.path);
+
+        // 2. Send Media
+        const payload = {
+            messaging_product: 'whatsapp',
+            to: to,
+            type: 'audio',
+            audio: {
+                id: mediaId
+            }
+        };
+
+        const response = await axios.post(
+            `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+            payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        if (response.data?.messages && response.data.messages.length > 0) {
+            await Message.create({
+                from: phoneNumberId,
+                to,
+                messageId: response.data.messages[0].id,
+                type: 'audio',
+                mediaId: mediaId,
+                status: 'sent'
+            });
+        }
+
+        res.status(200).json({ success: true, response: response.data });
+    } catch (error) {
+        console.error('Error uploading/sending audio:', error.response?.data || error.message);
+        if (req.file && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+        res.status(error.response?.status || 500).json({ error: error.response?.data || error.message });
     }
 };

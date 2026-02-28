@@ -17,6 +17,14 @@ const messageSchema = new mongoose.Schema({
     text: {
         type: String, // To store message body if it's a text message
     },
+    type: {
+        type: String,
+        enum: ['text', 'audio', 'image', 'video', 'document', 'template'],
+        default: 'text'
+    },
+    mediaId: {
+        type: String, // To store WhatsApp Media ID for audio/image/video
+    },
     status: {
         type: String,
         enum: ['sent', 'delivered', 'read', 'received', 'failed'],
