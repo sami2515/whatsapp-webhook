@@ -304,6 +304,7 @@ body {
   justify-content: center;
   cursor: pointer;
   transition: color 0.2s;
+  flex-shrink: 0;
 }
 
 .send-btn svg {
@@ -392,6 +393,7 @@ body {
   cursor: pointer;
   border-radius: 50%;
   transition: background-color 0.2s;
+  flex-shrink: 0;
 }
 
 .cancel-btn svg {
