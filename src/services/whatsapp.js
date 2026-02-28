@@ -49,3 +49,17 @@ export const sendAudioMessage = async (toPhoneNumber, audioBlob) => {
   });
   return response.data;
 };
+
+// Send an image message
+export const sendImageMessage = async (toPhoneNumber, imageFile) => {
+  const formData = new FormData();
+  formData.append('image', imageFile);
+  formData.append('to', toPhoneNumber);
+
+  const response = await axios.post(`${BASE_URL}/send-image`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return response.data;
+};

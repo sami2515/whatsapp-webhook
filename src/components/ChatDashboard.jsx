@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, BASE_URL } from '../services/whatsapp';
+import React, { useState, useEffect, useRef } from 'react';
+import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, sendImageMessage, BASE_URL } from '../services/whatsapp';
 import './ChatDashboard.css';
 
 export default function ChatDashboard() {
@@ -14,14 +14,14 @@ export default function ChatDashboard() {
     const [recordingDuration, setRecordingDuration] = useState(0);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
-    const timerIntervalRef = useRef(null);
-    const isCancelledRef = useRef(false);
+    const timerRef = useRef(null); // Renamed from timerIntervalRef
 
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
 
     const messagesEndRef = useRef(null);
+    const fileInputRef = useRef(null); // Added fileInputRef
 
     // Initial load
     useEffect(() => {
@@ -93,8 +93,7 @@ export default function ChatDashboard() {
     };
 
     // Voice Recording Logic
-    const handleStartRecording = async (e) => {
-        e.preventDefault();
+    const handleStartRecording = async () => { // Removed e.preventDefault()
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
@@ -106,7 +105,6 @@ export default function ChatDashboard() {
 
             mediaRecorderRef.current = new MediaRecorder(stream, options);
             audioChunksRef.current = [];
-            isCancelledRef.current = false;
 
             mediaRecorderRef.current.ondataavailable = (event) => {
                 if (event.data.size > 0) {
@@ -115,22 +113,25 @@ export default function ChatDashboard() {
             };
 
             mediaRecorderRef.current.onstop = async () => {
-                if (!isCancelledRef.current) {
-                    const mimeType = mediaRecorderRef.current.mimeType || 'audio/mp4';
-                    const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
+                const mimeType = mediaRecorderRef.current.mimeType || 'audio/mp4';
+                const audioBlob = new Blob(audioChunksRef.current, { type: mimeType });
 
-                    // Create File object to pass explicitly
-                    const fileExtension = mimeType.includes('mp4') ? 'mp4' : 'webm';
-                    const audioFile = new File([audioBlob], `voice_message.${fileExtension}`, { type: mimeType });
+                // Create File object to pass explicitly
+                const fileExtension = mimeType.includes('mp4') ? 'mp4' : 'webm';
+                const audioFile = new File([audioBlob], `voice_message.${fileExtension}`, { type: mimeType });
 
-                    await sendVoiceMessage(audioFile);
+                await sendVoiceMessage(audioFile);
+
+                // Stop stream tracks after recording is done and processed
+                if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
+                    mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
                 }
             };
 
             mediaRecorderRef.current.start();
             setIsRecording(true);
             setRecordingDuration(0);
-            timerIntervalRef.current = setInterval(() => {
+            timerRef.current = setInterval(() => { // Changed to timerRef
                 setRecordingDuration((prev) => prev + 1);
             }, 1000);
         } catch (error) {
@@ -139,29 +140,28 @@ export default function ChatDashboard() {
         }
     };
 
-    const handleStopRecording = (e) => {
-        e.preventDefault();
+    const handleStopRecording = () => {
         if (mediaRecorderRef.current && isRecording) {
             mediaRecorderRef.current.stop();
-            cleanupRecording();
+            setIsRecording(false);
+            clearInterval(timerRef.current);
+            setRecordingDuration(0);
         }
     };
 
-    const handleCancelRecording = (e) => {
-        e.preventDefault();
+    const handleCancelRecording = () => {
         if (mediaRecorderRef.current && isRecording) {
-            isCancelledRef.current = true;
+            // Stop recording but prevent the onstop event from sending
+            mediaRecorderRef.current.onstop = null;
             mediaRecorderRef.current.stop();
-            cleanupRecording();
-        }
-    };
-
-    const cleanupRecording = () => {
-        setIsRecording(false);
-        clearInterval(timerIntervalRef.current);
-        setRecordingDuration(0);
-        if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
-            mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+            setIsRecording(false);
+            clearInterval(timerRef.current);
+            setRecordingDuration(0);
+            audioChunksRef.current = [];
+            // Stop stream tracks
+            if (mediaRecorderRef.current && mediaRecorderRef.current.stream) {
+                mediaRecorderRef.current.stream.getTracks().forEach(track => track.stop());
+            }
         }
     };
 
@@ -254,7 +254,7 @@ export default function ChatDashboard() {
                     {conversations.map((conv) => (
                         <div
                             key={conv._id}
-                            className={`conversation-item ${activeNumber === conv._id ? 'active' : ''}`}
+                            className={`conversation - item ${activeNumber === conv._id ? 'active' : ''} `}
                             onClick={() => setActiveNumber(conv._id)}
                         >
                             <div className="conv-header">
@@ -281,14 +281,29 @@ export default function ChatDashboard() {
                         {messages.map((msg, index) => {
                             const isSentByMe = msg.from !== activeNumber;
                             return (
-                                <div key={msg._id || index} className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
+                                <div key={msg._id || index} className={`message - bubble ${isSentByMe ? 'sent' : 'received'} `}>
                                     {msg.type === 'audio' ? (
                                         <div className="audio-message">
                                             {msg.mediaId ? (
-                                                <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} style={{ maxWidth: '200px' }} />
+                                                <audio controls src={`${BASE_URL} /media/${msg.mediaId} `} style={{ maxWidth: '200px' }} />
                                             ) : (
                                                 <span style={{ fontStyle: 'italic' }}>Sending audio...</span>
                                             )}
+                                        </div>
+                                    ) : msg.type === 'image' ? (
+                                        <div className="image-message">
+                                            {msg.mediaId ? (
+                                                <img
+                                                    src={`${BASE_URL} /media/${msg.mediaId} `}
+                                                    alt="Photo"
+                                                    style={{ maxWidth: '100%', borderRadius: '6px', marginBottom: '4px' }}
+                                                />
+                                            ) : (
+                                                <div style={{ padding: '20px', backgroundColor: '#e9edef', borderRadius: '6px', textAlign: 'center' }}>
+                                                    Sending image...
+                                                </div>
+                                            )}
+                                            {msg.text && msg.text !== '📸 Photo' && <div className="message-header-text">{msg.text}</div>}
                                         </div>
                                     ) : (
                                         <div className="message-header-text">{msg.text}</div>
@@ -298,7 +313,7 @@ export default function ChatDashboard() {
                                             {formatTime(msg.timestamp)}
                                         </span>
                                         {isSentByMe && (
-                                            <span className={`message-status ${msg.status}`}>
+                                            <span className={`message - status ${msg.status} `}>
                                                 {msg.status === 'read' ? ' ✓✓' : msg.status === 'delivered' ? ' ✓✓' : ' ✓'}
                                             </span>
                                         )}
@@ -319,14 +334,35 @@ export default function ChatDashboard() {
                                 </span>
                             </div>
                         ) : (
-                            <input
-                                type="text"
-                                className="chat-input"
-                                placeholder="Type a message..."
-                                value={inputText}
-                                onChange={(e) => setInputText(e.target.value)}
-                                disabled={isLoading}
-                            />
+                            <>
+                                <button
+                                    type="button"
+                                    className="attach-btn"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    disabled={isLoading}
+                                    title="Attach Image"
+                                    style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', color: '#54656f', cursor: 'pointer' }}
+                                >
+                                    <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
+                                        <path d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.57.57 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"></path>
+                                    </svg>
+                                </button>
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    style={{ display: 'none' }}
+                                    ref={fileInputRef}
+                                    onChange={handleImageUpload}
+                                />
+                                <input
+                                    type="text"
+                                    className="chat-input"
+                                    placeholder="Type a message..."
+                                    value={inputText}
+                                    onChange={(e) => setInputText(e.target.value)}
+                                    disabled={isLoading}
+                                />
+                            </>
                         )}
 
                         {isRecording ? (
