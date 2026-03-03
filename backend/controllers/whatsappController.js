@@ -1,6 +1,7 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
+import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 import Message from '../models/Message.js';
 import { BOT_CONFIG, buildInteractiveMenuPayload } from '../utils/botConfig.js';
