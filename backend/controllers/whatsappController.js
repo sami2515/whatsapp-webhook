@@ -3,10 +3,37 @@ import FormData from 'form-data';
 import fs from 'fs';
 import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from '@ffmpeg-installer/ffmpeg';
+import webpush from 'web-push';
 import Message from '../models/Message.js';
+import Subscription from '../models/Subscription.js';
 import { BOT_CONFIG, buildInteractiveMenuPayload } from '../utils/botConfig.js';
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
+
+let webpushConfigured = false;
+const configureWebPush = () => {
+    if (!webpushConfigured && process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+        webpush.setVapidDetails(
+            'mailto:admin@admin.com',
+            process.env.VAPID_PUBLIC_KEY,
+            process.env.VAPID_PRIVATE_KEY
+        );
+        webpushConfigured = true;
+    }
+};
+
+export const subscribeToPush = async (req, res) => {
+    try {
+        const subscription = req.body;
+        const sub = new Subscription({ ...subscription, endpoint: subscription.endpoint });
+        await sub.save();
+        res.status(201).json({ message: 'Subscribed successfully.' });
+    } catch (err) {
+        if (err.code === 11000) return res.status(200).json({ message: 'Already subscribed.' });
+        console.error('Error saving subscription:', err);
+        res.status(500).json({ error: 'Failed to subscribe.' });
+    }
+};
 
 // Verify Webhook for Meta API setup 
 export const verifyWebhook = (req, res) => {
@@ -85,6 +112,36 @@ export const handleIncomingMessage = async (req, res) => {
                     messageId,
                     status: 'received'
                 });
+
+                // Notify all subscribed devices via Web Push
+                try {
+                    configureWebPush();
+                    if (webpushConfigured) {
+                        const pushPayload = JSON.stringify({
+                            title: `WhatsApp: ${from}`,
+                            body: msgBody,
+                            icon: '/icon512_rounded.png',
+                            badge: '/icon512_maskable.png'
+                        });
+                        const subscriptions = await Subscription.find({});
+                        for (let sub of subscriptions) {
+                            try {
+                                await webpush.sendNotification({
+                                    endpoint: sub.endpoint,
+                                    keys: sub.keys
+                                }, pushPayload);
+                            } catch (err) {
+                                if (err.statusCode === 410 || err.statusCode === 404) {
+                                    await Subscription.deleteOne({ endpoint: sub.endpoint });
+                                } else {
+                                    console.error('Push error:', err);
+                                }
+                            }
+                        }
+                    }
+                } catch (pushErr) {
+                    console.error('Failed to send push notifications:', pushErr);
+                }
 
                 // Auto Responder Logic (if Bot is enabled)
                 if (BOT_CONFIG.ENABLED) {

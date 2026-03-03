@@ -26,6 +26,9 @@ export default function ChatDashboard() {
     const [liveStatus, setLiveStatus] = useState("Available 🟢");
     const [isUpdatingBot, setIsUpdatingBot] = useState(false);
 
+    // Web Push State
+    const [pushEnabled, setPushEnabled] = useState(false);
+
     const messagesEndRef = useRef(null);
     const fileInputRef = useRef(null);
 
@@ -46,6 +49,17 @@ export default function ChatDashboard() {
             return () => clearInterval(interval);
         }
     }, [activeNumber]);
+
+    // Check Push Subscription on load
+    useEffect(() => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(reg => {
+                reg.pushManager.getSubscription().then(sub => {
+                    if (sub) setPushEnabled(true);
+                });
+            });
+        }
+    }, []);
 
     // Auto scroll to bottom
     useEffect(() => {
@@ -68,6 +82,50 @@ export default function ChatDashboard() {
             setLiveStatus(response.data.liveStatus);
         } catch (error) {
             console.error('Failed to load bot settings', error);
+        }
+    };
+
+    const urlBase64ToUint8Array = (base64String) => {
+        const padding = '='.repeat((4 - base64String.length % 4) % 4);
+        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+        for (let i = 0; i < rawData.length; ++i) {
+            outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+    };
+
+    const subscribeToPushNotifications = async () => {
+        if (!('serviceWorker' in navigator)) {
+            alert('Push Notifications are not supported in this browser.');
+            return;
+        }
+
+        try {
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                alert('Notification permission denied.');
+                return;
+            }
+
+            const registration = await navigator.serviceWorker.ready;
+            const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+
+            let subscription = await registration.pushManager.getSubscription();
+            if (!subscription) {
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+                });
+            }
+
+            await axios.post(`${BASE_URL}/subscribe`, subscription);
+            setPushEnabled(true);
+            alert('Push Notifications enabled successfully! You will now receive alerts when your phone is locked or app is closed.');
+        } catch (err) {
+            console.error('Failed to subscribe:', err);
+            alert('Failed to enable push notifications.');
         }
     };
 
@@ -318,6 +376,11 @@ export default function ChatDashboard() {
                         </button>
                     </div>
 
+                    {!pushEnabled && (
+                        <button className="new-chat-btn" onClick={subscribeToPushNotifications} title="Enable Local Background Notifications" style={{ marginRight: '10px', backgroundColor: '#e9edef' }}>
+                            🔔 Subscribe
+                        </button>
+                    )}
                     <button className="new-chat-btn" onClick={() => setIsModalOpen(!isModalOpen)}>
                         + New
                     </button>

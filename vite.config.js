@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        importScripts: ['/sw-push.js']
+      },
       includeAssets: ['pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: 'WhatsApp Admin',
