@@ -41,7 +41,7 @@ function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const isLogged = localStorage.getItem('chat_dashboard_auth') === 'true';
+    const isLogged = sessionStorage.getItem('chat_dashboard_auth') === 'true';
     if (isLogged) {
       setIsAuthenticated(true);
     }
@@ -52,7 +52,7 @@ function App() {
     const correctPassword = import.meta.env.VITE_DASHBOARD_PASSWORD;
     if (passwordInput === correctPassword) {
       setIsAuthenticated(true);
-      localStorage.setItem('chat_dashboard_auth', 'true');
+      sessionStorage.setItem('chat_dashboard_auth', 'true');
       setError('');
     } else {
       setError('Incorrect Password!');
