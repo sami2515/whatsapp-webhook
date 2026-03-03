@@ -63,7 +63,7 @@ export default function ChatDashboard() {
 
     const fetchBotSettings = async () => {
         try {
-            const response = await axios.get(`${BASE_URL}/api/bot-settings`);
+            const response = await axios.get(`${BASE_URL}/bot-settings`);
             setBotEnabled(response.data.enabled);
             setLiveStatus(response.data.liveStatus);
         } catch (error) {
@@ -75,7 +75,7 @@ export default function ChatDashboard() {
         setIsUpdatingBot(true);
         try {
             const newEnabledState = !botEnabled;
-            await axios.post(`${BASE_URL}/api/bot-settings`, { enabled: newEnabledState });
+            await axios.post(`${BASE_URL}/bot-settings`, { enabled: newEnabledState });
             setBotEnabled(newEnabledState);
         } catch (error) {
             console.error('Failed to update bot state', error);
@@ -88,7 +88,7 @@ export default function ChatDashboard() {
     const changeLiveStatus = async (newStatus) => {
         setIsUpdatingBot(true);
         try {
-            await axios.post(`${BASE_URL}/api/bot-settings`, { liveStatus: newStatus });
+            await axios.post(`${BASE_URL}/bot-settings`, { liveStatus: newStatus });
             setLiveStatus(newStatus);
         } catch (error) {
             console.error('Failed to update live status', error);
