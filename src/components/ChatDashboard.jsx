@@ -244,7 +244,7 @@ export default function ChatDashboard() {
     const myNumberId = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER_ID; // Optional if we just check 'received'
 
     return (
-        <div className="chat-container">
+        <div className={`chat-container ${activeNumber ? 'chat-active' : ''}`}>
             {/* Sidebar */}
             <div className="sidebar">
                 <div className="sidebar-header">
@@ -301,6 +301,11 @@ export default function ChatDashboard() {
             {activeNumber ? (
                 <div className="chat-area">
                     <div className="chat-header">
+                        <button className="back-btn" onClick={() => setActiveNumber(null)} aria-label="Back to chats">
+                            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
+                            </svg>
+                        </button>
                         <h3>+{activeNumber}</h3>
                     </div>
 

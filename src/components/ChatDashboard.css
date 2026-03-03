@@ -490,3 +490,97 @@ body {
 .template-btn:hover {
   background-color: #e0a800;
 }
+
+.back-btn {
+  display: none;
+  background: transparent;
+  color: #54656f;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn:hover {
+  background-color: #e9edef;
+}
+
+@media (max-width: 768px) {
+  /* Container becomes full screen */
+  .chat-container {
+    height: 100vh !important;
+    height: 100dvh !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    top: 0 !important;
+    border-radius: 0;
+  }
+
+  /* List vs Chat toggle logic */
+  .chat-container .sidebar {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    display: flex;
+  }
+  
+  .chat-container .chat-area,
+  .chat-container .no-chat-selected {
+    display: none;
+    width: 100%;
+  }
+
+  /* When an active chat is open */
+  .chat-container.chat-active .sidebar {
+    display: none;
+  }
+  .chat-container.chat-active .chat-area {
+    display: flex;
+  }
+
+  /* Fix the back button */
+  .back-btn {
+    display: flex;
+  }
+
+  /* Adjust header text */
+  .chat-header h3 {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Chat input squishing fixes */
+  .chat-input-area {
+    padding: 8px 6px;
+    gap: 4px;
+  }
+  
+  .attach-btn, 
+  .send-btn, 
+  .cancel-btn {
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+  }
+
+  .attach-btn svg,
+  .send-btn svg,
+  .cancel-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .chat-input {
+    padding: 10px 12px;
+  }
+
+  /* Audio message fix */
+  .audio-message audio {
+    width: 200px;
+  }
+}
