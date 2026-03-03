@@ -1,9 +1,9 @@
 import axios from 'axios';
 import FormData from 'form-data';
 import fs from 'fs';
-import ffmpeg from 'fluent-ffmpeg';
 import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 import Message from '../models/Message.js';
+import { BOT_CONFIG, buildInteractiveMenuPayload } from '../utils/botConfig.js';
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 
@@ -46,6 +46,8 @@ export const handleIncomingMessage = async (req, res) => {
 
                 let msgBody = '';
                 let mediaId = null;
+                let isInteractive = false;
+                let interactiveId = null;
 
                 if (msgType === 'text') {
                     msgBody = messageObj.text?.body || '';
@@ -57,14 +59,23 @@ export const handleIncomingMessage = async (req, res) => {
                     mediaId = messageObj.video?.id;
                 } else if (msgType === 'document') {
                     mediaId = messageObj.document?.id;
+                } else if (msgType === 'interactive') {
+                    isInteractive = true;
+                    // Extract list_reply
+                    interactiveId = messageObj.interactive?.list_reply?.id;
+                    msgBody = messageObj.interactive?.list_reply?.title || messageObj.interactive?.button_reply?.title || '[Interactive Reply]';
                 } else {
                     msgBody = `[Unsupported message type: ${msgType}]`;
                 }
 
                 console.log(`Received ${msgType} message from ${from}`);
 
+                // Check if this is the first message from this user to trigger the Bot Menu
+                const existingMsg = await Message.findOne({ from });
+                const isFirstMessage = !existingMsg;
+
                 // Save incoming message to MongoDB
-                await Message.create({
+                const savedMessage = await Message.create({
                     from,
                     to: phoneNumberId,
                     text: msgBody,
@@ -73,6 +84,50 @@ export const handleIncomingMessage = async (req, res) => {
                     messageId,
                     status: 'received'
                 });
+
+                // Auto Responder Logic (if Bot is enabled)
+                if (BOT_CONFIG.ENABLED) {
+                    const token = process.env.WHATSAPP_TOKEN;
+
+                    if (isFirstMessage && !isInteractive) {
+                        // Send the main Welcome List Menu
+                        const menuPayload = buildInteractiveMenuPayload(from);
+                        await axios.post(
+                            `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+                            menuPayload,
+                            { headers: { Authorization: `Bearer ${token}` } }
+                        );
+                    } else if (isInteractive && interactiveId) {
+                        let textReply = "";
+                        let markUrgent = false;
+
+                        // Handle List Menu Button clicks
+                        if (interactiveId === "btn_bio") {
+                            textReply = BOT_CONFIG.BIO_MESSAGE;
+                        } else if (interactiveId === "btn_social") {
+                            textReply = BOT_CONFIG.SOCIAL_LINKS;
+                        } else if (interactiveId === "btn_leave_msg") {
+                            textReply = BOT_CONFIG.LEAVE_MESSAGE_PROMPT;
+                        } else if (interactiveId === "btn_urgent") {
+                            textReply = BOT_CONFIG.URGENT_MESSAGE_ACK;
+                            markUrgent = true;
+                        }
+
+                        if (textReply) {
+                            await axios.post(
+                                `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+                                { messaging_product: "whatsapp", recipient_type: "individual", to: from, type: "text", text: { body: textReply } },
+                                { headers: { Authorization: `Bearer ${token}` } }
+                            );
+                        }
+
+                        if (markUrgent) {
+                            // Update the just saved incoming message to be marked urgent for the UI
+                            savedMessage.text = `[URGENT 🚨] ${savedMessage.text}`;
+                            await savedMessage.save();
+                        }
+                    }
+                }
 
             } else if (
                 body.entry &&
@@ -458,4 +513,33 @@ export const uploadAndSendImage = async (req, res) => {
         }
         res.status(error.response?.status || 500).json({ error: metaError });
     }
+};
+
+// Admin UI: Get current bot settings
+export const getBotSettings = (req, res) => {
+    res.status(200).json({
+        enabled: BOT_CONFIG.ENABLED,
+        liveStatus: BOT_CONFIG.LIVE_STATUS
+    });
+};
+
+// Admin UI: Update bot settings
+export const updateBotSettings = (req, res) => {
+    const { enabled, liveStatus } = req.body;
+
+    if (typeof enabled === 'boolean') {
+        BOT_CONFIG.ENABLED = enabled;
+    }
+    if (liveStatus) {
+        BOT_CONFIG.LIVE_STATUS = liveStatus;
+    }
+
+    res.status(200).json({
+        success: true,
+        message: 'Bot settings updated',
+        settings: {
+            enabled: BOT_CONFIG.ENABLED,
+            liveStatus: BOT_CONFIG.LIVE_STATUS
+        }
+    });
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, sendImageMessage, BASE_URL } from '../services/whatsapp';
 import './ChatDashboard.css';
 
@@ -20,12 +21,18 @@ export default function ChatDashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
 
+    // Bot Control State
+    const [botEnabled, setBotEnabled] = useState(false);
+    const [liveStatus, setLiveStatus] = useState("Available 🟢");
+    const [isUpdatingBot, setIsUpdatingBot] = useState(false);
+
     const messagesEndRef = useRef(null);
-    const fileInputRef = useRef(null); // Added fileInputRef
+    const fileInputRef = useRef(null);
 
     // Initial load
     useEffect(() => {
         fetchConversations();
+        fetchBotSettings();
         // Start polling for new messages every 5 seconds
         const interval = setInterval(fetchConversations, 5000);
         return () => clearInterval(interval);
@@ -51,6 +58,43 @@ export default function ChatDashboard() {
             setConversations(data);
         } catch (error) {
             console.error('Failed to load conversations', error);
+        }
+    };
+
+    const fetchBotSettings = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}/api/bot-settings`);
+            setBotEnabled(response.data.enabled);
+            setLiveStatus(response.data.liveStatus);
+        } catch (error) {
+            console.error('Failed to load bot settings', error);
+        }
+    };
+
+    const toggleBotState = async () => {
+        setIsUpdatingBot(true);
+        try {
+            const newEnabledState = !botEnabled;
+            await axios.post(`${BASE_URL}/api/bot-settings`, { enabled: newEnabledState });
+            setBotEnabled(newEnabledState);
+        } catch (error) {
+            console.error('Failed to update bot state', error);
+            alert('Failed to update AI Bot state');
+        } finally {
+            setIsUpdatingBot(false);
+        }
+    };
+
+    const changeLiveStatus = async (newStatus) => {
+        setIsUpdatingBot(true);
+        try {
+            await axios.post(`${BASE_URL}/api/bot-settings`, { liveStatus: newStatus });
+            setLiveStatus(newStatus);
+        } catch (error) {
+            console.error('Failed to update live status', error);
+            alert('Failed to update Live Status');
+        } finally {
+            setIsUpdatingBot(false);
         }
     };
 
@@ -249,6 +293,31 @@ export default function ChatDashboard() {
             <div className="sidebar">
                 <div className="sidebar-header">
                     <h2>Chats</h2>
+
+                    {/* Bot Control Panel */}
+                    <div className="bot-control-panel">
+                        <select
+                            value={liveStatus}
+                            onChange={(e) => changeLiveStatus(e.target.value)}
+                            disabled={isUpdatingBot}
+                            className="status-dropdown"
+                        >
+                            <option value="Available 🟢">Available 🟢</option>
+                            <option value="Busy 🔴">Busy 🔴</option>
+                            <option value="Sleeping 😴">Sleeping 😴</option>
+                            <option value="At the Gym 🏋️">At the Gym 🏋️</option>
+                            <option value="Driving 🚗">Driving 🚗</option>
+                        </select>
+                        <button
+                            className={`bot-toggle-btn ${botEnabled ? 'on' : 'off'}`}
+                            onClick={toggleBotState}
+                            disabled={isUpdatingBot}
+                            title="Toggle AI Assistant Auto-Replies"
+                        >
+                            🤖 Bot: {botEnabled ? 'ON' : 'OFF'}
+                        </button>
+                    </div>
+
                     <button className="new-chat-btn" onClick={() => setIsModalOpen(!isModalOpen)}>
                         + New
                     </button>
@@ -290,7 +359,14 @@ export default function ChatDashboard() {
                             </div>
                             <div className="conv-preview">
                                 {conv.unreadCount > 0 && <span style={{ color: '#25D366', fontWeight: 'bold' }}>• </span>}
-                                {conv.lastMessage}
+                                {conv.lastMessage?.startsWith('[URGENT 🚨]') ? (
+                                    <>
+                                        <span className="urgent-tag">🚨 URGENT</span>
+                                        {conv.lastMessage.replace('[URGENT 🚨] ', '')}
+                                    </>
+                                ) : (
+                                    conv.lastMessage
+                                )}
                             </div>
                         </div>
                     ))}

@@ -137,6 +137,65 @@ body {
   align-items: center;
 }
 
+/* Make Urgent Messages Red */
+.conv-preview:has(span.urgent-tag) {
+  color: #ea0038;
+  font-weight: 500;
+}
+
+.urgent-tag {
+  color: #ea0038;
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+/* Bot Control Panel UI */
+.bot-control-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  margin-left: 15px;
+}
+
+.status-dropdown {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d7db;
+  background-color: white;
+  color: #111b21;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+}
+
+.bot-toggle-btn {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: white;
+}
+
+.bot-toggle-btn.on {
+  background-color: #00a884;
+}
+
+.bot-toggle-btn.on:hover {
+  background-color: #008f6f;
+}
+
+.bot-toggle-btn.off {
+  background-color: #8696a0;
+}
+
+.bot-toggle-btn.off:hover {
+  background-color: #667781;
+}
+
 /* Chat Area (Right Panel) */
 .chat-area {
   flex: 1;
@@ -509,6 +568,7 @@ body {
 }
 
 @media (max-width: 768px) {
+
   /* Container becomes full screen */
   .chat-container {
     height: 100vh !important;
@@ -526,7 +586,7 @@ body {
     min-width: 100%;
     display: flex;
   }
-  
+
   .chat-container .chat-area,
   .chat-container .no-chat-selected {
     display: none;
@@ -537,6 +597,7 @@ body {
   .chat-container.chat-active .sidebar {
     display: none;
   }
+
   .chat-container.chat-active .chat-area {
     display: flex;
   }
@@ -559,9 +620,9 @@ body {
     padding: 8px 6px;
     gap: 4px;
   }
-  
-  .attach-btn, 
-  .send-btn, 
+
+  .attach-btn,
+  .send-btn,
   .cancel-btn {
     width: 38px !important;
     height: 38px !important;
