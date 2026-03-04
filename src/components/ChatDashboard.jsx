@@ -113,12 +113,15 @@ export default function ChatDashboard() {
             const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
 
             let subscription = await registration.pushManager.getSubscription();
-            if (!subscription) {
-                subscription = await registration.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
-                });
+            if (subscription) {
+                // Force unsubscribe the old subscription to prevent key mismatch from compromised keys
+                await subscription.unsubscribe();
             }
+
+            subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+            });
 
             await axios.post(`${BASE_URL}/subscribe`, subscription);
             setPushEnabled(true);
