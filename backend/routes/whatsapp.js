@@ -11,7 +11,6 @@ import {
     uploadAndSendImage,
     getBotSettings,
     updateBotSettings,
-    updateBotSettings,
     subscribeToPush,
     sendReaction,
     deleteMessage
