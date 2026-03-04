@@ -5,7 +5,6 @@ self.addEventListener('push', function (event) {
         const options = {
             body: payload.body,
             icon: payload.icon || '/pwa-192x192.png',
-            badge: payload.badge || '/pwa-512x512.png',
             vibrate: [200, 100, 200, 100, 200, 100, 200],
             requireInteraction: true,
             data: {

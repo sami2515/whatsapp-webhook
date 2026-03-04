@@ -16,8 +16,8 @@ export default defineConfig({
         name: 'WhatsApp Admin',
         short_name: 'WA Admin',
         description: 'Manage WhatsApp API Conversations',
-        theme_color: '#00a884',
-        background_color: '#e3e1df',
+        theme_color: '#111b21',
+        background_color: '#111b21',
         display: 'standalone',
         icons: [
           {

@@ -1,0 +1,102 @@
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #111b21;
+    /* WhatsApp dark mode background */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeOut 0.5s ease-in-out forwards;
+    animation-delay: 2s;
+    /* Start fading out after 2 seconds */
+}
+
+.splash-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.splash-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+.splash-footer {
+    padding-bottom: 40px;
+    text-align: center;
+    animation: slideUpFadeIn 1s ease-out;
+}
+
+.footer-from {
+    color: #8696a0;
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 4px;
+    opacity: 0.8;
+}
+
+.footer-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00a884;
+    /* WhatsApp brand green */
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.brand-text {
+    background: linear-gradient(135deg, #00a884, #00c69d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUpFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}

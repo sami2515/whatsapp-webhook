@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from 'react';
 import './App.css';
 import ChatDashboard from './components/ChatDashboard';
+import SplashScreen from './components/SplashScreen';
 
 class ErrorBoundary extends Component {
   constructor(props) {
@@ -39,12 +40,20 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [error, setError] = useState('');
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
+    // 2.5s timer for Splash Screen animation to finish
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 2500);
+
     const isLogged = sessionStorage.getItem('chat_dashboard_auth') === 'true';
     if (isLogged) {
       setIsAuthenticated(true);
     }
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleLogin = (e) => {
@@ -58,6 +67,10 @@ function App() {
       setError('Incorrect Password!');
     }
   };
+
+  if (showSplash) {
+    return <SplashScreen />;
+  }
 
   if (!isAuthenticated) {
     return (

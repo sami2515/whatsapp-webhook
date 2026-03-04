@@ -121,7 +121,6 @@ export const handleIncomingMessage = async (req, res) => {
                             title: `WhatsApp: +${from}`,
                             body: msgBody,
                             icon: '/pwa-192x192.png',
-                            badge: '/pwa-192x192.png',
                             data: {
                                 url: '/' // We can add ?number=${from} later if UI supports direct routing
                             }
