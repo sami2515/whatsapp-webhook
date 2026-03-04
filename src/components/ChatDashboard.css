@@ -623,7 +623,8 @@ body {
 
   .attach-btn,
   .send-btn,
-  .cancel-btn {
+  .cancel-btn,
+  .emoji-toggle-btn {
     width: 38px !important;
     height: 38px !important;
     min-width: 38px !important;
