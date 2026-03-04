@@ -10,13 +10,13 @@ You are a highly professional, friendly, and smart Executive Assistant for Mr. M
 Sami's current status is: "${liveStatus}".
 The current local time in Karachi, Pakistan is: ${currentTime}.
 
-Your Objective & Rules:
-1. Language: You MUST communicate fluently in Roman Urdu (e.g., "Assalam o Alaikum! Sami abhi masroof hain..."). If the user speaks English, you can reply in English, but your default friendly tone should be in Roman Urdu.
-2. Persona: Act like a real, helpful human assistant. NEVER say things like "As an AI..." or "I don't have a physical body". Play the role of a smart manager handling his WhatsApp.
-3. Chat Logic: Do NOT introduce yourself or say "Assalam o Alaikum" in every single message. Only greet politely if they say hello first. Otherwise, just answer their question directly like an ongoing natural conversation.
-4. Information & Time: If they ask for Sami, use his current status AND the current Karachi time (e.g., if it's 3 AM, mention he is likely asleep and will reply tomorrow) to give a realistic response.
-5. Urgency: If they seem very urgent, politely guide them to use the "Mark as URGENT" button from the main menu so you can alert Sami instantly.
-6. Tone: Keep your responses concise (1-3 sentences max), warm, and polite. Don't be robotic.
+CRITICAL RULES:
+1. Language: Communicate fluently in Roman Urdu.
+2. Persona: Act like a real, helpful human assistant. NEVER say "As an AI...".
+3. Memory & Context: Read the provided conversation history. DO NOT repeat the same phrase (like "Mai Sami ko inform kar deta hoon") over and over. If you have already acknowledged a request, just reply with a brief, natural "Jee theek hai", "Zaroor", or "Okay". Keep the conversation moving forward logically. If you've already greeted them, don't greet them again.
+4. Accuracy: Do not hallucinate. If the user asks a tricky question like "Which AI is this", playfully say you are Sami's digital executive assistant.
+5. Urgency: Guide extremely urgent matters to the "Mark as URGENT" button from the main menu.
+6. Tone: Keep your responses EXTREMELY concise (maximum 1 or 2 sentences), warm, and polite. Do not be a robotic parrot.
 `;
 
 export const generateAIResponse = async (userMessage, liveStatus, history = [], base64Image = null) => {
@@ -35,21 +35,35 @@ export const generateAIResponse = async (userMessage, liveStatus, history = [], 
             systemInstruction: systemInstruction
         });
 
-        // Format history for Gemini API: { role: "user" | "model", parts: [{ text: "..." }] }
-        const formattedHistory = history.map(msg => ({
-            role: msg.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: msg.content || "Attached Media" }]
-        }));
+        // Format history to guarantee strict alternating roles for native Gemini API format
+        let formattedHistory = [];
+        let lastRole = null;
 
-        const chatSession = model.startChat({
-            history: formattedHistory
-        });
+        for (const msg of history) {
+            const role = msg.role === 'assistant' ? 'model' : 'user';
+            const textContent = msg.content || "Attached Media";
 
-        let messageParts = [userMessage];
+            if (role === lastRole) {
+                // Merge consecutive messages from same role to prevent API crash
+                formattedHistory[formattedHistory.length - 1].parts[0].text += `\n\n${textContent}`;
+            } else {
+                formattedHistory.push({
+                    role: role,
+                    parts: [{ text: textContent }]
+                });
+                lastRole = role;
+            }
+        }
 
-        // Append image data if provided (Gemini Vision integration)
+        // Gemini requires history to ALWAYS start with 'user'
+        if (formattedHistory.length > 0 && formattedHistory[0].role === 'model') {
+            formattedHistory.shift();
+        }
+
+        // Compile the current incoming message
+        let finalParts = [{ text: userMessage }];
         if (base64Image) {
-            messageParts.push({
+            finalParts.push({
                 inlineData: {
                     data: base64Image,
                     mimeType: "image/jpeg"
@@ -57,7 +71,17 @@ export const generateAIResponse = async (userMessage, liveStatus, history = [], 
             });
         }
 
-        const result = await chatSession.sendMessage(messageParts);
+        // Merge latest message into context 
+        if (lastRole === 'user') {
+            formattedHistory[formattedHistory.length - 1].parts.push(...finalParts);
+        } else {
+            formattedHistory.push({
+                role: 'user',
+                parts: finalParts
+            });
+        }
+
+        const result = await model.generateContent({ contents: formattedHistory });
         return result.response.text();
 
     } catch (error) {

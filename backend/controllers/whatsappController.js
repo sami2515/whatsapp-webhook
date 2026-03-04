@@ -208,11 +208,12 @@ export const handleIncomingMessage = async (req, res) => {
                         // Forward regular text or image to Gemini AI if not paused
                         if (!userContext.isAIPaused) {
 
-                            // 1. Fetch Chat History (Memory)
+                            // 1. Fetch Chat History (Memory) - Exclude current message
                             const recentContext = await Message.find({
                                 $or: [{ from: from }, { to: from }],
-                                type: 'text' // Only feed text context to save tokens, images are inline
-                            }).sort({ _id: -1 }).limit(12);
+                                type: 'text',
+                                messageId: { $ne: messageId }
+                            }).sort({ _id: -1 }).limit(10);
 
                             const history = recentContext.reverse().map(msg => ({
                                 role: msg.from === from ? 'user' : 'assistant',
