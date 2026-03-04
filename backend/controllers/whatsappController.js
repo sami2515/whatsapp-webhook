@@ -6,6 +6,8 @@ import ffmpegPath from '@ffmpeg-installer/ffmpeg';
 import webpush from 'web-push';
 import Message from '../models/Message.js';
 import Subscription from '../models/Subscription.js';
+import UserContext from '../models/UserContext.js';
+import { generateAIResponse } from '../services/geminiService.js';
 import { BOT_CONFIG, buildInteractiveMenuPayload } from '../utils/botConfig.js';
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
@@ -149,6 +151,12 @@ export const handleIncomingMessage = async (req, res) => {
                 if (BOT_CONFIG.ENABLED) {
                     const token = process.env.WHATSAPP_TOKEN;
 
+                    // Fetch or Create User Context for AI state tracking
+                    let userContext = await UserContext.findOne({ phoneNumber: from });
+                    if (!userContext) {
+                        userContext = await UserContext.create({ phoneNumber: from });
+                    }
+
                     if (isFirstMessage && !isInteractive) {
                         // Send the main Welcome List Menu
                         const menuPayload = buildInteractiveMenuPayload(from);
@@ -162,9 +170,7 @@ export const handleIncomingMessage = async (req, res) => {
                         let markUrgent = false;
 
                         // Handle List Menu Button clicks
-                        if (interactiveId === "btn_bio") {
-                            textReply = BOT_CONFIG.BIO_MESSAGE;
-                        } else if (interactiveId === "btn_social") {
+                        if (interactiveId === "btn_social") {
                             textReply = BOT_CONFIG.SOCIAL_LINKS;
                         } else if (interactiveId === "btn_leave_msg") {
                             textReply = BOT_CONFIG.LEAVE_MESSAGE_PROMPT;
@@ -182,9 +188,36 @@ export const handleIncomingMessage = async (req, res) => {
                         }
 
                         if (markUrgent) {
+                            // Pause AI for this user so Sami can handle it manually
+                            userContext.isAIPaused = true;
+                            await userContext.save();
+
                             // Update the just saved incoming message to be marked urgent for the UI
                             savedMessage.text = `[URGENT 🚨] ${savedMessage.text}`;
                             await savedMessage.save();
+                        }
+                    } else if (!isInteractive && msgType === 'text') {
+                        // Forward regular text to Gemini AI if not paused
+                        if (!userContext.isAIPaused) {
+                            const aiReply = await generateAIResponse(msgBody, BOT_CONFIG.LIVE_STATUS);
+
+                            // Send AI reply back to user
+                            await axios.post(
+                                `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+                                { messaging_product: "whatsapp", recipient_type: "individual", to: from, type: "text", text: { body: aiReply } },
+                                { headers: { Authorization: `Bearer ${token}` } }
+                            );
+
+                            // Save AI outgoing message locally to MongoDB so it shows in Dashboard
+                            await Message.create({
+                                from: phoneNumberId,
+                                to: from,
+                                messageId: `ai-${Date.now()}`,
+                                type: 'text',
+                                text: aiReply,
+                                status: 'sent',
+                                timestamp: new Date()
+                            });
                         }
                     }
                 }

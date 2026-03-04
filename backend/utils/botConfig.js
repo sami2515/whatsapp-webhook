@@ -4,15 +4,13 @@ export const BOT_CONFIG = {
     LIVE_STATUS: "Available 🟢", // e.g., "Sleeping 😴", "Driving 🚗"
 
     // Messages
-    WELCOME_MESSAGE: "Assalam o Alaikum! 👋\n\nMain Sami ka *Personal AI Assistant* hoon. Sami abhi dastiyab nahi hain, unka current status hai: *{{STATUS}}*.\n\nAapko kya kaam tha? Neechay diye gaye Menu se muntakhib karein:",
+    WELCOME_MESSAGE: "Greetings! 👋\n\nYou have reached the office of Mr. Muhammad Sami. I am his AI Executive Assistant.\n\nMr. Sami is currently: *{{STATUS}}*.\n\nHow may I assist you today? Please choose an option from the menu below, or simply reply to chat with me.",
 
-    BIO_MESSAGE: "Sami ek Software Developer aur Tech Enthusiast hain! 🚀\n\nWoh hamesha new technologies seekhne aur behtareen applications bananane mein masroof rehte hain.",
+    SOCIAL_LINKS: "You may connect with Mr. Sami through his professional profiles:\n\n💼 LinkedIn: https://linkedin.com/in/sami\n🐦 X (Twitter): https://x.com/sami\n📘 Facebook: https://facebook.com/sami",
 
-    SOCIAL_LINKS: "Aap Sami se yahan connect kar sakte hain:\n\n📸 Instagram: https://instagram.com/sami\n📘 Facebook: https://facebook.com/sami\n💼 LinkedIn: https://linkedin.com/in/sami",
+    LEAVE_MESSAGE_PROMPT: "Please type your message, and I will ensure it reaches Mr. Sami upon his return. 📝",
 
-    LEAVE_MESSAGE_PROMPT: "Aap apna paigham neechay type kar ke forward kar dein, main Sami ko pohncha dunga! 📝",
-
-    URGENT_MESSAGE_ACK: "🚨 Main ne aapka message *URGENT* mark kar diya hai. Sami isay sab se pehle dekhenge!"
+    URGENT_MESSAGE_ACK: "🚨 Your message has been marked as URGENT. Mr. Sami has been notified immediately, and I have paused my AI responses so he can take over."
 };
 
 // WhatsApp Interactive List Message Payload builder
@@ -38,23 +36,13 @@ export const buildInteractiveMenuPayload = (toPhoneNumber) => {
                 button: "Open Menu 📋",
                 sections: [
                     {
-                        title: "Get to Know Sami",
+                        title: "Contact Options",
                         rows: [
-                            {
-                                id: "btn_bio",
-                                title: "📖 Sami Ka Bayan",
-                                description: "Know more about him"
-                            },
                             {
                                 id: "btn_social",
                                 title: "📱 Social Media Links",
-                                description: "Connect on Insta/FB"
-                            }
-                        ]
-                    },
-                    {
-                        title: "Contact Options",
-                        rows: [
+                                description: "Connect professionally"
+                            },
                             {
                                 id: "btn_leave_msg",
                                 title: "📝 Leave a Message",
@@ -63,7 +51,7 @@ export const buildInteractiveMenuPayload = (toPhoneNumber) => {
                             {
                                 id: "btn_urgent",
                                 title: "🚨 Mark as URGENT",
-                                description: "I need him right now!"
+                                description: "Notify Mr. Sami immediately"
                             }
                         ]
                     }
