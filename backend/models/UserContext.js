@@ -10,6 +10,9 @@ const userContextSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    aiPausedAt: {
+        type: Date
+    },
     lastInteraction: {
         type: Date,
         default: Date.now

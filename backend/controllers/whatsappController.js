@@ -155,6 +155,14 @@ export const handleIncomingMessage = async (req, res) => {
                     let userContext = await UserContext.findOne({ phoneNumber: from });
                     if (!userContext) {
                         userContext = await UserContext.create({ phoneNumber: from });
+                    } else if (userContext.isAIPaused && userContext.aiPausedAt) {
+                        // Check if 12 hours have passed since it was paused
+                        const hoursPassed = (new Date() - new Date(userContext.aiPausedAt)) / (1000 * 60 * 60);
+                        if (hoursPassed >= 12) {
+                            userContext.isAIPaused = false;
+                            userContext.aiPausedAt = null;
+                            await userContext.save();
+                        }
                     }
 
                     if (isFirstMessage && !isInteractive) {
@@ -196,10 +204,43 @@ export const handleIncomingMessage = async (req, res) => {
                             savedMessage.text = `[URGENT 🚨] ${savedMessage.text}`;
                             await savedMessage.save();
                         }
-                    } else if (!isInteractive && msgType === 'text') {
-                        // Forward regular text to Gemini AI if not paused
+                    } else if (!isInteractive && (msgType === 'text' || msgType === 'image')) {
+                        // Forward regular text or image to Gemini AI if not paused
                         if (!userContext.isAIPaused) {
-                            const aiReply = await generateAIResponse(msgBody, BOT_CONFIG.LIVE_STATUS);
+
+                            // 1. Fetch Chat History (Memory)
+                            const recentContext = await Message.find({
+                                $or: [{ from: from }, { to: from }],
+                                type: 'text' // Only feed text context to save tokens, images are inline
+                            }).sort({ _id: -1 }).limit(12);
+
+                            const history = recentContext.reverse().map(msg => ({
+                                role: msg.from === from ? 'user' : 'assistant',
+                                content: msg.text || "Message"
+                            }));
+
+                            // 2. Fetch Image Buffer (Vision)
+                            let base64Image = null;
+                            if (msgType === 'image' && mediaId) {
+                                try {
+                                    const mediaRes = await axios.get(`https://graph.facebook.com/v21.0/${mediaId}`, {
+                                        headers: { Authorization: `Bearer ${token}` }
+                                    });
+                                    const mediaUrl = mediaRes.data.url;
+
+                                    const imageRes = await axios.get(mediaUrl, {
+                                        headers: { Authorization: `Bearer ${token}` },
+                                        responseType: 'arraybuffer'
+                                    });
+
+                                    base64Image = Buffer.from(imageRes.data, 'binary').toString('base64');
+                                    if (!msgBody) msgBody = "Please review this image and assist me.";
+                                } catch (err) {
+                                    console.error("Failed to fetch image for Gemini:", err.message);
+                                }
+                            }
+
+                            const aiReply = await generateAIResponse(msgBody, BOT_CONFIG.LIVE_STATUS, history, base64Image);
 
                             // Send AI reply back to user
                             await axios.post(
@@ -302,7 +343,7 @@ export const sendWhatsAppMessage = async (req, res) => {
             if (type === 'text' || type === 'audio' || type === 'image' || type === 'video' || type === 'document') {
                 await UserContext.findOneAndUpdate(
                     { phoneNumber: to },
-                    { isAIPaused: true },
+                    { isAIPaused: true, aiPausedAt: new Date() },
                     { upsert: true }
                 );
             }
