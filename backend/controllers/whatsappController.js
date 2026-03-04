@@ -241,7 +241,15 @@ export const handleIncomingMessage = async (req, res) => {
                                 }
                             }
 
-                            const aiReply = await generateAIResponse(msgBody, BOT_CONFIG.LIVE_STATUS, history, base64Image);
+                            let aiReply = await generateAIResponse(msgBody, BOT_CONFIG.LIVE_STATUS, history, base64Image);
+
+                            // Check if AI explicitly requested an auto-handover
+                            if (aiReply.includes('[PAUSE]')) {
+                                userContext.isAIPaused = true;
+                                userContext.aiPausedAt = new Date();
+                                await userContext.save();
+                                aiReply = aiReply.replace('[PAUSE]', '').trim();
+                            }
 
                             // Send AI reply back to user
                             await axios.post(
