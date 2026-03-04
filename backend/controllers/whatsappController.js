@@ -297,6 +297,16 @@ export const sendWhatsAppMessage = async (req, res) => {
 
         // Save outgoing message locally to MongoDB
         if (response.data?.messages && response.data.messages.length > 0) {
+
+            // Auto-pause AI when Admin sends a manual message
+            if (type === 'text' || type === 'audio' || type === 'image' || type === 'video' || type === 'document') {
+                await UserContext.findOneAndUpdate(
+                    { phoneNumber: to },
+                    { isAIPaused: true },
+                    { upsert: true }
+                );
+            }
+
             let templateString = '';
             if (type === 'template') {
                 templateString = templateName === 'hello_world'
