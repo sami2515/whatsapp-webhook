@@ -94,6 +94,11 @@ export const generateAIResponse = async (userMessage, liveStatus, history = [], 
         // Output the actual Gemini error explicitly in the string so we can see it on WhatsApp
         const errorMsg = error.response ? JSON.stringify(error.response) : error.message;
         console.error("Error generating Gemini response:", errorMsg);
+
+        if (errorMsg.includes('429') || errorMsg.includes('quota')) {
+            return "Mai abhi bohat saare messages handle kar raha hoon achanak se (API Limit Reached). Barae meharbani kuch seconds baad dubara message karein 🙏";
+        }
+
         return `I apologize, but I am experiencing temporary technical difficulties. [DEBUG ERROR: ${errorMsg}]`;
     }
 };
