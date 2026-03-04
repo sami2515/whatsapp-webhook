@@ -12,10 +12,10 @@ The current local time in Karachi, Pakistan is: ${currentTime}.
 
 CRITICAL RULES:
 1. Language: Communicate fluently in natural Roman Urdu (Pakistani conversational style).
-2. Persona: Act like a real human assistant. NEVER say "As an AI...". Be smart and proactive.
-3. Memory & Context: Read the provided conversation history. DO NOT repeat the same phrase over and over.
-4. Stop Looping: If a user has already stated their intent (e.g., they want to leave a message or just said "g krdo" / "yes"), DO NOT ask them again. Acknowledge it decisively once (e.g., "Theek hai, maine Sami ko bata diya hai.") and do NOT end with another question.
-5. Auto-Handover: If the conversation has reached a natural conclusion (for example, the user finished their request and you told them Sami will reply), YOU MUST append the exact string "[PAUSE]" at the very end of your response. This hands control over to Sami so you don't keep replying.
+2. Persona (Not a Postman): Act like a real human assistant. NEVER say "As an AI...". Be smart. If they want to talk to Sami, say something like: "Jee zaroor, Sami abhi Karachi mein hain aur shayad busy hon. Main unhe notify kar deta hoon, aap apna topic bata den taake wo prepare rahein."
+3. Stop Looping: If the user has explicitly decided between a message or a call (e.g., they said "g krdo", "bat krni ha", or "message dena hai"), DO NOT ask them the same question again. Acknowledge it once and wait for Sami's reply.
+4. Memory & Context: Read the provided conversation history.
+5. Auto-Handover: If the conversation has reached a natural conclusion and you have nothing left to ask, or the user confirms you should pass the message, you MUST append the exact string "[PAUSE]" at the very end of your response. This stops you from replying and hands control over to Sami.
 6. Tone: Keep your responses EXTREMELY concise (maximum 1 or 2 sentences), warm, and polite.
 `;
 
@@ -60,24 +60,30 @@ export const generateAIResponse = async (userMessage, liveStatus, history = [], 
             formattedHistory.shift();
         }
 
-        // Compile the current incoming message
-        let finalParts = [{ text: userMessage }];
-        if (base64Image) {
-            finalParts.push({
-                inlineData: {
-                    data: base64Image,
-                    mimeType: "image/jpeg"
-                }
-            });
-        }
-
         // Merge latest message into context 
         if (lastRole === 'user') {
-            formattedHistory[formattedHistory.length - 1].parts.push(...finalParts);
+            formattedHistory[formattedHistory.length - 1].parts[0].text += `\n\n${userMessage}`;
+            if (base64Image) {
+                formattedHistory[formattedHistory.length - 1].parts.push({
+                    inlineData: {
+                        data: base64Image,
+                        mimeType: "image/jpeg"
+                    }
+                });
+            }
         } else {
+            let userParts = [{ text: userMessage }];
+            if (base64Image) {
+                userParts.push({
+                    inlineData: {
+                        data: base64Image,
+                        mimeType: "image/jpeg"
+                    }
+                });
+            }
             formattedHistory.push({
                 role: 'user',
-                parts: finalParts
+                parts: userParts
             });
         }
 
@@ -85,7 +91,9 @@ export const generateAIResponse = async (userMessage, liveStatus, history = [], 
         return result.response.text();
 
     } catch (error) {
-        console.error("Error generating Gemini response:", error);
-        return "I apologize, but I am experiencing temporary technical difficulties processing your request. Please try again later or mark your message as urgent.";
+        // Output the actual Gemini error explicitly in the string so we can see it on WhatsApp
+        const errorMsg = error.response ? JSON.stringify(error.response) : error.message;
+        console.error("Error generating Gemini response:", errorMsg);
+        return `I apologize, but I am experiencing temporary technical difficulties. [DEBUG ERROR: ${errorMsg}]`;
     }
 };
