@@ -4,12 +4,17 @@ self.addEventListener('push', function (event) {
 
         const options = {
             body: payload.body,
-            icon: payload.icon || '/icon512_rounded.png',
-            badge: payload.badge || '/icon512_maskable.png',
+            icon: payload.icon || '/pwa-192x192.png',
+            badge: payload.badge || '/pwa-512x512.png',
             vibrate: [200, 100, 200, 100, 200, 100, 200],
+            requireInteraction: true,
             data: {
-                dateOfArrival: Date.now()
-            }
+                dateOfArrival: Date.now(),
+                url: payload.data?.url || '/'
+            },
+            actions: [
+                { action: 'open', title: 'Open Chat' }
+            ]
         };
 
         const promiseChain = self.registration.showNotification(payload.title, options);
@@ -19,18 +24,23 @@ self.addEventListener('push', function (event) {
 
 self.addEventListener('notificationclick', function (event) {
     event.notification.close();
+
+    let urlToOpen = '/';
+    if (event.notification.data && event.notification.data.url) {
+        urlToOpen = event.notification.data.url;
+    }
+
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
-            if (clientList.length > 0) {
-                let client = clientList[0];
-                for (let i = 0; i < clientList.length; i++) {
-                    if (clientList[i].focused) {
-                        client = clientList[i];
-                    }
+            for (let i = 0; i < clientList.length; i++) {
+                let client = clientList[i];
+                if (client.url === urlToOpen && 'focus' in client) {
+                    return client.focus();
                 }
-                return client.focus();
             }
-            return clients.openWindow('/');
+            if (clients.openWindow) {
+                return clients.openWindow(urlToOpen);
+            }
         })
     );
 });

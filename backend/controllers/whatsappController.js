@@ -118,10 +118,13 @@ export const handleIncomingMessage = async (req, res) => {
                     configureWebPush();
                     if (webpushConfigured) {
                         const pushPayload = JSON.stringify({
-                            title: `WhatsApp: ${from}`,
+                            title: `WhatsApp: +${from}`,
                             body: msgBody,
-                            icon: '/icon512_rounded.png',
-                            badge: '/icon512_maskable.png'
+                            icon: '/pwa-192x192.png',
+                            badge: '/pwa-192x192.png',
+                            data: {
+                                url: '/' // We can add ?number=${from} later if UI supports direct routing
+                            }
                         });
                         const subscriptions = await Subscription.find({});
                         for (let sub of subscriptions) {
