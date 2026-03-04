@@ -63,3 +63,20 @@ export const sendImageMessage = async (toPhoneNumber, imageFile) => {
   });
   return response.data;
 };
+
+// Send a reaction to a specific message
+export const sendReaction = async (toPhoneNumber, messageId, emoji) => {
+  const payload = {
+    to: toPhoneNumber,
+    messageId: messageId,
+    emoji: emoji
+  };
+  const response = await axios.post(`${BASE_URL}/send-reaction`, payload);
+  return response.data;
+};
+
+// Delete a message locally from the MongoDB dashboard
+export const deleteLocalMessage = async (messageId) => {
+  const response = await axios.delete(`${BASE_URL}/messages/${messageId}`);
+  return response.data;
+};

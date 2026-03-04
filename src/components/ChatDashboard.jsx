@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, sendImageMessage, BASE_URL } from '../services/whatsapp';
+import EmojiPicker from 'emoji-picker-react';
+import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, sendImageMessage, sendReaction, deleteLocalMessage, BASE_URL } from '../services/whatsapp';
 import './ChatDashboard.css';
 
 export default function ChatDashboard() {
@@ -9,6 +10,11 @@ export default function ChatDashboard() {
     const [messages, setMessages] = useState([]);
     const [inputText, setInputText] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    // Emoji & Action State
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [selectedMessageId, setSelectedMessageId] = useState(null);
+    const [isSendingReaction, setIsSendingReaction] = useState(false);
 
     // Voice Recording State
     const [isRecording, setIsRecording] = useState(false);
@@ -194,6 +200,38 @@ export default function ChatDashboard() {
             alert(`Failed to send message: ${error.response?.data?.error?.message || error.message}`);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const onEmojiClick = (emojiObject) => {
+        setInputText(prevInput => prevInput + emojiObject.emoji);
+    };
+
+    const handleReaction = async (msgIdToReact, emoji) => {
+        if (!activeNumber || isSendingReaction || !msgIdToReact) return;
+        setIsSendingReaction(true);
+        try {
+            await sendReaction(activeNumber, msgIdToReact, emoji);
+            await fetchMessages(activeNumber);
+        } catch (error) {
+            console.error('Failed to send reaction:', error);
+            alert('Failed to send reaction.');
+        } finally {
+            setIsSendingReaction(false);
+            setSelectedMessageId(null);
+        }
+    };
+
+    const handleDeleteMessage = async (msgMongoId) => {
+        if (!window.confirm("Delete this message locally? (This won't delete it from the user's phone)")) return;
+
+        try {
+            await deleteLocalMessage(msgMongoId);
+            setMessages(prev => prev.filter(m => m._id !== msgMongoId && m.messageId !== msgMongoId));
+            setSelectedMessageId(null);
+        } catch (error) {
+            console.error('Failed to delete message:', error);
+            alert('Failed to delete message.');
         }
     };
 
@@ -454,43 +492,61 @@ export default function ChatDashboard() {
                     <div className="messages-list">
                         {messages.map((msg, index) => {
                             const isSentByMe = msg.from !== activeNumber;
+                            const isSelected = selectedMessageId === msg._id;
                             return (
-                                <div key={msg._id || index} className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
-                                    {msg.type === 'audio' ? (
-                                        <div className="audio-message">
-                                            {msg.mediaId ? (
-                                                <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} style={{ maxWidth: '200px' }} />
-                                            ) : (
-                                                <span style={{ fontStyle: 'italic' }}>Sending audio...</span>
-                                            )}
+                                <div
+                                    key={msg._id || index}
+                                    className={`message-bubble-wrapper ${isSentByMe ? 'sent' : 'received'}`}
+                                    onClick={() => setSelectedMessageId(isSelected ? null : msg._id)}
+                                    style={{ display: 'flex', flexDirection: 'column', alignItems: isSentByMe ? 'flex-end' : 'flex-start', position: 'relative' }}
+                                >
+                                    {isSelected && (
+                                        <div className={`message-actions-overlay ${isSentByMe ? 'actions-right' : 'actions-left'}`}>
+                                            <div className="quick-reactions">
+                                                {['👍', '❤️', '😂', '😮', '😢', '🙏'].map(emoji => (
+                                                    <span key={emoji} className="reaction-btn" onClick={(e) => { e.stopPropagation(); handleReaction(msg.messageId, emoji); }}>{emoji}</span>
+                                                ))}
+                                            </div>
+                                            <button className="del-msg-btn" onClick={(e) => { e.stopPropagation(); handleDeleteMessage(msg._id); }}>🗑️</button>
                                         </div>
-                                    ) : msg.type === 'image' ? (
-                                        <div className="image-message">
-                                            {msg.mediaId ? (
-                                                <img
-                                                    src={`${BASE_URL}/media/${msg.mediaId}`}
-                                                    alt="Photo"
-                                                    style={{ maxWidth: '100%', borderRadius: '6px', marginBottom: '4px' }}
-                                                />
-                                            ) : (
-                                                <div style={{ padding: '20px', backgroundColor: '#e9edef', borderRadius: '6px', textAlign: 'center' }}>
-                                                    Sending image...
-                                                </div>
-                                            )}
-                                            {msg.text && msg.text !== '📸 Photo' && <div className="message-header-text">{msg.text}</div>}
-                                        </div>
-                                    ) : (
-                                        <div className="message-header-text">{msg.text}</div>
                                     )}
-                                    <div className="message-time-container">
-                                        <span className="message-time">
-                                            {formatTime(msg.timestamp)}
-                                        </span>
-                                        {isSentByMe && (
-                                            <span className={`message-status ${msg.status}`}>
-                                                {msg.status === 'read' ? ' ✓✓' : msg.status === 'delivered' ? ' ✓✓' : ' ✓'}
-                                            </span>
+                                    <div className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
+                                        {msg.type === 'audio' ? (
+                                            <div className="audio-message">
+                                                {msg.mediaId ? (
+                                                    <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} style={{ maxWidth: '200px' }} />
+                                                ) : (
+                                                    <span style={{ fontStyle: 'italic' }}>Sending audio...</span>
+                                                )}
+                                            </div>
+                                        ) : msg.type === 'image' ? (
+                                            <div className="image-message">
+                                                {msg.mediaId ? (
+                                                    <img
+                                                        src={`${BASE_URL}/media/${msg.mediaId}`}
+                                                        alt="Photo"
+                                                        style={{ maxWidth: '100%', borderRadius: '6px', marginBottom: '4px' }}
+                                                    />
+                                                ) : (
+                                                    <div style={{ padding: '20px', backgroundColor: '#e9edef', borderRadius: '6px', textAlign: 'center' }}>
+                                                        Sending image...
+                                                    </div>
+                                                )}
+                                                {msg.text && msg.text !== '📸 Photo' && <div className="message-header-text">{msg.text}</div>}
+                                            </div>
+                                        ) : (
+                                            <div className="message-header-text">{msg.text}</div>
                                         )}
+                                        <div className="message-time-container">
+                                            <span className="message-time">
+                                                {formatTime(msg.timestamp)}
+                                            </span>
+                                            {isSentByMe && (
+                                                <span className={`message-status ${msg.status}`}>
+                                                    {msg.status === 'read' ? ' ✓✓' : msg.status === 'delivered' ? ' ✓✓' : ' ✓'}
+                                                </span>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             );
@@ -509,6 +565,20 @@ export default function ChatDashboard() {
                             </div>
                         ) : (
                             <>
+                                <button
+                                    type="button"
+                                    className="emoji-toggle-btn"
+                                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                    title="Add Emoji"
+                                    style={{ fontSize: '24px', background: 'transparent', border: 'none', cursor: 'pointer', padding: '0 8px' }}
+                                >
+                                    😃
+                                </button>
+                                {showEmojiPicker && (
+                                    <div className="emoji-picker-container" style={{ position: 'absolute', bottom: '60px', left: '10px', zIndex: 1000 }}>
+                                        <EmojiPicker onEmojiClick={onEmojiClick} theme="light" />
+                                    </div>
+                                )}
                                 <button
                                     type="button"
                                     className="attach-btn"

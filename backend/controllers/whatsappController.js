@@ -603,3 +603,69 @@ export const updateBotSettings = (req, res) => {
         }
     });
 };
+
+export const sendReaction = async (req, res) => {
+    try {
+        const { to, messageId, emoji } = req.body;
+        if (!to || !messageId || !emoji) {
+            return res.status(400).json({ error: 'Phone number, messageId, and emoji are required.' });
+        }
+
+        const token = process.env.WHATSAPP_TOKEN;
+        const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+
+        const payload = {
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to: to,
+            type: 'reaction',
+            reaction: {
+                message_id: messageId,
+                emoji: emoji
+            }
+        };
+
+        const response = await axios.post(
+            `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+            payload,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        // Save a dummy record to render locally that we reacted
+        const newReactionMsg = await Message.create({
+            from: phoneNumberId,
+            to: to,
+            text: emoji,
+            type: 'reaction',
+            messageId: Date.now().toString(),
+            status: 'sent'
+        });
+
+        res.status(200).json({ success: true, message: 'Reaction sent successfully' });
+    } catch (error) {
+        console.error('Error sending reaction:', error.response?.data || error.message);
+        res.status(500).json({ error: 'Failed to send WhatsApp reaction' });
+    }
+};
+
+export const deleteMessage = async (req, res) => {
+    try {
+        const { messageId } = req.params;
+        const deletedMsg = await Message.findOneAndDelete({ _id: messageId });
+
+        if (!deletedMsg) {
+            // Try Meta messageId if frontend didn't pass Mongo _id
+            await Message.findOneAndDelete({ messageId: messageId });
+        }
+
+        res.status(200).json({ success: true, message: 'Message deleted locally' });
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        res.status(500).json({ error: 'Failed to delete message' });
+    }
+};

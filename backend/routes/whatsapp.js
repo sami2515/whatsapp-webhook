@@ -11,7 +11,10 @@ import {
     uploadAndSendImage,
     getBotSettings,
     updateBotSettings,
-    subscribeToPush
+    updateBotSettings,
+    subscribeToPush,
+    sendReaction,
+    deleteMessage
 } from '../controllers/whatsappController.js';
 
 const router = express.Router();
@@ -47,5 +50,11 @@ router.post('/bot-settings', updateBotSettings);
 
 // Subscribe a device for Web Push Notifications
 router.post('/subscribe', subscribeToPush);
+
+// Send a reaction to a specific message
+router.post('/send-reaction', sendReaction);
+
+// Delete a message locally from the Admin Dashboard
+router.delete('/messages/:messageId', deleteMessage);
 
 export default router;
