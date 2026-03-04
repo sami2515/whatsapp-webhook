@@ -1,6 +1,6 @@
 export const BOT_CONFIG = {
     // Basic settings (can be moved to DB later)
-    ENABLED: false,
+    ENABLED: true,
     LIVE_STATUS: "Available 🟢", // e.g., "Sleeping 😴", "Driving 🚗"
 
     // Messages
