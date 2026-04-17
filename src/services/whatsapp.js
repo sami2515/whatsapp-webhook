@@ -1,6 +1,6 @@
-import axios from 'axios';
+﻿import axios from 'axios';
 
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://whatsapp-webhook-awel.onrender.com/api/whatsapp';
+export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/whatsapp';
 
 // Fetch all unique conversations
 export const getConversations = async () => {
