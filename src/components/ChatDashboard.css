@@ -133,8 +133,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  display: flex;
-  align-items: center;
+  display: block;
 }
 
 /* Make Urgent Messages Red */
@@ -231,6 +230,7 @@ body {
   flex: 1;
   padding: 20px 60px;
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -247,6 +247,8 @@ body {
   box-shadow: 0 1px 0.5px rgba(11, 20, 26, .13);
   margin-bottom: 12px;
   width: fit-content;
+  word-wrap: break-word; /* Added to enforce wrapping */
+  word-break: break-word; /* Ensures long words break */
 }
 
 /* Tail for first message in group */
@@ -304,8 +306,11 @@ body {
 .message-header-text {
   word-wrap: break-word;
   white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
   margin: 0;
   padding-right: 15px;
+  max-width: 100%;
 }
 
 .message-time-container {
@@ -644,6 +649,14 @@ body {
   /* Audio message fix */
   .audio-message audio {
     width: 200px;
+  }
+
+  .messages-list {
+    padding: 10px 15px; /* Less padding on mobile */
+  }
+
+  .message-bubble {
+    max-width: 85%; /* Give more space on small screen */
   }
 }
 
