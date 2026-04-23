@@ -37,6 +37,8 @@ export default function ChatDashboard() {
     const [pushEnabled, setPushEnabled] = useState(false);
 
     const messagesEndRef = useRef(null);
+    const messagesContainerRef = useRef(null);
+    const shouldForceScrollRef = useRef(true);
     const fileInputRef = useRef(null);
 
     // Initial load
@@ -51,6 +53,7 @@ export default function ChatDashboard() {
     // When active chat changes, load messages immediately
     useEffect(() => {
         if (activeNumber) {
+            shouldForceScrollRef.current = true;
             fetchMessages(activeNumber);
             const interval = setInterval(() => fetchMessages(activeNumber), 5000);
             return () => clearInterval(interval);
@@ -70,7 +73,21 @@ export default function ChatDashboard() {
 
     // Auto scroll to bottom
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+        const container = messagesContainerRef.current;
+        
+        if (!container || shouldForceScrollRef.current) {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+            if (messages.length > 0) {
+                shouldForceScrollRef.current = false;
+            }
+            return;
+        }
+
+        const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 300;
+
+        if (isNearBottom) {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+        }
     }, [messages]);
 
     const fetchConversations = async () => {
@@ -494,14 +511,27 @@ export default function ChatDashboard() {
                             </div>
                             <div className="conv-preview">
                                 {conv.unreadCount > 0 && <span className="unread-badge">{conv.unreadCount}</span>}
-                                {conv.lastMessage?.startsWith('[URGENT 🚨]') ? (
-                                    <>
-                                        <span className="urgent-tag">🚨 URGENT</span>
-                                        {conv.lastMessage.replace('[URGENT 🚨] ', '')}
-                                    </>
-                                ) : (
-                                    conv.lastMessage
+                                {conv.lastMessageFrom && conv.lastMessageFrom !== conv._id && (
+                                    <span className={`message-status ${conv.lastMessageStatus}`} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline-flex' }}>
+                                        {conv.lastMessageStatus === 'read' ? (
+                                            <svg viewBox="0 0 16 15" width="14" height="13" fill="currentColor"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+                                        ) : conv.lastMessageStatus === 'delivered' ? (
+                                            <svg viewBox="0 0 16 15" width="14" height="13" fill="currentColor"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+                                        ) : (
+                                            <svg viewBox="0 0 11 14" width="10" height="12" fill="currentColor"><path d="M10.426 3.114l-.478-.372a.365.365 0 0 0-.51.063L4.082 9.684a.32.32 0 0 1-.484.033L1.407 7.58a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+                                        )}
+                                    </span>
                                 )}
+                                <span className="preview-text">
+                                    {conv.lastMessage?.startsWith('[URGENT 🚨]') ? (
+                                        <>
+                                            <span className="urgent-tag">🚨 URGENT</span>
+                                            {conv.lastMessage.replace('[URGENT 🚨] ', '')}
+                                        </>
+                                    ) : (
+                                        conv.lastMessage
+                                    )}
+                                </span>
                             </div>
                         </div>
                     ))}
@@ -520,7 +550,7 @@ export default function ChatDashboard() {
                         <h3>+{activeNumber}</h3>
                     </div>
 
-                    <div className="messages-list">
+                    <div className="messages-list" ref={messagesContainerRef}>
                         {messages.map((msg, index) => {
                             const isSentByMe = msg.from !== activeNumber;
                             const isSelected = selectedMessageId === msg._id;

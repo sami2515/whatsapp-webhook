@@ -402,6 +402,8 @@ export const getConversations = async (req, res) => {
                         ]
                     },
                     lastMessage: { $first: "$text" },
+                    lastMessageStatus: { $first: "$status" },
+                    lastMessageFrom: { $first: "$from" },
                     timestamp: { $first: "$timestamp" },
                     unreadCount: {
                         $sum: {
