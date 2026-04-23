@@ -252,22 +252,24 @@ export const handleIncomingMessage = async (req, res) => {
                             }
 
                             // Send AI reply back to user
-                            await axios.post(
+                            const aiRes = await axios.post(
                                 `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
                                 { messaging_product: "whatsapp", recipient_type: "individual", to: from, type: "text", text: { body: aiReply } },
                                 { headers: { Authorization: `Bearer ${token}` } }
                             );
 
                             // Save AI outgoing message locally to MongoDB so it shows in Dashboard
-                            await Message.create({
-                                from: phoneNumberId,
-                                to: from,
-                                messageId: `ai-${Date.now()}`,
-                                type: 'text',
-                                text: aiReply,
-                                status: 'sent',
-                                timestamp: new Date()
-                            });
+                            if (aiRes.data?.messages && aiRes.data.messages.length > 0) {
+                                await Message.create({
+                                    from: phoneNumberId,
+                                    to: from,
+                                    messageId: aiRes.data.messages[0].id,
+                                    type: 'text',
+                                    text: aiReply,
+                                    status: 'sent',
+                                    timestamp: new Date()
+                                });
+                            }
                         }
                     }
                 }

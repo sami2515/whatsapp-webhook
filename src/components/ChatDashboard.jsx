@@ -462,7 +462,7 @@ export default function ChatDashboard() {
                                 <span className="conv-time">{formatTime(conv.timestamp)}</span>
                             </div>
                             <div className="conv-preview">
-                                {conv.unreadCount > 0 && <span style={{ color: '#25D366', fontWeight: 'bold' }}>• </span>}
+                                {conv.unreadCount > 0 && <span className="unread-badge">{conv.unreadCount}</span>}
                                 {conv.lastMessage?.startsWith('[URGENT 🚨]') ? (
                                     <>
                                         <span className="urgent-tag">🚨 URGENT</span>
@@ -542,8 +542,14 @@ export default function ChatDashboard() {
                                                 {formatTime(msg.timestamp)}
                                             </span>
                                             {isSentByMe && (
-                                                <span className={`message-status ${msg.status}`}>
-                                                    {msg.status === 'read' ? ' ✓✓' : msg.status === 'delivered' ? ' ✓✓' : ' ✓'}
+                                                <span className={`message-status ${msg.status}`} title={msg.status}>
+                                                    {msg.status === 'read' ? (
+                                                        <svg viewBox="0 0 16 15" width="16" height="15" fill="currentColor"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+                                                    ) : msg.status === 'delivered' ? (
+                                                        <svg viewBox="0 0 16 15" width="16" height="15" fill="currentColor"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+                                                    ) : (
+                                                        <svg viewBox="0 0 11 14" width="11" height="14" fill="currentColor"><path d="M10.426 3.114l-.478-.372a.365.365 0 0 0-.51.063L4.082 9.684a.32.32 0 0 1-.484.033L1.407 7.58a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
+                                                    )}
                                                 </span>
                                             )}
                                         </div>
