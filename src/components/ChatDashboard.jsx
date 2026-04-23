@@ -502,7 +502,7 @@ export default function ChatDashboard() {
                     {conversations.map((conv) => (
                         <div
                             key={conv._id}
-                            className={`conversation-item ${activeNumber === conv._id ? 'active' : ''}`}
+                            className={`conversation-item ${activeNumber === conv._id ? 'active' : ''} ${conv.unreadCount > 0 ? 'unread' : ''}`}
                             onClick={() => setActiveNumber(conv._id)}
                         >
                             <div className="conv-header">

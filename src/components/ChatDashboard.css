@@ -109,6 +109,24 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
+.conversation-item.unread {
+  background-color: #F0FDF4;
+}
+
+.conversation-item.unread .conv-phone {
+  color: #059669;
+}
+
+.conversation-item.unread .conv-preview {
+  color: #0F172A;
+  font-weight: 500;
+}
+
+.conversation-item.unread .conv-time {
+  color: #10B981;
+  font-weight: 600;
+}
+
 .conv-header {
   display: flex;
   justify-content: space-between;
