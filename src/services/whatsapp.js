@@ -1,4 +1,4 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/whatsapp';
 
@@ -14,12 +14,12 @@ export const getChatHistory = async (phoneNumber) => {
   return response.data;
 };
 
-// Send a 'hello_world' WhatsApp template message
-export const sendHelloWorldMessage = async (toPhoneNumber) => {
+// Send a WhatsApp template message (e.g. 'hello_world')
+export const sendTemplateMessage = async (toPhoneNumber, templateName = 'hello_world') => {
   const payload = {
     to: toPhoneNumber,
     type: 'template',
-    templateName: 'hello_world'
+    templateName: templateName
   };
   const response = await axios.post(`${BASE_URL}/send`, payload);
   return response.data;

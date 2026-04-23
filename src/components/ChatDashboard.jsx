@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import EmojiPicker from 'emoji-picker-react';
-import { getConversations, getChatHistory, sendTextMessage, sendHelloWorldMessage, sendAudioMessage, sendImageMessage, sendReaction, deleteLocalMessage, BASE_URL } from '../services/whatsapp';
+import { getConversations, getChatHistory, sendTextMessage, sendTemplateMessage, sendAudioMessage, sendImageMessage, sendReaction, deleteLocalMessage, BASE_URL } from '../services/whatsapp';
 import './ChatDashboard.css';
 
 export default function ChatDashboard() {
@@ -26,6 +26,7 @@ export default function ChatDashboard() {
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
+    const [selectedTemplate, setSelectedTemplate] = useState('hello_world');
 
     // Bot Control State
     const [botEnabled, setBotEnabled] = useState(false);
@@ -366,7 +367,7 @@ export default function ChatDashboard() {
         setIsLoading(true);
         try {
             // Must send a template to initiate a 24h window if they haven't messaged us
-            await sendHelloWorldMessage(newPhoneNumber);
+            await sendTemplateMessage(newPhoneNumber, selectedTemplate);
             setActiveNumber(newPhoneNumber);
             setIsModalOpen(false);
             setNewPhoneNumber('');
@@ -428,20 +429,50 @@ export default function ChatDashboard() {
                 </div>
 
                 {isModalOpen && (
-                    <div className="new-chat-modal">
-                        <input
-                            type="text"
-                            placeholder="e.g. 923001234567"
-                            value={newPhoneNumber}
-                            onChange={(e) => setNewPhoneNumber(e.target.value)}
-                        />
-                        <button onClick={handleStartNewChat} disabled={isLoading}>
-                            Send Initial Template
-                        </button>
-                        <small style={{ color: '#6c757d', lineHeight: '1.2' }}>
-                            * Note: Meta requires sending an approved Template (like 'hello_world')
-                            first to open a 24hr customer service window.
-                        </small>
+                    <div className="modal-overlay">
+                        <div className="premium-modal">
+                            <div className="modal-header">
+                                <h3>Start New Conversation</h3>
+                                <button className="close-modal-btn" onClick={() => setIsModalOpen(false)}>×</button>
+                            </div>
+                            
+                            <div className="modal-body">
+                                <div className="form-group">
+                                    <label>Recipient WhatsApp Number</label>
+                                    <div className="phone-input-wrapper">
+                                        <span className="country-code">+</span>
+                                        <input
+                                            type="text"
+                                            placeholder="923001234567"
+                                            value={newPhoneNumber}
+                                            onChange={(e) => setNewPhoneNumber(e.target.value.replace(/[^0-9]/g, ''))}
+                                        />
+                                    </div>
+                                    <small className="help-text">Include country code without '+' or '00'</small>
+                                </div>
+
+                                <div className="form-group">
+                                    <label>Select Approved Template</label>
+                                    <select 
+                                        className="template-select"
+                                        value={selectedTemplate}
+                                        onChange={(e) => setSelectedTemplate(e.target.value)}
+                                    >
+                                        <option value="hello_world">hello_world (Default)</option>
+                                        <option value="appointment_reminder">appointment_reminder</option>
+                                        <option value="payment_update">payment_update</option>
+                                    </select>
+                                    <small className="help-text">WhatsApp requires sending a pre-approved template to start a 24-hour messaging window.</small>
+                                </div>
+                            </div>
+
+                            <div className="modal-footer">
+                                <button className="btn-cancel" onClick={() => setIsModalOpen(false)}>Cancel</button>
+                                <button className="btn-primary" onClick={handleStartNewChat} disabled={isLoading || !newPhoneNumber}>
+                                    {isLoading ? 'Sending...' : 'Send Template'}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 
