@@ -26,12 +26,17 @@ export const sendTemplateMessage = async (toPhoneNumber, templateName = 'hello_w
 };
 
 // Send a free-form text message (only works if user messaged you within 24h)
-export const sendTextMessage = async (toPhoneNumber, textBody) => {
+export const sendTextMessage = async (toPhoneNumber, textBody, contextMessageId = null) => {
   const payload = {
     to: toPhoneNumber,
     type: 'text',
     textBody: textBody
   };
+
+  if (contextMessageId) {
+    payload.contextMessageId = contextMessageId;
+  }
+
   const response = await axios.post(`${BASE_URL}/send`, payload);
   return response.data;
 };

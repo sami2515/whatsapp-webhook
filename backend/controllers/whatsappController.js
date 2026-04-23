@@ -78,6 +78,11 @@ export const handleIncomingMessage = async (req, res) => {
                 let mediaId = null;
                 let isInteractive = false;
                 let interactiveId = null;
+                let contextMessageId = null;
+
+                if (messageObj.context && messageObj.context.id) {
+                    contextMessageId = messageObj.context.id;
+                }
 
                 if (msgType === 'text') {
                     msgBody = messageObj.text?.body || '';
@@ -112,7 +117,8 @@ export const handleIncomingMessage = async (req, res) => {
                     type: msgType,
                     mediaId,
                     messageId,
-                    status: 'received'
+                    status: 'received',
+                    contextMessageId: contextMessageId
                 });
 
                 // Notify all subscribed devices via Web Push
@@ -310,7 +316,7 @@ export const handleIncomingMessage = async (req, res) => {
 // Send a WhatsApp Message from the backend to the user
 export const sendWhatsAppMessage = async (req, res) => {
     try {
-        const { to, type = 'template', templateName = 'hello_world', textBody } = req.body;
+        const { to, type = 'template', templateName = 'hello_world', textBody, contextMessageId } = req.body;
 
         if (!to) {
             return res.status(400).json({ error: 'Phone number (to) is required.' });
@@ -324,6 +330,12 @@ export const sendWhatsAppMessage = async (req, res) => {
             to: to,
             type: type,
         };
+
+        if (contextMessageId) {
+            payload.context = {
+                message_id: contextMessageId
+            };
+        }
 
         if (type === 'template') {
             payload.template = {
@@ -373,7 +385,8 @@ export const sendWhatsAppMessage = async (req, res) => {
                 type: type,
                 text: type === 'text' ? textBody : templateString,
                 mediaId: type === 'audio' ? req.body.mediaId : undefined,
-                status: 'sent'
+                status: 'sent',
+                contextMessageId: contextMessageId
             });
         }
 
@@ -740,7 +753,8 @@ export const sendReaction = async (req, res) => {
             text: emoji,
             type: 'reaction',
             messageId: Date.now().toString(),
-            status: 'sent'
+            status: 'sent',
+            contextMessageId: messageId
         });
 
         res.status(200).json({ success: true, message: 'Reaction sent successfully' });

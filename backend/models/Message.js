@@ -19,8 +19,11 @@ const messageSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['text', 'audio', 'image', 'video', 'document', 'template', 'interactive'],
+        enum: ['text', 'audio', 'image', 'video', 'document', 'template', 'interactive', 'reaction'],
         default: 'text'
+    },
+    contextMessageId: {
+        type: String, // To store the ID of the message being replied to
     },
     mediaId: {
         type: String, // To store WhatsApp Media ID for audio/image/video

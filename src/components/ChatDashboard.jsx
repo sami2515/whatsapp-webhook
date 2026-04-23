@@ -15,6 +15,7 @@ export default function ChatDashboard() {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [selectedMessageId, setSelectedMessageId] = useState(null);
     const [isSendingReaction, setIsSendingReaction] = useState(false);
+    const [replyingTo, setReplyingTo] = useState(null);
 
     // Voice Recording State
     const [isRecording, setIsRecording] = useState(false);
@@ -204,14 +205,17 @@ export default function ChatDashboard() {
                 text: inputText,
                 from: 'me', // Not strictly needed but helps styling
                 status: 'sent',
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                contextMessageId: replyingTo?.messageId
             };
             setMessages(prev => [...prev, tempMsg]);
 
             const textToSend = inputText;
+            const contextId = replyingTo?.messageId;
             setInputText('');
+            setReplyingTo(null);
 
-            await sendTextMessage(activeNumber, textToSend);
+            await sendTextMessage(activeNumber, textToSend, contextId);
             await fetchMessages(activeNumber); // Refresh
             await fetchConversations();
         } catch (error) {
@@ -551,9 +555,10 @@ export default function ChatDashboard() {
                     </div>
 
                     <div className="messages-list" ref={messagesContainerRef}>
-                        {messages.map((msg, index) => {
+                        {messages.filter(m => m.type !== 'reaction').map((msg, index) => {
                             const isSentByMe = msg.from !== activeNumber;
                             const isSelected = selectedMessageId === msg._id;
+                            const msgReactions = messages.filter(m => m.type === 'reaction' && m.contextMessageId === msg.messageId);
                             return (
                                 <div
                                     key={msg._id || index}
@@ -568,10 +573,19 @@ export default function ChatDashboard() {
                                                     <span key={emoji} className="reaction-btn" onClick={(e) => { e.stopPropagation(); handleReaction(msg.messageId, emoji); }}>{emoji}</span>
                                                 ))}
                                             </div>
-                                            <button className="del-msg-btn" onClick={(e) => { e.stopPropagation(); handleDeleteMessage(msg._id); }}>🗑️</button>
+                                            <button className="del-msg-btn" title="Reply" onClick={(e) => { e.stopPropagation(); setReplyingTo(msg); setSelectedMessageId(null); }}>↩️</button>
+                                            <button className="del-msg-btn" title="Delete" onClick={(e) => { e.stopPropagation(); handleDeleteMessage(msg._id); }}>🗑️</button>
                                         </div>
                                     )}
                                     <div className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
+                                        {msg.contextMessageId && (
+                                            <div className="reply-context-block" style={{ backgroundColor: isSentByMe ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.05)', padding: '6px', borderRadius: '4px', marginBottom: '6px', fontSize: '13px', borderLeft: `4px solid ${isSentByMe ? '#ffffff' : '#00a884'}` }}>
+                                                {(() => {
+                                                    const originalMsg = messages.find(m => m.messageId === msg.contextMessageId);
+                                                    return originalMsg ? originalMsg.text : "Original message";
+                                                })()}
+                                            </div>
+                                        )}
                                         {msg.type === 'audio' ? (
                                             <div className="audio-message">
                                                 {msg.mediaId ? (
@@ -613,15 +627,32 @@ export default function ChatDashboard() {
                                                     )}
                                                 </span>
                                             )}
+                                            )}
                                         </div>
+                                        {msgReactions.length > 0 && (
+                                            <div className="message-reactions" style={{ position: 'absolute', bottom: '-10px', right: isSentByMe ? 'auto' : '-10px', left: isSentByMe ? '-10px' : 'auto', background: 'white', borderRadius: '12px', padding: '2px 4px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)', fontSize: '12px', display: 'flex', gap: '2px', zIndex: 5 }}>
+                                                {msgReactions.map(r => <span key={r._id}>{r.text}</span>)}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             );
                         })}
                         <div ref={messagesEndRef} />
                     </div>
-
-                    <form className="chat-input-area" onSubmit={handleSendText}>
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                        {replyingTo && (
+                            <div className="replying-to-banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F1F5F9', padding: '10px 15px', borderLeft: '4px solid #2563EB', borderTop: '1px solid #E2E8F0' }}>
+                                <div style={{ fontSize: '13px' }}>
+                                    <span style={{ color: '#2563EB', fontWeight: 'bold' }}>Replying to</span>
+                                    <div style={{ color: '#475569', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '250px' }}>
+                                        {replyingTo.text}
+                                    </div>
+                                </div>
+                                <button type="button" onClick={() => setReplyingTo(null)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#64748B' }}>×</button>
+                            </div>
+                        )}
+                        <form className="chat-input-area" onSubmit={handleSendText}>
                         {isRecording ? (
                             <div className="recording-indicator">
                                 <span className="recording-pulse"></span>
@@ -703,6 +734,7 @@ export default function ChatDashboard() {
                             </button>
                         )}
                     </form>
+                    </div>
                 </div>
             ) : (
                 <div className="no-chat-selected">
