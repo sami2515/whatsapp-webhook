@@ -177,7 +177,7 @@ body {
 }
 
 .status-dropdown {
-  padding: 6px 12px;
+  padding: 6px 8px;
   border-radius: 8px;
   border: 1px solid #E2E8F0;
   background-color: #FFFFFF;
@@ -186,6 +186,10 @@ body {
   outline: none;
   cursor: pointer;
   font-family: inherit;
+  width: 110px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .bot-toggle-btn {
