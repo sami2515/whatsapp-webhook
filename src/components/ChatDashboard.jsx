@@ -627,7 +627,6 @@ export default function ChatDashboard() {
                                                     )}
                                                 </span>
                                             )}
-                                            )}
                                         </div>
                                         {msgReactions.length > 0 && (
                                             <div className="message-reactions" style={{ position: 'absolute', bottom: '-10px', right: isSentByMe ? 'auto' : '-10px', left: isSentByMe ? '-10px' : 'auto', background: 'white', borderRadius: '12px', padding: '2px 4px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)', fontSize: '12px', display: 'flex', gap: '2px', zIndex: 5 }}>
