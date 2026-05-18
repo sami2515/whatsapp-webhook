@@ -24,11 +24,15 @@ const subscriptionSchema = new mongoose.Schema({
         type: String, // 'admin' or 'customer' (for future use, if needed)
         default: 'admin'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    userAgent: {
+        type: String,
+        default: ''
+    },
+    active: {
+        type: Boolean,
+        default: true
     }
-});
+}, { timestamps: true });
 
 const Subscription = mongoose.model('Subscription', subscriptionSchema);
 

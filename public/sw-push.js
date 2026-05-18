@@ -1,15 +1,22 @@
 self.addEventListener('push', function (event) {
     if (event.data) {
-        const payload = event.data.json();
+        let payload = {};
+        try {
+            payload = event.data.json();
+        } catch {
+            payload = { title: 'New WhatsApp message', body: event.data.text() };
+        }
 
         const options = {
             body: payload.body,
             icon: payload.icon || '/pwa-192x192.png',
-            vibrate: [200, 100, 200, 100, 200, 100, 200],
+            badge: payload.badge || '/pwa-192x192.png',
+            vibrate: [120, 60, 120],
             requireInteraction: true,
             data: {
                 dateOfArrival: Date.now(),
-                url: payload.data?.url || '/'
+                url: payload.data?.url || '/',
+                phone: payload.data?.phone || ''
             },
             actions: [
                 { action: 'open', title: 'Open Chat' }
@@ -28,17 +35,18 @@ self.addEventListener('notificationclick', function (event) {
     if (event.notification.data && event.notification.data.url) {
         urlToOpen = event.notification.data.url;
     }
+    const absoluteUrl = new URL(urlToOpen, self.location.origin).href;
 
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (clientList) {
             for (let i = 0; i < clientList.length; i++) {
-                let client = clientList[i];
-                if (client.url === urlToOpen && 'focus' in client) {
+                const client = clientList[i];
+                if (client.url.startsWith(self.location.origin) && 'focus' in client) {
                     return client.focus();
                 }
             }
             if (clients.openWindow) {
-                return clients.openWindow(urlToOpen);
+                return clients.openWindow(absoluteUrl);
             }
         })
     );

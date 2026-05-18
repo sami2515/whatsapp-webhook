@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import whatsappRoutes from './routes/whatsapp.js';
+import pushRoutes from './routes/push.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/whatsapp', whatsappRoutes);
+app.use('/api/push', pushRoutes);
 
 // Root route
 app.get('/', (req, res) => {

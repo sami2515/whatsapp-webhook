@@ -28,39 +28,61 @@ let webpushConfigured = false;
 let webpushDisabled = false;
 let webpushWarningLogged = false;
 
-const disableWebPush = () => {
+const disableWebPush = (message = 'Push notifications disabled: invalid VAPID keys') => {
     webpushConfigured = false;
     webpushDisabled = true;
 
     if (!webpushWarningLogged) {
-        console.warn('Push notifications disabled: invalid VAPID keys');
+        console.warn(message);
         webpushWarningLogged = true;
     }
 };
 
-const configureWebPush = () => {
-    if (webpushConfigured || webpushDisabled) return;
+const decodeBase64Url = (value = '') => {
+    const normalized = `${value}${'='.repeat((4 - value.length % 4) % 4)}`
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+    return Buffer.from(normalized, 'base64');
+};
 
-    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
-        disableWebPush();
-        return;
+const hasValidVapidShape = () => {
+    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) return false;
+
+    try {
+        const publicKey = decodeBase64Url(process.env.VAPID_PUBLIC_KEY);
+        const privateKey = decodeBase64Url(process.env.VAPID_PRIVATE_KEY);
+        return publicKey.length === 65 && publicKey[0] === 4 && privateKey.length === 32;
+    } catch {
+        return false;
+    }
+};
+
+const configureWebPush = () => {
+    if (webpushConfigured) return true;
+    if (webpushDisabled) return false;
+
+    if (!hasValidVapidShape()) {
+        disableWebPush('Push notifications disabled: invalid VAPID keys');
+        return false;
     }
 
     try {
         webpush.setVapidDetails(
-            'mailto:admin@admin.com',
+            process.env.VAPID_SUBJECT || 'mailto:admin@example.com',
             process.env.VAPID_PUBLIC_KEY,
             process.env.VAPID_PRIVATE_KEY
         );
         webpushConfigured = true;
+        return true;
     } catch {
-        disableWebPush();
+        disableWebPush('Push notifications disabled: invalid VAPID keys');
+        return false;
     }
 };
 
 const isInvalidVapidError = (error) => {
     const message = String(error?.message || error || '').toLowerCase();
-    return message.includes('vapid') || message.includes('p-256') || message.includes('curve');
+    return message.includes('vapid') || message.includes('p-256') || message.includes('curve') || message.includes('applicationserverkey');
 };
 
 const RAPID_REPLY_WINDOW_MS = 2500;
@@ -237,13 +259,108 @@ const markManualReply = async (phoneNumber) => {
 export const subscribeToPush = async (req, res) => {
     try {
         const subscription = req.body;
-        const sub = new Subscription({ ...subscription, endpoint: subscription.endpoint });
-        await sub.save();
-        res.status(201).json({ message: 'Subscribed successfully.' });
+        if (!subscription?.endpoint || !subscription?.keys?.p256dh || !subscription?.keys?.auth) {
+            return res.status(400).json({ error: 'Invalid push subscription.' });
+        }
+
+        await Subscription.findOneAndUpdate(
+            { endpoint: subscription.endpoint },
+            {
+                endpoint: subscription.endpoint,
+                expirationTime: subscription.expirationTime || null,
+                keys: subscription.keys,
+                userType: 'admin',
+                userAgent: req.get('user-agent') || '',
+                active: true
+            },
+            { upsert: true, new: true, setDefaultsOnInsert: true }
+        );
+
+        res.status(201).json({ success: true, message: 'Subscribed successfully.' });
     } catch (err) {
-        if (err.code === 11000) return res.status(200).json({ message: 'Already subscribed.' });
         console.error('Error saving subscription:', err);
         res.status(500).json({ error: 'Failed to subscribe.' });
+    }
+};
+
+export const unsubscribeFromPush = async (req, res) => {
+    try {
+        const { endpoint } = req.body || {};
+        if (!endpoint) return res.status(400).json({ error: 'Subscription endpoint is required.' });
+
+        await Subscription.findOneAndUpdate(
+            { endpoint },
+            { active: false },
+            { new: true }
+        );
+
+        res.status(200).json({ success: true });
+    } catch (err) {
+        console.error('Error unsubscribing push subscription:', err);
+        res.status(500).json({ error: 'Failed to unsubscribe.' });
+    }
+};
+
+export const getPushPublicKey = (req, res) => {
+    const enabled = configureWebPush();
+
+    res.status(200).json({
+        enabled,
+        publicKey: enabled ? process.env.VAPID_PUBLIC_KEY : '',
+        subject: process.env.VAPID_SUBJECT || 'mailto:admin@example.com'
+    });
+};
+
+const markSubscriptionInactive = async (subscription) => {
+    await Subscription.findOneAndUpdate(
+        { endpoint: subscription.endpoint },
+        { active: false }
+    );
+};
+
+const notifyAdminsOfIncomingMessage = async ({ phone, text, messageType, timestamp }) => {
+    if (!configureWebPush()) return;
+
+    const bodyText = text || `[${messageType || 'message'}]`;
+    const pushPayload = JSON.stringify({
+        title: 'New WhatsApp message',
+        body: `+${phone}: ${bodyText}`,
+        icon: '/pwa-192x192.png',
+        badge: '/pwa-192x192.png',
+        data: {
+            url: '/',
+            phone,
+            timestamp
+        }
+    });
+
+    try {
+        const subscriptions = await Subscription.find({ active: { $ne: false } });
+
+        await Promise.all(subscriptions.map(async (sub) => {
+            try {
+                await webpush.sendNotification({
+                    endpoint: sub.endpoint,
+                    keys: sub.keys
+                }, pushPayload);
+            } catch (err) {
+                if (err.statusCode === 404 || err.statusCode === 410) {
+                    await markSubscriptionInactive(sub);
+                    return;
+                }
+                if (isInvalidVapidError(err)) {
+                    disableWebPush('Push notifications disabled: invalid VAPID keys');
+                    return;
+                }
+                console.error('Push notification failed:', err.message || err);
+            }
+        }));
+    } catch (err) {
+        if (isInvalidVapidError(err)) {
+            disableWebPush('Push notifications disabled: invalid VAPID keys');
+            return;
+        }
+        console.error('Failed to send push notifications:', err.message || err);
     }
 };
 
@@ -332,44 +449,12 @@ export const handleIncomingMessage = async (req, res) => {
                     contextMessageId: contextMessageId
                 });
 
-                // Notify all subscribed devices via Web Push
-                try {
-                    configureWebPush();
-                    if (webpushConfigured) {
-                        const pushPayload = JSON.stringify({
-                            title: `WhatsApp: +${from}`,
-                            body: msgBody,
-                            icon: '/pwa-192x192.png',
-                            data: {
-                                url: '/' // We can add ?number=${from} later if UI supports direct routing
-                            }
-                        });
-                        const subscriptions = await Subscription.find({});
-                        for (let sub of subscriptions) {
-                            try {
-                                await webpush.sendNotification({
-                                    endpoint: sub.endpoint,
-                                    keys: sub.keys
-                                }, pushPayload);
-                            } catch (err) {
-                                if (err.statusCode === 410 || err.statusCode === 404) {
-                                    await Subscription.deleteOne({ endpoint: sub.endpoint });
-                                } else if (isInvalidVapidError(err)) {
-                                    disableWebPush();
-                                    break;
-                                } else {
-                                    console.error('Push error:', err);
-                                }
-                            }
-                        }
-                    }
-                } catch (pushErr) {
-                    if (isInvalidVapidError(pushErr)) {
-                        disableWebPush();
-                    } else {
-                        console.error('Failed to send push notifications:', pushErr);
-                    }
-                }
+                void notifyAdminsOfIncomingMessage({
+                    phone: from,
+                    text: msgBody,
+                    messageType: msgType,
+                    timestamp: savedMessage.timestamp
+                });
 
                 const parsedLead = parseWebsiteLeadMessage(msgBody);
                 const incomingIntent = Object.keys(parsedLead).length > 0 ? 'new_project' : detectIntent(msgBody);
@@ -1038,9 +1123,53 @@ export const updateBotSettings = (req, res) => {
     });
 };
 
+const formatLeadContextResponse = (userContext) => ({
+    phoneNumber: userContext.phoneNumber,
+    phone: userContext.phone || userContext.phoneNumber,
+    name: userContext.name,
+    business: userContext.business,
+    serviceType: userContext.serviceType,
+    budget: userContext.budget,
+    timeline: userContext.timeline,
+    projectDetails: userContext.projectDetails,
+    requirementSummary: userContext.requirementSummary,
+    conversationSummary: userContext.conversationSummary,
+    intent: userContext.intent,
+    latestIntent: userContext.intent,
+    stage: userContext.stage,
+    status: userContext.status,
+    aiPaused: userContext.aiPaused || userContext.isAIPaused,
+    isAIPaused: userContext.isAIPaused,
+    aiPausedAt: userContext.aiPausedAt,
+    handoffReason: userContext.handoffReason,
+    leadScore: userContext.leadScore,
+    unclearCount: userContext.unclearCount,
+    personalQuestionCount: userContext.personalQuestionCount,
+    offTopicCount: userContext.offTopicCount,
+    updatedAt: userContext.updatedAt
+});
+
+export const getUserContextForConversation = async (req, res) => {
+    try {
+        const phoneNumber = req.params.phone || req.params.phoneNumber;
+        if (!phoneNumber) return res.status(400).json({ error: 'Phone number is required.' });
+
+        const userContext = await UserContext.findOne({ phoneNumber });
+        if (!userContext) return res.status(404).json({ error: 'Lead context not found.' });
+
+        res.status(200).json({
+            success: true,
+            lead: formatLeadContextResponse(userContext)
+        });
+    } catch (error) {
+        console.error('Error fetching user context:', error);
+        res.status(500).json({ error: 'Failed to fetch user context.' });
+    }
+};
+
 export const resumeAIForConversation = async (req, res) => {
     try {
-        const { phoneNumber } = req.params;
+        const phoneNumber = req.params.phone || req.params.phoneNumber;
 
         if (!phoneNumber) {
             return res.status(400).json({ error: 'Phone number is required.' });
@@ -1055,24 +1184,52 @@ export const resumeAIForConversation = async (req, res) => {
                 status: 'open',
                 handoffReason: ''
             },
-            { new: true }
+            { new: true, upsert: true, setDefaultsOnInsert: true }
         );
 
-        if (!userContext) {
-            return res.status(404).json({ error: 'Lead context not found.' });
-        }
+        userContext.phone = userContext.phone || phoneNumber;
+        refreshLeadSummary(userContext);
+        await userContext.save();
 
         res.status(200).json({
             success: true,
-            lead: {
-                phoneNumber: userContext.phoneNumber,
-                aiPaused: userContext.aiPaused || userContext.isAIPaused,
-                status: userContext.status
-            }
+            lead: formatLeadContextResponse(userContext)
         });
     } catch (error) {
         console.error('Error resuming AI:', error);
         res.status(500).json({ error: 'Failed to resume AI.' });
+    }
+};
+
+export const pauseAIForConversation = async (req, res) => {
+    try {
+        const phoneNumber = req.params.phone || req.params.phoneNumber;
+        if (!phoneNumber) return res.status(400).json({ error: 'Phone number is required.' });
+
+        const userContext = await UserContext.findOneAndUpdate(
+            { phoneNumber },
+            {
+                phone: phoneNumber,
+                isAIPaused: true,
+                aiPaused: true,
+                aiPausedAt: new Date(),
+                status: 'needs_handoff',
+                stage: 'handed_off',
+                handoffReason: 'Manually paused by admin'
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+        );
+
+        refreshLeadSummary(userContext);
+        await userContext.save();
+
+        res.status(200).json({
+            success: true,
+            lead: formatLeadContextResponse(userContext)
+        });
+    } catch (error) {
+        console.error('Error pausing AI:', error);
+        res.status(500).json({ error: 'Failed to pause AI.' });
     }
 };
 

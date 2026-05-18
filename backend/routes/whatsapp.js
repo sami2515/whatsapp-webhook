@@ -12,9 +12,13 @@ import {
     getBotSettings,
     updateBotSettings,
     subscribeToPush,
+    unsubscribeFromPush,
+    getPushPublicKey,
     sendReaction,
     deleteMessage,
-    resumeAIForConversation
+    resumeAIForConversation,
+    pauseAIForConversation,
+    getUserContextForConversation
 } from '../controllers/whatsappController.js';
 
 const router = express.Router();
@@ -48,9 +52,14 @@ router.get('/messages/:phoneNumber', getChatHistory);
 router.get('/bot-settings', getBotSettings);
 router.post('/bot-settings', updateBotSettings);
 router.post('/resume-ai/:phoneNumber', resumeAIForConversation);
+router.get('/users/:phone/context', getUserContextForConversation);
+router.post('/users/:phone/resume-ai', resumeAIForConversation);
+router.post('/users/:phone/pause-ai', pauseAIForConversation);
 
 // Subscribe a device for Web Push Notifications
 router.post('/subscribe', subscribeToPush);
+router.post('/unsubscribe', unsubscribeFromPush);
+router.get('/push/public-key', getPushPublicKey);
 
 // Send a reaction to a specific message
 router.post('/send-reaction', sendReaction);

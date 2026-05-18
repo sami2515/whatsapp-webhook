@@ -14,3 +14,21 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Web Push / PWA Notifications
+
+Generate valid VAPID keys for browser push notifications:
+
+```bash
+npx web-push generate-vapid-keys
+```
+
+Set these values in the backend `.env` file:
+
+```env
+VAPID_PUBLIC_KEY=your_public_key
+VAPID_PRIVATE_KEY=your_private_key
+VAPID_SUBJECT=mailto:your-email@example.com
+```
+
+The public key must be the generated P-256 VAPID public key. Do not commit the private key.

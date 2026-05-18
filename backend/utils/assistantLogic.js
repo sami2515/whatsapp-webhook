@@ -1469,6 +1469,17 @@ export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '' }
         };
     }
 
+    if (intent === 'new_project' || includesAny(text, ['website banwani', 'website banwana', 'project banwana', 'web development'])) {
+        return {
+            reply: template(style, {
+                english: 'Got it, your requirement has been received. I am forwarding it to Sami, and he will reply to you soon.',
+                roman: 'Jee, aapki requirement receive ho gayi hai. Main ye Sami ko forward kar raha hoon, wo jaldi aapko reply karenge.',
+                urdu: 'جی، آپ کی requirement receive ہو گئی ہے۔ میں یہ Sami کو forward کر رہا ہوں، وہ جلدی آپ کو reply کریں گے۔'
+            }),
+            intent: 'new_project'
+        };
+    }
+
     if (intent === 'ask_services' || includesAny(text, ['services', 'service list', 'what do you build', 'tum kya kar sakte ho'])) {
         return {
             reply: getServicesReply(style),

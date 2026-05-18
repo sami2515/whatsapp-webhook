@@ -1,7 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import EmojiPicker from 'emoji-picker-react';
-import { getConversations, getChatHistory, sendTextMessage, sendTemplateMessage, sendAudioMessage, sendImageMessage, sendReaction, deleteLocalMessage, resumeAI, BASE_URL } from '../services/whatsapp';
+import {
+    getConversations,
+    getChatHistory,
+    sendTextMessage,
+    sendTemplateMessage,
+    sendAudioMessage,
+    sendImageMessage,
+    sendReaction,
+    deleteLocalMessage,
+    resumeAI,
+    pauseAI,
+    getUserContext,
+    getPushPublicKey,
+    subscribeToPush,
+    BASE_URL
+} from '../services/whatsapp';
 import './ChatDashboard.css';
 
 export default function ChatDashboard() {
@@ -33,14 +48,21 @@ export default function ChatDashboard() {
     const [botEnabled, setBotEnabled] = useState(false);
     const [liveStatus, setLiveStatus] = useState("Available 🟢");
     const [isUpdatingBot, setIsUpdatingBot] = useState(false);
+    const [activeLeadContext, setActiveLeadContext] = useState(null);
+    const [chatControlMessage, setChatControlMessage] = useState('');
 
     // Web Push State
     const [pushEnabled, setPushEnabled] = useState(false);
+    const [pushStatus, setPushStatus] = useState('checking');
+    const [pushMessage, setPushMessage] = useState('');
+    const [dashboardNotice, setDashboardNotice] = useState('');
 
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const shouldForceScrollRef = useRef(true);
     const fileInputRef = useRef(null);
+    const conversationSnapshotRef = useRef(new Map());
+    const hasLoadedConversationsRef = useRef(false);
 
     // Initial load
     useEffect(() => {
@@ -55,22 +77,43 @@ export default function ChatDashboard() {
     useEffect(() => {
         if (activeNumber) {
             shouldForceScrollRef.current = true;
+            setChatControlMessage('');
             fetchMessages(activeNumber);
+            fetchUserContext(activeNumber);
             const interval = setInterval(() => fetchMessages(activeNumber), 5000);
             return () => clearInterval(interval);
+        } else {
+            setActiveLeadContext(null);
         }
     }, [activeNumber]);
 
     // Check Push Subscription on load
     useEffect(() => {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.ready.then(reg => {
-                reg.pushManager.getSubscription().then(sub => {
-                    if (sub) setPushEnabled(true);
-                });
-            });
-        }
+        checkPushSubscription();
     }, []);
+
+    useEffect(() => {
+        if (!dashboardNotice) return;
+
+        const timeout = setTimeout(() => setDashboardNotice(''), 5000);
+        return () => clearTimeout(timeout);
+    }, [dashboardNotice]);
+
+    useEffect(() => {
+        if (!chatControlMessage) return;
+
+        const timeout = setTimeout(() => setChatControlMessage(''), 4000);
+        return () => clearTimeout(timeout);
+    }, [chatControlMessage]);
+
+    useEffect(() => {
+        if (!activeNumber || conversations.length === 0) return;
+
+        const latestLead = conversations.find((conv) => conv._id === activeNumber)?.lead;
+        if (latestLead) {
+            setActiveLeadContext((current) => ({ ...(current || {}), ...latestLead }));
+        }
+    }, [conversations, activeNumber]);
 
     // Auto scroll to bottom
     useEffect(() => {
@@ -94,9 +137,47 @@ export default function ChatDashboard() {
     async function fetchConversations() {
         try {
             const data = await getConversations();
+            const previousSnapshot = conversationSnapshotRef.current;
+
+            if (hasLoadedConversationsRef.current) {
+                const newInbound = data.find((conversation) => {
+                    const previous = previousSnapshot.get(conversation._id);
+                    return conversation.lastMessageFrom === conversation._id &&
+                        conversation.timestamp !== previous?.timestamp;
+                });
+
+                if (newInbound) {
+                    setDashboardNotice(`New message from +${newInbound._id}`);
+                }
+            }
+
+            conversationSnapshotRef.current = new Map(
+                data.map((conversation) => [
+                    conversation._id,
+                    {
+                        timestamp: conversation.timestamp,
+                        unreadCount: conversation.unreadCount
+                    }
+                ])
+            );
+            hasLoadedConversationsRef.current = true;
             setConversations(data);
         } catch (error) {
             console.error('Failed to load conversations', error);
+        }
+    }
+
+    async function fetchUserContext(phoneNumber) {
+        try {
+            const response = await getUserContext(phoneNumber);
+            setActiveLeadContext(response.lead);
+            return response.lead;
+        } catch (error) {
+            if (error.response?.status !== 404) {
+                console.error('Failed to load user context', error);
+            }
+            setActiveLeadContext(null);
+            return null;
         }
     }
 
@@ -121,39 +202,93 @@ export default function ChatDashboard() {
         return outputArray;
     };
 
-    const subscribeToPushNotifications = async () => {
-        if (!('serviceWorker' in navigator)) {
-            alert('Push Notifications are not supported in this browser.');
+    const ensureServiceWorkerRegistration = async () => {
+        let registration = await navigator.serviceWorker.getRegistration();
+        if (!registration) {
+            try {
+                registration = await navigator.serviceWorker.register('/sw.js');
+            } catch (error) {
+                console.error('Service worker registration failed:', error);
+                throw error;
+            }
+        }
+        return registration;
+    };
+
+    const checkPushSubscription = async () => {
+        if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+            setPushStatus('unsupported');
+            setPushMessage('Notifications are not supported in this browser.');
+            return;
+        }
+
+        if (Notification.permission === 'denied') {
+            setPushStatus('denied');
+            setPushMessage('Notifications blocked in browser settings');
             return;
         }
 
         try {
+            const registration = await ensureServiceWorkerRegistration();
+            const subscription = await registration.pushManager.getSubscription();
+            setPushEnabled(Boolean(subscription));
+            setPushStatus(subscription ? 'granted' : (Notification.permission === 'granted' ? 'ready' : 'default'));
+            setPushMessage(subscription ? 'Notifications enabled' : '');
+        } catch (error) {
+            console.error('Failed to check push subscription:', error);
+            setPushStatus('error');
+            setPushMessage('Could not check notification status.');
+        }
+    };
+
+    const subscribeToPushNotifications = async () => {
+        if (!('serviceWorker' in navigator)) {
+            setPushStatus('unsupported');
+            setPushMessage('Push notifications are not supported in this browser.');
+            return;
+        }
+
+        setPushStatus('subscribing');
+        setPushMessage('');
+
+        try {
             const permission = await Notification.requestPermission();
             if (permission !== 'granted') {
-                alert('Notification permission denied.');
+                setPushStatus(permission === 'denied' ? 'denied' : 'default');
+                setPushMessage(permission === 'denied'
+                    ? 'Notifications blocked in browser settings'
+                    : 'Notification permission was not granted.');
                 return;
             }
 
-            const registration = await navigator.serviceWorker.ready;
-            const publicVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY;
+            const registration = await ensureServiceWorkerRegistration();
+            const vapid = await getPushPublicKey();
+
+            if (!vapid.enabled || !vapid.publicKey) {
+                setPushStatus('error');
+                setPushMessage('Push is disabled on the server. Add valid VAPID keys and restart the backend.');
+                return;
+            }
 
             let subscription = await registration.pushManager.getSubscription();
             if (subscription) {
-                // Force unsubscribe the old subscription to prevent key mismatch from compromised keys
                 await subscription.unsubscribe();
             }
 
             subscription = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+                applicationServerKey: urlBase64ToUint8Array(vapid.publicKey)
             });
 
-            await axios.post(`${BASE_URL}/subscribe`, subscription);
+            await subscribeToPush(subscription);
             setPushEnabled(true);
-            alert('Push Notifications enabled successfully! You will now receive alerts when your phone is locked or app is closed.');
+            setPushStatus('granted');
+            setPushMessage('Notifications enabled');
         } catch (err) {
             console.error('Failed to subscribe:', err);
-            alert('Failed to enable push notifications.');
+            setPushEnabled(false);
+            setPushStatus('error');
+            setPushMessage('Failed to enable push notifications. Check VAPID keys and browser permission.');
         }
     };
 
@@ -407,17 +542,41 @@ export default function ChatDashboard() {
     };
 
     const activeConversation = conversations.find((conv) => conv._id === activeNumber);
-    const activeLead = activeConversation?.lead;
+    const activeLead = activeLeadContext || activeConversation?.lead;
+    const isActiveAIPaused = Boolean(activeLead?.aiPaused || activeLead?.isAIPaused);
+    const aiControlDisabled = isUpdatingBot || !activeNumber;
 
     const handleResumeAI = async () => {
         if (!activeNumber) return;
 
         setIsUpdatingBot(true);
+        setChatControlMessage('');
         try {
-            await resumeAI(activeNumber);
+            const response = await resumeAI(activeNumber);
+            setActiveLeadContext(response.lead);
             await fetchConversations();
+            await fetchUserContext(activeNumber);
+            setChatControlMessage('AI resumed for this chat.');
         } catch (error) {
-            alert(`Failed to resume AI: ${error.response?.data?.error || error.message}`);
+            setChatControlMessage(`Failed to resume AI: ${error.response?.data?.error || error.message}`);
+        } finally {
+            setIsUpdatingBot(false);
+        }
+    };
+
+    const handlePauseAI = async () => {
+        if (!activeNumber) return;
+
+        setIsUpdatingBot(true);
+        setChatControlMessage('');
+        try {
+            const response = await pauseAI(activeNumber);
+            setActiveLeadContext(response.lead);
+            await fetchConversations();
+            await fetchUserContext(activeNumber);
+            setChatControlMessage('AI paused for this chat.');
+        } catch (error) {
+            setChatControlMessage(`Failed to pause AI: ${error.response?.data?.error || error.message}`);
         } finally {
             setIsUpdatingBot(false);
         }
@@ -454,7 +613,24 @@ export default function ChatDashboard() {
                         </button>
                     </div>
 
-                    {!pushEnabled && (
+                    <div className="notification-control">
+                        {pushEnabled ? (
+                            <span className="notification-state enabled">Notifications enabled</span>
+                        ) : pushStatus === 'denied' ? (
+                            <span className="notification-state blocked">Notifications blocked in browser settings</span>
+                        ) : (
+                            <button
+                                className="new-chat-btn notification-btn"
+                                onClick={subscribeToPushNotifications}
+                                disabled={pushStatus === 'subscribing'}
+                                title="Enable mobile PWA push notifications"
+                            >
+                                {pushStatus === 'subscribing' ? 'Enabling...' : 'Enable Notifications'}
+                            </button>
+                        )}
+                    </div>
+
+                    {false && !pushEnabled && (
                         <button className="new-chat-btn" onClick={subscribeToPushNotifications} title="Enable Local Background Notifications" style={{ marginRight: '10px', backgroundColor: '#e9edef' }}>
                             🔔 Subscribe
                         </button>
@@ -463,6 +639,18 @@ export default function ChatDashboard() {
                         + New
                     </button>
                 </div>
+
+                {pushMessage && (
+                    <div className={`dashboard-inline-message ${pushStatus === 'error' || pushStatus === 'denied' ? 'error' : 'success'}`}>
+                        {pushMessage}
+                    </div>
+                )}
+
+                {dashboardNotice && (
+                    <div className="dashboard-inline-message notice">
+                        {dashboardNotice}
+                    </div>
+                )}
 
                 {isModalOpen && (
                     <div className="modal-overlay">
@@ -585,17 +773,46 @@ export default function ChatDashboard() {
                                 </div>
                             )}
                         </div>
-                        {activeLead?.aiPaused && (
+                        <div className="chat-ai-status">
+                            <span className={`ai-status-pill ${isActiveAIPaused ? 'paused' : 'active'}`}>
+                                AI: {isActiveAIPaused ? 'Paused' : 'Active'}
+                            </span>
+                            <span>Stage: {activeLead?.stage || 'new'}</span>
+                            <span>Intent: {activeLead?.latestIntent || activeLead?.intent || 'unknown'}</span>
+                            {activeLead?.handoffReason && <span>Reason: {activeLead.handoffReason}</span>}
+                        </div>
+                        {isActiveAIPaused ? (
                             <button
                                 type="button"
                                 className="resume-ai-btn"
                                 onClick={handleResumeAI}
-                                disabled={isUpdatingBot}
+                                disabled={aiControlDisabled}
                             >
-                                Resume AI
+                                {isUpdatingBot ? 'Updating...' : 'Resume AI'}
+                            </button>
+                        ) : (
+                            <button
+                                type="button"
+                                className="resume-ai-btn pause-ai-btn"
+                                onClick={handlePauseAI}
+                                disabled={aiControlDisabled}
+                            >
+                                {isUpdatingBot ? 'Updating...' : 'Pause AI'}
                             </button>
                         )}
                     </div>
+
+                    {!botEnabled && (
+                        <div className="global-bot-warning">
+                            Global bot is off. Resume AI will not auto-reply until bot is on.
+                        </div>
+                    )}
+
+                    {chatControlMessage && (
+                        <div className={`chat-control-message ${chatControlMessage.startsWith('Failed') ? 'error' : 'success'}`}>
+                            {chatControlMessage}
+                        </div>
+                    )}
 
                     {activeLead && (
                         <div className="lead-summary-panel">

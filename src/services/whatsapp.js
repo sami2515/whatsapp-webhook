@@ -1,6 +1,10 @@
 import axios from 'axios';
 
 export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/whatsapp';
+export const PUSH_BASE_URL = import.meta.env.VITE_PUSH_BASE_URL ||
+  (BASE_URL.endsWith('/api/whatsapp')
+    ? BASE_URL.replace(/\/api\/whatsapp$/, '/api/push')
+    : '/api/push');
 
 // Fetch all unique conversations
 export const getConversations = async () => {
@@ -87,6 +91,31 @@ export const deleteLocalMessage = async (messageId) => {
 };
 
 export const resumeAI = async (phoneNumber) => {
-  const response = await axios.post(`${BASE_URL}/resume-ai/${phoneNumber}`);
+  const response = await axios.post(`${BASE_URL}/users/${phoneNumber}/resume-ai`);
+  return response.data;
+};
+
+export const pauseAI = async (phoneNumber) => {
+  const response = await axios.post(`${BASE_URL}/users/${phoneNumber}/pause-ai`);
+  return response.data;
+};
+
+export const getUserContext = async (phoneNumber) => {
+  const response = await axios.get(`${BASE_URL}/users/${phoneNumber}/context`);
+  return response.data;
+};
+
+export const getPushPublicKey = async () => {
+  const response = await axios.get(`${PUSH_BASE_URL}/public-key`);
+  return response.data;
+};
+
+export const subscribeToPush = async (subscription) => {
+  const response = await axios.post(`${PUSH_BASE_URL}/subscribe`, subscription);
+  return response.data;
+};
+
+export const unsubscribeFromPush = async (endpoint) => {
+  const response = await axios.post(`${PUSH_BASE_URL}/unsubscribe`, { endpoint });
   return response.data;
 };
