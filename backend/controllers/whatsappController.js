@@ -22,15 +22,42 @@ import {
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 
 let webpushConfigured = false;
+let webpushDisabled = false;
+let webpushWarningLogged = false;
+
+const disableWebPush = () => {
+    webpushConfigured = false;
+    webpushDisabled = true;
+
+    if (!webpushWarningLogged) {
+        console.warn('Push notifications disabled: invalid VAPID keys');
+        webpushWarningLogged = true;
+    }
+};
+
 const configureWebPush = () => {
-    if (!webpushConfigured && process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+    if (webpushConfigured || webpushDisabled) return;
+
+    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+        disableWebPush();
+        return;
+    }
+
+    try {
         webpush.setVapidDetails(
             'mailto:admin@admin.com',
             process.env.VAPID_PUBLIC_KEY,
             process.env.VAPID_PRIVATE_KEY
         );
         webpushConfigured = true;
+    } catch {
+        disableWebPush();
     }
+};
+
+const isInvalidVapidError = (error) => {
+    const message = String(error?.message || error || '').toLowerCase();
+    return message.includes('vapid') || message.includes('p-256') || message.includes('curve');
 };
 
 const RAPID_REPLY_WINDOW_MS = 2500;
@@ -263,6 +290,9 @@ export const handleIncomingMessage = async (req, res) => {
                             } catch (err) {
                                 if (err.statusCode === 410 || err.statusCode === 404) {
                                     await Subscription.deleteOne({ endpoint: sub.endpoint });
+                                } else if (isInvalidVapidError(err)) {
+                                    disableWebPush();
+                                    break;
                                 } else {
                                     console.error('Push error:', err);
                                 }
@@ -270,11 +300,15 @@ export const handleIncomingMessage = async (req, res) => {
                         }
                     }
                 } catch (pushErr) {
-                    console.error('Failed to send push notifications:', pushErr);
+                    if (isInvalidVapidError(pushErr)) {
+                        disableWebPush();
+                    } else {
+                        console.error('Failed to send push notifications:', pushErr);
+                    }
                 }
 
-                const incomingIntent = detectIntent(msgBody);
                 const parsedLead = parseWebsiteLeadMessage(msgBody);
+                const incomingIntent = Object.keys(parsedLead).length > 0 ? 'new_project' : detectIntent(msgBody);
                 const inferredLeadUpdate = {
                     ...inferLeadUpdateFromIntent(incomingIntent),
                     ...parsedLead

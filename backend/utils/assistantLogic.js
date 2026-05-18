@@ -16,29 +16,85 @@ const normalizeText = (text = '') => text.toLowerCase().replace(/\s+/g, ' ').tri
 
 const includesAny = (text, keywords) => keywords.some((keyword) => text.includes(keyword));
 
+const toTitleCase = (value = '') => {
+    return value
+        .trim()
+        .split(/\s+/)
+        .map((word) => word ? `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}` : '')
+        .join(' ');
+};
+
+const normalizeLabel = (label = '') => label.toLowerCase().replace(/\s+/g, ' ').trim();
+
+const cleanParsedValue = (value = '') => {
+    return value
+        .replace(/\s+/g, ' ')
+        .replace(/^[\s.:-]+|[\s.]+$/g, '')
+        .trim();
+};
+
+const escapeRegex = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 export const isWebsiteBuildPlanMessage = (messageText = '') => {
     return normalizeText(messageText).includes(WEBSITE_BUILD_PLAN_TEXT);
 };
 
+const buildPlanLabels = [
+    { field: 'projectDetails', labels: ['Project details', 'Project Details', 'Details'] },
+    { field: 'business', labels: ['Business'] },
+    { field: 'service', labels: ['Service'] },
+    { field: 'budget', labels: ['Budget'] },
+    { field: 'name', labels: ['Name'] }
+];
+
+const buildPlanLabelToField = new Map(
+    buildPlanLabels.flatMap(({ field, labels }) => labels.map((label) => [normalizeLabel(label), field]))
+);
+
+const buildPlanLabelPattern = buildPlanLabels
+    .flatMap(({ labels }) => labels)
+    .sort((a, b) => b.length - a.length)
+    .map(escapeRegex)
+    .join('|');
+
+export const parseBuildPlanMessage = (messageText = '') => {
+    const text = messageText.replace(/\r\n/g, '\n').replace(/\u00a0/g, ' ').trim();
+    if (!text) return {};
+
+    const labelRegex = new RegExp(`(^|[\\s.,;|])(${buildPlanLabelPattern})\\s*:\\s*`, 'gi');
+    const matches = [...text.matchAll(labelRegex)];
+    if (matches.length === 0) return {};
+
+    const parsed = {};
+
+    for (let index = 0; index < matches.length; index += 1) {
+        const match = matches[index];
+        const label = match[2];
+        const field = buildPlanLabelToField.get(normalizeLabel(label));
+        const valueStart = match.index + match[0].length;
+        const valueEnd = matches[index + 1]?.index ?? text.length;
+        const value = cleanParsedValue(text.slice(valueStart, valueEnd));
+
+        if (field && value) {
+            parsed[field] = value;
+        }
+    }
+
+    return parsed;
+};
+
 export const parseWebsiteLeadMessage = (messageText = '') => {
-    const text = messageText.replace(/\r\n/g, '\n');
-    const extract = (label) => {
-        const labels = ['Name', 'Business', 'Service', 'Budget', 'Project details'];
-        const nextLabels = labels.filter((item) => item !== label).join('|');
-        const pattern = new RegExp(`(?:^|\\n)${label}\\s*:\\s*([\\s\\S]*?)(?=\\n(?:${nextLabels})\\s*:|$)`, 'i');
-        const match = text.match(pattern);
-        return match?.[1]?.trim() || '';
+    const parsed = parseBuildPlanMessage(messageText);
+
+    const leadUpdate = {
+        name: parsed.name,
+        business: parsed.business,
+        serviceType: parsed.service,
+        budget: parsed.budget,
+        projectDetails: parsed.projectDetails
     };
 
-    const parsed = {
-        name: extract('Name'),
-        business: extract('Business'),
-        serviceType: extract('Service'),
-        budget: extract('Budget'),
-        projectDetails: extract('Project details')
-    };
-
-    return Object.fromEntries(Object.entries(parsed).filter(([, value]) => Boolean(value)));
+    return Object.fromEntries(Object.entries(leadUpdate).filter(([, value]) => Boolean(value)));
 };
 
 export const detectLanguageStyle = (messageText = '') => {
@@ -158,13 +214,6 @@ const template = (style, variants) => {
 export const getServiceQualificationQuestion = (serviceType = '', style = 'roman') => {
     const service = normalizeText(serviceType);
 
-    if (service.includes('business')) {
-        return template(style, {
-            english: 'Around how many pages do you need - basic Home/About/Services/Contact, or product catalog, contact form, and WhatsApp leads too?',
-            roman: 'Approx kitne pages chahiye - basic Home, About, Services, Contact ya product/catalog, contact form, aur WhatsApp leads bhi?',
-            urdu: 'تقریباً کتنے pages چاہئیں - basic Home, About, Services, Contact یا product catalog, contact form اور WhatsApp leads بھی؟'
-        });
-    }
     if (service.includes('e-commerce') || service.includes('ecommerce') || service.includes('store') || service.includes('shop')) {
         return template(style, {
             english: 'Around how many products will there be, and what payment/delivery flow do you need?',
@@ -191,6 +240,13 @@ export const getServiceQualificationQuestion = (serviceType = '', style = 'roman
             english: 'Is it a personal portfolio, developer portfolio, company portfolio, or creative portfolio?',
             roman: 'Portfolio personal chahiye, developer portfolio, company portfolio, ya creative portfolio?',
             urdu: 'Portfolio personal چاہیے، developer portfolio، company portfolio، یا creative portfolio؟'
+        });
+    }
+    if (service.includes('business') || service.includes('website')) {
+        return template(style, {
+            english: 'Please share approximate pages/features - basic website, or contact form, product catalog, and WhatsApp leads too?',
+            roman: 'Approx pages/features bata dein - basic website chahiye ya contact form, product catalog, WhatsApp leads bhi chahiye?',
+            urdu: 'Approx pages/features بتا دیں - basic website چاہیے یا contact form, product catalog, WhatsApp leads بھی چاہیے؟'
         });
     }
 
@@ -269,8 +325,17 @@ const getClarificationReply = (style) => template(style, {
     urdu: 'سمجھ نہیں آیا۔ آپ website یا project requirement تھوڑی clear بتا دیں؟'
 });
 
+const getRomanBudgetPhrase = (budget = '') => {
+    const normalizedBudget = normalizeText(budget);
+    if (!budget) return '';
+    if (normalizedBudget.includes('need guidance') || normalizedBudget.includes('guidance')) {
+        return 'aur budget guidance needed hai';
+    }
+    return `aur budget ${budget.trim()} hai`;
+};
+
 const getFormReply = (leadUpdate, style) => {
-    const namePart = leadUpdate.name ? `${leadUpdate.name}, ` : '';
+    const namePart = leadUpdate.name ? `${toTitleCase(leadUpdate.name)}, ` : '';
     const question = leadUpdate.serviceType
         ? getServiceQualificationQuestion(leadUpdate.serviceType, style)
         : getNewProjectQuestion(style);
@@ -290,8 +355,8 @@ const getFormReply = (leadUpdate, style) => {
     }
 
     const businessPart = leadUpdate.business ? `${leadUpdate.business} business ke liye ` : '';
-    const budgetPart = leadUpdate.budget ? ` aur budget ${leadUpdate.budget} hai` : '';
-    const servicePart = leadUpdate.serviceType ? `${businessPart}${leadUpdate.serviceType}` : 'project';
+    const budgetPart = leadUpdate.budget ? ` ${getRomanBudgetPhrase(leadUpdate.budget)}` : '';
+    const servicePart = leadUpdate.serviceType ? `${businessPart}${leadUpdate.serviceType.toLowerCase()}` : 'project';
     return `Jee ${namePart}samajh gaya. Aap ${servicePart} chahte hain${budgetPart}. ${question}`;
 };
 
