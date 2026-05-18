@@ -54,7 +54,10 @@ const userContextSchema = new mongoose.Schema({
             'asked_timeline',
             'asked_budget',
             'qualified',
-            'handed_off'
+            'handed_off',
+            'unclear_waiting',
+            'personal_boundary',
+            'off_topic_waiting'
         ],
         default: 'new'
     },
@@ -76,6 +79,41 @@ const userContextSchema = new mongoose.Schema({
     },
     aiPausedAt: {
         type: Date
+    },
+    unclearCount: {
+        type: Number,
+        default: 0
+    },
+    personalQuestionCount: {
+        type: Number,
+        default: 0
+    },
+    offTopicCount: {
+        type: Number,
+        default: 0
+    },
+    abuseCount: {
+        type: Number,
+        default: 0
+    },
+    leadScore: {
+        type: Number,
+        default: 0
+    },
+    lastClarificationAt: {
+        type: Date
+    },
+    lastBotQuestionType: {
+        type: String,
+        default: ''
+    },
+    cameFromBuildPlan: {
+        type: Boolean,
+        default: false
+    },
+    buildPlanFormSubmitted: {
+        type: Boolean,
+        default: false
     },
     lastInteraction: {
         type: Date,

@@ -11,10 +11,13 @@ import { generateAIResponse } from '../services/geminiService.js';
 import { BOT_CONFIG } from '../utils/botConfig.js';
 import {
     buildLeadSummary,
+    calculateLeadScore,
     detectIntent,
+    getPausedSafeAssistantResponse,
     getRuleBasedAssistantResponse,
     getStageForLead,
     inferLeadUpdateFromIntent,
+    inferLeadUpdateFromMessage,
     parseWebsiteLeadMessage,
     sanitizeAssistantReply
 } from '../utils/assistantLogic.js';
@@ -71,8 +74,41 @@ const shouldUseValue = (value) => {
 const applyLeadUpdate = (userContext, leadUpdate = {}) => {
     for (const field of LEAD_UPDATE_FIELDS) {
         if (shouldUseValue(leadUpdate[field])) {
-            userContext[field] = String(leadUpdate[field]).trim();
+            const nextValue = String(leadUpdate[field]).trim();
+
+            if (field === 'projectDetails' && userContext.projectDetails) {
+                if (!userContext.projectDetails.toLowerCase().includes(nextValue.toLowerCase())) {
+                    userContext.projectDetails = `${userContext.projectDetails} | ${nextValue}`;
+                }
+                continue;
+            }
+
+            userContext[field] = nextValue;
         }
+    }
+};
+
+const CONTEXT_UPDATE_FIELDS = [
+    'unclearCount',
+    'personalQuestionCount',
+    'offTopicCount',
+    'abuseCount',
+    'leadScore',
+    'lastClarificationAt',
+    'lastBotQuestionType',
+    'cameFromBuildPlan',
+    'buildPlanFormSubmitted'
+];
+
+const applyContextUpdate = (userContext, contextUpdate = {}) => {
+    for (const field of CONTEXT_UPDATE_FIELDS) {
+        if (Object.prototype.hasOwnProperty.call(contextUpdate, field)) {
+            userContext[field] = contextUpdate[field];
+        }
+    }
+
+    if (['clarification', 'off_topic', 'repeat_confusion'].includes(contextUpdate.lastBotQuestionType)) {
+        userContext.lastClarificationAt = new Date();
     }
 };
 
@@ -91,10 +127,20 @@ const getLeadSnapshot = (userContext) => ({
     status: userContext.status,
     aiPaused: userContext.aiPaused || userContext.isAIPaused,
     isAIPaused: userContext.isAIPaused,
-    handoffReason: userContext.handoffReason
+    handoffReason: userContext.handoffReason,
+    unclearCount: userContext.unclearCount || 0,
+    personalQuestionCount: userContext.personalQuestionCount || 0,
+    offTopicCount: userContext.offTopicCount || 0,
+    abuseCount: userContext.abuseCount || 0,
+    leadScore: userContext.leadScore || 0,
+    lastClarificationAt: userContext.lastClarificationAt,
+    lastBotQuestionType: userContext.lastBotQuestionType || '',
+    cameFromBuildPlan: userContext.cameFromBuildPlan || false,
+    buildPlanFormSubmitted: userContext.buildPlanFormSubmitted || false
 });
 
-const refreshLeadSummary = (userContext) => {
+const refreshLeadSummary = (userContext, latestMessageText = '') => {
+    userContext.leadScore = calculateLeadScore(getLeadSnapshot(userContext), latestMessageText);
     const summary = buildLeadSummary(getLeadSnapshot(userContext));
     userContext.requirementSummary = summary;
     userContext.conversationSummary = summary;
@@ -152,6 +198,24 @@ const sendWhatsAppText = async ({ phoneNumberId, to, text, token }) => {
         },
         { headers: { Authorization: `Bearer ${token}` } }
     );
+};
+
+const sendAndSaveAssistantText = async ({ phoneNumberId, to, text, token }) => {
+    const response = await sendWhatsAppText({ phoneNumberId, to, text, token });
+
+    if (response.data?.messages && response.data.messages.length > 0) {
+        await Message.create({
+            from: phoneNumberId,
+            to,
+            messageId: response.data.messages[0].id,
+            type: 'text',
+            text,
+            status: 'sent',
+            timestamp: new Date()
+        });
+    }
+
+    return response;
 };
 
 const markManualReply = async (phoneNumber) => {
@@ -311,6 +375,7 @@ export const handleIncomingMessage = async (req, res) => {
                 const incomingIntent = Object.keys(parsedLead).length > 0 ? 'new_project' : detectIntent(msgBody);
                 const inferredLeadUpdate = {
                     ...inferLeadUpdateFromIntent(incomingIntent),
+                    ...inferLeadUpdateFromMessage(msgBody),
                     ...parsedLead
                 };
 
@@ -330,8 +395,14 @@ export const handleIncomingMessage = async (req, res) => {
                 userContext.lastMessageAt = new Date();
                 userContext.intent = incomingIntent;
                 applyLeadUpdate(userContext, inferredLeadUpdate);
+                if (Object.keys(parsedLead).length > 0) {
+                    userContext.cameFromBuildPlan = true;
+                    userContext.buildPlanFormSubmitted = true;
+                    userContext.unclearCount = 0;
+                    userContext.offTopicCount = 0;
+                }
                 userContext.stage = getStageForLead(getLeadSnapshot(userContext), incomingIntent);
-                refreshLeadSummary(userContext);
+                refreshLeadSummary(userContext, msgBody);
                 await userContext.save();
 
                 const isRapidMessage = previousLastMessageAt &&
@@ -381,8 +452,26 @@ export const handleIncomingMessage = async (req, res) => {
                             await savedMessage.save();
                         }
                     } else if (!isInteractive && (msgType === 'text' || msgType === 'image')) {
-                        // Forward regular text or image to Gemini AI if not paused
-                        if (!userContext.isAIPaused && !userContext.aiPaused && !isRapidMessage) {
+                        const isAIPaused = userContext.isAIPaused || userContext.aiPaused;
+
+                        if (isAIPaused && msgType === 'text') {
+                            const pausedReply = getPausedSafeAssistantResponse({
+                                messageText: msgBody,
+                                intent: incomingIntent
+                            });
+
+                            if (pausedReply?.reply) {
+                                userContext.intent = pausedReply.intent || incomingIntent;
+                                refreshLeadSummary(userContext, msgBody);
+                                await userContext.save();
+                                await sendAndSaveAssistantText({
+                                    phoneNumberId,
+                                    to: from,
+                                    text: sanitizeAssistantReply(pausedReply.reply),
+                                    token
+                                });
+                            }
+                        } else if (!isAIPaused && !isRapidMessage) {
 
                             // 1. Fetch Chat History (Memory) - Exclude current message
                             const recentContext = await Message.find({
@@ -439,33 +528,24 @@ export const handleIncomingMessage = async (req, res) => {
                             );
 
                             applyLeadUpdate(userContext, aiResult.leadUpdate || {});
+                            applyContextUpdate(userContext, aiResult.contextUpdate || {});
                             userContext.intent = aiResult.intent || incomingIntent;
                             userContext.stage = aiResult.stage || getStageForLead(getLeadSnapshot(userContext), userContext.intent);
+                            if (typeof aiResult.leadScore === 'number') {
+                                userContext.leadScore = aiResult.leadScore;
+                            }
 
                             if (aiResult.pauseAI || /\[PAUSE\]/i.test(aiResult.reply || '')) {
                                 pauseAIForLead(userContext, aiResult.handoffReason || 'Assistant requested handoff');
                             }
 
-                            refreshLeadSummary(userContext);
+                            refreshLeadSummary(userContext, msgBody);
                             await userContext.save();
 
                             const aiReply = sanitizeAssistantReply(aiResult.reply || '')
                                 || 'Assistant abhi temporarily busy hai. Aap apni requirement bhej dein, Sami ko forward kar diya jayega.';
 
-                            const aiRes = await sendWhatsAppText({ phoneNumberId, to: from, text: aiReply, token });
-
-                            // Save AI outgoing message locally to MongoDB so it shows in Dashboard
-                            if (aiRes.data?.messages && aiRes.data.messages.length > 0) {
-                                await Message.create({
-                                    from: phoneNumberId,
-                                    to: from,
-                                    messageId: aiRes.data.messages[0].id,
-                                    type: 'text',
-                                    text: aiReply,
-                                    status: 'sent',
-                                    timestamp: new Date()
-                                });
-                            }
+                            await sendAndSaveAssistantText({ phoneNumberId, to: from, text: aiReply, token });
                         }
                     }
                 }
@@ -643,7 +723,11 @@ export const getConversations = async (req, res) => {
                     stage: lead.stage,
                     status: lead.status,
                     aiPaused: lead.aiPaused || lead.isAIPaused,
-                    handoffReason: lead.handoffReason
+                    handoffReason: lead.handoffReason,
+                    leadScore: lead.leadScore,
+                    unclearCount: lead.unclearCount,
+                    personalQuestionCount: lead.personalQuestionCount,
+                    offTopicCount: lead.offTopicCount
                 } : null
             };
         });

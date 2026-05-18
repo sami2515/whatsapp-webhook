@@ -615,6 +615,18 @@ export default function ChatDashboard() {
                                 <span className="lead-label">Budget</span>
                                 <strong>{activeLead.budget || 'Not set'}</strong>
                             </div>
+                            <div>
+                                <span className="lead-label">Lead Score</span>
+                                <strong>{activeLead.leadScore ?? 0}</strong>
+                            </div>
+                            {(activeLead.unclearCount > 0 || activeLead.personalQuestionCount > 0 || activeLead.offTopicCount > 0) && (
+                                <div>
+                                    <span className="lead-label">Signals</span>
+                                    <strong>
+                                        U:{activeLead.unclearCount || 0} P:{activeLead.personalQuestionCount || 0} O:{activeLead.offTopicCount || 0}
+                                    </strong>
+                                </div>
+                            )}
                             {activeLead.handoffReason && (
                                 <div className="lead-summary-wide">
                                     <span className="lead-label">Handoff</span>
