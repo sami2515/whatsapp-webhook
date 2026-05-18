@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import EmojiPicker from 'emoji-picker-react';
-import { getConversations, getChatHistory, sendTextMessage, sendTemplateMessage, sendAudioMessage, sendImageMessage, sendReaction, deleteLocalMessage, BASE_URL } from '../services/whatsapp';
+import { getConversations, getChatHistory, sendTextMessage, sendTemplateMessage, sendAudioMessage, sendImageMessage, sendReaction, deleteLocalMessage, resumeAI, BASE_URL } from '../services/whatsapp';
 import './ChatDashboard.css';
 
 export default function ChatDashboard() {
@@ -91,16 +91,16 @@ export default function ChatDashboard() {
         }
     }, [messages]);
 
-    const fetchConversations = async () => {
+    async function fetchConversations() {
         try {
             const data = await getConversations();
             setConversations(data);
         } catch (error) {
             console.error('Failed to load conversations', error);
         }
-    };
+    }
 
-    const fetchBotSettings = async () => {
+    async function fetchBotSettings() {
         try {
             const response = await axios.get(`${BASE_URL}/bot-settings`);
             setBotEnabled(response.data.enabled);
@@ -108,11 +108,11 @@ export default function ChatDashboard() {
         } catch (error) {
             console.error('Failed to load bot settings', error);
         }
-    };
+    }
 
     const urlBase64ToUint8Array = (base64String) => {
         const padding = '='.repeat((4 - base64String.length % 4) % 4);
-        const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+        const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
         const rawData = window.atob(base64);
         const outputArray = new Uint8Array(rawData.length);
         for (let i = 0; i < rawData.length; ++i) {
@@ -184,14 +184,14 @@ export default function ChatDashboard() {
         }
     };
 
-    const fetchMessages = async (phoneNumber) => {
+    async function fetchMessages(phoneNumber) {
         try {
             const data = await getChatHistory(phoneNumber);
             setMessages(data);
         } catch (error) {
             console.error('Failed to load messages', error);
         }
-    };
+    }
 
     const handleSendText = async (e) => {
         e.preventDefault();
@@ -406,7 +406,22 @@ export default function ChatDashboard() {
         return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     };
 
-    const myNumberId = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER_ID; // Optional if we just check 'received'
+    const activeConversation = conversations.find((conv) => conv._id === activeNumber);
+    const activeLead = activeConversation?.lead;
+
+    const handleResumeAI = async () => {
+        if (!activeNumber) return;
+
+        setIsUpdatingBot(true);
+        try {
+            await resumeAI(activeNumber);
+            await fetchConversations();
+        } catch (error) {
+            alert(`Failed to resume AI: ${error.response?.data?.error || error.message}`);
+        } finally {
+            setIsUpdatingBot(false);
+        }
+    };
 
     return (
         <div className={`chat-container ${activeNumber ? 'chat-active' : ''}`}>
@@ -513,6 +528,13 @@ export default function ChatDashboard() {
                                 <span className="conv-phone">+{conv._id}</span>
                                 <span className="conv-time">{formatTime(conv.timestamp)}</span>
                             </div>
+                            {conv.lead && (
+                                <div className="lead-badges">
+                                    {conv.lead.aiPaused && <span className="lead-badge paused">AI paused</span>}
+                                    {conv.lead.intent && <span className="lead-badge">{conv.lead.intent}</span>}
+                                    {conv.lead.serviceType && <span className="lead-badge service">{conv.lead.serviceType}</span>}
+                                </div>
+                            )}
                             <div className="conv-preview">
                                 {conv.unreadCount > 0 && <span className="unread-badge">{conv.unreadCount}</span>}
                                 {conv.lastMessageFrom && conv.lastMessageFrom !== conv._id && (
@@ -527,10 +549,10 @@ export default function ChatDashboard() {
                                     </span>
                                 )}
                                 <span className="preview-text">
-                                    {conv.lastMessage?.startsWith('[URGENT 🚨]') ? (
+                                    {conv.lastMessage?.startsWith('[URGENT]') || conv.lastMessage?.startsWith('[URGENT 🚨]') ? (
                                         <>
-                                            <span className="urgent-tag">🚨 URGENT</span>
-                                            {conv.lastMessage.replace('[URGENT 🚨] ', '')}
+                                            <span className="urgent-tag">URGENT</span>
+                                            {conv.lastMessage.replace('[URGENT] ', '').replace('[URGENT 🚨] ', '')}
                                         </>
                                     ) : (
                                         conv.lastMessage
@@ -551,8 +573,62 @@ export default function ChatDashboard() {
                                 <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path>
                             </svg>
                         </button>
-                        <h3>+{activeNumber}</h3>
+                        <div className="chat-title-block">
+                            <h3>+{activeNumber}</h3>
+                            {activeLead && (
+                                <div className="chat-lead-line">
+                                    {activeLead.name && <span>{activeLead.name}</span>}
+                                    {activeLead.serviceType && <span>{activeLead.serviceType}</span>}
+                                    {activeLead.budget && <span>Budget: {activeLead.budget}</span>}
+                                    {activeLead.timeline && <span>Timeline: {activeLead.timeline}</span>}
+                                    {activeLead.aiPaused && <span className="lead-paused-text">AI paused</span>}
+                                </div>
+                            )}
+                        </div>
+                        {activeLead?.aiPaused && (
+                            <button
+                                type="button"
+                                className="resume-ai-btn"
+                                onClick={handleResumeAI}
+                                disabled={isUpdatingBot}
+                            >
+                                Resume AI
+                            </button>
+                        )}
                     </div>
+
+                    {activeLead && (
+                        <div className="lead-summary-panel">
+                            <div>
+                                <span className="lead-label">Intent</span>
+                                <strong>{activeLead.intent || 'unknown'}</strong>
+                            </div>
+                            <div>
+                                <span className="lead-label">Stage</span>
+                                <strong>{activeLead.stage || 'new'}</strong>
+                            </div>
+                            <div>
+                                <span className="lead-label">Service</span>
+                                <strong>{activeLead.serviceType || 'Not set'}</strong>
+                            </div>
+                            <div>
+                                <span className="lead-label">Budget</span>
+                                <strong>{activeLead.budget || 'Not set'}</strong>
+                            </div>
+                            {activeLead.handoffReason && (
+                                <div className="lead-summary-wide">
+                                    <span className="lead-label">Handoff</span>
+                                    <strong>{activeLead.handoffReason}</strong>
+                                </div>
+                            )}
+                            {activeLead.requirementSummary && (
+                                <div className="lead-summary-wide">
+                                    <span className="lead-label">Summary</span>
+                                    <strong>{activeLead.requirementSummary}</strong>
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                     <div className="messages-list" ref={messagesContainerRef}>
                         {messages.filter(m => m.type !== 'reaction').map((msg, index) => {

@@ -6,6 +6,70 @@ const userContextSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    phone: {
+        type: String
+    },
+    name: {
+        type: String,
+        default: ''
+    },
+    business: {
+        type: String,
+        default: ''
+    },
+    serviceType: {
+        type: String,
+        default: ''
+    },
+    budget: {
+        type: String,
+        default: ''
+    },
+    timeline: {
+        type: String,
+        default: ''
+    },
+    projectDetails: {
+        type: String,
+        default: ''
+    },
+    requirementSummary: {
+        type: String,
+        default: ''
+    },
+    conversationSummary: {
+        type: String,
+        default: ''
+    },
+    intent: {
+        type: String,
+        default: 'unknown'
+    },
+    stage: {
+        type: String,
+        enum: [
+            'new',
+            'asked_project_type',
+            'asked_requirements',
+            'asked_timeline',
+            'asked_budget',
+            'qualified',
+            'handed_off'
+        ],
+        default: 'new'
+    },
+    status: {
+        type: String,
+        default: 'open'
+    },
+    aiPaused: {
+        type: Boolean,
+        default: false
+    },
+    handoffReason: {
+        type: String,
+        default: ''
+    },
     isAIPaused: {
         type: Boolean,
         default: false
@@ -16,8 +80,11 @@ const userContextSchema = new mongoose.Schema({
     lastInteraction: {
         type: Date,
         default: Date.now
+    },
+    lastMessageAt: {
+        type: Date
     }
-});
+}, { timestamps: true });
 
 const UserContext = mongoose.model('UserContext', userContextSchema);
 

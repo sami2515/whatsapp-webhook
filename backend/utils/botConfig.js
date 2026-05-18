@@ -1,57 +1,52 @@
+import { SAMI_KNOWLEDGE } from '../data/samiKnowledge.js';
+
 export const BOT_CONFIG = {
-    // Basic settings (can be moved to DB later)
     ENABLED: true,
-    LIVE_STATUS: "Available 🟢", // e.g., "Sleeping 😴", "Driving 🚗"
-
-    // Messages
-    WELCOME_MESSAGE: "Greetings! 👋\n\nYou have reached the office of Mr. Muhammad Sami. I am his AI Executive Assistant.\n\nMr. Sami is currently: *{{STATUS}}*.\n\nHow may I assist you today? Please choose an option from the menu below, or simply reply to chat with me.",
-
-    SOCIAL_LINKS: "You may connect with Mr. Sami through his professional profiles:\n\n💼 LinkedIn: https://linkedin.com/in/sami\n🐦 X (Twitter): https://x.com/sami\n📘 Facebook: https://facebook.com/sami",
-
-    LEAVE_MESSAGE_PROMPT: "Please type your message, and I will ensure it reaches Mr. Sami upon his return. 📝",
-
-    URGENT_MESSAGE_ACK: "🚨 Your message has been marked as URGENT. Mr. Sami has been notified immediately, and I have paused my AI responses so he can take over."
+    LIVE_STATUS: 'Available',
+    WELCOME_MESSAGE: `Jee, main ${SAMI_KNOWLEDGE.assistantName} hoon. Aap website, portal, e-commerce store, dashboard, ya custom web app ke bare mein baat karna chahte hain?`,
+    SOCIAL_LINKS: `Main website: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}`,
+    LEAVE_MESSAGE_PROMPT: 'Aap apni project requirement bhej dein, main Sami ko proper context ke sath forward kar dunga.',
+    URGENT_MESSAGE_ACK: 'Jee zaroor. Aap topic bata dein taake main Sami ko proper context ke sath forward kar doon.'
 };
 
-// WhatsApp Interactive List Message Payload builder
 export const buildInteractiveMenuPayload = (toPhoneNumber) => {
     return {
-        messaging_product: "whatsapp",
-        recipient_type: "individual",
+        messaging_product: 'whatsapp',
+        recipient_type: 'individual',
         to: toPhoneNumber,
-        type: "interactive",
+        type: 'interactive',
         interactive: {
-            type: "list",
+            type: 'list',
             header: {
-                type: "text",
-                text: "🤖 Sami's AI Assistant"
+                type: 'text',
+                text: SAMI_KNOWLEDGE.assistantName
             },
             body: {
-                text: BOT_CONFIG.WELCOME_MESSAGE.replace('{{STATUS}}', BOT_CONFIG.LIVE_STATUS)
+                text: BOT_CONFIG.WELCOME_MESSAGE
             },
             footer: {
-                text: "Select an option below"
+                text: SAMI_KNOWLEDGE.businessName
             },
             action: {
-                button: "Open Menu 📋",
+                button: 'Open menu',
                 sections: [
                     {
-                        title: "Contact Options",
+                        title: 'Quick options',
                         rows: [
                             {
-                                id: "btn_social",
-                                title: "📱 Social Media Links",
-                                description: "Connect professionally"
+                                id: 'btn_social',
+                                title: 'Links',
+                                description: 'Website and portfolio'
                             },
                             {
-                                id: "btn_leave_msg",
-                                title: "📝 Leave a Message",
-                                description: "Send a normal text"
+                                id: 'btn_leave_msg',
+                                title: 'Project inquiry',
+                                description: 'Share your requirement'
                             },
                             {
-                                id: "btn_urgent",
-                                title: "🚨 Mark as URGENT",
-                                description: "Notify Mr. Sami immediately"
+                                id: 'btn_urgent',
+                                title: 'Talk to Sami',
+                                description: 'Share topic for handoff'
                             }
                         ]
                     }
@@ -60,3 +55,4 @@ export const buildInteractiveMenuPayload = (toPhoneNumber) => {
         }
     };
 };
+

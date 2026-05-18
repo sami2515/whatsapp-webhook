@@ -13,7 +13,8 @@ import {
     updateBotSettings,
     subscribeToPush,
     sendReaction,
-    deleteMessage
+    deleteMessage,
+    resumeAIForConversation
 } from '../controllers/whatsappController.js';
 
 const router = express.Router();
@@ -46,6 +47,7 @@ router.get('/messages/:phoneNumber', getChatHistory);
 // Get and Update Bot Configuration (ON/OFF and Live Status)
 router.get('/bot-settings', getBotSettings);
 router.post('/bot-settings', updateBotSettings);
+router.post('/resume-ai/:phoneNumber', resumeAIForConversation);
 
 // Subscribe a device for Web Push Notifications
 router.post('/subscribe', subscribeToPush);

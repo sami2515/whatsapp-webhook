@@ -37,7 +37,7 @@ class ErrorBoundary extends Component {
 }
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => sessionStorage.getItem('chat_dashboard_auth') === 'true');
   const [passwordInput, setPasswordInput] = useState('');
   const [error, setError] = useState('');
   const [showSplash, setShowSplash] = useState(true);
@@ -47,11 +47,6 @@ function App() {
     const timer = setTimeout(() => {
       setShowSplash(false);
     }, 2500);
-
-    const isLogged = sessionStorage.getItem('chat_dashboard_auth') === 'true';
-    if (isLogged) {
-      setIsAuthenticated(true);
-    }
 
     return () => clearTimeout(timer);
   }, []);

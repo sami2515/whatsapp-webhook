@@ -8,7 +8,16 @@ import Message from '../models/Message.js';
 import Subscription from '../models/Subscription.js';
 import UserContext from '../models/UserContext.js';
 import { generateAIResponse } from '../services/geminiService.js';
-import { BOT_CONFIG, buildInteractiveMenuPayload } from '../utils/botConfig.js';
+import { BOT_CONFIG } from '../utils/botConfig.js';
+import {
+    buildLeadSummary,
+    detectIntent,
+    getRuleBasedAssistantResponse,
+    getStageForLead,
+    inferLeadUpdateFromIntent,
+    parseWebsiteLeadMessage,
+    sanitizeAssistantReply
+} from '../utils/assistantLogic.js';
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 
@@ -22,6 +31,116 @@ const configureWebPush = () => {
         );
         webpushConfigured = true;
     }
+};
+
+const RAPID_REPLY_WINDOW_MS = 2500;
+const CUSTOMER_SERVICE_WINDOW_MS = 24 * 60 * 60 * 1000;
+const LEAD_UPDATE_FIELDS = ['name', 'business', 'serviceType', 'budget', 'timeline', 'projectDetails'];
+
+const shouldUseValue = (value) => {
+    return typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
+};
+
+const applyLeadUpdate = (userContext, leadUpdate = {}) => {
+    for (const field of LEAD_UPDATE_FIELDS) {
+        if (shouldUseValue(leadUpdate[field])) {
+            userContext[field] = String(leadUpdate[field]).trim();
+        }
+    }
+};
+
+const getLeadSnapshot = (userContext) => ({
+    phone: userContext.phone || userContext.phoneNumber,
+    name: userContext.name,
+    business: userContext.business,
+    serviceType: userContext.serviceType,
+    budget: userContext.budget,
+    timeline: userContext.timeline,
+    projectDetails: userContext.projectDetails,
+    requirementSummary: userContext.requirementSummary,
+    conversationSummary: userContext.conversationSummary,
+    intent: userContext.intent,
+    stage: userContext.stage,
+    status: userContext.status,
+    aiPaused: userContext.aiPaused || userContext.isAIPaused,
+    isAIPaused: userContext.isAIPaused,
+    handoffReason: userContext.handoffReason
+});
+
+const refreshLeadSummary = (userContext) => {
+    const summary = buildLeadSummary(getLeadSnapshot(userContext));
+    userContext.requirementSummary = summary;
+    userContext.conversationSummary = summary;
+};
+
+const pauseAIForLead = (userContext, reason = 'Lead needs Sami handoff') => {
+    userContext.isAIPaused = true;
+    userContext.aiPaused = true;
+    userContext.aiPausedAt = new Date();
+    userContext.stage = 'handed_off';
+    userContext.status = 'needs_handoff';
+    userContext.handoffReason = reason;
+};
+
+const resumeExpiredPause = (userContext) => {
+    if (!userContext.isAIPaused || !userContext.aiPausedAt) return;
+    if (['needs_handoff', 'manual_reply'].includes(userContext.status)) return;
+
+    const hoursPassed = (new Date() - new Date(userContext.aiPausedAt)) / (1000 * 60 * 60);
+    if (hoursPassed >= 12) {
+        userContext.isAIPaused = false;
+        userContext.aiPaused = false;
+        userContext.aiPausedAt = null;
+        userContext.status = 'open';
+    }
+};
+
+const isWithinCustomerServiceWindow = (userContext) => {
+    if (!userContext?.lastMessageAt) return false;
+    return Date.now() - new Date(userContext.lastMessageAt).getTime() <= CUSTOMER_SERVICE_WINDOW_MS;
+};
+
+const hasActiveCustomerServiceWindow = async (phoneNumber) => {
+    const userContext = await UserContext.findOne({ phoneNumber });
+    if (isWithinCustomerServiceWindow(userContext)) return true;
+
+    const lastInbound = await Message.findOne({
+        from: phoneNumber,
+        status: { $in: ['received', 'read'] }
+    }).sort({ timestamp: -1 });
+
+    if (!lastInbound?.timestamp) return false;
+    return Date.now() - new Date(lastInbound.timestamp).getTime() <= CUSTOMER_SERVICE_WINDOW_MS;
+};
+
+const sendWhatsAppText = async ({ phoneNumberId, to, text, token }) => {
+    return axios.post(
+        `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
+        {
+            messaging_product: 'whatsapp',
+            recipient_type: 'individual',
+            to,
+            type: 'text',
+            text: { body: text }
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+    );
+};
+
+const markManualReply = async (phoneNumber) => {
+    await UserContext.findOneAndUpdate(
+        { phoneNumber },
+        {
+            phone: phoneNumber,
+            isAIPaused: true,
+            aiPaused: true,
+            aiPausedAt: new Date(),
+            stage: 'handed_off',
+            status: 'manual_reply',
+            handoffReason: 'Admin sent a manual reply'
+        },
+        { upsert: true }
+    );
 };
 
 export const subscribeToPush = async (req, res) => {
@@ -105,9 +224,10 @@ export const handleIncomingMessage = async (req, res) => {
 
                 console.log(`Received ${msgType} message from ${from}`);
 
-                // Check if this is the first message from this user to trigger the Bot Menu
-                const existingMsg = await Message.findOne({ from });
-                const isFirstMessage = !existingMsg;
+                if (messageId && await Message.exists({ messageId })) {
+                    console.log(`Duplicate WhatsApp message ignored: ${messageId}`);
+                    return res.sendStatus(200);
+                }
 
                 // Save incoming message to MongoDB
                 const savedMessage = await Message.create({
@@ -153,33 +273,41 @@ export const handleIncomingMessage = async (req, res) => {
                     console.error('Failed to send push notifications:', pushErr);
                 }
 
+                const incomingIntent = detectIntent(msgBody);
+                const parsedLead = parseWebsiteLeadMessage(msgBody);
+                const inferredLeadUpdate = {
+                    ...inferLeadUpdateFromIntent(incomingIntent),
+                    ...parsedLead
+                };
+
+                let userContext = await UserContext.findOne({ phoneNumber: from });
+                const previousLastMessageAt = userContext?.lastMessageAt;
+
+                if (!userContext) {
+                    userContext = await UserContext.create({
+                        phoneNumber: from,
+                        phone: from
+                    });
+                }
+
+                resumeExpiredPause(userContext);
+                userContext.phone = userContext.phone || from;
+                userContext.lastInteraction = new Date();
+                userContext.lastMessageAt = new Date();
+                userContext.intent = incomingIntent;
+                applyLeadUpdate(userContext, inferredLeadUpdate);
+                userContext.stage = getStageForLead(getLeadSnapshot(userContext), incomingIntent);
+                refreshLeadSummary(userContext);
+                await userContext.save();
+
+                const isRapidMessage = previousLastMessageAt &&
+                    (Date.now() - new Date(previousLastMessageAt).getTime()) < RAPID_REPLY_WINDOW_MS;
+
                 // Auto Responder Logic (if Bot is enabled)
                 if (BOT_CONFIG.ENABLED) {
                     const token = process.env.WHATSAPP_TOKEN;
 
-                    // Fetch or Create User Context for AI state tracking
-                    let userContext = await UserContext.findOne({ phoneNumber: from });
-                    if (!userContext) {
-                        userContext = await UserContext.create({ phoneNumber: from });
-                    } else if (userContext.isAIPaused && userContext.aiPausedAt) {
-                        // Check if 12 hours have passed since it was paused
-                        const hoursPassed = (new Date() - new Date(userContext.aiPausedAt)) / (1000 * 60 * 60);
-                        if (hoursPassed >= 12) {
-                            userContext.isAIPaused = false;
-                            userContext.aiPausedAt = null;
-                            await userContext.save();
-                        }
-                    }
-
-                    if (isFirstMessage && !isInteractive) {
-                        // Send the main Welcome List Menu
-                        const menuPayload = buildInteractiveMenuPayload(from);
-                        await axios.post(
-                            `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
-                            menuPayload,
-                            { headers: { Authorization: `Bearer ${token}` } }
-                        );
-                    } else if (isInteractive && interactiveId) {
+                    if (isInteractive && interactiveId) {
                         let textReply = "";
                         let markUrgent = false;
 
@@ -194,25 +322,33 @@ export const handleIncomingMessage = async (req, res) => {
                         }
 
                         if (textReply) {
-                            await axios.post(
-                                `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
-                                { messaging_product: "whatsapp", recipient_type: "individual", to: from, type: "text", text: { body: textReply } },
-                                { headers: { Authorization: `Bearer ${token}` } }
-                            );
+                            const sentReply = await sendWhatsAppText({ phoneNumberId, to: from, text: textReply, token });
+                            if (sentReply.data?.messages?.length > 0) {
+                                await Message.create({
+                                    from: phoneNumberId,
+                                    to: from,
+                                    messageId: sentReply.data.messages[0].id,
+                                    type: 'text',
+                                    text: textReply,
+                                    status: 'sent',
+                                    timestamp: new Date()
+                                });
+                            }
                         }
 
                         if (markUrgent) {
                             // Pause AI for this user so Sami can handle it manually
-                            userContext.isAIPaused = true;
+                            pauseAIForLead(userContext, 'User selected talk to Sami / urgent handoff');
+                            refreshLeadSummary(userContext);
                             await userContext.save();
 
                             // Update the just saved incoming message to be marked urgent for the UI
-                            savedMessage.text = `[URGENT 🚨] ${savedMessage.text}`;
+                            savedMessage.text = `[URGENT] ${savedMessage.text}`;
                             await savedMessage.save();
                         }
                     } else if (!isInteractive && (msgType === 'text' || msgType === 'image')) {
                         // Forward regular text or image to Gemini AI if not paused
-                        if (!userContext.isAIPaused) {
+                        if (!userContext.isAIPaused && !userContext.aiPaused && !isRapidMessage) {
 
                             // 1. Fetch Chat History (Memory) - Exclude current message
                             const recentContext = await Message.find({
@@ -247,22 +383,42 @@ export const handleIncomingMessage = async (req, res) => {
                                 }
                             }
 
-                            let aiReply = await generateAIResponse(msgBody, BOT_CONFIG.LIVE_STATUS, history, base64Image);
+                            const ruleReply = msgType === 'text'
+                                ? getRuleBasedAssistantResponse({
+                                    messageText: msgBody,
+                                    intent: incomingIntent,
+                                    lead: getLeadSnapshot(userContext),
+                                    parsedLead
+                                })
+                                : null;
 
-                            // Check if AI explicitly requested an auto-handover
-                            if (aiReply.includes('[PAUSE]')) {
-                                userContext.isAIPaused = true;
-                                userContext.aiPausedAt = new Date();
-                                await userContext.save();
-                                aiReply = aiReply.replace('[PAUSE]', '').trim();
+                            const aiResult = ruleReply || await generateAIResponse(
+                                msgBody,
+                                BOT_CONFIG.LIVE_STATUS,
+                                history,
+                                base64Image,
+                                {
+                                    detectedIntent: incomingIntent,
+                                    lead: getLeadSnapshot(userContext),
+                                    conversationSummary: userContext.conversationSummary
+                                }
+                            );
+
+                            applyLeadUpdate(userContext, aiResult.leadUpdate || {});
+                            userContext.intent = aiResult.intent || incomingIntent;
+                            userContext.stage = aiResult.stage || getStageForLead(getLeadSnapshot(userContext), userContext.intent);
+
+                            if (aiResult.pauseAI || /\[PAUSE\]/i.test(aiResult.reply || '')) {
+                                pauseAIForLead(userContext, aiResult.handoffReason || 'Assistant requested handoff');
                             }
 
-                            // Send AI reply back to user
-                            const aiRes = await axios.post(
-                                `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
-                                { messaging_product: "whatsapp", recipient_type: "individual", to: from, type: "text", text: { body: aiReply } },
-                                { headers: { Authorization: `Bearer ${token}` } }
-                            );
+                            refreshLeadSummary(userContext);
+                            await userContext.save();
+
+                            const aiReply = sanitizeAssistantReply(aiResult.reply || '')
+                                || 'Assistant abhi temporarily busy hai. Aap apni requirement bhej dein, Sami ko forward kar diya jayega.';
+
+                            const aiRes = await sendWhatsAppText({ phoneNumberId, to: from, text: aiReply, token });
 
                             // Save AI outgoing message locally to MongoDB so it shows in Dashboard
                             if (aiRes.data?.messages && aiRes.data.messages.length > 0) {
@@ -324,6 +480,15 @@ export const sendWhatsAppMessage = async (req, res) => {
 
         const token = process.env.WHATSAPP_TOKEN;
         const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+        const freeFormTypes = ['text', 'audio', 'image', 'video', 'document'];
+
+        if (freeFormTypes.includes(type)) {
+            if (!await hasActiveCustomerServiceWindow(to)) {
+                return res.status(400).json({
+                    error: 'Free-form WhatsApp replies are only allowed inside the 24-hour customer service window.'
+                });
+            }
+        }
 
         let payload = {
             messaging_product: 'whatsapp',
@@ -364,11 +529,7 @@ export const sendWhatsAppMessage = async (req, res) => {
 
             // Auto-pause AI when Admin sends a manual message
             if (type === 'text' || type === 'audio' || type === 'image' || type === 'video' || type === 'document') {
-                await UserContext.findOneAndUpdate(
-                    { phoneNumber: to },
-                    { isAIPaused: true, aiPausedAt: new Date() },
-                    { upsert: true }
-                );
+                await markManualReply(to);
             }
 
             let templateString = '';
@@ -428,7 +589,32 @@ export const getConversations = async (req, res) => {
             { $sort: { timestamp: -1 } }
         ]);
 
-        res.status(200).json(conversations);
+        const phoneNumbers = conversations.map((conversation) => conversation._id);
+        const leadContexts = await UserContext.find({ phoneNumber: { $in: phoneNumbers } }).lean();
+        const leadByPhone = new Map(leadContexts.map((lead) => [lead.phoneNumber, lead]));
+
+        const conversationsWithLeads = conversations.map((conversation) => {
+            const lead = leadByPhone.get(conversation._id);
+            return {
+                ...conversation,
+                lead: lead ? {
+                    name: lead.name,
+                    business: lead.business,
+                    serviceType: lead.serviceType,
+                    budget: lead.budget,
+                    timeline: lead.timeline,
+                    projectDetails: lead.projectDetails,
+                    requirementSummary: lead.requirementSummary,
+                    intent: lead.intent,
+                    stage: lead.stage,
+                    status: lead.status,
+                    aiPaused: lead.aiPaused || lead.isAIPaused,
+                    handoffReason: lead.handoffReason
+                } : null
+            };
+        });
+
+        res.status(200).json(conversationsWithLeads);
     } catch (error) {
         console.error('Error fetching conversations:', error);
         res.status(500).json({ error: 'Failed to fetch conversations' });
@@ -514,6 +700,15 @@ export const uploadAndSendAudio = async (req, res) => {
         const token = process.env.WHATSAPP_TOKEN;
         const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
 
+        if (!await hasActiveCustomerServiceWindow(to)) {
+            if (file && fs.existsSync(file.path)) {
+                fs.unlinkSync(file.path);
+            }
+            return res.status(400).json({
+                error: 'Free-form WhatsApp replies are only allowed inside the 24-hour customer service window.'
+            });
+        }
+
         // 1. Transcode Media to OGG Opus (Meta API Requirement)
         const outputPath = `${file.path}.ogg`;
 
@@ -587,6 +782,7 @@ export const uploadAndSendAudio = async (req, res) => {
                 mediaId: mediaId,
                 status: 'sent'
             });
+            await markManualReply(to);
         }
 
         res.status(200).json({ success: true, response: response.data });
@@ -613,6 +809,15 @@ export const uploadAndSendImage = async (req, res) => {
 
         const token = process.env.WHATSAPP_TOKEN;
         const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+
+        if (!await hasActiveCustomerServiceWindow(to)) {
+            if (file && fs.existsSync(file.path)) {
+                fs.unlinkSync(file.path);
+            }
+            return res.status(400).json({
+                error: 'Free-form WhatsApp replies are only allowed inside the 24-hour customer service window.'
+            });
+        }
 
         // 1. Upload Media
         const formData = new FormData();
@@ -671,6 +876,7 @@ export const uploadAndSendImage = async (req, res) => {
                 mediaId: mediaId,
                 status: 'sent'
             });
+            await markManualReply(to);
         }
 
         res.status(200).json({ success: true, response: response.data });
@@ -714,6 +920,44 @@ export const updateBotSettings = (req, res) => {
     });
 };
 
+export const resumeAIForConversation = async (req, res) => {
+    try {
+        const { phoneNumber } = req.params;
+
+        if (!phoneNumber) {
+            return res.status(400).json({ error: 'Phone number is required.' });
+        }
+
+        const userContext = await UserContext.findOneAndUpdate(
+            { phoneNumber },
+            {
+                isAIPaused: false,
+                aiPaused: false,
+                aiPausedAt: null,
+                status: 'open',
+                handoffReason: ''
+            },
+            { new: true }
+        );
+
+        if (!userContext) {
+            return res.status(404).json({ error: 'Lead context not found.' });
+        }
+
+        res.status(200).json({
+            success: true,
+            lead: {
+                phoneNumber: userContext.phoneNumber,
+                aiPaused: userContext.aiPaused || userContext.isAIPaused,
+                status: userContext.status
+            }
+        });
+    } catch (error) {
+        console.error('Error resuming AI:', error);
+        res.status(500).json({ error: 'Failed to resume AI.' });
+    }
+};
+
 export const sendReaction = async (req, res) => {
     try {
         const { to, messageId, emoji } = req.body;
@@ -723,6 +967,12 @@ export const sendReaction = async (req, res) => {
 
         const token = process.env.WHATSAPP_TOKEN;
         const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+
+        if (!await hasActiveCustomerServiceWindow(to)) {
+            return res.status(400).json({
+                error: 'WhatsApp reactions are only allowed inside the 24-hour customer service window.'
+            });
+        }
 
         const payload = {
             messaging_product: 'whatsapp',
@@ -735,7 +985,7 @@ export const sendReaction = async (req, res) => {
             }
         };
 
-        const response = await axios.post(
+        await axios.post(
             `https://graph.facebook.com/v21.0/${phoneNumberId}/messages`,
             payload,
             {
@@ -747,7 +997,7 @@ export const sendReaction = async (req, res) => {
         );
 
         // Save a dummy record to render locally that we reacted
-        const newReactionMsg = await Message.create({
+        await Message.create({
             from: phoneNumberId,
             to: to,
             text: emoji,

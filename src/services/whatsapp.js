@@ -85,3 +85,8 @@ export const deleteLocalMessage = async (messageId) => {
   const response = await axios.delete(`${BASE_URL}/messages/${messageId}`);
   return response.data;
 };
+
+export const resumeAI = async (phoneNumber) => {
+  const response = await axios.post(`${BASE_URL}/resume-ai/${phoneNumber}`);
+  return response.data;
+};
