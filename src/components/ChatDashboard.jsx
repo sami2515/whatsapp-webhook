@@ -43,6 +43,7 @@ export default function ChatDashboard() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
     const [selectedTemplate, setSelectedTemplate] = useState('hello_world');
+    const [isLeadDetailsOpen, setIsLeadDetailsOpen] = useState(false);
 
     // Bot Control State
     const [botEnabled, setBotEnabled] = useState(false);
@@ -55,6 +56,7 @@ export default function ChatDashboard() {
     const [pushEnabled, setPushEnabled] = useState(false);
     const [pushStatus, setPushStatus] = useState('checking');
     const [pushMessage, setPushMessage] = useState('');
+    const [pushServerStatus, setPushServerStatus] = useState({ enabled: null, reason: '' });
     const [dashboardNotice, setDashboardNotice] = useState('');
 
     const messagesEndRef = useRef(null);
@@ -78,12 +80,14 @@ export default function ChatDashboard() {
         if (activeNumber) {
             shouldForceScrollRef.current = true;
             setChatControlMessage('');
+            setIsLeadDetailsOpen(false);
             fetchMessages(activeNumber);
             fetchUserContext(activeNumber);
             const interval = setInterval(() => fetchMessages(activeNumber), 5000);
             return () => clearInterval(interval);
         } else {
             setActiveLeadContext(null);
+            setIsLeadDetailsOpen(false);
         }
     }, [activeNumber]);
 
@@ -229,6 +233,20 @@ export default function ChatDashboard() {
         }
 
         try {
+            const vapid = await getPushPublicKey();
+            const serverStatus = {
+                enabled: Boolean(vapid.enabled),
+                reason: vapid.reason || (vapid.enabled ? 'valid' : 'missing_vapid_keys')
+            };
+            setPushServerStatus(serverStatus);
+
+            if (!serverStatus.enabled) {
+                setPushEnabled(false);
+                setPushStatus('server_disabled');
+                setPushMessage('');
+                return;
+            }
+
             const registration = await ensureServiceWorkerRegistration();
             const subscription = await registration.pushManager.getSubscription();
             setPushEnabled(Boolean(subscription));
@@ -263,10 +281,14 @@ export default function ChatDashboard() {
 
             const registration = await ensureServiceWorkerRegistration();
             const vapid = await getPushPublicKey();
+            setPushServerStatus({
+                enabled: Boolean(vapid.enabled),
+                reason: vapid.reason || (vapid.enabled ? 'valid' : 'missing_vapid_keys')
+            });
 
             if (!vapid.enabled || !vapid.publicKey) {
-                setPushStatus('error');
-                setPushMessage('Push is disabled on the server. Add valid VAPID keys and restart the backend.');
+                setPushStatus('server_disabled');
+                setPushMessage('Push notifications are not configured on the server. Add valid VAPID keys and restart backend.');
                 return;
             }
 
@@ -546,6 +568,9 @@ export default function ChatDashboard() {
     const isActiveAIPaused = Boolean(activeLead?.aiPaused || activeLead?.isAIPaused);
     const aiControlDisabled = isUpdatingBot || !activeNumber;
     const latestIntent = activeLead?.latestIntent || activeLead?.intent || 'unknown';
+    const pushServerDisabled = pushServerStatus.enabled === false &&
+        ['missing_vapid_keys', 'invalid_vapid_keys'].includes(pushServerStatus.reason);
+    const leadSignalText = `Unclear: ${activeLead?.unclearCount || 0} · Personal: ${activeLead?.personalQuestionCount || 0} · Off-topic: ${activeLead?.offTopicCount || 0}`;
 
     const handleResumeAI = async () => {
         if (!activeNumber) return;
@@ -640,8 +665,14 @@ export default function ChatDashboard() {
                 </div>
 
                 {pushMessage && (
-                    <div className={`dashboard-inline-message ${pushStatus === 'error' || pushStatus === 'denied' ? 'error' : 'success'}`}>
+                    <div className={`dashboard-inline-message ${pushStatus === 'error' || pushStatus === 'denied' || pushStatus === 'server_disabled' ? 'error' : 'success'}`}>
                         {pushMessage}
+                    </div>
+                )}
+
+                {pushServerDisabled && (
+                    <div className="push-server-note">
+                        Server push keys missing/invalid.
                     </div>
                 )}
 
@@ -767,38 +798,43 @@ export default function ChatDashboard() {
                                     {activeLead.name && <span>{activeLead.name}</span>}
                                     {activeLead.serviceType && <span>{activeLead.serviceType}</span>}
                                     {activeLead.budget && <span>Budget: {activeLead.budget}</span>}
-                                    {activeLead.timeline && <span>Timeline: {activeLead.timeline}</span>}
-                                    {activeLead.aiPaused && <span className="lead-paused-text">AI paused</span>}
                                 </div>
                             )}
                         </div>
-                        <div className="chat-ai-status">
-                            <span className={`ai-status-pill ${isActiveAIPaused ? 'paused' : 'active'}`}>
-                                AI: {isActiveAIPaused ? 'Paused' : 'Active'}
-                            </span>
-                            <span>Stage: {activeLead?.stage || 'new'}</span>
-                            <span>Intent: {latestIntent}</span>
-                            {activeLead?.handoffReason && <span className="chat-ai-reason">Reason: {activeLead.handoffReason}</span>}
+                        <div className="chat-header-actions">
+                            <div className="chat-ai-status">
+                                <span className={`ai-status-pill ${isActiveAIPaused ? 'paused' : 'active'}`}>
+                                    AI: {isActiveAIPaused ? 'Paused' : 'Active'}
+                                </span>
+                            </div>
+                            {isActiveAIPaused ? (
+                                <button
+                                    type="button"
+                                    className="resume-ai-btn"
+                                    onClick={handleResumeAI}
+                                    disabled={aiControlDisabled}
+                                >
+                                    {isUpdatingBot ? 'Updating...' : 'Resume AI'}
+                                </button>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="resume-ai-btn pause-ai-btn"
+                                    onClick={handlePauseAI}
+                                    disabled={aiControlDisabled}
+                                >
+                                    {isUpdatingBot ? 'Updating...' : 'Pause AI'}
+                                </button>
+                            )}
+                            <button
+                                type="button"
+                                className="lead-details-btn"
+                                onClick={() => setIsLeadDetailsOpen(true)}
+                                disabled={!activeLead}
+                            >
+                                Lead Details
+                            </button>
                         </div>
-                        {isActiveAIPaused ? (
-                            <button
-                                type="button"
-                                className="resume-ai-btn"
-                                onClick={handleResumeAI}
-                                disabled={aiControlDisabled}
-                            >
-                                {isUpdatingBot ? 'Updating...' : 'Resume AI'}
-                            </button>
-                        ) : (
-                            <button
-                                type="button"
-                                className="resume-ai-btn pause-ai-btn"
-                                onClick={handlePauseAI}
-                                disabled={aiControlDisabled}
-                            >
-                                {isUpdatingBot ? 'Updating...' : 'Pause AI'}
-                            </button>
-                        )}
                     </div>
 
                     {!botEnabled && (
@@ -813,58 +849,80 @@ export default function ChatDashboard() {
                         </div>
                     )}
 
-                    {activeLead && (
-                        <div className="lead-summary-panel">
-                            <div className="lead-summary-heading">
-                                <span>Lead Summary</span>
-                                <strong>{isActiveAIPaused ? 'Handoff mode' : 'AI active'}</strong>
-                            </div>
-                            <div className="lead-summary-grid">
-                                <div className="lead-info-card">
-                                    <span className="lead-label">Intent</span>
-                                    <strong>{latestIntent}</strong>
-                                </div>
-                                <div className="lead-info-card">
-                                    <span className="lead-label">Stage</span>
-                                    <strong>{activeLead.stage || 'new'}</strong>
-                                </div>
-                                <div className="lead-info-card">
-                                    <span className="lead-label">Service</span>
-                                    <strong>{activeLead.serviceType || 'Not set'}</strong>
-                                </div>
-                                <div className="lead-info-card">
-                                    <span className="lead-label">Budget</span>
-                                    <strong>{activeLead.budget || 'Not set'}</strong>
-                                </div>
-                                <div className="lead-info-card">
-                                    <span className="lead-label">Timeline</span>
-                                    <strong>{activeLead.timeline || 'Not set'}</strong>
-                                </div>
-                                <div className="lead-info-card">
-                                    <span className="lead-label">Lead Score</span>
-                                    <strong>{activeLead.leadScore ?? 0}</strong>
-                                </div>
-                                {(activeLead.unclearCount > 0 || activeLead.personalQuestionCount > 0 || activeLead.offTopicCount > 0) && (
-                                    <div className="lead-info-card">
-                                        <span className="lead-label">Signals</span>
-                                        <strong>
-                                            U:{activeLead.unclearCount || 0} P:{activeLead.personalQuestionCount || 0} O:{activeLead.offTopicCount || 0}
-                                        </strong>
+                    {activeLead && isLeadDetailsOpen && (
+                        <div
+                            className="lead-details-backdrop"
+                            role="presentation"
+                            onClick={() => setIsLeadDetailsOpen(false)}
+                        >
+                            <aside
+                                className="lead-details-drawer"
+                                role="dialog"
+                                aria-modal="true"
+                                aria-labelledby="lead-details-title"
+                                onClick={(event) => event.stopPropagation()}
+                            >
+                                <div className="lead-details-header">
+                                    <div>
+                                        <span className="lead-details-eyebrow">Selected Chat</span>
+                                        <h3 id="lead-details-title">Lead Details</h3>
+                                        <p>+{activeNumber}</p>
                                     </div>
-                                )}
-                                {activeLead.handoffReason && (
-                                    <div className="lead-info-card lead-summary-wide">
-                                        <span className="lead-label">Handoff</span>
-                                        <strong>{activeLead.handoffReason}</strong>
+                                    <button
+                                        type="button"
+                                        className="lead-details-close"
+                                        onClick={() => setIsLeadDetailsOpen(false)}
+                                        aria-label="Close lead details"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+
+                                <div className="lead-details-body">
+                                    <div className="lead-summary-heading">
+                                        <span>Lead Summary</span>
+                                        <strong>{isActiveAIPaused ? 'Handoff mode' : 'AI active'}</strong>
                                     </div>
-                                )}
-                                {activeLead.requirementSummary && (
-                                    <div className="lead-info-card lead-summary-wide">
-                                        <span className="lead-label">Summary</span>
-                                        <strong>{activeLead.requirementSummary}</strong>
+                                    <div className="lead-summary-grid">
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Intent</span>
+                                            <strong>{latestIntent}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Stage</span>
+                                            <strong>{activeLead.stage || 'new'}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Service</span>
+                                            <strong>{activeLead.serviceType || 'Not set'}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Budget</span>
+                                            <strong>{activeLead.budget || 'Not set'}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Timeline</span>
+                                            <strong>{activeLead.timeline || 'Not set'}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Lead Score</span>
+                                            <strong>{activeLead.leadScore ?? 0}</strong>
+                                        </div>
+                                        <div className="lead-info-card lead-summary-wide">
+                                            <span className="lead-label">Signals</span>
+                                            <strong>{leadSignalText}</strong>
+                                        </div>
+                                        <div className="lead-info-card lead-summary-wide">
+                                            <span className="lead-label">Handoff Reason</span>
+                                            <strong>{activeLead.handoffReason || 'Not set'}</strong>
+                                        </div>
+                                        <div className="lead-info-card lead-summary-wide">
+                                            <span className="lead-label">Summary</span>
+                                            <strong>{activeLead.requirementSummary || activeLead.projectDetails || 'Not set'}</strong>
+                                        </div>
                                     </div>
-                                )}
-                            </div>
+                                </div>
+                            </aside>
                         </div>
                     )}
 

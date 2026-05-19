@@ -329,10 +329,13 @@ export const getPushPublicKey = (req, res) => {
         ? { enabled: false, reason: webpushDisabledReason || 'invalid_vapid_keys' }
         : getVapidKeyStatus();
     const enabled = keyStatus.enabled && configureWebPush();
+    const reason = enabled
+        ? 'valid'
+        : (webpushDisabledReason || keyStatus.reason || 'invalid_vapid_keys');
 
     res.status(200).json({
         enabled,
-        reason: enabled ? 'valid' : keyStatus.reason,
+        reason,
         publicKey: enabled ? process.env.VAPID_PUBLIC_KEY : '',
         subject: process.env.VAPID_SUBJECT || 'mailto:admin@example.com'
     });
@@ -421,6 +424,12 @@ const notifyAdminsOfIncomingMessage = async ({ phone, text, messageType, timesta
                 if (statusCode === 403) {
                     await markSubscriptionInactive(sub);
                     logPushEndpointFailureOnce(sub, `Push subscription disabled after 403 response: ${sub.endpoint}`);
+                    return;
+                }
+
+                if (statusCode === 400 || statusCode === 401) {
+                    await markSubscriptionInactive(sub);
+                    logPushEndpointFailureOnce(sub, `Push subscription disabled after ${statusCode} response: ${sub.endpoint}`);
                     return;
                 }
 
