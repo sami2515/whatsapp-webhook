@@ -545,6 +545,7 @@ export default function ChatDashboard() {
     const activeLead = activeLeadContext || activeConversation?.lead;
     const isActiveAIPaused = Boolean(activeLead?.aiPaused || activeLead?.isAIPaused);
     const aiControlDisabled = isUpdatingBot || !activeNumber;
+    const latestIntent = activeLead?.latestIntent || activeLead?.intent || 'unknown';
 
     const handleResumeAI = async () => {
         if (!activeNumber) return;
@@ -587,57 +588,55 @@ export default function ChatDashboard() {
             {/* Sidebar */}
             <div className="sidebar">
                 <div className="sidebar-header">
-                    <h2>Chats</h2>
-
-                    {/* Bot Control Panel */}
-                    <div className="bot-control-panel">
-                        <select
-                            value={liveStatus}
-                            onChange={(e) => changeLiveStatus(e.target.value)}
-                            disabled={isUpdatingBot}
-                            className="status-dropdown"
-                        >
-                            <option value="Available 🟢">Available 🟢</option>
-                            <option value="Busy 🔴">Busy 🔴</option>
-                            <option value="Sleeping 😴">Sleeping 😴</option>
-                            <option value="At the Gym 🏋️">At the Gym 🏋️</option>
-                            <option value="Driving 🚗">Driving 🚗</option>
-                        </select>
-                        <button
-                            className={`bot-toggle-btn ${botEnabled ? 'on' : 'off'}`}
-                            onClick={toggleBotState}
-                            disabled={isUpdatingBot}
-                            title="Toggle AI Assistant Auto-Replies"
-                        >
-                            🤖 Bot: {botEnabled ? 'ON' : 'OFF'}
+                    <div className="sidebar-title-row">
+                        <h2>Chats</h2>
+                        <button className="new-chat-btn" onClick={() => setIsModalOpen(!isModalOpen)}>
+                            + New
                         </button>
                     </div>
 
-                    <div className="notification-control">
-                        {pushEnabled ? (
-                            <span className="notification-state enabled">Notifications enabled</span>
-                        ) : pushStatus === 'denied' ? (
-                            <span className="notification-state blocked">Notifications blocked in browser settings</span>
-                        ) : (
-                            <button
-                                className="new-chat-btn notification-btn"
-                                onClick={subscribeToPushNotifications}
-                                disabled={pushStatus === 'subscribing'}
-                                title="Enable mobile PWA push notifications"
+                    <div className="sidebar-controls-row">
+                        {/* Bot Control Panel */}
+                        <div className="bot-control-panel">
+                            <select
+                                value={liveStatus}
+                                onChange={(e) => changeLiveStatus(e.target.value)}
+                                disabled={isUpdatingBot}
+                                className="status-dropdown"
                             >
-                                {pushStatus === 'subscribing' ? 'Enabling...' : 'Enable Notifications'}
+                                <option value="Available 🟢">Available 🟢</option>
+                                <option value="Busy 🔴">Busy 🔴</option>
+                                <option value="Sleeping 😴">Sleeping 😴</option>
+                                <option value="At the Gym 🏋️">At the Gym 🏋️</option>
+                                <option value="Driving 🚗">Driving 🚗</option>
+                            </select>
+                            <button
+                                className={`bot-toggle-btn ${botEnabled ? 'on' : 'off'}`}
+                                onClick={toggleBotState}
+                                disabled={isUpdatingBot}
+                                title="Toggle AI Assistant Auto-Replies"
+                            >
+                                Bot: {botEnabled ? 'ON' : 'OFF'}
                             </button>
-                        )}
-                    </div>
+                        </div>
 
-                    {false && !pushEnabled && (
-                        <button className="new-chat-btn" onClick={subscribeToPushNotifications} title="Enable Local Background Notifications" style={{ marginRight: '10px', backgroundColor: '#e9edef' }}>
-                            🔔 Subscribe
-                        </button>
-                    )}
-                    <button className="new-chat-btn" onClick={() => setIsModalOpen(!isModalOpen)}>
-                        + New
-                    </button>
+                        <div className="notification-control">
+                            {pushEnabled ? (
+                                <span className="notification-state enabled">Notifications enabled</span>
+                            ) : pushStatus === 'denied' ? (
+                                <span className="notification-state blocked">Notifications blocked in browser settings</span>
+                            ) : (
+                                <button
+                                    className="new-chat-btn notification-btn"
+                                    onClick={subscribeToPushNotifications}
+                                    disabled={pushStatus === 'subscribing'}
+                                    title="Enable mobile PWA push notifications"
+                                >
+                                    {pushStatus === 'subscribing' ? 'Enabling...' : 'Enable Notifications'}
+                                </button>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 {pushMessage && (
@@ -702,7 +701,7 @@ export default function ChatDashboard() {
 
                 <div className="conversation-list">
                     {conversations.length === 0 && (
-                        <div style={{ padding: '20px', textAlign: 'center', color: '#888' }}>
+                        <div className="empty-conversations">
                             No conversations yet.
                         </div>
                     )}
@@ -726,7 +725,7 @@ export default function ChatDashboard() {
                             <div className="conv-preview">
                                 {conv.unreadCount > 0 && <span className="unread-badge">{conv.unreadCount}</span>}
                                 {conv.lastMessageFrom && conv.lastMessageFrom !== conv._id && (
-                                    <span className={`message-status ${conv.lastMessageStatus}`} style={{ marginRight: '4px', verticalAlign: 'middle', display: 'inline-flex' }}>
+                                    <span className={`message-status conv-status ${conv.lastMessageStatus}`}>
                                         {conv.lastMessageStatus === 'read' ? (
                                             <svg viewBox="0 0 16 15" width="14" height="13" fill="currentColor"><path d="M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.879a.32.32 0 0 1-.484.033l-.358-.325a.319.319 0 0 0-.484.032l-.378.483a.418.418 0 0 0 .036.541l1.32 1.266c.143.14.361.125.484-.033l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.879a.32.32 0 0 1-.484.033L1.891 7.769a.366.366 0 0 0-.515.006l-.423.433a.364.364 0 0 0 .006.514l3.258 3.185c.143.14.361.125.484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z"></path></svg>
                                         ) : conv.lastMessageStatus === 'delivered' ? (
@@ -778,8 +777,8 @@ export default function ChatDashboard() {
                                 AI: {isActiveAIPaused ? 'Paused' : 'Active'}
                             </span>
                             <span>Stage: {activeLead?.stage || 'new'}</span>
-                            <span>Intent: {activeLead?.latestIntent || activeLead?.intent || 'unknown'}</span>
-                            {activeLead?.handoffReason && <span>Reason: {activeLead.handoffReason}</span>}
+                            <span>Intent: {latestIntent}</span>
+                            {activeLead?.handoffReason && <span className="chat-ai-reason">Reason: {activeLead.handoffReason}</span>}
                         </div>
                         {isActiveAIPaused ? (
                             <button
@@ -816,46 +815,56 @@ export default function ChatDashboard() {
 
                     {activeLead && (
                         <div className="lead-summary-panel">
-                            <div>
-                                <span className="lead-label">Intent</span>
-                                <strong>{activeLead.intent || 'unknown'}</strong>
+                            <div className="lead-summary-heading">
+                                <span>Lead Summary</span>
+                                <strong>{isActiveAIPaused ? 'Handoff mode' : 'AI active'}</strong>
                             </div>
-                            <div>
-                                <span className="lead-label">Stage</span>
-                                <strong>{activeLead.stage || 'new'}</strong>
-                            </div>
-                            <div>
-                                <span className="lead-label">Service</span>
-                                <strong>{activeLead.serviceType || 'Not set'}</strong>
-                            </div>
-                            <div>
-                                <span className="lead-label">Budget</span>
-                                <strong>{activeLead.budget || 'Not set'}</strong>
-                            </div>
-                            <div>
-                                <span className="lead-label">Lead Score</span>
-                                <strong>{activeLead.leadScore ?? 0}</strong>
-                            </div>
-                            {(activeLead.unclearCount > 0 || activeLead.personalQuestionCount > 0 || activeLead.offTopicCount > 0) && (
-                                <div>
-                                    <span className="lead-label">Signals</span>
-                                    <strong>
-                                        U:{activeLead.unclearCount || 0} P:{activeLead.personalQuestionCount || 0} O:{activeLead.offTopicCount || 0}
-                                    </strong>
+                            <div className="lead-summary-grid">
+                                <div className="lead-info-card">
+                                    <span className="lead-label">Intent</span>
+                                    <strong>{latestIntent}</strong>
                                 </div>
-                            )}
-                            {activeLead.handoffReason && (
-                                <div className="lead-summary-wide">
-                                    <span className="lead-label">Handoff</span>
-                                    <strong>{activeLead.handoffReason}</strong>
+                                <div className="lead-info-card">
+                                    <span className="lead-label">Stage</span>
+                                    <strong>{activeLead.stage || 'new'}</strong>
                                 </div>
-                            )}
-                            {activeLead.requirementSummary && (
-                                <div className="lead-summary-wide">
-                                    <span className="lead-label">Summary</span>
-                                    <strong>{activeLead.requirementSummary}</strong>
+                                <div className="lead-info-card">
+                                    <span className="lead-label">Service</span>
+                                    <strong>{activeLead.serviceType || 'Not set'}</strong>
                                 </div>
-                            )}
+                                <div className="lead-info-card">
+                                    <span className="lead-label">Budget</span>
+                                    <strong>{activeLead.budget || 'Not set'}</strong>
+                                </div>
+                                <div className="lead-info-card">
+                                    <span className="lead-label">Timeline</span>
+                                    <strong>{activeLead.timeline || 'Not set'}</strong>
+                                </div>
+                                <div className="lead-info-card">
+                                    <span className="lead-label">Lead Score</span>
+                                    <strong>{activeLead.leadScore ?? 0}</strong>
+                                </div>
+                                {(activeLead.unclearCount > 0 || activeLead.personalQuestionCount > 0 || activeLead.offTopicCount > 0) && (
+                                    <div className="lead-info-card">
+                                        <span className="lead-label">Signals</span>
+                                        <strong>
+                                            U:{activeLead.unclearCount || 0} P:{activeLead.personalQuestionCount || 0} O:{activeLead.offTopicCount || 0}
+                                        </strong>
+                                    </div>
+                                )}
+                                {activeLead.handoffReason && (
+                                    <div className="lead-info-card lead-summary-wide">
+                                        <span className="lead-label">Handoff</span>
+                                        <strong>{activeLead.handoffReason}</strong>
+                                    </div>
+                                )}
+                                {activeLead.requirementSummary && (
+                                    <div className="lead-info-card lead-summary-wide">
+                                        <span className="lead-label">Summary</span>
+                                        <strong>{activeLead.requirementSummary}</strong>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
 
@@ -869,7 +878,6 @@ export default function ChatDashboard() {
                                     key={msg._id || index}
                                     className={`message-bubble-wrapper ${isSentByMe ? 'sent' : 'received'}`}
                                     onClick={() => setSelectedMessageId(isSelected ? null : msg._id)}
-                                    style={{ display: 'flex', flexDirection: 'column', alignItems: isSentByMe ? 'flex-end' : 'flex-start', position: 'relative' }}
                                 >
                                     {isSelected && (
                                         <div className={`message-actions-overlay ${isSentByMe ? 'actions-right' : 'actions-left'}`}>
@@ -884,7 +892,7 @@ export default function ChatDashboard() {
                                     )}
                                     <div className={`message-bubble ${isSentByMe ? 'sent' : 'received'}`}>
                                         {msg.contextMessageId && (
-                                            <div className="reply-context-block" style={{ backgroundColor: isSentByMe ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.05)', padding: '6px', borderRadius: '4px', marginBottom: '6px', fontSize: '13px', borderLeft: `4px solid ${isSentByMe ? '#ffffff' : '#00a884'}` }}>
+                                            <div className={`reply-context-block ${isSentByMe ? 'sent-context' : 'received-context'}`}>
                                                 {(() => {
                                                     const originalMsg = messages.find(m => m.messageId === msg.contextMessageId);
                                                     return originalMsg ? originalMsg.text : "Original message";
@@ -894,9 +902,9 @@ export default function ChatDashboard() {
                                         {msg.type === 'audio' ? (
                                             <div className="audio-message">
                                                 {msg.mediaId ? (
-                                                    <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} style={{ maxWidth: '200px' }} />
+                                                    <audio controls src={`${BASE_URL}/media/${msg.mediaId}`} />
                                                 ) : (
-                                                    <span style={{ fontStyle: 'italic' }}>Sending audio...</span>
+                                                    <span className="media-pending">Sending audio...</span>
                                                 )}
                                             </div>
                                         ) : msg.type === 'image' ? (
@@ -905,10 +913,9 @@ export default function ChatDashboard() {
                                                     <img
                                                         src={`${BASE_URL}/media/${msg.mediaId}`}
                                                         alt="Photo"
-                                                        style={{ maxWidth: '100%', borderRadius: '6px', marginBottom: '4px' }}
                                                     />
                                                 ) : (
-                                                    <div style={{ padding: '20px', backgroundColor: '#e9edef', borderRadius: '6px', textAlign: 'center' }}>
+                                                    <div className="media-placeholder">
                                                         Sending image...
                                                     </div>
                                                 )}
@@ -934,7 +941,7 @@ export default function ChatDashboard() {
                                             )}
                                         </div>
                                         {msgReactions.length > 0 && (
-                                            <div className="message-reactions" style={{ position: 'absolute', bottom: '-10px', right: isSentByMe ? 'auto' : '-10px', left: isSentByMe ? '-10px' : 'auto', background: 'white', borderRadius: '12px', padding: '2px 4px', boxShadow: '0 1px 3px rgba(0,0,0,0.2)', fontSize: '12px', display: 'flex', gap: '2px', zIndex: 5 }}>
+                                            <div className="message-reactions">
                                                 {msgReactions.map(r => <span key={r._id}>{r.text}</span>)}
                                             </div>
                                         )}
@@ -944,16 +951,16 @@ export default function ChatDashboard() {
                         })}
                         <div ref={messagesEndRef} />
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <div className="composer-shell">
                         {replyingTo && (
-                            <div className="replying-to-banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F1F5F9', padding: '10px 15px', borderLeft: '4px solid #2563EB', borderTop: '1px solid #E2E8F0' }}>
-                                <div style={{ fontSize: '13px' }}>
-                                    <span style={{ color: '#2563EB', fontWeight: 'bold' }}>Replying to</span>
-                                    <div style={{ color: '#475569', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '250px' }}>
+                            <div className="replying-to-banner">
+                                <div className="replying-to-copy">
+                                    <span>Replying to</span>
+                                    <div>
                                         {replyingTo.text}
                                     </div>
                                 </div>
-                                <button type="button" onClick={() => setReplyingTo(null)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: '18px', color: '#64748B' }}>×</button>
+                                <button type="button" className="reply-cancel-btn" onClick={() => setReplyingTo(null)}>×</button>
                             </div>
                         )}
                         <form className="chat-input-area" onSubmit={handleSendText}>
@@ -972,12 +979,13 @@ export default function ChatDashboard() {
                                     className="emoji-toggle-btn"
                                     onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                                     title="Add Emoji"
-                                    style={{ fontSize: '24px', background: 'transparent', border: 'none', cursor: 'pointer', padding: '0 8px' }}
                                 >
-                                    😃
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M12 22a10 10 0 1 1 10-10 10.012 10.012 0 0 1-10 10Zm0-2a8 8 0 1 0-8-8 8.009 8.009 0 0 0 8 8Zm-3.2-9.2a1.2 1.2 0 1 1 1.2-1.2 1.2 1.2 0 0 1-1.2 1.2Zm6.4 0a1.2 1.2 0 1 1 1.2-1.2 1.2 1.2 0 0 1-1.2 1.2ZM12 17a5.2 5.2 0 0 1-4.2-2.1l1.6-1.2a3.25 3.25 0 0 0 5.2 0l1.6 1.2A5.2 5.2 0 0 1 12 17Z"></path>
+                                    </svg>
                                 </button>
                                 {showEmojiPicker && (
-                                    <div className="emoji-picker-container" style={{ position: 'absolute', bottom: '60px', left: '10px', zIndex: 1000 }}>
+                                    <div className="emoji-picker-container">
                                         <EmojiPicker onEmojiClick={onEmojiClick} theme="light" />
                                     </div>
                                 )}
@@ -987,16 +995,15 @@ export default function ChatDashboard() {
                                     onClick={() => fileInputRef.current?.click()}
                                     disabled={isLoading}
                                     title="Attach Image"
-                                    style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'transparent', border: 'none', color: '#54656f', cursor: 'pointer' }}
                                 >
-                                    <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M1.816 15.556v.002c0 1.502.584 2.912 1.646 3.972s2.472 1.647 3.974 1.647a5.58 5.58 0 0 0 3.972-1.645l9.547-9.548c.769-.768 1.147-1.767 1.058-2.817-.079-.968-.548-1.927-1.319-2.698-1.594-1.592-4.068-1.711-5.517-.262l-7.916 7.915c-.881.881-.792 2.25.214 3.261.959.958 2.423 1.053 3.263.215l5.511-5.512c.28-.28.267-.722.053-.936l-.244-.244c-.191-.191-.567-.349-.957.04l-5.506 5.506c-.18.18-.635.127-.976-.214-.098-.097-.576-.613-.213-.973l7.915-7.917c.818-.817 2.267-.699 3.23.262.5.501.802 1.1.849 1.685.051.573-.156 1.111-.589 1.543l-9.547 9.549a3.97 3.97 0 0 1-2.829 1.171 3.975 3.975 0 0 1-2.83-1.173 3.973 3.973 0 0 1-1.172-2.828c0-1.071.415-2.076 1.172-2.83l7.209-7.211c.157-.157.264-.579.028-.814L11.5 4.36a.57.57 0 0 0-.834.018l-7.205 7.207a5.577 5.577 0 0 0-1.645 3.971z"></path>
                                     </svg>
                                 </button>
                                 <input
                                     type="file"
                                     accept="image/*"
-                                    style={{ display: 'none' }}
+                                    className="hidden-file-input"
                                     ref={fileInputRef}
                                     onChange={handleImageUpload}
                                 />
@@ -1013,26 +1020,26 @@ export default function ChatDashboard() {
 
                         {isRecording ? (
                             <div className="recording-controls">
-                                <button type="button" className="cancel-btn" onClick={handleCancelRecording} title="Delete" style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
+                                <button type="button" className="cancel-btn" onClick={handleCancelRecording} title="Delete">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
                                     </svg>
                                 </button>
-                                <button type="button" className="send-btn active-send" onClick={handleStopRecording} disabled={isLoading} title="Send" style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
+                                <button type="button" className="send-btn active-send" onClick={handleStopRecording} disabled={isLoading} title="Send">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                                     </svg>
                                 </button>
                             </div>
                         ) : inputText.trim() ? (
-                            <button type="submit" className="send-btn active-send" disabled={isLoading} style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
+                            <button type="submit" className="send-btn active-send" disabled={isLoading}>
+                                <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                                 </svg>
                             </button>
                         ) : (
-                            <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading} title="Record Voice" style={{ width: '40px', height: '40px', minWidth: '40px', flexShrink: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', minWidth: '24px' }} fill="currentColor">
+                            <button type="button" className="send-btn" onClick={handleStartRecording} disabled={isLoading} title="Record Voice">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M11.999 14.942c2.001 0 3.531-1.53 3.531-3.531V4.35c0-2.001-1.53-3.531-3.531-3.531S8.468 2.349 8.468 4.35v7.061c0 2.001 1.53 3.531 3.531 3.531zm6.238-3.53c0 3.531-2.942 6.002-6.237 6.002s-6.237-2.471-6.237-6.002H3.761c0 4.001 3.178 7.297 7.061 7.885v3.884h2.354v-3.884c3.884-.588 7.061-3.884 7.061-7.885h-2.002z"></path>
                                 </svg>
                             </button>
@@ -1042,7 +1049,16 @@ export default function ChatDashboard() {
                 </div>
             ) : (
                 <div className="no-chat-selected">
-                    <p>Select a conversation or start a new chat to begin messaging.</p>
+                    <div className="empty-state-card">
+                        <div className="empty-state-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v5A3.5 3.5 0 0 1 15.5 15H12l-4.2 3.15A.5.5 0 0 1 7 17.75V15.4a3.5 3.5 0 0 1-2-3.15v-5.75Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"></path>
+                                <path d="M8.5 8h7M8.5 11h4.75" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"></path>
+                            </svg>
+                        </div>
+                        <h3>No conversation selected</h3>
+                        <p>Choose a chat from the inbox.</p>
+                    </div>
                 </div>
             )}
         </div>

@@ -14,6 +14,7 @@ import {
     subscribeToPush,
     unsubscribeFromPush,
     getPushPublicKey,
+    deleteInactivePushSubscriptions,
     sendReaction,
     deleteMessage,
     resumeAIForConversation,
@@ -60,6 +61,7 @@ router.post('/users/:phone/pause-ai', pauseAIForConversation);
 router.post('/subscribe', subscribeToPush);
 router.post('/unsubscribe', unsubscribeFromPush);
 router.get('/push/public-key', getPushPublicKey);
+router.delete('/push/subscriptions/inactive', deleteInactivePushSubscriptions);
 
 // Send a reaction to a specific message
 router.post('/send-reaction', sendReaction);

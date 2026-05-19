@@ -27,12 +27,20 @@ ffmpeg.setFfmpegPath(ffmpegPath.path);
 let webpushConfigured = false;
 let webpushDisabled = false;
 let webpushWarningLogged = false;
+let webpushDisabledReason = '';
+const loggedPushEndpointFailures = new Set();
+const loggedMediaFetchFailures = new Set();
+const SUPPORTED_MEDIA_MESSAGE_TYPES = ['audio', 'voice', 'image', 'video', 'document'];
 
-const disableWebPush = (message = 'Push notifications disabled: invalid VAPID keys') => {
+const disableWebPush = (reason = 'invalid_vapid_keys') => {
     webpushConfigured = false;
     webpushDisabled = true;
+    webpushDisabledReason = reason;
 
     if (!webpushWarningLogged) {
+        const message = reason === 'missing_vapid_keys'
+            ? 'Push notifications disabled: missing VAPID keys'
+            : 'Push notifications disabled: invalid VAPID keys';
         console.warn(message);
         webpushWarningLogged = true;
     }
@@ -45,15 +53,18 @@ const decodeBase64Url = (value = '') => {
     return Buffer.from(normalized, 'base64');
 };
 
-const hasValidVapidShape = () => {
-    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) return false;
+const getVapidKeyStatus = () => {
+    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+        return { enabled: false, reason: 'missing_vapid_keys' };
+    }
 
     try {
         const publicKey = decodeBase64Url(process.env.VAPID_PUBLIC_KEY);
         const privateKey = decodeBase64Url(process.env.VAPID_PRIVATE_KEY);
-        return publicKey.length === 65 && publicKey[0] === 4 && privateKey.length === 32;
+        const valid = publicKey.length === 65 && publicKey[0] === 4 && privateKey.length === 32;
+        return { enabled: valid, reason: valid ? 'valid' : 'invalid_vapid_keys' };
     } catch {
-        return false;
+        return { enabled: false, reason: 'invalid_vapid_keys' };
     }
 };
 
@@ -61,8 +72,9 @@ const configureWebPush = () => {
     if (webpushConfigured) return true;
     if (webpushDisabled) return false;
 
-    if (!hasValidVapidShape()) {
-        disableWebPush('Push notifications disabled: invalid VAPID keys');
+    const keyStatus = getVapidKeyStatus();
+    if (!keyStatus.enabled) {
+        disableWebPush(keyStatus.reason);
         return false;
     }
 
@@ -75,14 +87,25 @@ const configureWebPush = () => {
         webpushConfigured = true;
         return true;
     } catch {
-        disableWebPush('Push notifications disabled: invalid VAPID keys');
+        disableWebPush('invalid_vapid_keys');
         return false;
     }
 };
 
 const isInvalidVapidError = (error) => {
-    const message = String(error?.message || error || '').toLowerCase();
-    return message.includes('vapid') || message.includes('p-256') || message.includes('curve') || message.includes('applicationserverkey');
+    const message = [
+        error?.message,
+        error?.body,
+        error?.response?.body,
+        error
+    ].map((value) => String(value || '').toLowerCase()).join(' ');
+
+    return message.includes('vapid') ||
+        message.includes('p-256') ||
+        message.includes('curve') ||
+        message.includes('applicationserverkey') ||
+        message.includes('application server key') ||
+        message.includes('permission denied');
 };
 
 const RAPID_REPLY_WINDOW_MS = 2500;
@@ -129,7 +152,7 @@ const applyContextUpdate = (userContext, contextUpdate = {}) => {
         }
     }
 
-    if (['clarification', 'off_topic', 'repeat_confusion'].includes(contextUpdate.lastBotQuestionType)) {
+    if (['clarification', 'unclear', 'off_topic', 'repeat_confusion'].includes(contextUpdate.lastBotQuestionType)) {
         userContext.lastClarificationAt = new Date();
     }
 };
@@ -302,10 +325,14 @@ export const unsubscribeFromPush = async (req, res) => {
 };
 
 export const getPushPublicKey = (req, res) => {
-    const enabled = configureWebPush();
+    const keyStatus = webpushDisabled
+        ? { enabled: false, reason: webpushDisabledReason || 'invalid_vapid_keys' }
+        : getVapidKeyStatus();
+    const enabled = keyStatus.enabled && configureWebPush();
 
     res.status(200).json({
         enabled,
+        reason: enabled ? 'valid' : keyStatus.reason,
         publicKey: enabled ? process.env.VAPID_PUBLIC_KEY : '',
         subject: process.env.VAPID_SUBJECT || 'mailto:admin@example.com'
     });
@@ -316,6 +343,41 @@ const markSubscriptionInactive = async (subscription) => {
         { endpoint: subscription.endpoint },
         { active: false }
     );
+};
+
+const markMediaUnavailable = async (mediaId, reason = 'media_unavailable') => {
+    if (!mediaId) return;
+
+    await Message.updateMany(
+        { mediaId },
+        {
+            type: 'media_unavailable',
+            text: '[Media unavailable]',
+            status: 'failed'
+        }
+    );
+
+    if (!loggedMediaFetchFailures.has(mediaId)) {
+        loggedMediaFetchFailures.add(mediaId);
+        console.warn(`Media unavailable (${reason}): ${mediaId}`);
+    }
+};
+
+const logPushEndpointFailureOnce = (subscription, message) => {
+    const key = subscription.endpoint || message;
+    if (loggedPushEndpointFailures.has(key)) return;
+    loggedPushEndpointFailures.add(key);
+    console.warn(message);
+};
+
+export const deleteInactivePushSubscriptions = async (req, res) => {
+    try {
+        const result = await Subscription.deleteMany({ active: false });
+        res.status(200).json({ success: true, deletedCount: result.deletedCount || 0 });
+    } catch (err) {
+        console.error('Error deleting inactive push subscriptions:', err);
+        res.status(500).json({ error: 'Failed to delete inactive subscriptions.' });
+    }
 };
 
 const notifyAdminsOfIncomingMessage = async ({ phone, text, messageType, timestamp }) => {
@@ -344,20 +406,30 @@ const notifyAdminsOfIncomingMessage = async ({ phone, text, messageType, timesta
                     keys: sub.keys
                 }, pushPayload);
             } catch (err) {
-                if (err.statusCode === 404 || err.statusCode === 410) {
+                const statusCode = err.statusCode || err.response?.statusCode || err.response?.status;
+
+                if (statusCode === 404 || statusCode === 410) {
                     await markSubscriptionInactive(sub);
                     return;
                 }
-                if (isInvalidVapidError(err)) {
-                    disableWebPush('Push notifications disabled: invalid VAPID keys');
+
+                if (statusCode === 403 && isInvalidVapidError(err)) {
+                    disableWebPush('invalid_vapid_keys');
                     return;
                 }
-                console.error('Push notification failed:', err.message || err);
+
+                if (statusCode === 403) {
+                    await markSubscriptionInactive(sub);
+                    logPushEndpointFailureOnce(sub, `Push subscription disabled after 403 response: ${sub.endpoint}`);
+                    return;
+                }
+
+                logPushEndpointFailureOnce(sub, `Push notification failed for ${sub.endpoint}: ${err.message || 'unexpected response'}`);
             }
         }));
     } catch (err) {
         if (isInvalidVapidError(err)) {
-            disableWebPush('Push notifications disabled: invalid VAPID keys');
+            disableWebPush('invalid_vapid_keys');
             return;
         }
         console.error('Failed to send push notifications:', err.message || err);
@@ -587,7 +659,11 @@ export const handleIncomingMessage = async (req, res) => {
                                     base64Image = Buffer.from(imageRes.data, 'binary').toString('base64');
                                     if (!msgBody) msgBody = "Please review this image and assist me.";
                                 } catch (err) {
-                                    console.error("Failed to fetch image for Gemini:", err.message);
+                                    if (err.response?.status === 400) {
+                                        await markMediaUnavailable(mediaId, 'meta_400');
+                                    } else {
+                                        console.warn(`Image unavailable for Gemini (${mediaId}): ${err.message}`);
+                                    }
                                 }
                             }
 
@@ -856,6 +932,15 @@ export const getMedia = async (req, res) => {
         const { mediaId } = req.params;
         const token = process.env.WHATSAPP_TOKEN;
 
+        if (!mediaId) {
+            return res.status(400).json({ error: 'Media ID is required.' });
+        }
+
+        const mediaMessage = await Message.findOne({ mediaId }).sort({ timestamp: -1 });
+        if (!mediaMessage || !SUPPORTED_MEDIA_MESSAGE_TYPES.includes(mediaMessage.type)) {
+            return res.status(404).json({ error: 'Media not available.' });
+        }
+
         // 1. Get Media URL
         const mediaResponse = await axios.get(
             `https://graph.facebook.com/v21.0/${mediaId}`,
@@ -885,7 +970,16 @@ export const getMedia = async (req, res) => {
         audioStreamResponse.data.pipe(res);
 
     } catch (error) {
-        console.error('Error fetching media:', error.message);
+        const { mediaId } = req.params;
+        if (error.response?.status === 400) {
+            await markMediaUnavailable(mediaId, 'meta_400');
+            return res.status(404).json({ error: 'Media unavailable.' });
+        }
+
+        if (!loggedMediaFetchFailures.has(mediaId)) {
+            loggedMediaFetchFailures.add(mediaId);
+            console.warn(`Media fetch failed (${mediaId}): ${error.message}`);
+        }
         res.status(500).json({ error: 'Failed to fetch media' });
     }
 };

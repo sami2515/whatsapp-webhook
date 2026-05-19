@@ -177,6 +177,13 @@ const repeatConfusionPhrases = [
     'سمجھ نہیں آیا', 'دوبارہ بتائیں', 'پھر سے بتاؤ', 'کیا؟'
 ];
 
+const affirmativePhrases = [
+    'yes', 'yes please', 'yes chahiye', 'haan', 'han', 'ha', 'jee', 'ji', 'g',
+    'bilkul', 'sure', 'ok', 'okay', 'theek', 'ٹھیک', 'جی', 'ہاں', 'بالکل'
+];
+
+const romanAffirmativePhrases = ['haan', 'han', 'ha', 'jee', 'ji', 'g', 'bilkul', 'yes chahiye', 'theek'];
+
 const handoffPhraseGroups = {
     request_quote: [
         'quote de do', 'quotation de do', 'quotation bhejo', 'send quote',
@@ -185,6 +192,7 @@ const handoffPhraseGroups = {
     ],
     request_call: [
         'call kar lein', 'call kar len', 'call pe baat', 'call par baat',
+        'call krni', 'call karni', 'call krni ha', 'call krni hai', 'call karni hai',
         'phone pe baat', 'can we have a call', 'schedule a call', 'call me',
         'call please', 'کال کر لیں', 'کال پر بات'
     ],
@@ -236,6 +244,19 @@ const handoffIntentPriority = [
 
 const currencyAmountPattern = /(?:rs\.?|pkr|rupees)\s*\d[\d,.]*(?:\s*(?:k|lac|lakh|thousand))?|\b\d[\d,.]*\s*(?:k|lac|lakh|thousand)\b/i;
 const durationPattern = /\b\d+\s*(?:days?|din|weeks?|week|haftay|hafta|months?|month|mahine|mahina)\b/i;
+
+export const detectAffirmative = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    if (!text) return false;
+    return affirmativePhrases.includes(text) || /^(yes|yeah|yep|haan|han|jee|ji|g)\s*(please)?$/i.test(text);
+};
+
+const detectAffirmativeLanguageStyle = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    if (/[\u0600-\u06FF]/.test(messageText)) return 'urdu';
+    if (romanAffirmativePhrases.includes(text)) return 'roman';
+    return detectLanguageStyle(messageText);
+};
 
 export const detectFeaturesOrPages = (messageText = '') => {
     const text = normalizeLoose(messageText);
@@ -556,7 +577,7 @@ export const shouldPauseForSafetyOrConfusion = ({ userContext = {}, messageText 
 
     if (
         detectRepeatConfusion(messageText) &&
-        ((userContext.unclearCount || 0) > 0 || ['clarification', 'off_topic', 'repeat_confusion'].includes(userContext.lastBotQuestionType))
+        ((userContext.unclearCount || 0) > 0 || ['clarification', 'unclear', 'off_topic', 'repeat_confusion'].includes(userContext.lastBotQuestionType))
     ) {
         return { shouldPause: true, handoffReason: 'Repeated confusion after clarification' };
     }
@@ -759,6 +780,12 @@ const getNewProjectQuestion = (style) => template(style, {
     english: 'Sure. What type of project do you need - business website, portfolio, e-commerce store, portal, dashboard, or custom web app?',
     roman: 'Jee bilkul. Aap kis type ka project banwana chahte hain - business website, portfolio, e-commerce store, portal, ya custom web app?',
     urdu: 'جی بالکل۔ آپ کس type کا project بنوانا چاہتے ہیں - business website، portfolio، e-commerce store، portal، یا custom web app؟'
+});
+
+const getAffirmativeServiceChoiceReply = (style) => template(style, {
+    english: 'Great. Which one do you need - website, portal, e-commerce store, dashboard, or custom web app?',
+    roman: 'Jee, kis type ka project chahiye - website, portal, e-commerce store, dashboard ya custom web app?',
+    urdu: 'جی، آپ کو کس type کا project چاہیے - website، portal، e-commerce store، dashboard یا custom web app?'
 });
 
 const getPortfolioReply = (style) => template(style, {
@@ -1148,6 +1175,21 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         });
     }
 
+    if (detectAffirmative(messageText) && ['service_choice', 'project_type'].includes(lead.lastBotQuestionType)) {
+        const affirmativeStyle = detectAffirmativeLanguageStyle(messageText);
+
+        return withDefaults({
+            reply: getAffirmativeServiceChoiceReply(affirmativeStyle),
+            intent: 'new_project',
+            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
+            pauseAI: false,
+            contextUpdate: {
+                ...resetContextUpdate,
+                lastBotQuestionType: 'service_choice'
+            }
+        });
+    }
+
     const isPersonalFollowUp = (lead.personalQuestionCount || 0) > 0 &&
         detectPersonalFollowUp(messageText) &&
         !usefulProjectContext;
@@ -1188,7 +1230,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
 
     if (detectRepeatConfusion(messageText)) {
         const shouldPause = (lead.unclearCount || 0) > 0 ||
-            ['clarification', 'off_topic', 'repeat_confusion'].includes(lead.lastBotQuestionType);
+            ['clarification', 'unclear', 'off_topic', 'repeat_confusion'].includes(lead.lastBotQuestionType);
 
         return withDefaults({
             reply: shouldPause ? getRepeatedUnclearHandoffReply(style) : getUnclearOffTopicReply(style),
@@ -1243,7 +1285,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             pauseAI: false,
             contextUpdate: {
                 ...resetContextUpdate,
-                lastBotQuestionType: 'project_type'
+                lastBotQuestionType: 'service_choice'
             }
         });
     }
@@ -1272,7 +1314,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             pauseAI: false,
             contextUpdate: {
                 ...resetContextUpdate,
-                lastBotQuestionType: 'project_type'
+                lastBotQuestionType: 'service_choice'
             }
         });
     }
@@ -1285,7 +1327,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             pauseAI: false,
             contextUpdate: {
                 ...resetContextUpdate,
-                lastBotQuestionType: 'project_type'
+                lastBotQuestionType: 'service_choice'
             }
         });
     }
@@ -1422,7 +1464,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             pauseAI: false,
             contextUpdate: {
                 ...resetContextUpdate,
-                lastBotQuestionType: 'project_type'
+                lastBotQuestionType: 'service_choice'
             }
         });
     }
@@ -1435,7 +1477,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             pauseAI: false,
             contextUpdate: {
                 unclearCount: (lead.unclearCount || 0) + 1,
-                lastBotQuestionType: 'clarification'
+                lastBotQuestionType: 'unclear'
             }
         });
     }
