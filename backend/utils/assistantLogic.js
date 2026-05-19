@@ -14,6 +14,30 @@ export const LEAD_STAGES = {
 };
 
 const WEBSITE_BUILD_PLAN_TEXT = 'hi sami, i want a web development build plan.';
+export const AUTO_RESUME_STALE_PAUSE_HOURS = 6;
+
+const SAFETY_CONFUSION_PAUSE_REASONS = [
+    'Repeated personal/private question',
+    'Repeated unclear/off-topic messages',
+    'Repeated confusion after clarification',
+    'Abusive or inappropriate message'
+];
+
+const SERIOUS_LEAD_PAUSE_REASONS = [
+    'Manually paused by admin',
+    'Qualified lead asked for quote',
+    'User requested call',
+    'User requested meeting',
+    'User wants to proceed',
+    'Detailed build-plan form completed',
+    'Lead score reached threshold',
+    'Strong qualified lead reached threshold',
+    'User requested human handoff',
+    'User selected talk to Sami / urgent handoff',
+    'User asked for a final quote after sharing lead details',
+    'User asked to talk to Sami after sharing lead details',
+    'User requested a call after sharing lead details'
+];
 
 const normalizeText = (text = '') => text.toLowerCase().replace(/\s+/g, ' ').trim();
 
@@ -26,6 +50,11 @@ const normalizeLoose = (text = '') => normalizeText(text)
 const includesAny = (text, keywords) => keywords.some((keyword) => text.includes(keyword));
 
 const matchesAny = (text, patterns) => patterns.some((pattern) => pattern.test(text));
+
+const matchesReason = (reason = '', reasons = []) => {
+    const normalizedReason = normalizeText(reason);
+    return reasons.some((item) => normalizedReason.includes(normalizeText(item)));
+};
 
 const toTitleCase = (value = '') => {
     return value
@@ -323,12 +352,14 @@ export const inferLeadUpdateFromMessage = (messageText = '', lead = {}) => {
     const timeline = extractTimeline(messageText);
     const hasFeatureDetails = detectFeaturesOrPages(messageText);
     const cleanedMessage = cleanParsedValue(messageText);
+    const genericWebsiteIntent = hasGenericWebsiteBuildIntent(messageText);
 
     if (serviceType) leadUpdate.serviceType = serviceType;
     if (budget) leadUpdate.budget = budget;
     if (timeline) leadUpdate.timeline = timeline;
 
     if (
+        !genericWebsiteIntent &&
         cleanedMessage.length > 15 &&
         (
             hasFeatureDetails ||
@@ -383,6 +414,44 @@ export const detectRepeatConfusion = (messageText = '') => {
     return includesAny(normalizeLoose(messageText), repeatConfusionPhrases);
 };
 
+export const hasGenericWebsiteBuildIntent = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    return includesAny(text, [
+        'website banwani hai',
+        'website banwana hai',
+        'site banwani hai',
+        'site banwana hai',
+        'web development chahiye',
+        'web development karwani hai',
+        'web development karwana hai',
+        'website chahiye',
+        'website chaiye',
+        'project banwana hai',
+        'project banwani hai'
+    ]);
+};
+
+export const hasClearProjectIntent = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    return hasGenericWebsiteBuildIntent(messageText) || includesAny(text, [
+        'business website',
+        'company website',
+        'ecommerce store',
+        'e-commerce store',
+        'online store',
+        'portal chahiye',
+        'portal banana',
+        'dashboard chahiye',
+        'dashboard banana',
+        'odoo ka kaam',
+        'odoo work',
+        'custom web app',
+        'build plan',
+        'project discuss karna hai',
+        'project discuss krna hai'
+    ]);
+};
+
 export const hasUsefulProjectContext = (messageText = '', leadUpdate = {}) => {
     const text = normalizeLoose(messageText);
     return Boolean(
@@ -394,6 +463,7 @@ export const hasUsefulProjectContext = (messageText = '', leadUpdate = {}) => {
         extractBudget(messageText) ||
         extractTimeline(messageText) ||
         detectFeaturesOrPages(messageText) ||
+        hasClearProjectIntent(messageText) ||
         includesAny(text, ['website banwani', 'website banwana', 'web development', 'project banwana'])
     );
 };
@@ -522,6 +592,7 @@ export const shouldPauseForQualifiedLead = ({ lead = {}, messageText = '', inten
     const handoffIntent = detectHandoffIntent(messageText);
     const leadScore = calculateLeadScore(leadWithStage, messageText);
     const hasServiceOrDetails = Boolean(leadWithStage.serviceType || leadWithStage.projectDetails);
+    const hasBudgetAndTimeline = Boolean(leadWithStage.budget && leadWithStage.timeline);
 
     if (handoffIntent.wants_human) {
         return { shouldPause: true, leadScore, handoffReason: 'User requested human handoff' };
@@ -546,11 +617,8 @@ export const shouldPauseForQualifiedLead = ({ lead = {}, messageText = '', inten
         leadScore >= 5 &&
         hasAnsweredQualificationQuestion(leadWithStage) &&
         Boolean(
-            leadWithStage.budget ||
-            leadWithStage.timeline ||
-            leadWithStage.business ||
-            leadWithStage.cameFromBuildPlan ||
-            leadWithStage.buildPlanFormSubmitted ||
+            hasBudgetAndTimeline ||
+            ((leadWithStage.cameFromBuildPlan || leadWithStage.buildPlanFormSubmitted) && (leadWithStage.budget || leadWithStage.timeline)) ||
             handoffIntent.ask_next_step
         ) &&
         !isThinLeadMessage({ lead: leadWithStage, messageText, intent })
@@ -587,6 +655,37 @@ export const shouldPauseForSafetyOrConfusion = ({ userContext = {}, messageText 
     }
 
     return { shouldPause: false, handoffReason: '' };
+};
+
+export const getPauseReasonType = (reason = '') => {
+    if (matchesReason(reason, SAFETY_CONFUSION_PAUSE_REASONS)) return 'safety_confusion';
+    if (matchesReason(reason, SERIOUS_LEAD_PAUSE_REASONS)) return 'serious_lead';
+    return reason ? 'manual_or_unknown' : '';
+};
+
+export const isSafetyConfusionPause = (reason = '') => getPauseReasonType(reason) === 'safety_confusion';
+
+export const isSeriousLeadPause = (reason = '') => {
+    const reasonType = getPauseReasonType(reason);
+    return reasonType === 'serious_lead' || reasonType === 'manual_or_unknown';
+};
+
+export const getPausedAutoResumeStatus = ({ lead = {}, messageText = '', parsedLead = {}, now = new Date() }) => {
+    const pausedAt = lead.aiPausedAt ? new Date(lead.aiPausedAt) : null;
+    const pauseAgeHours = pausedAt && !Number.isNaN(pausedAt.getTime())
+        ? (now.getTime() - pausedAt.getTime()) / (1000 * 60 * 60)
+        : 0;
+    const reasonType = getPauseReasonType(lead.handoffReason || '');
+    const staleSafetyPause = reasonType === 'safety_confusion' && pauseAgeHours >= AUTO_RESUME_STALE_PAUSE_HOURS;
+    const projectIntent = Object.keys(parsedLead || {}).length > 0 || hasClearProjectIntent(messageText);
+
+    return {
+        eligible: Boolean(staleSafetyPause && projectIntent),
+        reasonType,
+        pauseAgeHours,
+        staleSafetyPause,
+        projectIntent
+    };
 };
 
 export const detectLanguageStyle = (messageText = '') => {
@@ -666,6 +765,7 @@ export const detectIntent = (messageText = '') => {
     }
     if (
         isWebsiteBuildPlanMessage(text) ||
+        hasGenericWebsiteBuildIntent(messageText) ||
         includesAny(text, ['website banwani', 'website banwana', 'web development', 'build plan', 'project banwana', 'site banwani', 'mujhe banwani', 'mujhe banwana', 'mujhe ye banwana'])
     ) {
         return 'new_project';
@@ -1263,11 +1363,14 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
     }
 
     if (Object.keys(parsedLead).length > 0) {
+        const detailedBuildPlan = Boolean(mergedLead.serviceType && mergedLead.projectDetails && (mergedLead.budget || mergedLead.timeline));
+
         return withDefaults({
-            reply: getFormReply(leadUpdate, style),
+            reply: detailedBuildPlan ? getTalkToSamiReply(style, true) : getFormReply(leadUpdate, style),
             intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
+            stage: detailedBuildPlan ? LEAD_STAGES.HANDED_OFF : LEAD_STAGES.ASKED_REQUIREMENTS,
+            pauseAI: detailedBuildPlan,
+            handoffReason: detailedBuildPlan ? 'Detailed build-plan form completed' : '',
             contextUpdate: {
                 ...resetContextUpdate,
                 cameFromBuildPlan: true,
@@ -1351,6 +1454,19 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             });
         }
 
+        if ((leadUpdate.budget || leadUpdate.timeline) && (mergedLead.serviceType || mergedLead.projectDetails)) {
+            return withDefaults({
+                reply: getTimelineOrBudgetQuestion(style, mergedLead),
+                intent,
+                stage: !mergedLead.budget ? LEAD_STAGES.ASKED_BUDGET : LEAD_STAGES.ASKED_TIMELINE,
+                pauseAI: false,
+                contextUpdate: {
+                    ...resetContextUpdate,
+                    lastBotQuestionType: !mergedLead.budget ? 'budget' : 'timeline'
+                }
+            });
+        }
+
         return withDefaults({
             reply: getPriceReply(style),
             intent,
@@ -1378,6 +1494,19 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
             pauseAI: true,
             leadScore: handoffDecision.leadScore,
             handoffReason: handoffDecision.handoffReason
+        });
+    }
+
+    if ((leadUpdate.budget || leadUpdate.timeline) && (mergedLead.serviceType || mergedLead.projectDetails)) {
+        return withDefaults({
+            reply: getTimelineOrBudgetQuestion(style, mergedLead),
+            intent: intent === 'unknown' ? 'qualified_lead' : intent,
+            stage: !mergedLead.budget ? LEAD_STAGES.ASKED_BUDGET : LEAD_STAGES.ASKED_TIMELINE,
+            pauseAI: false,
+            contextUpdate: {
+                ...resetContextUpdate,
+                lastBotQuestionType: !mergedLead.budget ? 'budget' : 'timeline'
+            }
         });
     }
 
@@ -1485,11 +1614,12 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
     return getLegacyRuleBasedAssistantResponse({ messageText, intent, lead, parsedLead });
 };
 
-export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '' }) => {
+export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '', lead = {} }) => {
     const style = detectLanguageStyle(messageText);
     const text = normalizeLoose(messageText);
+    const pauseReasonType = getPauseReasonType(lead.handoffReason || '');
 
-    if (intent === 'ask_portfolio' || includesAny(text, ['portfolio', 'sample', 'samples', 'kaam dikhao'])) {
+    if (intent === 'ask_portfolio' || includesAny(text, ['portfolio', 'portfolio dikhao', 'work samples', 'sample', 'samples', 'kaam dikhao'])) {
         return {
             reply: template(style, {
                 english: `Sure, portfolio is here: ${SAMI_KNOWLEDGE.portfolioUrl}`,
@@ -1500,7 +1630,7 @@ export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '' }
         };
     }
 
-    if (includesAny(text, ['main website', 'website link', 'samii.pk', 'site link'])) {
+    if (includesAny(text, ['main website', 'website link', 'your website', 'you website', 'website?', 'samii.pk', 'site link', 'any site'])) {
         return {
             reply: template(style, {
                 english: `Sure, main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
@@ -1511,20 +1641,60 @@ export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '' }
         };
     }
 
-    if (intent === 'new_project' || includesAny(text, ['website banwani', 'website banwana', 'project banwana', 'web development'])) {
+    if (includesAny(text, [
+        'detail forward',
+        'details forward',
+        'details gayi',
+        'message mila',
+        'sami ko bheja',
+        'forward kardi',
+        'forward kar di',
+        'forward ho gayi'
+    ])) {
         return {
             reply: template(style, {
-                english: 'Got it, your requirement has been received. I am forwarding it to Sami, and he will reply to you soon.',
-                roman: 'Jee, aapki requirement receive ho gayi hai. Main ye Sami ko forward kar raha hoon, wo jaldi aapko reply karenge.',
-                urdu: 'جی، آپ کی requirement receive ہو گئی ہے۔ میں یہ Sami کو forward کر رہا ہوں، وہ جلدی آپ کو reply کریں گے۔'
+                english: 'Yes, details have been forwarded. Sami will reply manually soon.',
+                roman: 'Jee, details forward ho gayi hain. Sami jaldi manually reply karenge.',
+                urdu: 'Jee, details forward ho gayi hain. Sami jaldi manually reply karenge.'
             }),
-            intent: 'new_project'
+            intent: 'paused_acknowledgement'
+        };
+    }
+
+    if (includesAny(text, ['reply kab', 'kab reply', 'sami reply', 'any update', 'koi update', 'waiting', 'jaldi reply'])) {
+        return {
+            reply: template(style, {
+                english: 'Sami will reply manually soon.',
+                roman: 'Sami jaldi manually reply karenge.',
+                urdu: 'Sami jaldi manually reply karenge.'
+            }),
+            intent: 'paused_acknowledgement'
+        };
+    }
+
+    const leadUpdate = inferLeadUpdateFromMessage(messageText, lead);
+    if (
+        pauseReasonType !== 'safety_confusion' &&
+        Boolean(pauseReasonType) &&
+        (intent === 'new_project' || hasUsefulProjectContext(messageText, leadUpdate))
+    ) {
+        return {
+            reply: template(style, {
+                english: 'Got it, your additional details have been received. Sami will reply manually soon.',
+                roman: 'Jee, aapki additional details receive ho gayi hain. Sami jaldi manually reply karenge.',
+                urdu: 'Jee, aapki additional details receive ho gayi hain. Sami jaldi manually reply karenge.'
+            }),
+            intent: 'paused_additional_details'
         };
     }
 
     if (intent === 'ask_services' || includesAny(text, ['services', 'service list', 'what do you build', 'tum kya kar sakte ho'])) {
         return {
-            reply: getServicesReply(style),
+            reply: template(style, {
+                english: 'Sami builds business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, and custom web apps.',
+                roman: 'Sami business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, aur custom web apps build karte hain.',
+                urdu: 'Sami business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, aur custom web apps build karte hain.'
+            }),
             intent: 'ask_services'
         };
     }

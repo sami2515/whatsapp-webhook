@@ -13,7 +13,9 @@ import {
     buildLeadSummary,
     calculateLeadScore,
     detectIntent,
+    getPausedAutoResumeStatus,
     getPausedSafeAssistantResponse,
+    getPauseReasonType,
     getRuleBasedAssistantResponse,
     getStageForLead,
     inferLeadUpdateFromIntent,
@@ -189,6 +191,7 @@ const getLeadSnapshot = (userContext) => ({
     status: userContext.status,
     aiPaused: userContext.aiPaused || userContext.isAIPaused,
     isAIPaused: userContext.isAIPaused,
+    aiPausedAt: userContext.aiPausedAt,
     handoffReason: userContext.handoffReason,
     unclearCount: userContext.unclearCount || 0,
     personalQuestionCount: userContext.personalQuestionCount || 0,
@@ -632,26 +635,51 @@ export const handleIncomingMessage = async (req, res) => {
                             await savedMessage.save();
                         }
                     } else if (!isInteractive && (msgType === 'text' || msgType === 'image')) {
-                        const isAIPaused = userContext.isAIPaused || userContext.aiPaused;
+                        let isAIPaused = userContext.isAIPaused || userContext.aiPaused;
 
                         if (isAIPaused && msgType === 'text') {
-                            const pausedReply = getPausedSafeAssistantResponse({
+                            const autoResumeStatus = getPausedAutoResumeStatus({
+                                lead: getLeadSnapshot(userContext),
                                 messageText: msgBody,
-                                intent: incomingIntent
+                                parsedLead
                             });
 
-                            if (pausedReply?.reply) {
-                                userContext.intent = pausedReply.intent || incomingIntent;
+                            if (autoResumeStatus.eligible) {
+                                userContext.isAIPaused = false;
+                                userContext.aiPaused = false;
+                                userContext.aiPausedAt = null;
+                                userContext.handoffReason = '';
+                                userContext.status = 'open';
+                                userContext.unclearCount = 0;
+                                userContext.offTopicCount = 0;
+                                userContext.personalQuestionCount = 0;
+                                userContext.lastBotQuestionType = '';
+                                userContext.stage = getStageForLead(getLeadSnapshot(userContext), incomingIntent);
                                 refreshLeadSummary(userContext, msgBody);
                                 await userContext.save();
-                                await sendAndSaveAssistantText({
-                                    phoneNumberId,
-                                    to: from,
-                                    text: sanitizeAssistantReply(pausedReply.reply),
-                                    token
+                                isAIPaused = false;
+                            } else {
+                                const pausedReply = getPausedSafeAssistantResponse({
+                                    messageText: msgBody,
+                                    intent: incomingIntent,
+                                    lead: getLeadSnapshot(userContext)
                                 });
+
+                                if (pausedReply?.reply) {
+                                    userContext.intent = pausedReply.intent || incomingIntent;
+                                    refreshLeadSummary(userContext, msgBody);
+                                    await userContext.save();
+                                    await sendAndSaveAssistantText({
+                                        phoneNumberId,
+                                        to: from,
+                                        text: sanitizeAssistantReply(pausedReply.reply),
+                                        token
+                                    });
+                                }
                             }
-                        } else if (!isAIPaused && !isRapidMessage) {
+                        }
+
+                        if (!isAIPaused && !isRapidMessage) {
 
                             // 1. Fetch Chat History (Memory) - Exclude current message
                             const recentContext = await Message.find({
@@ -893,6 +921,8 @@ export const getConversations = async (req, res) => {
 
         const conversationsWithLeads = conversations.map((conversation) => {
             const lead = leadByPhone.get(conversation._id);
+            const pauseReasonType = lead ? getPauseReasonType(lead.handoffReason || '') : '';
+            const autoResumeStatus = lead ? getPausedAutoResumeStatus({ lead }) : {};
             return {
                 ...conversation,
                 lead: lead ? {
@@ -907,7 +937,12 @@ export const getConversations = async (req, res) => {
                     stage: lead.stage,
                     status: lead.status,
                     aiPaused: lead.aiPaused || lead.isAIPaused,
+                    isAIPaused: lead.isAIPaused,
+                    aiPausedAt: lead.aiPausedAt,
                     handoffReason: lead.handoffReason,
+                    pauseReasonType,
+                    autoResumeEligible: Boolean((lead.aiPaused || lead.isAIPaused) && autoResumeStatus.staleSafetyPause),
+                    autoResumeRequiresProjectIntent: pauseReasonType === 'safety_confusion',
                     leadScore: lead.leadScore,
                     unclearCount: lead.unclearCount,
                     personalQuestionCount: lead.personalQuestionCount,
@@ -1240,31 +1275,39 @@ export const updateBotSettings = (req, res) => {
     });
 };
 
-const formatLeadContextResponse = (userContext) => ({
-    phoneNumber: userContext.phoneNumber,
-    phone: userContext.phone || userContext.phoneNumber,
-    name: userContext.name,
-    business: userContext.business,
-    serviceType: userContext.serviceType,
-    budget: userContext.budget,
-    timeline: userContext.timeline,
-    projectDetails: userContext.projectDetails,
-    requirementSummary: userContext.requirementSummary,
-    conversationSummary: userContext.conversationSummary,
-    intent: userContext.intent,
-    latestIntent: userContext.intent,
-    stage: userContext.stage,
-    status: userContext.status,
-    aiPaused: userContext.aiPaused || userContext.isAIPaused,
-    isAIPaused: userContext.isAIPaused,
-    aiPausedAt: userContext.aiPausedAt,
-    handoffReason: userContext.handoffReason,
-    leadScore: userContext.leadScore,
-    unclearCount: userContext.unclearCount,
-    personalQuestionCount: userContext.personalQuestionCount,
-    offTopicCount: userContext.offTopicCount,
-    updatedAt: userContext.updatedAt
-});
+const formatLeadContextResponse = (userContext) => {
+    const autoResumeStatus = getPausedAutoResumeStatus({ lead: getLeadSnapshot(userContext) });
+    const pauseReasonType = getPauseReasonType(userContext.handoffReason || '');
+
+    return {
+        phoneNumber: userContext.phoneNumber,
+        phone: userContext.phone || userContext.phoneNumber,
+        name: userContext.name,
+        business: userContext.business,
+        serviceType: userContext.serviceType,
+        budget: userContext.budget,
+        timeline: userContext.timeline,
+        projectDetails: userContext.projectDetails,
+        requirementSummary: userContext.requirementSummary,
+        conversationSummary: userContext.conversationSummary,
+        intent: userContext.intent,
+        latestIntent: userContext.intent,
+        stage: userContext.stage,
+        status: userContext.status,
+        aiPaused: userContext.aiPaused || userContext.isAIPaused,
+        isAIPaused: userContext.isAIPaused,
+        aiPausedAt: userContext.aiPausedAt,
+        handoffReason: userContext.handoffReason,
+        pauseReasonType,
+        autoResumeEligible: Boolean((userContext.aiPaused || userContext.isAIPaused) && autoResumeStatus.staleSafetyPause),
+        autoResumeRequiresProjectIntent: pauseReasonType === 'safety_confusion',
+        leadScore: userContext.leadScore,
+        unclearCount: userContext.unclearCount,
+        personalQuestionCount: userContext.personalQuestionCount,
+        offTopicCount: userContext.offTopicCount,
+        updatedAt: userContext.updatedAt
+    };
+};
 
 export const getUserContextForConversation = async (req, res) => {
     try {

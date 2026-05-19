@@ -596,6 +596,23 @@ export default function ChatDashboard() {
         ['missing_vapid_keys', 'invalid_vapid_keys'].includes(pushServerStatus.reason);
     const leadSignalText = `Unclear: ${activeLead?.unclearCount || 0} · Personal: ${activeLead?.personalQuestionCount || 0} · Off-topic: ${activeLead?.offTopicCount || 0}`;
 
+    const formatDateTime = (isoString) => {
+        if (!isoString) return 'Not set';
+        return new Date(isoString).toLocaleString([], {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+    const pauseReasonTypeLabels = {
+        serious_lead: 'Serious lead',
+        safety_confusion: 'Safety/confusion',
+        manual_or_unknown: 'Manual/unknown'
+    };
+    const pauseReasonTypeText = pauseReasonTypeLabels[activeLead?.pauseReasonType] || 'Not set';
+    const autoResumeText = activeLead?.autoResumeEligible ? 'Yes' : 'No';
+
     const handleResumeAI = async () => {
         if (!activeNumber) return;
 
@@ -830,6 +847,13 @@ export default function ChatDashboard() {
                                 <span className={`ai-status-pill ${isActiveAIPaused ? 'paused' : 'active'}`}>
                                     AI: {isActiveAIPaused ? 'Paused' : 'Active'}
                                 </span>
+                                {isActiveAIPaused && (
+                                    <>
+                                        <span title={activeLead?.handoffReason || ''}>Reason: {activeLead?.handoffReason || 'Not set'}</span>
+                                        <span>Paused: {formatDateTime(activeLead?.aiPausedAt)}</span>
+                                        <span>Auto-resume: {autoResumeText}</span>
+                                    </>
+                                )}
                             </div>
                             {isActiveAIPaused ? (
                                 <button
@@ -939,6 +963,18 @@ export default function ChatDashboard() {
                                         <div className="lead-info-card lead-summary-wide">
                                             <span className="lead-label">Handoff Reason</span>
                                             <strong>{activeLead.handoffReason || 'Not set'}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Pause Type</span>
+                                            <strong>{pauseReasonTypeText}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Paused At</span>
+                                            <strong>{formatDateTime(activeLead.aiPausedAt)}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Auto-resume Eligible</span>
+                                            <strong>{autoResumeText}</strong>
                                         </div>
                                         <div className="lead-info-card lead-summary-wide">
                                             <span className="lead-label">Summary</span>
