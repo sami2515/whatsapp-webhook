@@ -1,8 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import dotenv from 'dotenv';
+import '../config/env.js';
 import { SAMI_KNOWLEDGE } from '../data/samiKnowledge.js';
-
-dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 

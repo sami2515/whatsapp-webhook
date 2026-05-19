@@ -1,11 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import './config/env.js';
 import connectDB from './config/db.js';
 import whatsappRoutes from './routes/whatsapp.js';
 import pushRoutes from './routes/push.js';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

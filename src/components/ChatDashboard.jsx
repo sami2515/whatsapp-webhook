@@ -206,6 +206,21 @@ export default function ChatDashboard() {
         return outputArray;
     };
 
+    const arrayBufferToBase64Url = (buffer) => {
+        const bytes = new Uint8Array(buffer);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i += 1) {
+            binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    };
+
+    const subscriptionMatchesServerKey = (subscription, publicKey) => {
+        const applicationServerKey = subscription?.options?.applicationServerKey;
+        if (!applicationServerKey || !publicKey) return true;
+        return arrayBufferToBase64Url(applicationServerKey) === publicKey;
+    };
+
     const ensureServiceWorkerRegistration = async () => {
         let registration = await navigator.serviceWorker.getRegistration();
         if (!registration) {
@@ -248,7 +263,16 @@ export default function ChatDashboard() {
             }
 
             const registration = await ensureServiceWorkerRegistration();
-            const subscription = await registration.pushManager.getSubscription();
+            let subscription = await registration.pushManager.getSubscription();
+            if (subscription && !subscriptionMatchesServerKey(subscription, vapid.publicKey)) {
+                await subscription.unsubscribe();
+                subscription = null;
+            }
+
+            if (subscription) {
+                await subscribeToPush(subscription);
+            }
+
             setPushEnabled(Boolean(subscription));
             setPushStatus(subscription ? 'granted' : (Notification.permission === 'granted' ? 'ready' : 'default'));
             setPushMessage(subscription ? 'Notifications enabled' : '');

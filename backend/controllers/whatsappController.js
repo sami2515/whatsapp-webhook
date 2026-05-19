@@ -53,15 +53,31 @@ const decodeBase64Url = (value = '') => {
     return Buffer.from(normalized, 'base64');
 };
 
+const cleanEnvValue = (value = '') => {
+    const trimmed = String(value || '').trim();
+    const hasMatchingQuotes = (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+        (trimmed.startsWith("'") && trimmed.endsWith("'"));
+
+    return hasMatchingQuotes ? trimmed.slice(1, -1).trim() : trimmed;
+};
+
+const getVapidKeys = () => ({
+    publicKey: cleanEnvValue(process.env.VAPID_PUBLIC_KEY),
+    privateKey: cleanEnvValue(process.env.VAPID_PRIVATE_KEY),
+    subject: cleanEnvValue(process.env.VAPID_SUBJECT) || 'mailto:admin@example.com'
+});
+
 const getVapidKeyStatus = () => {
-    if (!process.env.VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+    const { publicKey, privateKey } = getVapidKeys();
+
+    if (!publicKey || !privateKey) {
         return { enabled: false, reason: 'missing_vapid_keys' };
     }
 
     try {
-        const publicKey = decodeBase64Url(process.env.VAPID_PUBLIC_KEY);
-        const privateKey = decodeBase64Url(process.env.VAPID_PRIVATE_KEY);
-        const valid = publicKey.length === 65 && publicKey[0] === 4 && privateKey.length === 32;
+        const decodedPublicKey = decodeBase64Url(publicKey);
+        const decodedPrivateKey = decodeBase64Url(privateKey);
+        const valid = decodedPublicKey.length === 65 && decodedPublicKey[0] === 4 && decodedPrivateKey.length === 32;
         return { enabled: valid, reason: valid ? 'valid' : 'invalid_vapid_keys' };
     } catch {
         return { enabled: false, reason: 'invalid_vapid_keys' };
@@ -79,10 +95,11 @@ const configureWebPush = () => {
     }
 
     try {
+        const { publicKey, privateKey, subject } = getVapidKeys();
         webpush.setVapidDetails(
-            process.env.VAPID_SUBJECT || 'mailto:admin@example.com',
-            process.env.VAPID_PUBLIC_KEY,
-            process.env.VAPID_PRIVATE_KEY
+            subject,
+            publicKey,
+            privateKey
         );
         webpushConfigured = true;
         return true;
@@ -325,6 +342,7 @@ export const unsubscribeFromPush = async (req, res) => {
 };
 
 export const getPushPublicKey = (req, res) => {
+    const { publicKey, subject } = getVapidKeys();
     const keyStatus = webpushDisabled
         ? { enabled: false, reason: webpushDisabledReason || 'invalid_vapid_keys' }
         : getVapidKeyStatus();
@@ -336,8 +354,8 @@ export const getPushPublicKey = (req, res) => {
     res.status(200).json({
         enabled,
         reason,
-        publicKey: enabled ? process.env.VAPID_PUBLIC_KEY : '',
-        subject: process.env.VAPID_SUBJECT || 'mailto:admin@example.com'
+        publicKey: enabled ? publicKey : '',
+        subject
     });
 };
 
@@ -413,11 +431,6 @@ const notifyAdminsOfIncomingMessage = async ({ phone, text, messageType, timesta
 
                 if (statusCode === 404 || statusCode === 410) {
                     await markSubscriptionInactive(sub);
-                    return;
-                }
-
-                if (statusCode === 403 && isInvalidVapidError(err)) {
-                    disableWebPush('invalid_vapid_keys');
                     return;
                 }
 
