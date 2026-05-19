@@ -14,7 +14,7 @@ const SplashScreen = () => {
             <div className="splash-footer">
                 <p className="footer-from">from</p>
                 <div className="footer-brand">
-                    <span className="brand-text">WhatsApp Admin</span>
+                    <span className="brand-text">Sami</span>
                 </div>
             </div>
         </div>
