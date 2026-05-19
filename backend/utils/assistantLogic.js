@@ -174,6 +174,7 @@ const personalQuestionPhrases = [
     'aap real ho', 'tum real ho', 'are you real', 'are you ai', 'are you a bot',
     'tum insaan ho', 'tum insan ho', 'insaan ho ya ai', 'human ho ya ai',
     'sami abhi kahan', 'sami abhi kaha', 'where is sami right now',
+    'sami kaha hai', 'sami kahan hai', 'sami kaha ha', 'sami kahan ha',
     'sami busy kyun', 'sami busy kyu', 'is sami married', "what is sami's age",
     'what is sami age', 'where does sami live', "sami's income", "sami's family",
     'give sami personal number', "give sami's personal number", 'personal address',
@@ -383,6 +384,9 @@ export const detectNotInterested = (messageText = '') => {
 
 export const detectPersonalQuestion = (messageText = '') => {
     const text = normalizeLoose(messageText);
+    if (detectMainWebsiteRequest(messageText, { paused: true }) || detectPortfolioRequest(messageText) || detectCompletedWorkRequest(messageText)) {
+        return false;
+    }
     const hasBusinessContext = includesAny(text, ['project', 'website', 'service', 'portfolio', 'work', 'business', 'quote']);
     if (!hasBusinessContext && includesAny(text, ['tumhara naam kya hai', 'aapka naam kya hai', 'what is your name'])) {
         return true;
@@ -414,6 +418,8 @@ export const detectRepeatConfusion = (messageText = '') => {
     return includesAny(normalizeLoose(messageText), repeatConfusionPhrases);
 };
 
+export const isBareWebsiteRequest = (messageText = '') => normalizeLoose(messageText) === 'website';
+
 export const hasGenericWebsiteBuildIntent = (messageText = '') => {
     const text = normalizeLoose(messageText);
     return includesAny(text, [
@@ -429,6 +435,107 @@ export const hasGenericWebsiteBuildIntent = (messageText = '') => {
         'project banwana hai',
         'project banwani hai'
     ]);
+};
+
+export const detectCompletedWorkRequest = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    return includesAny(text, [
+        'project jo complete kie',
+        'project jo complete kiye',
+        'completed projects',
+        'complete projects',
+        'complete projects dikhao',
+        'projects dikhao',
+        'kaam dikhao',
+        'work samples',
+        'previous work',
+        'examples',
+        'proof',
+        'client work',
+        'live project',
+        'live website',
+        'zmg',
+        'education portal',
+        'sami ke projects',
+        'sami ka kaam'
+    ]);
+};
+
+export const detectPortfolioRequest = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    if (includesAny(text, ['portfolio website banwani', 'portfolio website banwana', 'portfolio website chahiye'])) return false;
+    return includesAny(text, ['portfolio', 'portfolio dikhao', 'sami ka portfolio']);
+};
+
+export const detectMainWebsiteRequest = (messageText = '', { paused = false } = {}) => {
+    const text = normalizeLoose(messageText);
+    if (!text || hasGenericWebsiteBuildIntent(messageText) || detectCompletedWorkRequest(messageText)) return false;
+    if (paused && isBareWebsiteRequest(messageText)) return true;
+
+    return includesAny(text, [
+        'website dikhao',
+        'main website',
+        'main website dikhao',
+        'website link',
+        'site link',
+        'your website',
+        'you website',
+        'sami ki website',
+        'sami ki website kaha ha',
+        'sami ki website kaha hai',
+        'sami website',
+        'samii.pk',
+        'any site'
+    ]);
+};
+
+const detectPausedTimelineQuestion = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    return includesAny(text, [
+        'timeline',
+        'kab tak',
+        'delivery time',
+        'how many days',
+        'kitne din',
+        'kitna time',
+        'time lagega',
+        'hafty',
+        'haftay',
+        'hafta',
+        'ban jaigi',
+        'ban jaegi',
+        'ban jayegi',
+        'banegi',
+        'banegi?'
+    ]) || /\b\d+\s*(?:days?|din|weeks?|week|hafty|haftay|hafta)\b/i.test(text);
+};
+
+const detectPausedForwardAckRequest = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    return includesAny(text, [
+        'detail forward',
+        'details forward',
+        'details gayi',
+        'meri details gayi',
+        'message mila',
+        'sami ko bheja',
+        'forward kardi',
+        'forward kar di',
+        'forward ho gayi',
+        'dobara forward',
+        'urgent ha',
+        'urgent hai',
+        'reply kab',
+        'kab reply',
+        'sami reply',
+        'any update',
+        'koi update'
+    ]);
+};
+
+const detectShortRepeatAck = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    return ['dobara', 'dubara', 'again', 'repeat'].includes(text);
 };
 
 export const hasClearProjectIntent = (messageText = '') => {
@@ -717,6 +824,10 @@ export const detectIntent = (messageText = '') => {
     const text = normalizeText(messageText);
     if (!text) return 'unknown';
 
+    if (detectCompletedWorkRequest(messageText)) return 'ask_completed_work';
+    if (detectPortfolioRequest(messageText)) return 'ask_portfolio';
+    if (detectMainWebsiteRequest(messageText, { paused: true })) return 'ask_main_website';
+
     if (detectPersonalQuestion(messageText)) return 'personal_question';
 
     const abusive = detectAbusiveOrInappropriate(messageText);
@@ -830,6 +941,35 @@ const template = (style, variants) => {
     return variants.roman;
 };
 
+const getSafeReplyStyle = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    if (
+        isBareWebsiteRequest(messageText) ||
+        includesAny(text, [
+            'dikhao',
+            'dobara',
+            'dubara',
+            'kaha',
+            'ha',
+            'hai',
+            'ki',
+            'ka',
+            'krdo',
+            'kardo',
+            'krdi',
+            'kardi',
+            'hafty',
+            'haftay',
+            'ban jaigi',
+            'banegi'
+        ])
+    ) {
+        return 'roman';
+    }
+
+    return detectLanguageStyle(messageText);
+};
+
 export const getServiceQualificationQuestion = (serviceType = '', style = 'roman') => {
     const service = normalizeText(serviceType);
 
@@ -898,6 +1038,48 @@ const getWebsiteReply = (style) => template(style, {
     english: `Main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\n\nYou can also send a build plan request from there.`,
     roman: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\n\nAap direct build plan request bhi bhej sakte hain.`,
     urdu: `جی، main website یہاں ہے: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\n\nآپ وہاں سے direct build plan request بھی بھیج سکتے ہیں۔`
+});
+
+const getPortfolioLinkReply = (style) => template(style, {
+    english: `Sure, portfolio is here: ${SAMI_KNOWLEDGE.portfolioUrl}`,
+    roman: `Jee, portfolio yahan hai: ${SAMI_KNOWLEDGE.portfolioUrl}`,
+    urdu: `Jee, portfolio yahan hai: ${SAMI_KNOWLEDGE.portfolioUrl}`
+});
+
+const getMainWebsiteLinkReply = (style) => template(style, {
+    english: `Sure, main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
+    roman: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
+    urdu: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`
+});
+
+const getCompletedWorkReply = (style) => template(style, {
+    english: `Sure, you can view completed work here:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`,
+    roman: `Jee, completed work yahan dekh sakte hain:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`,
+    urdu: `Jee, completed work yahan dekh sakte hain:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`
+});
+
+const getWebsiteDisambiguationReply = (style) => template(style, {
+    english: 'Do you need a website, or do you want to view the website link?',
+    roman: 'Website chahiye ya website link dekhna hai?',
+    urdu: 'Website chahiye ya website link dekhna hai?'
+});
+
+const getPausedForwardAckReply = (style) => template(style, {
+    english: "Yes, details have been forwarded. If it is urgent, I'm noting that; Sami will reply manually soon.",
+    roman: 'Jee, details forward ho gayi hain. Agar urgent hai to main isay note kar raha hoon; Sami jaldi manually reply karenge.',
+    urdu: 'Jee, details forward ho gayi hain. Agar urgent hai to main isay note kar raha hoon; Sami jaldi manually reply karenge.'
+});
+
+const getPausedTimelineReply = (style) => template(style, {
+    english: 'Sami will confirm the timeline after reviewing the requirements. Your message has been received.',
+    roman: 'Timeline requirements dekh kar Sami confirm karenge. Aapki message receive ho gayi hai.',
+    urdu: 'Timeline requirements dekh kar Sami confirm karenge. Aapki message receive ho gayi hai.'
+});
+
+const getShortNotedReply = (style) => template(style, {
+    english: 'Noted.',
+    roman: 'Jee, noted.',
+    urdu: 'Jee, noted.'
 });
 
 const getGreetingReply = (style) => template(style, {
@@ -1290,6 +1472,32 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         });
     }
 
+    if (intent === 'ask_completed_work' || detectCompletedWorkRequest(messageText)) {
+        return withDefaults({
+            reply: getCompletedWorkReply(getSafeReplyStyle(messageText)),
+            intent: 'ask_completed_work',
+            pauseAI: false
+        });
+    }
+
+    if (intent === 'ask_portfolio' || detectPortfolioRequest(messageText)) {
+        return withDefaults({
+            reply: getPortfolioLinkReply(getSafeReplyStyle(messageText)),
+            intent: 'ask_portfolio',
+            pauseAI: false
+        });
+    }
+
+    if (intent === 'ask_main_website' || detectMainWebsiteRequest(messageText)) {
+        return withDefaults({
+            reply: isBareWebsiteRequest(messageText) && ['service_choice', 'project_type'].includes(lead.lastBotQuestionType)
+                ? getWebsiteDisambiguationReply(getSafeReplyStyle(messageText))
+                : getMainWebsiteLinkReply(getSafeReplyStyle(messageText)),
+            intent: 'ask_main_website',
+            pauseAI: false
+        });
+    }
+
     const isPersonalFollowUp = (lead.personalQuestionCount || 0) > 0 &&
         detectPersonalFollowUp(messageText) &&
         !usefulProjectContext;
@@ -1615,9 +1823,58 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
 };
 
 export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '', lead = {} }) => {
-    const style = detectLanguageStyle(messageText);
+    const style = getSafeReplyStyle(messageText);
     const text = normalizeLoose(messageText);
     const pauseReasonType = getPauseReasonType(lead.handoffReason || '');
+
+    if (detectShortRepeatAck(messageText)) {
+        return {
+            reply: getShortNotedReply(style),
+            intent: 'paused_acknowledgement'
+        };
+    }
+
+    if (detectPausedTimelineQuestion(messageText)) {
+        return {
+            reply: getPausedTimelineReply(style),
+            intent: 'paused_timeline'
+        };
+    }
+
+    if (intent === 'ask_completed_work' || detectCompletedWorkRequest(messageText)) {
+        return {
+            reply: getCompletedWorkReply(style),
+            intent: 'ask_completed_work'
+        };
+    }
+
+    if (intent === 'ask_portfolio' || detectPortfolioRequest(messageText)) {
+        return {
+            reply: getPortfolioLinkReply(style),
+            intent: 'ask_portfolio'
+        };
+    }
+
+    if (intent === 'ask_main_website' || detectMainWebsiteRequest(messageText, { paused: true })) {
+        return {
+            reply: getMainWebsiteLinkReply(style),
+            intent: 'ask_main_website'
+        };
+    }
+
+    if (detectPausedForwardAckRequest(messageText)) {
+        return {
+            reply: getPausedForwardAckReply(style),
+            intent: 'paused_acknowledgement'
+        };
+    }
+
+    if (detectPersonalQuestion(messageText)) {
+        return {
+            reply: getPersonalBoundaryReply(style),
+            intent: 'personal_question'
+        };
+    }
 
     if (intent === 'ask_portfolio' || includesAny(text, ['portfolio', 'portfolio dikhao', 'work samples', 'sample', 'samples', 'kaam dikhao'])) {
         return {
