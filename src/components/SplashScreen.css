@@ -4,8 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #111b21;
-    /* WhatsApp dark mode background */
+    background: #111b21;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -23,11 +22,47 @@
     align-items: center;
 }
 
-.splash-logo {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    animation: pulse 1.5s infinite ease-in-out;
+.splash-mark {
+    position: relative;
+    width: 104px;
+    height: 104px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #00a884, #0b7f73);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(255, 255, 255, 0.12) inset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    animation: pulse 1.8s infinite ease-in-out;
+}
+
+.splash-mark::before {
+    content: "";
+    position: absolute;
+    inset: 24px 19px 31px;
+    border-radius: 22px;
+    background: #f5fffb;
+}
+
+.splash-mark::after {
+    content: "";
+    position: absolute;
+    left: 33px;
+    bottom: 22px;
+    width: 25px;
+    height: 25px;
+    background: #f5fffb;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    transform: rotate(-10deg);
+}
+
+.splash-dot {
+    position: relative;
+    z-index: 1;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00a884;
 }
 
 .splash-footer {
@@ -45,11 +80,10 @@
 }
 
 .footer-brand {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 700;
     color: #00a884;
-    /* WhatsApp brand green */
-    letter-spacing: 1px;
+    letter-spacing: 0;
     display: flex;
     align-items: center;
     justify-content: center;

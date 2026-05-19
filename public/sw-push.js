@@ -4,13 +4,16 @@ self.addEventListener('push', function (event) {
         try {
             payload = event.data.json();
         } catch {
-            payload = { title: 'New WhatsApp message', body: event.data.text() };
+            payload = { title: 'New message', body: event.data.text() };
         }
 
         const options = {
             body: payload.body,
             icon: payload.icon || '/pwa-192x192.png',
-            badge: payload.badge || '/pwa-192x192.png',
+            badge: payload.badge || '/notification-badge-96.png',
+            tag: payload.tag || payload.data?.phone || 'whatsapp-admin-message',
+            renotify: true,
+            timestamp: payload.data?.timestamp ? new Date(payload.data.timestamp).getTime() : Date.now(),
             vibrate: [120, 60, 120],
             requireInteraction: true,
             data: {
@@ -19,11 +22,11 @@ self.addEventListener('push', function (event) {
                 phone: payload.data?.phone || ''
             },
             actions: [
-                { action: 'open', title: 'Open Chat' }
+                { action: 'open', title: 'Open chat' }
             ]
         };
 
-        const promiseChain = self.registration.showNotification(payload.title, options);
+        const promiseChain = self.registration.showNotification(payload.title || 'New message', options);
         event.waitUntil(promiseChain);
     }
 });

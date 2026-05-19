@@ -406,10 +406,11 @@ const notifyAdminsOfIncomingMessage = async ({ phone, text, messageType, timesta
 
     const bodyText = text || `[${messageType || 'message'}]`;
     const pushPayload = JSON.stringify({
-        title: 'New WhatsApp message',
+        title: 'New message',
         body: `+${phone}: ${bodyText}`,
-        icon: '/pwa-192x192.png',
-        badge: '/pwa-192x192.png',
+        icon: '/notification-icon-192.png',
+        badge: '/notification-badge-96.png',
+        tag: `whatsapp-${phone}`,
         data: {
             url: '/',
             phone,

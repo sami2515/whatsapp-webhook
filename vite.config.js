@@ -11,7 +11,12 @@ export default defineConfig({
       workbox: {
         importScripts: ['/sw-push.js']
       },
-      includeAssets: ['pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: [
+        'pwa-192x192.png',
+        'pwa-512x512.png',
+        'notification-icon-192.png',
+        'notification-badge-96.png'
+      ],
       manifest: {
         name: 'WhatsApp Admin',
         short_name: 'WA Admin',
@@ -23,12 +28,14 @@ export default defineConfig({
           {
             src: 'pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           },
           {
             src: 'pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           }
         ]
       }
