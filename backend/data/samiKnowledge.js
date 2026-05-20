@@ -1,7 +1,9 @@
 export const SAMI_KNOWLEDGE = {
-    mainWebsiteUrl: 'https://samii.pk',
-    portfolioUrl: 'https://portfolio.samii.pk',
-    businessName: 'samii.studio',
+    mainWebsiteUrl: 'https://samidev.pk/',
+    portfolioUrl: 'https://portfolio.samidev.pk/',
+    developerCardUrl: 'https://card.samidev.pk',
+    contactEmail: 'info@samidev.pk',
+    businessName: 'Sami Dev',
     assistantName: 'Sami Assistant',
     services: [
         'Business Websites',
@@ -87,4 +89,3 @@ export const SAMI_KNOWLEDGE = {
         'assistant is unsure'
     ]
 };
-

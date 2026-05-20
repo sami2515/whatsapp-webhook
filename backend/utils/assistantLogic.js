@@ -51,6 +51,8 @@ const includesAny = (text, keywords) => keywords.some((keyword) => text.includes
 
 const matchesAny = (text, patterns) => patterns.some((pattern) => pattern.test(text));
 
+const includesKnownSamiDomain = (messageText = '') => normalizeText(messageText).includes('samidev.pk');
+
 const matchesReason = (reason = '', reasons = []) => {
     const normalizedReason = normalizeText(reason);
     return reasons.some((item) => normalizedReason.includes(normalizeText(item)));
@@ -98,6 +100,33 @@ const buildPlanLabelPattern = buildPlanLabels
     .map(escapeRegex)
     .join('|');
 
+const PROJECT_DETAIL_SIGNAL_KEYWORDS = [
+    'website', 'web site', 'web app', 'portal', 'dashboard', 'admin', 'admin panel',
+    'ecommerce', 'e-commerce', 'store', 'shop', 'landing page', 'business website',
+    'company website', 'portfolio', 'booking', 'payment', 'checkout', 'contact form',
+    'form', 'whatsapp', 'leads', 'catalog', 'products', 'seo', 'redesign', 'maintenance',
+    'login', 'signup', 'student', 'admission', 'documents', 'blog', 'gallery', 'cms',
+    'inventory', 'orders', 'users', 'odoo', 'frontend', 'backend', 'api', 'erp', 'crm'
+];
+
+const WEAK_PROJECT_DETAIL_EXACT_VALUES = [
+    's',
+    'ss',
+    'sss',
+    'test',
+    'testing',
+    'asdf',
+    'abc',
+    'n a',
+    'na',
+    'none',
+    'no',
+    'sami',
+    'samj',
+    'samajh',
+    'sami ma ssamj'
+];
+
 export const parseBuildPlanMessage = (messageText = '') => {
     const text = messageText.replace(/\r\n/g, '\n').replace(/\u00a0/g, ' ').trim();
     if (!text) return {};
@@ -124,6 +153,26 @@ export const parseBuildPlanMessage = (messageText = '') => {
     return parsed;
 };
 
+export const isMeaningfulProjectDetails = (value = '') => {
+    const text = normalizeLoose(value);
+    if (!text || WEAK_PROJECT_DETAIL_EXACT_VALUES.includes(text)) return false;
+
+    const compactText = text.replace(/\s+/g, '');
+    const words = text.split(' ').filter(Boolean);
+    const usefulWords = words.filter((word) => word.length >= 4 && !['sami', 'need', 'want', 'chahiye', 'banwana', 'banwani'].includes(word));
+
+    if (text.length < 12 || words.length < 3 || usefulWords.length === 0) return false;
+    if (/^(.)\1{2,}$/i.test(compactText)) return false;
+    if (!/\b[a-z\u0600-\u06FF]{3,}\b/i.test(text)) return false;
+
+    return /\b\d+\s*(?:pages?|page)\b/i.test(text) || includesAny(text, PROJECT_DETAIL_SIGNAL_KEYWORDS);
+};
+
+export const hasWeakBuildPlanProjectDetails = (messageText = '') => {
+    const parsed = parseBuildPlanMessage(messageText);
+    return Boolean(parsed.projectDetails && !isMeaningfulProjectDetails(parsed.projectDetails));
+};
+
 export const parseWebsiteLeadMessage = (messageText = '') => {
     const parsed = parseBuildPlanMessage(messageText);
 
@@ -133,7 +182,7 @@ export const parseWebsiteLeadMessage = (messageText = '') => {
         serviceType: parsed.service,
         budget: parsed.budget,
         timeline: parsed.timeline,
-        projectDetails: parsed.projectDetails
+        projectDetails: isMeaningfulProjectDetails(parsed.projectDetails) ? parsed.projectDetails : ''
     };
 
     return Object.fromEntries(Object.entries(leadUpdate).filter(([, value]) => Boolean(value)));
@@ -467,10 +516,37 @@ export const detectPortfolioRequest = (messageText = '') => {
     return includesAny(text, ['portfolio', 'portfolio dikhao', 'sami ka portfolio']);
 };
 
+export const detectDeveloperCardRequest = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    const rawText = normalizeText(messageText);
+    if (rawText.includes('card.samidev.pk')) return true;
+    if (['card', 'developer card', 'dev card', 'digital card', 'profile card', 'business card', 'visiting card'].includes(text)) return true;
+
+    return includesAny(text, [
+        'developer card',
+        'dev card',
+        'sami developer card',
+        'sami dev card',
+        'sami card',
+        'digital card',
+        'profile card',
+        'business card',
+        'visiting card',
+        'card link',
+        'card dikhao',
+        'card bhej',
+        'card do',
+        'card bata',
+        'card bta'
+    ]);
+};
+
 export const detectMainWebsiteRequest = (messageText = '', { paused = false } = {}) => {
     const text = normalizeLoose(messageText);
+    const rawText = normalizeText(messageText);
     if (!text || hasGenericWebsiteBuildIntent(messageText) || detectCompletedWorkRequest(messageText)) return false;
     if (paused && isBareWebsiteRequest(messageText)) return true;
+    if (rawText.includes('samidev.pk') && !rawText.includes('portfolio.samidev.pk') && !rawText.includes('card.samidev.pk')) return true;
 
     return includesAny(text, [
         'website dikhao',
@@ -484,8 +560,44 @@ export const detectMainWebsiteRequest = (messageText = '', { paused = false } = 
         'sami ki website kaha ha',
         'sami ki website kaha hai',
         'sami website',
-        'samii.pk',
+        'samidev.pk',
         'any site'
+    ]);
+};
+
+export const detectContactEmailRequest = (messageText = '') => {
+    const text = normalizeLoose(messageText);
+    if (['email', 'e mail', 'mail', 'mail id', 'email id', 'gmail'].includes(text)) return true;
+
+    return includesAny(text, [
+        'contact email',
+        'business email',
+        'official email',
+        'email address',
+        'mail address',
+        'email do',
+        'email bata',
+        'email bta',
+        'email kya',
+        'email chahiye',
+        'email bhej',
+        'mail do',
+        'mail bata',
+        'mail bta',
+        'mail kya',
+        'mail chahiye',
+        'mail bhej',
+        'your email',
+        'your mail',
+        'sami email',
+        'sami ka email',
+        'sami ki email',
+        'sami mail',
+        'sami ka mail',
+        'sami ki mail',
+        'company email',
+        'company mail',
+        'gmail'
     ]);
 };
 
@@ -583,7 +695,7 @@ export const detectOffTopicOrNonsense = (messageText = '', lead = {}) => {
     if (hasUsefulProjectContext(messageText)) return false;
     if (detectPersonalQuestion(messageText)) return false;
     if (detectAbusiveOrInappropriate(messageText).isAbusive) return false;
-    if (/(https?:\/\/|www\.)/i.test(messageText) && !text.includes('samii.pk')) return true;
+    if (/(https?:\/\/|www\.)/i.test(messageText) && !includesKnownSamiDomain(messageText)) return true;
     if (includesAny(text, SERVICE_CONTEXT_KEYWORDS)) return false;
 
     if ((lead.offTopicCount || lead.unclearCount || 0) > 0 && includesAny(text, ['tum kya kar sakte ho', 'what can you do'])) {
@@ -826,14 +938,16 @@ export const detectIntent = (messageText = '') => {
 
     if (detectCompletedWorkRequest(messageText)) return 'ask_completed_work';
     if (detectPortfolioRequest(messageText)) return 'ask_portfolio';
+    if (detectDeveloperCardRequest(messageText)) return 'ask_developer_card';
     if (detectMainWebsiteRequest(messageText, { paused: true })) return 'ask_main_website';
+    if (detectContactEmailRequest(messageText)) return 'ask_contact_email';
 
     if (detectPersonalQuestion(messageText)) return 'personal_question';
 
     const abusive = detectAbusiveOrInappropriate(messageText);
     if (abusive.isAbusive) return 'abusive';
 
-    if (/(https?:\/\/|www\.)/.test(text) && !text.includes('samii.pk')) return 'spam';
+    if (/(https?:\/\/|www\.)/.test(text) && !includesKnownSamiDomain(messageText)) return 'spam';
     if (includesAny(text, ['casino', 'betting', 'crypto profit', 'loan offer', 'adult'])) return 'spam';
 
     const handoffIntent = detectHandoffIntent(messageText);
@@ -1052,6 +1166,18 @@ const getMainWebsiteLinkReply = (style) => template(style, {
     urdu: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`
 });
 
+const getDeveloperCardReply = (style) => template(style, {
+    english: `Sure, Sami's developer card is here: ${SAMI_KNOWLEDGE.developerCardUrl}`,
+    roman: `Jee, Sami ka developer card yahan hai: ${SAMI_KNOWLEDGE.developerCardUrl}`,
+    urdu: `Jee, Sami ka developer card yahan hai: ${SAMI_KNOWLEDGE.developerCardUrl}`
+});
+
+const getContactEmailReply = (style) => template(style, {
+    english: `Sure, Sami's email is ${SAMI_KNOWLEDGE.contactEmail}`,
+    roman: `Jee, Sami ka email ${SAMI_KNOWLEDGE.contactEmail} hai.`,
+    urdu: `Jee, Sami ka email ${SAMI_KNOWLEDGE.contactEmail} hai.`
+});
+
 const getCompletedWorkReply = (style) => template(style, {
     english: `Sure, you can view completed work here:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`,
     roman: `Jee, completed work yahan dekh sakte hain:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`,
@@ -1130,6 +1256,12 @@ const getClarificationReply = (style) => template(style, {
     english: 'Could you clarify your project requirement a little?',
     roman: 'Samajh nahi aya. Aap website ya project requirement thori clear bata dein?',
     urdu: 'سمجھ نہیں آیا۔ آپ website یا project requirement تھوڑی clear بتا دیں؟'
+});
+
+const getBuildPlanDetailClarificationReply = (style) => template(style, {
+    english: 'I received the form, but the project details are not clear. Please share the website/app type and key pages or features.',
+    roman: 'Form receive ho gaya, lekin project details clear nahi hain. Website/app ka type aur main pages/features thori detail se bata dein.',
+    urdu: 'Form receive ho gaya, lekin project details clear nahi hain. Website/app ka type aur main pages/features thori detail se bata dein.'
 });
 
 const getUnclearOffTopicReply = (style) => template(style, {
@@ -1236,12 +1368,29 @@ const getFormReply = (leadUpdate, style) => {
 const getLegacyRuleBasedAssistantResponse = ({ messageText = '', intent, lead = {}, parsedLead = {} }) => {
     const isPrefilledWebsiteMessage = isWebsiteBuildPlanMessage(messageText);
     const style = isPrefilledWebsiteMessage ? 'roman' : detectLanguageStyle(messageText);
+    const weakBuildPlanDetails = hasWeakBuildPlanProjectDetails(messageText);
     const leadUpdate = {
         ...inferLeadUpdateFromIntent(intent),
         ...parsedLead
     };
     const mergedLead = { ...lead, ...leadUpdate };
     const lowerText = normalizeText(messageText);
+
+    if (weakBuildPlanDetails) {
+        return {
+            reply: getBuildPlanDetailClarificationReply(style),
+            leadUpdate,
+            intent: 'new_project',
+            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
+            pauseAI: false,
+            contextUpdate: {
+                cameFromBuildPlan: true,
+                buildPlanFormSubmitted: false,
+                unclearCount: (lead.unclearCount || 0) + 1,
+                lastBotQuestionType: 'requirements'
+            }
+        };
+    }
 
     if (Object.keys(parsedLead).length > 0) {
         return {
@@ -1283,7 +1432,27 @@ const getLegacyRuleBasedAssistantResponse = ({ messageText = '', intent, lead = 
         };
     }
 
-    if (includesAny(lowerText, ['samii.pk', 'main website', 'website link', 'build plan page'])) {
+    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
+        return {
+            reply: getDeveloperCardReply(style),
+            leadUpdate,
+            intent: 'ask_developer_card',
+            stage: lead.stage || LEAD_STAGES.NEW,
+            pauseAI: false
+        };
+    }
+
+    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
+        return {
+            reply: getContactEmailReply(style),
+            leadUpdate,
+            intent: 'ask_contact_email',
+            stage: lead.stage || LEAD_STAGES.NEW,
+            pauseAI: false
+        };
+    }
+
+    if (includesAny(lowerText, ['samidev.pk', 'main website', 'website link', 'build plan page'])) {
         return {
             reply: getWebsiteReply(style),
             leadUpdate,
@@ -1425,6 +1594,7 @@ const getLegacyRuleBasedAssistantResponse = ({ messageText = '', intent, lead = 
 export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead = {}, parsedLead = {} }) => {
     const isPrefilledWebsiteMessage = isWebsiteBuildPlanMessage(messageText);
     const style = isPrefilledWebsiteMessage ? 'roman' : detectLanguageStyle(messageText);
+    const weakBuildPlanDetails = hasWeakBuildPlanProjectDetails(messageText);
     const messageLeadUpdate = inferLeadUpdateFromMessage(messageText, lead);
     const leadUpdate = {
         ...inferLeadUpdateFromIntent(intent),
@@ -1484,6 +1654,22 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         return withDefaults({
             reply: getPortfolioLinkReply(getSafeReplyStyle(messageText)),
             intent: 'ask_portfolio',
+            pauseAI: false
+        });
+    }
+
+    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
+        return withDefaults({
+            reply: getDeveloperCardReply(getSafeReplyStyle(messageText)),
+            intent: 'ask_developer_card',
+            pauseAI: false
+        });
+    }
+
+    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
+        return withDefaults({
+            reply: getContactEmailReply(getSafeReplyStyle(messageText)),
+            intent: 'ask_contact_email',
             pauseAI: false
         });
     }
@@ -1553,6 +1739,22 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         });
     }
 
+    if (weakBuildPlanDetails) {
+        return withDefaults({
+            reply: getBuildPlanDetailClarificationReply(style),
+            intent: 'new_project',
+            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
+            pauseAI: false,
+            contextUpdate: {
+                ...resetContextUpdate,
+                cameFromBuildPlan: true,
+                buildPlanFormSubmitted: false,
+                unclearCount: (lead.unclearCount || 0) + 1,
+                lastBotQuestionType: 'requirements'
+            }
+        });
+    }
+
     if (intent === 'spam' || intent === 'nonsense' || intent === 'off_topic' || detectOffTopicOrNonsense(messageText, lead)) {
         const shouldPause = (lead.offTopicCount || 0) > 0 || (lead.unclearCount || 0) > 0;
 
@@ -1609,7 +1811,23 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         });
     }
 
-    if (includesAny(lowerText, ['samii.pk', 'main website', 'website link', 'build plan page'])) {
+    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
+        return withDefaults({
+            reply: getDeveloperCardReply(style),
+            intent: 'ask_developer_card',
+            pauseAI: false
+        });
+    }
+
+    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
+        return withDefaults({
+            reply: getContactEmailReply(style),
+            intent: 'ask_contact_email',
+            pauseAI: false
+        });
+    }
+
+    if (includesAny(lowerText, ['samidev.pk', 'main website', 'website link', 'build plan page'])) {
         return withDefaults({
             reply: getWebsiteReply(style),
             intent: intent === 'unknown' ? 'ask_services' : intent,
@@ -1855,6 +2073,20 @@ export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '', 
         };
     }
 
+    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
+        return {
+            reply: getDeveloperCardReply(style),
+            intent: 'ask_developer_card'
+        };
+    }
+
+    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
+        return {
+            reply: getContactEmailReply(style),
+            intent: 'ask_contact_email'
+        };
+    }
+
     if (intent === 'ask_main_website' || detectMainWebsiteRequest(messageText, { paused: true })) {
         return {
             reply: getMainWebsiteLinkReply(style),
@@ -1887,7 +2119,14 @@ export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '', 
         };
     }
 
-    if (includesAny(text, ['main website', 'website link', 'your website', 'you website', 'website?', 'samii.pk', 'site link', 'any site'])) {
+    if (includesAny(text, ['developer card', 'dev card', 'card link', 'card dikhao', 'card bhej'])) {
+        return {
+            reply: getDeveloperCardReply(style),
+            intent: 'ask_developer_card'
+        };
+    }
+
+    if (includesAny(text, ['main website', 'website link', 'your website', 'you website', 'website?', 'samidev.pk', 'site link', 'any site'])) {
         return {
             reply: template(style, {
                 english: `Sure, main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,

@@ -4,7 +4,7 @@ export const BOT_CONFIG = {
     ENABLED: true,
     LIVE_STATUS: 'Available',
     WELCOME_MESSAGE: `Jee, main ${SAMI_KNOWLEDGE.assistantName} hoon. Aap website, portal, e-commerce store, dashboard, ya custom web app ke bare mein baat karna chahte hain?`,
-    SOCIAL_LINKS: `Main website: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}`,
+    SOCIAL_LINKS: `Main website: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nDeveloper card: ${SAMI_KNOWLEDGE.developerCardUrl}\nEmail: ${SAMI_KNOWLEDGE.contactEmail}`,
     LEAVE_MESSAGE_PROMPT: 'Aap apni project requirement bhej dein, main Sami ko proper context ke sath forward kar dunga.',
     URGENT_MESSAGE_ACK: 'Jee zaroor. Aap topic bata dein taake main Sami ko proper context ke sath forward kar doon.'
 };
@@ -36,7 +36,7 @@ export const buildInteractiveMenuPayload = (toPhoneNumber) => {
                             {
                                 id: 'btn_social',
                                 title: 'Links',
-                                description: 'Website and portfolio'
+                                description: 'Website, portfolio and card'
                             },
                             {
                                 id: 'btn_leave_msg',
@@ -55,4 +55,3 @@ export const buildInteractiveMenuPayload = (toPhoneNumber) => {
         }
     };
 };
-

@@ -9,6 +9,8 @@ const FALLBACK_REPLY = 'Assistant abhi temporarily busy hai. Aap apni requiremen
 const compactKnowledge = {
     mainWebsiteUrl: SAMI_KNOWLEDGE.mainWebsiteUrl,
     portfolioUrl: SAMI_KNOWLEDGE.portfolioUrl,
+    developerCardUrl: SAMI_KNOWLEDGE.developerCardUrl,
+    contactEmail: SAMI_KNOWLEDGE.contactEmail,
     businessName: SAMI_KNOWLEDGE.businessName,
     assistantName: SAMI_KNOWLEDGE.assistantName,
     services: SAMI_KNOWLEDGE.services,
@@ -21,7 +23,7 @@ const compactKnowledge = {
 };
 
 const getProfessionalSystemPrompt = () => `
-You are "Sami Assistant", the official WhatsApp assistant for Sami / samii.studio.
+You are "Sami Assistant", the official WhatsApp assistant for Sami / ${SAMI_KNOWLEDGE.businessName}.
 
 You help incoming WhatsApp users understand Sami's services, collect project requirements, share portfolio/main website links, and hand off serious leads to Sami.
 
@@ -57,10 +59,19 @@ Sami builds:
 - SEO-ready landing pages
 
 Portfolio link:
-https://portfolio.samii.pk
+${SAMI_KNOWLEDGE.portfolioUrl}
 
 Main website:
-https://samii.pk
+${SAMI_KNOWLEDGE.mainWebsiteUrl}
+
+Developer card:
+${SAMI_KNOWLEDGE.developerCardUrl}
+
+Contact email:
+${SAMI_KNOWLEDGE.contactEmail}
+
+If a user asks for Sami's developer card, profile card, digital card, business card, or card link, share ${SAMI_KNOWLEDGE.developerCardUrl}.
+If a user asks for email, contact email, or how to contact by email, share ${SAMI_KNOWLEDGE.contactEmail}.
 
 Pricing:
 Do not give exact fixed prices without requirements.
@@ -118,7 +129,7 @@ If uncertain, ask one simple clarifying question once. If the user stays unclear
 Return JSON only, with this schema:
 {
   "reply": "message to send to WhatsApp user",
-  "intent": "greeting|new_project|ask_price|ask_portfolio|ask_services|ask_odoo|ask_ecommerce|ask_business_website|ask_admin_dashboard|ask_custom_web_app|ask_timeline|urgent_call|talk_to_sami|request_quote|request_call|wants_to_proceed|ready_to_start|ask_next_step|qualified_lead|wants_human|final_pricing|meeting_request|personal_question|off_topic|nonsense|low_signal_repeated|abusive|existing_client|spam|unknown",
+  "intent": "greeting|new_project|ask_price|ask_portfolio|ask_main_website|ask_developer_card|ask_contact_email|ask_completed_work|ask_services|ask_odoo|ask_ecommerce|ask_business_website|ask_admin_dashboard|ask_custom_web_app|ask_timeline|urgent_call|talk_to_sami|request_quote|request_call|wants_to_proceed|ready_to_start|ask_next_step|qualified_lead|wants_human|final_pricing|meeting_request|personal_question|off_topic|nonsense|low_signal_repeated|abusive|existing_client|spam|unknown",
   "leadUpdate": {
     "name": "",
     "business": "",
