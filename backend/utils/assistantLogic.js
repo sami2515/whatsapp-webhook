@@ -210,7 +210,9 @@ const FEATURE_KEYWORDS = [
 const notInterestedPhrases = [
     'no thanks', 'not interested', 'not now', 'maybe later', 'abhi nahi', 'abi nahi',
     'nahi chahiye', 'nai chahiye', 'zaroorat nahi', 'need nahi', 'filhal nahi',
-    'phir kabhi', 'baad mein', 'bad me', 'no need'
+    'phir kabhi', 'baad mein', 'bad me', 'no need', 'no thank you', 'interest nahi',
+    'dilchaspi nahi', 'nahi krwana', 'nahi karwana', 'nai karwana', 'nai krwana',
+    'filhal nahi chahiye', 'phir kabhi sahi'
 ];
 
 const personalQuestionPhrases = [
@@ -321,13 +323,21 @@ const handoffIntentPriority = [
     'qualified_lead'
 ];
 
-const currencyAmountPattern = /(?:rs\.?|pkr|rupees)\s*\d[\d,.-]*(?:\s*(?:k|lac|lakh|thousand))?|\b\d[\d,.-]*\s*(?:k|lac|lakh|thousand)\b/i;
-const durationPattern = /\b\d+\s*(?:days?|dayz|din|weeks?|week|wks|haftay|hafte|hafta|months?|month|mth|mahine|mahiney|mahina)\b/i;
+const currencyAmountPattern = /(?:rs\.?|pkr|rupees|ہزار|لاکھ)\s*\d[\d,.-]*(?:\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions))?|\b\d[\d,.-]*\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions|ہزار|لاکھ)\b/i;
+const budgetRangePattern = /\b\d[\d,.-]*(?:\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions|ہزار|لاکھ))?\s*(?:-|to|se|ya|or)\s*\d[\d,.-]*\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions|ہزار|لاکھ)\b/i;
+const durationPattern = /\b\d+(?:\s*(?:-|to|se|ya|or)\s*\d+)?\s*(?:days?|dayz|din|weeks?|week|wks|haftay|hafte|hafta|months?|month|mth|mahine|mahiney|mahina)\b/i;
+
 
 export const detectAffirmative = (messageText = '') => {
     const text = normalizeLoose(messageText);
     if (!text) return false;
-    return affirmativePhrases.includes(text) || /^(yes|yeah|yep|haan|han|jee|ji|g)\s*(please)?$/i.test(text);
+    const matchesPhrase = includesAny(text, [
+        'ji bilkul', 'jee bilkul', 'haan please', 'han please',
+        'sure why not', 'why not', 'haan sahi hai', 'han sahi hai',
+        'theek hai', 'thik hai', 'bilkul sahi', 'thek hai'
+    ]);
+    if (matchesPhrase) return true;
+    return affirmativePhrases.includes(text) || /^(yes|yeah|yep|sure|ok|okay|haan|han|ha|jee|ji|g|bilkul|theek|thik|thek)\s*(please|hai|ha|boss|sir|bhai)?$/i.test(text);
 };
 
 const detectAffirmativeLanguageStyle = (messageText = '') => {
@@ -342,49 +352,63 @@ export const detectFeaturesOrPages = (messageText = '') => {
     return /\b\d+\s*(?:pages?|page)\b/i.test(text) || includesAny(text, FEATURE_KEYWORDS);
 };
 
-export const extractBudget = (messageText = '') => {
+export const extractBudget = (messageText = '', lead = {}) => {
     const text = normalizeLoose(messageText);
-    if (includesAny(text, ['need guidance', 'budget guidance', 'guide me', 'guidance needed', 'rahnumai', 'guidance'])) {
+    if (includesAny(text, [
+        'need guidance', 'budget guidance', 'guide me', 'guidance needed', 'rahnumai', 'guidance',
+        'guide krden', 'guide karden', 'guide krdo', 'guide kardo', 'bataen', 'btaen'
+    ])) {
         return 'Need guidance';
     }
 
-    const hasBudgetWord = includesAny(text, ['budget', 'bujut', 'range', 'بجٹ', 'milay ga', 'laga']);
+    const isBudgetQuestionContext = lead && lead.lastBotQuestionType === 'budget';
+    const cleanTrimmed = messageText.trim();
+
+    const rangeMatch = messageText.match(budgetRangePattern);
+    if (rangeMatch) {
+        return cleanParsedValue(rangeMatch[0]);
+    }
+
     const amountMatch = messageText.match(currencyAmountPattern);
-    if (amountMatch && (hasBudgetWord || /\b(?:rs\.?|pkr|rupees)\b/i.test(amountMatch[0]) || /(?:k|lac|lakh|thousand)\b/i.test(amountMatch[0]))) {
+    const hasBudgetWord = includesAny(text, ['budget', 'bujut', 'range', 'بجٹ', 'milay ga', 'laga', 'paisa', 'paise', 'rupay', 'rupee', 'rupees', 'rs', 'pkr']);
+    if (amountMatch && (hasBudgetWord || isBudgetQuestionContext || /\b(?:rs\.?|pkr|rupees)\b/i.test(amountMatch[0]) || /(?:k|lac|lakh|thousand|hazar|hazaar|hzr|m|million)\b/i.test(amountMatch[0]))) {
         return cleanParsedValue(amountMatch[0]);
     }
 
-    if (hasBudgetWord) {
+    if (hasBudgetWord || isBudgetQuestionContext) {
         const plainAmount = messageText.match(/\b\d{4,8}\b/);
         if (plainAmount) return cleanParsedValue(plainAmount[0]);
     }
 
-    // New: If user just inputs a pure number or simple range (e.g. "20000", "20k", "20-30k", "20 to 30k") and length is short, capture it as budget!
-    const cleanTrimmed = messageText.trim();
-    const plainRangeOrNumber = cleanTrimmed.match(/^\s*(?:rs\.?\s*)?(\d+[\d,\s]*k?|\d+[\d,\s]*\s*(?:-|to)\s*\d+[\d,\s]*k?)\s*$/i);
-    if (plainRangeOrNumber && cleanTrimmed.length <= 15) {
+    const plainRangeOrNumber = cleanTrimmed.match(/^\s*(?:rs\.?\s*)?(\d+[\d,\s]*(?:k|hazar|hazaar|hzr|thousand|lakh|lac)?|\d+[\d,\s]*(?:k|hazar|hazaar|hzr|thousand|lakh|lac)?\s*(?:-|to|se|ya|or)\s*\d+[\d,\s]*(?:k|hazar|hazaar|hzr|thousand|lakh|lac)?)\s*$/i);
+    if (plainRangeOrNumber && (cleanTrimmed.length <= 20 || isBudgetQuestionContext)) {
         return cleanParsedValue(plainRangeOrNumber[0]);
     }
 
     return '';
 };
 
-export const extractTimeline = (messageText = '') => {
+export const extractTimeline = (messageText = '', lead = {}) => {
     const text = normalizeLoose(messageText);
     const timelinePhrases = [
         'today', 'tomorrow', 'this week', 'next week', 'this month', 'next month',
         'urgent', 'asap', 'jaldi', 'jldi', 'fori', 'فوری', 'جلدی', 'اگلے ہفتے', 'urgent hai',
-        '1 month', '2 months', '3 months', '1 week', '2 weeks', '3 weeks'
-    ];
+        '1 month', '2 months', '3 months', '1 week', '2 weeks', '3 weeks',
+        'is hafte', 'is mahine', 'jaldi se jaldi', 'as soon as possible', '1-2 days', '2-3 days'
+    ].sort((a, b) => b.length - a.length);
     const phrase = timelinePhrases.find((item) => text.includes(item));
     if (phrase) return phrase;
 
+    const isTimelineQuestionContext = lead && lead.lastBotQuestionType === 'timeline';
     const duration = messageText.match(durationPattern);
     if (duration) return cleanParsedValue(duration[0]);
 
-    if (includesAny(text, ['timeline', 'deadline', 'delivery', 'kab tak', 'کب تک'])) {
-        const afterLabel = messageText.match(/(?:timeline|deadline|delivery)\s*(?:is|hai|:|-)?\s*([^.,\n]+)/i);
-        if (afterLabel?.[1]) return cleanParsedValue(afterLabel[1]);
+    if (isTimelineQuestionContext || includesAny(text, ['timeline', 'deadline', 'delivery', 'kab tak', 'کب تک', 'kb tak', 'kb tk', 'kabtk'])) {
+        const afterLabel = messageText.match(/(?:timeline|deadline|delivery|kab tak|kabtk|kb tak)\s*(?:is|hai|:|-)?\s*([^.,\n]+)/i);
+        if (afterLabel?.[1] && afterLabel[1].trim().length > 0) return cleanParsedValue(afterLabel[1]);
+        if (isTimelineQuestionContext && messageText.trim().length <= 25) {
+            return cleanParsedValue(messageText);
+        }
     }
 
     return '';
@@ -393,16 +417,41 @@ export const extractTimeline = (messageText = '') => {
 const inferServiceTypeFromText = (messageText = '') => {
     const text = normalizeLoose(messageText);
 
-    if (includesAny(text, ['odoo'])) return 'Odoo Portal';
-    if (includesAny(text, ['e-commerce', 'ecommerce', 'online store', 'store chahiye', 'shop', 'eshop', 'online dukan', 'shopify', 'woo', 'shopping website', 'dukan'])) return 'E-commerce Store';
-    if (includesAny(text, ['admission portal', 'student portal', 'school portal', 'college portal', 'university portal', 'result portal'])) return 'Student/Admission Portal';
-    if (includesAny(text, ['document portal', 'document support'])) return 'Document Support Portal';
-    if (includesAny(text, ['admin dashboard', 'dashboard', 'admin panel', 'panel', 'management system', 'crm', 'erp'])) return 'Admin Dashboard';
-    if (includesAny(text, ['portfolio website', 'developer portfolio', 'personal portfolio', 'cv website', 'personal site', 'apni website'])) return 'Portfolio Website';
-    if (includesAny(text, ['business website', 'company website', 'corporate website', 'agency website', 'landing page'])) return 'Business Website';
-    if (includesAny(text, ['custom web app', 'web app', 'portal', 'software', 'custom system', 'web app banwani'])) return 'Custom Web App';
-    if (includesAny(text, ['redesign', 'renew', 'design change'])) return 'Website Redesign';
-    if (includesAny(text, ['maintenance', 'fix issue', 'bugs', 'domain connect'])) return 'Maintenance';
+    if (includesAny(text, ['odoo', 'odu'])) return 'Odoo Portal';
+    if (includesAny(text, [
+        'e-commerce', 'ecommerce', 'online store', 'store chahiye', 'shop', 'eshop', 'online dukan',
+        'shopify', 'woo', 'shopping website', 'dukan', 'dukan website', 'online shop', 'e-store',
+        'sales website', 'shopping site', 'dukan ki site', 'online dukan ki website'
+    ])) return 'E-commerce Store';
+    if (includesAny(text, [
+        'admission portal', 'student portal', 'school portal', 'college portal', 'university portal',
+        'result portal', 'student system', 'admission website', 'admission system', 'school management'
+    ])) return 'Student/Admission Portal';
+    if (includesAny(text, ['document portal', 'document support', 'doc portal'])) return 'Document Support Portal';
+    if (includesAny(text, [
+        'admin dashboard', 'dashboard', 'admin panel', 'panel', 'management system', 'crm', 'erp',
+        'custom panel', 'inventory dashboard', 'sales dashboard', 'admin system', 'reporting system'
+    ])) return 'Admin Dashboard';
+    if (includesAny(text, [
+        'portfolio website', 'developer portfolio', 'personal portfolio', 'cv website', 'personal site',
+        'apni website', 'resume website', 'cv site', 'apna portfolio', 'personal cv website'
+    ])) return 'Portfolio Website';
+    if (includesAny(text, [
+        'business website', 'company website', 'corporate website', 'agency website', 'landing page',
+        'business ki website', 'company ki website', 'official website', 'agency site', 'business site'
+    ])) return 'Business Website';
+    if (includesAny(text, [
+        'custom web app', 'web app', 'portal', 'software', 'custom system', 'web app banwani',
+        'custom system banwana', 'portal system', 'webapp development'
+    ])) return 'Custom Web App';
+    if (includesAny(text, [
+        'redesign', 'renew', 'design change', 'website change karni', 'website update karni',
+        'new design', 'modernize website', 'layout change', 'design update', 'theme update'
+    ])) return 'Website Redesign';
+    if (includesAny(text, [
+        'maintenance', 'fix issue', 'bugs', 'domain connect', 'hosting setup', 'website repair',
+        'error fix', 'error fixing', 'website repair karni', 'bug fixing', 'fix design'
+    ])) return 'Maintenance';
 
     return '';
 };
@@ -410,8 +459,8 @@ const inferServiceTypeFromText = (messageText = '') => {
 export const inferLeadUpdateFromMessage = (messageText = '', lead = {}) => {
     const leadUpdate = {};
     const serviceType = inferServiceTypeFromText(messageText);
-    const budget = extractBudget(messageText);
-    const timeline = extractTimeline(messageText);
+    const budget = extractBudget(messageText, lead);
+    const timeline = extractTimeline(messageText, lead);
     const hasFeatureDetails = detectFeaturesOrPages(messageText);
     const cleanedMessage = cleanParsedValue(messageText);
     const genericWebsiteIntent = hasGenericWebsiteBuildIntent(messageText);
@@ -518,14 +567,32 @@ export const detectCompletedWorkRequest = (messageText = '') => {
         'zmg',
         'education portal',
         'sami ke projects',
-        'sami ka kaam'
+        'sami ka kaam',
+        'demo',
+        'demos',
+        'live website link',
+        'apna kaam dikhao',
+        'kuch kaam dikhao',
+        'live work',
+        'samples dikhao',
+        'kam dikhao',
+        'work portfolio',
+        'previous project',
+        'purana kaam',
+        'purane projects'
     ]);
 };
 
 export const detectPortfolioRequest = (messageText = '') => {
     const text = normalizeLoose(messageText);
-    if (includesAny(text, ['portfolio website banwani', 'portfolio website banwana', 'portfolio website chahiye'])) return false;
-    return includesAny(text, ['portfolio', 'portfolio dikhao', 'sami ka portfolio']);
+    if (includesAny(text, [
+        'portfolio website banwani', 'portfolio website banwana', 'portfolio website chahiye',
+        'portfolio website banwani hai', 'portfolio website banwana hai'
+    ])) return false;
+    return includesAny(text, [
+        'portfolio', 'portfolio dikhao', 'sami ka portfolio', 'portfolio link', 'portfolio link do',
+        'portfolio bhej', 'portfolio send', 'portfoli', 'port folio', 'portpholio'
+    ]);
 };
 
 export const detectDeveloperCardRequest = (messageText = '') => {
