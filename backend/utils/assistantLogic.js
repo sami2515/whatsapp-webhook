@@ -321,8 +321,8 @@ const handoffIntentPriority = [
     'qualified_lead'
 ];
 
-const currencyAmountPattern = /(?:rs\.?|pkr|rupees)\s*\d[\d,.]*(?:\s*(?:k|lac|lakh|thousand))?|\b\d[\d,.]*\s*(?:k|lac|lakh|thousand)\b/i;
-const durationPattern = /\b\d+\s*(?:days?|din|weeks?|week|haftay|hafta|months?|month|mahine|mahina)\b/i;
+const currencyAmountPattern = /(?:rs\.?|pkr|rupees)\s*\d[\d,.-]*(?:\s*(?:k|lac|lakh|thousand))?|\b\d[\d,.-]*\s*(?:k|lac|lakh|thousand)\b/i;
+const durationPattern = /\b\d+\s*(?:days?|dayz|din|weeks?|week|wks|haftay|hafte|hafta|months?|month|mth|mahine|mahiney|mahina)\b/i;
 
 export const detectAffirmative = (messageText = '') => {
     const text = normalizeLoose(messageText);
@@ -344,11 +344,11 @@ export const detectFeaturesOrPages = (messageText = '') => {
 
 export const extractBudget = (messageText = '') => {
     const text = normalizeLoose(messageText);
-    if (includesAny(text, ['need guidance', 'budget guidance', 'guide me', 'guidance needed'])) {
+    if (includesAny(text, ['need guidance', 'budget guidance', 'guide me', 'guidance needed', 'rahnumai', 'guidance'])) {
         return 'Need guidance';
     }
 
-    const hasBudgetWord = includesAny(text, ['budget', 'bujut', 'range', 'بجٹ']);
+    const hasBudgetWord = includesAny(text, ['budget', 'bujut', 'range', 'بجٹ', 'milay ga', 'laga']);
     const amountMatch = messageText.match(currencyAmountPattern);
     if (amountMatch && (hasBudgetWord || /\b(?:rs\.?|pkr|rupees)\b/i.test(amountMatch[0]) || /(?:k|lac|lakh|thousand)\b/i.test(amountMatch[0]))) {
         return cleanParsedValue(amountMatch[0]);
@@ -359,6 +359,13 @@ export const extractBudget = (messageText = '') => {
         if (plainAmount) return cleanParsedValue(plainAmount[0]);
     }
 
+    // New: If user just inputs a pure number or simple range (e.g. "20000", "20k", "20-30k", "20 to 30k") and length is short, capture it as budget!
+    const cleanTrimmed = messageText.trim();
+    const plainRangeOrNumber = cleanTrimmed.match(/^\s*(?:rs\.?\s*)?(\d+[\d,\s]*k?|\d+[\d,\s]*\s*(?:-|to)\s*\d+[\d,\s]*k?)\s*$/i);
+    if (plainRangeOrNumber && cleanTrimmed.length <= 15) {
+        return cleanParsedValue(plainRangeOrNumber[0]);
+    }
+
     return '';
 };
 
@@ -366,7 +373,8 @@ export const extractTimeline = (messageText = '') => {
     const text = normalizeLoose(messageText);
     const timelinePhrases = [
         'today', 'tomorrow', 'this week', 'next week', 'this month', 'next month',
-        'urgent', 'asap', 'jaldi', 'jldi', 'fori', 'فوری', 'جلدی', 'اگلے ہفتے'
+        'urgent', 'asap', 'jaldi', 'jldi', 'fori', 'فوری', 'جلدی', 'اگلے ہفتے', 'urgent hai',
+        '1 month', '2 months', '3 months', '1 week', '2 weeks', '3 weeks'
     ];
     const phrase = timelinePhrases.find((item) => text.includes(item));
     if (phrase) return phrase;
@@ -386,11 +394,15 @@ const inferServiceTypeFromText = (messageText = '') => {
     const text = normalizeLoose(messageText);
 
     if (includesAny(text, ['odoo'])) return 'Odoo Portal';
-    if (includesAny(text, ['e-commerce', 'ecommerce', 'online store', 'store chahiye', 'shop', 'eshop'])) return 'E-commerce Store';
-    if (includesAny(text, ['business website', 'company website', 'corporate website'])) return 'Business Website';
-    if (includesAny(text, ['admin dashboard', 'dashboard', 'admin panel', 'panel'])) return 'Admin Dashboard';
-    if (includesAny(text, ['custom web app', 'web app', 'portal', 'software'])) return 'Custom Web App';
-    if (includesAny(text, ['portfolio website', 'developer portfolio', 'personal portfolio'])) return 'Portfolio Website';
+    if (includesAny(text, ['e-commerce', 'ecommerce', 'online store', 'store chahiye', 'shop', 'eshop', 'online dukan', 'shopify', 'woo', 'shopping website', 'dukan'])) return 'E-commerce Store';
+    if (includesAny(text, ['admission portal', 'student portal', 'school portal', 'college portal', 'university portal', 'result portal'])) return 'Student/Admission Portal';
+    if (includesAny(text, ['document portal', 'document support'])) return 'Document Support Portal';
+    if (includesAny(text, ['admin dashboard', 'dashboard', 'admin panel', 'panel', 'management system', 'crm', 'erp'])) return 'Admin Dashboard';
+    if (includesAny(text, ['portfolio website', 'developer portfolio', 'personal portfolio', 'cv website', 'personal site', 'apni website'])) return 'Portfolio Website';
+    if (includesAny(text, ['business website', 'company website', 'corporate website', 'agency website', 'landing page'])) return 'Business Website';
+    if (includesAny(text, ['custom web app', 'web app', 'portal', 'software', 'custom system', 'web app banwani'])) return 'Custom Web App';
+    if (includesAny(text, ['redesign', 'renew', 'design change'])) return 'Website Redesign';
+    if (includesAny(text, ['maintenance', 'fix issue', 'bugs', 'domain connect'])) return 'Maintenance';
 
     return '';
 };
@@ -917,7 +929,10 @@ export const detectLanguageStyle = (messageText = '') => {
         'banwana', 'dikhao', 'kya', 'kia', 'kitna', 'krni', 'karni', 'kaam', 'baat',
         'hai', 'hain', 'ha', 'ho', 'karte', 'kar', 'bata', 'batao', 'bta', 'bhejo',
         'de do', 'link do', 'bhej do', 'lein', 'len', 'pe', 'par', 'chahta',
-        'chahti', 'mein', 'me', 'ka', 'ki', 'se', 'ke liye'
+        'chahti', 'mein', 'me', 'ka', 'ki', 'se', 'ke liye', 'aoa', 'salam',
+        'assalam', 'kese', 'kaise', 'bhai', 'bro', 'yaar', 'ab', 'kab', 'tab',
+        'btaen', 'bataen', 'shukriya', 'tameer', 'kharab', 'kuch', 'sath',
+        'baad', 'hoga', 'hogi', 'hoge', 'raha', 'rahi', 'rahe'
     ];
     const englishMarkers = [
         'need', 'business', 'website', 'company', 'project', 'price', 'cost',
