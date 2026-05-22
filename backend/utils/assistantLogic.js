@@ -769,7 +769,8 @@ export const hasUsefulProjectContext = (messageText = '', leadUpdate = {}) => {
 export const detectOffTopicOrNonsense = (messageText = '', lead = {}) => {
     const text = normalizeLoose(messageText);
     if (!text) return true;
-    if (/^(hi|hello|hey|salam|salaam|assalam|aoa|jee|ji|hy)$/.test(text)) return false;
+    const greetingRegex = /^(hi|hello|hey|salam|salaam|assalam|aoa|hy|yo|helo)(?:\s+(?:there|dear|bro|bhai|sir|sami|friends?|guys?|everyone|all|o\s+al[a-z]+|o\s+ale[a-z]+))?$/i;
+    if (greetingRegex.test(text)) return false;
     if (detectNotInterested(messageText)) return false;
     if (hasUsefulProjectContext(messageText)) return false;
     if (detectPersonalQuestion(messageText)) return false;
@@ -1077,7 +1078,9 @@ export const detectIntent = (messageText = '') => {
     ) {
         return 'new_project';
     }
-    if (/^(hi|hello|hey|salam|salaam|assalam|aoa|jee|ji|hy)$/.test(text)) return 'greeting';
+    const looseText = normalizeLoose(messageText);
+    const greetingRegex = /^(hi|hello|hey|salam|salaam|assalam|aoa|hy|yo|helo)(?:\s+(?:there|dear|bro|bhai|sir|sami|friends?|guys?|everyone|all|o\s+al[a-z]+|o\s+ale[a-z]+))?$/i;
+    if (greetingRegex.test(looseText)) return 'greeting';
 
     if (detectRepeatConfusion(messageText)) return 'low_signal_repeated';
     if (detectOffTopicOrNonsense(messageText)) return 'nonsense';
@@ -1698,94 +1701,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         ...result
     });
 
-    if (detectNotInterested(messageText)) {
-        return withDefaults({
-            reply: getNotInterestedReply(style),
-            intent: 'not_interested',
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: ''
-            }
-        });
-    }
-
-    if (detectAffirmative(messageText) && ['service_choice', 'project_type'].includes(lead.lastBotQuestionType)) {
-        const affirmativeStyle = detectAffirmativeLanguageStyle(messageText);
-
-        return withDefaults({
-            reply: getAffirmativeServiceChoiceReply(affirmativeStyle),
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'service_choice'
-            }
-        });
-    }
-
-    if (intent === 'ask_completed_work' || detectCompletedWorkRequest(messageText)) {
-        return withDefaults({
-            reply: getCompletedWorkReply(getSafeReplyStyle(messageText)),
-            intent: 'ask_completed_work',
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'ask_portfolio' || detectPortfolioRequest(messageText)) {
-        return withDefaults({
-            reply: getPortfolioLinkReply(getSafeReplyStyle(messageText)),
-            intent: 'ask_portfolio',
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
-        return withDefaults({
-            reply: getDeveloperCardReply(getSafeReplyStyle(messageText)),
-            intent: 'ask_developer_card',
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
-        return withDefaults({
-            reply: getContactEmailReply(getSafeReplyStyle(messageText)),
-            intent: 'ask_contact_email',
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'ask_main_website' || detectMainWebsiteRequest(messageText)) {
-        return withDefaults({
-            reply: isBareWebsiteRequest(messageText) && ['service_choice', 'project_type'].includes(lead.lastBotQuestionType)
-                ? getWebsiteDisambiguationReply(getSafeReplyStyle(messageText))
-                : getMainWebsiteLinkReply(getSafeReplyStyle(messageText)),
-            intent: 'ask_main_website',
-            pauseAI: false
-        });
-    }
-
-    const isPersonalFollowUp = (lead.personalQuestionCount || 0) > 0 &&
-        detectPersonalFollowUp(messageText) &&
-        !usefulProjectContext;
-
-    if (intent === 'personal_question' || detectPersonalQuestion(messageText) || isPersonalFollowUp) {
-        const isRepeat = (lead.personalQuestionCount || 0) > 0;
-
-        return withDefaults({
-            reply: isRepeat ? getPersonalHandoffReply(style) : getPersonalBoundaryReply(style),
-            intent: 'personal_question',
-            stage: isRepeat ? LEAD_STAGES.HANDED_OFF : LEAD_STAGES.PERSONAL_BOUNDARY,
-            pauseAI: isRepeat,
-            handoffReason: isRepeat ? 'Repeated personal/private question' : '',
-            contextUpdate: {
-                personalQuestionCount: (lead.personalQuestionCount || 0) + 1,
-                lastBotQuestionType: 'personal_boundary'
-            }
-        });
-    }
-
+    // 1. Abuse Detection
     const abuse = detectAbusiveOrInappropriate(messageText);
     if (intent === 'abusive' || abuse.isAbusive) {
         const shouldPause = abuse.severity === 'severe' || (lead.abuseCount || 0) > 0;
@@ -1804,56 +1720,7 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         });
     }
 
-    if (detectRepeatConfusion(messageText)) {
-        const shouldPause = (lead.unclearCount || 0) > 0 ||
-            ['clarification', 'unclear', 'off_topic', 'repeat_confusion'].includes(lead.lastBotQuestionType);
-
-        return withDefaults({
-            reply: shouldPause ? getRepeatedUnclearHandoffReply(style) : getUnclearOffTopicReply(style),
-            intent: 'low_signal_repeated',
-            stage: shouldPause ? LEAD_STAGES.HANDED_OFF : LEAD_STAGES.UNCLEAR_WAITING,
-            pauseAI: shouldPause,
-            handoffReason: shouldPause ? 'Repeated confusion after clarification' : '',
-            contextUpdate: {
-                unclearCount: (lead.unclearCount || 0) + 1,
-                lastBotQuestionType: 'repeat_confusion'
-            }
-        });
-    }
-
-    if (weakBuildPlanDetails) {
-        return withDefaults({
-            reply: getBuildPlanDetailClarificationReply(style),
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                cameFromBuildPlan: true,
-                buildPlanFormSubmitted: false,
-                unclearCount: (lead.unclearCount || 0) + 1,
-                lastBotQuestionType: 'requirements'
-            }
-        });
-    }
-
-    if (intent === 'spam' || intent === 'nonsense' || intent === 'off_topic' || detectOffTopicOrNonsense(messageText, lead)) {
-        const shouldPause = (lead.offTopicCount || 0) > 0 || (lead.unclearCount || 0) > 0;
-
-        return withDefaults({
-            reply: shouldPause ? getRepeatedUnclearHandoffReply(style) : getUnclearOffTopicReply(style),
-            intent: intent === 'spam' ? 'spam' : 'off_topic',
-            stage: shouldPause ? LEAD_STAGES.HANDED_OFF : LEAD_STAGES.OFF_TOPIC_WAITING,
-            pauseAI: shouldPause,
-            handoffReason: shouldPause ? 'Repeated unclear/off-topic messages' : '',
-            contextUpdate: {
-                unclearCount: (lead.unclearCount || 0) + 1,
-                offTopicCount: (lead.offTopicCount || 0) + 1,
-                lastBotQuestionType: 'off_topic'
-            }
-        });
-    }
-
+    // 2. Parsed Lead Forms / Website Build Plan
     if (Object.keys(parsedLead).length > 0) {
         const detailedBuildPlan = Boolean(mergedLead.serviceType && mergedLead.projectDetails && (mergedLead.budget || mergedLead.timeline));
 
@@ -1885,241 +1752,24 @@ export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead =
         });
     }
 
-    if (intent === 'ask_portfolio') {
+    if (weakBuildPlanDetails) {
         return withDefaults({
-            reply: getPortfolioReply(style),
-            intent,
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
-        return withDefaults({
-            reply: getDeveloperCardReply(style),
-            intent: 'ask_developer_card',
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
-        return withDefaults({
-            reply: getContactEmailReply(style),
-            intent: 'ask_contact_email',
-            pauseAI: false
-        });
-    }
-
-    if (includesAny(lowerText, ['samidev.pk', 'main website', 'website link', 'build plan page'])) {
-        return withDefaults({
-            reply: getWebsiteReply(style),
-            intent: intent === 'unknown' ? 'ask_services' : intent,
-            pauseAI: false
-        });
-    }
-
-    if (intent === 'greeting') {
-        return withDefaults({
-            reply: getGreetingReply(style),
-            intent,
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'service_choice'
-            }
-        });
-    }
-
-    if (intent === 'ask_services') {
-        return withDefaults({
-            reply: getServicesReply(style),
-            intent,
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'service_choice'
-            }
-        });
-    }
-
-    if (['ask_price', 'request_quote', 'final_pricing'].includes(intent)) {
-        const handoffDecision = shouldPauseForQualifiedLead({
-            lead: mergedLead,
-            messageText,
-            intent,
-            stage: mergedLead.stage
-        });
-
-        if (handoffDecision.shouldPause) {
-            return withDefaults({
-                reply: getTalkToSamiReply(style, true),
-                intent,
-                stage: LEAD_STAGES.HANDED_OFF,
-                pauseAI: true,
-                leadScore: handoffDecision.leadScore,
-                handoffReason: handoffDecision.handoffReason
-            });
-        }
-
-        if ((leadUpdate.budget || leadUpdate.timeline) && (mergedLead.serviceType || mergedLead.projectDetails)) {
-            return withDefaults({
-                reply: getTimelineOrBudgetQuestion(style, mergedLead),
-                intent,
-                stage: !mergedLead.budget ? LEAD_STAGES.ASKED_BUDGET : LEAD_STAGES.ASKED_TIMELINE,
-                pauseAI: false,
-                contextUpdate: {
-                    ...resetContextUpdate,
-                    lastBotQuestionType: !mergedLead.budget ? 'budget' : 'timeline'
-                }
-            });
-        }
-
-        return withDefaults({
-            reply: getPriceReply(style),
-            intent,
+            reply: getBuildPlanDetailClarificationReply(style),
+            intent: 'new_project',
             stage: LEAD_STAGES.ASKED_REQUIREMENTS,
             pauseAI: false,
             contextUpdate: {
                 ...resetContextUpdate,
-                lastBotQuestionType: 'requirements'
-            }
-        });
-    }
-
-    const handoffDecision = shouldPauseForQualifiedLead({
-        lead: mergedLead,
-        messageText,
-        intent,
-        stage: mergedLead.stage
-    });
-
-    if (handoffDecision.shouldPause) {
-        return withDefaults({
-            reply: getTalkToSamiReply(style, true),
-            intent,
-            stage: LEAD_STAGES.HANDED_OFF,
-            pauseAI: true,
-            leadScore: handoffDecision.leadScore,
-            handoffReason: handoffDecision.handoffReason
-        });
-    }
-
-    if ((leadUpdate.budget || leadUpdate.timeline) && (mergedLead.serviceType || mergedLead.projectDetails)) {
-        return withDefaults({
-            reply: getTimelineOrBudgetQuestion(style, mergedLead),
-            intent: intent === 'unknown' ? 'qualified_lead' : intent,
-            stage: !mergedLead.budget ? LEAD_STAGES.ASKED_BUDGET : LEAD_STAGES.ASKED_TIMELINE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: !mergedLead.budget ? 'budget' : 'timeline'
-            }
-        });
-    }
-
-    if (['talk_to_sami', 'urgent_call', 'wants_human', 'request_call', 'meeting_request'].includes(intent)) {
-        return withDefaults({
-            reply: intent === 'request_call' || intent === 'meeting_request'
-                ? getCallReply(style, false)
-                : getTalkToSamiReply(style, false),
-            intent,
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'handoff_context'
-            }
-        });
-    }
-
-    if (intent === 'ask_timeline') {
-        return withDefaults({
-            reply: template(style, {
-                english: 'Timeline depends on pages and features. What type of website or app do you need?',
-                roman: 'Timeline pages aur features par depend karti hai. Aapko kis type ki website ya app chahiye?',
-                urdu: 'Timeline pages aur features par depend karti hai. Aapko kis type ki website ya app chahiye?'
-            }),
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'requirements'
-            }
-        });
-    }
-
-    if (intent === 'existing_client') {
-        return withDefaults({
-            reply: template(style, {
-                english: 'Sure. Please share the website/project name and what change or issue you need fixed.',
-                roman: 'Jee. Website/project ka naam aur jo change ya issue hai wo bata dein.',
-                urdu: 'Jee. Website/project ka naam aur jo change ya issue hai wo bata dein.'
-            }),
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'requirements'
-            }
-        });
-    }
-
-    if (leadUpdate.projectDetails || (lead.serviceType && detectFeaturesOrPages(messageText))) {
-        return withDefaults({
-            reply: getTimelineOrBudgetQuestion(style, mergedLead),
-            intent: intent === 'unknown' ? 'qualified_lead' : intent,
-            stage: !mergedLead.budget ? LEAD_STAGES.ASKED_BUDGET : LEAD_STAGES.ASKED_TIMELINE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: !mergedLead.budget ? 'budget' : 'timeline'
-            }
-        });
-    }
-
-    if (['ask_odoo', 'ask_ecommerce', 'ask_business_website', 'ask_admin_dashboard', 'ask_custom_web_app'].includes(intent)) {
-        return withDefaults({
-            reply: getServiceQualificationQuestion(leadUpdate.serviceType, style),
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'requirements'
-            }
-        });
-    }
-
-    if (intent === 'new_project') {
-        return withDefaults({
-            reply: getNewProjectQuestion(style),
-            intent,
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'service_choice'
-            }
-        });
-    }
-
-    if (isLowSignalMessage(messageText)) {
-        return withDefaults({
-            reply: getClarificationReply(style),
-            intent: 'unknown',
-            stage: LEAD_STAGES.UNCLEAR_WAITING,
-            pauseAI: false,
-            contextUpdate: {
+                cameFromBuildPlan: true,
+                buildPlanFormSubmitted: false,
                 unclearCount: (lead.unclearCount || 0) + 1,
-                lastBotQuestionType: 'unclear'
+                lastBotQuestionType: 'requirements'
             }
         });
     }
 
-    return getLegacyRuleBasedAssistantResponse({ messageText, intent, lead, parsedLead });
+    // Default to falling back to Gemini
+    return null;
 };
 
 export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '', lead = {} }) => {

@@ -684,13 +684,13 @@ export const handleIncomingMessage = async (req, res) => {
                             // 1. Fetch Chat History (Memory) - Exclude current message
                             const recentContext = await Message.find({
                                 $or: [{ from: from }, { to: from }],
-                                type: 'text',
+                                type: { $in: ['text', 'interactive', 'image', 'audio', 'voice', 'video', 'document', 'template'] },
                                 messageId: { $ne: messageId }
                             }).sort({ _id: -1 }).limit(10);
 
                             const history = recentContext.reverse().map(msg => ({
                                 role: msg.from === from ? 'user' : 'assistant',
-                                content: msg.text || "Message"
+                                content: msg.text || `[${msg.type} message]`
                             }));
 
                             // 2. Fetch Image Buffer (Vision)
