@@ -131,7 +131,6 @@ Append **[PAUSE]** and set \`pauseAI: true\` when:
 }
 \`\`\`
 `;
-`;
 
 const normalizeJson = (text = '') => {
     return text

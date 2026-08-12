@@ -580,10 +580,18 @@ export const handleIncomingMessage = async (req, res) => {
                 const previousLastMessageAt = userContext?.lastMessageAt;
 
                 if (!userContext) {
-                    userContext = await UserContext.create({
-                        phoneNumber: from,
-                        phone: from
-                    });
+                    try {
+                        userContext = await UserContext.create({
+                            phoneNumber: from,
+                            phone: from
+                        });
+                    } catch (err) {
+                        if (err.code === 11000) {
+                            userContext = await UserContext.findOne({ phoneNumber: from });
+                        } else {
+                            throw err;
+                        }
+                    }
                 }
 
                 resumeExpiredPause(userContext);

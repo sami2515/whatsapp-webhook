@@ -19,7 +19,7 @@ const messageSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['text', 'audio', 'voice', 'image', 'video', 'document', 'template', 'interactive', 'reaction', 'media_unavailable'],
+        enum: ['text', 'audio', 'voice', 'image', 'video', 'document', 'template', 'interactive', 'reaction', 'media_unavailable', 'unsupported', 'sticker', 'location', 'contacts', 'button', 'unknown'],
         default: 'text'
     },
     contextMessageId: {
