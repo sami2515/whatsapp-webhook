@@ -13,6 +13,29 @@ const userContextSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    // Candidate & Exam Info
+    targetExam: {
+        type: String,
+        default: ''
+    },
+    targetWpm: {
+        type: String,
+        default: ''
+    },
+    subjectInterest: {
+        type: String,
+        default: ''
+    },
+    bookInterested: {
+        type: Boolean,
+        default: false
+    },
+    paymentSubmitted: {
+        type: Boolean,
+        default: false
+    },
+
+    // Legacy fields for backward compatibility
     business: {
         type: String,
         default: ''
@@ -49,6 +72,11 @@ const userContextSchema = new mongoose.Schema({
         type: String,
         enum: [
             'new',
+            'exploring_tools',
+            'target_exam_identified',
+            'book_interested',
+            'payment_pending',
+            'payment_submitted',
             'asked_project_type',
             'asked_requirements',
             'asked_timeline',

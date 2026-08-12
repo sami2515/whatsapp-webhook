@@ -1,55 +1,82 @@
-import { detectIntent, getRuleBasedAssistantResponse } from './utils/assistantLogic.js';
+import { detectIntent, getRuleBasedAssistantResponse, inferLeadUpdateFromMessage } from './utils/assistantLogic.js';
 
 const testCases = [
-    { text: 'Ji', expectedIntent: 'nonsense', expectedRuleResult: null },
-    { text: 'Jee', expectedIntent: 'nonsense', expectedRuleResult: null },
-    { text: 'Assalam o Alikum', expectedIntent: 'greeting', expectedRuleResult: null },
-    { text: 'hello there', expectedIntent: 'greeting', expectedRuleResult: null },
-    { text: 'hi sami', expectedIntent: 'greeting', expectedRuleResult: null },
-    { text: 'fuck', expectedIntent: 'abusive', expectedRuleResult: 'abuse_reply' },
-    { text: 'hi sami, i want a web development build plan.', expectedIntent: 'new_project', expectedRuleResult: 'new_project_reply' }
+    {
+        name: 'Greeting (Natural Walaikum Assalam)',
+        text: 'Assalam o Alikum',
+        expectedIntent: 'greeting',
+        checkReply: (reply) => reply.startsWith('Walaikum Assalam') && !reply.includes('Rs. 300')
+    },
+    {
+        name: 'General Book Inquiry (Must ask for post)',
+        text: 'Mujhe preparation book aur pdf notes chahiye',
+        expectedIntent: 'ask_pdf_book',
+        checkReply: (reply) => reply.includes('kis post') || reply.includes('department')
+    },
+    {
+        name: 'GHQ LDC Book Inquiry (Clerical Tailored + Direct Accounts)',
+        text: 'GHQ LDC ki preparation book kitne ki hai aur payment kaise karni hai?',
+        expectedIntent: 'ask_pdf_book',
+        checkReply: (reply) => reply.includes('past papers') && reply.includes('03039512277') && reply.includes('01990112309796') && !reply.includes('+92 318')
+    },
+    {
+        name: 'Police ASI Book Inquiry (Uniform Tailored + Direct Accounts)',
+        text: 'Islamabad Police ASI ke liye notes aur book chahiye',
+        expectedIntent: 'ask_pdf_book',
+        checkReply: (reply) => reply.includes('laws') && reply.includes('current affairs') && reply.includes('03039512277')
+    },
+    {
+        name: 'Payment Proof Handoff (Direct delivery acknowledgment + [PAUSE])',
+        text: 'Meny JazzCash se 300 rupay bhej diye hain ye screenshot hai book send kr dein',
+        expectedIntent: 'payment_proof_submitted',
+        checkReply: (reply) => reply.includes('[PAUSE]') && reply.includes('deliver')
+    },
+    {
+        name: 'Typing Coaching (How to increase speed)',
+        text: 'typing speed fast kaise karein aur mistakes kam kaise hon?',
+        expectedIntent: 'ask_typing_coaching',
+        checkReply: (reply) => reply.includes('accuracy') && reply.includes('Home Row')
+    },
+    {
+        name: 'GHQ LDC Typing Inquiry',
+        text: 'GHQ LDC ke liye typing test ka kya criteria hai?',
+        expectedIntent: 'ask_department_ldc',
+        checkReply: (reply) => reply.includes('GHQ') && reply.includes('30 WPM')
+    }
 ];
 
-console.log("Starting tests on assistantLogic...");
-console.log("-----------------------------------------");
+console.log("Starting TestTayar Book Flow & Logic Tests...\n");
 
 let failed = 0;
 for (const tc of testCases) {
     const detected = detectIntent(tc.text);
-    const ruleRes = getRuleBasedAssistantResponse({
-        messageText: tc.text,
-        intent: detected,
-        lead: {},
-        parsedLead: tc.text.includes('build plan') ? { serviceType: 'E-commerce' } : {}
-    });
+    const leadUpdate = inferLeadUpdateFromMessage(tc.text);
+    const ruleRes = getRuleBasedAssistantResponse(detected, tc.text, leadUpdate);
 
+    console.log(`============================================================`);
+    console.log(`Test: ${tc.name}`);
     console.log(`Input: "${tc.text}"`);
     console.log(`  - Detected Intent: "${detected}" (Expected: "${tc.expectedIntent}")`);
-    
-    let isRuleCorrect = false;
-    if (tc.expectedRuleResult === null) {
-        isRuleCorrect = (ruleRes === null);
-    } else if (tc.expectedRuleResult === 'abuse_reply') {
-        isRuleCorrect = (ruleRes && ruleRes.reply && ruleRes.reply.includes('conversation'));
-    } else if (tc.expectedRuleResult === 'new_project_reply') {
-        isRuleCorrect = (ruleRes && ruleRes.reply && ruleRes.reply.includes('Jee samajh gaya'));
-    }
+    console.log(`  - Extracted Lead:`, JSON.stringify(leadUpdate));
+    console.log(`  - Bot Reply:\n${ruleRes?.reply}`);
+    console.log(`  - Paused AI: ${ruleRes?.pauseAI || false}`);
 
-    console.log(`  - Rule Reply: ${ruleRes ? `"${ruleRes.reply}"` : 'null'} (Match expected: ${isRuleCorrect})`);
+    const isIntentOk = detected === tc.expectedIntent;
+    const isReplyOk = tc.checkReply ? tc.checkReply(ruleRes?.reply || '') : true;
 
-    if (detected !== tc.expectedIntent || !isRuleCorrect) {
+    if (!isIntentOk || !isReplyOk) {
         console.error("  ==> TEST FAILED!");
         failed++;
     } else {
-        console.log("  ==> Test Passed");
+        console.log("  ==> Test Passed ✅");
     }
-    console.log("-----------------------------------------");
+    console.log(`============================================================\n`);
 }
 
 if (failed === 0) {
-    console.log("ALL TESTS PASSED SUCCESSFULLY!");
+    console.log("ALL BOOK & PAYMENT FLOW TESTS PASSED! 🚀");
     process.exit(0);
 } else {
-    console.error(`${failed} test(s) failed.`);
+    console.error(`${failed} test(s) failed. ❌`);
     process.exit(1);
 }

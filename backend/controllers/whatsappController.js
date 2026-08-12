@@ -129,7 +129,19 @@ const isInvalidVapidError = (error) => {
 
 const RAPID_REPLY_WINDOW_MS = 2500;
 const CUSTOMER_SERVICE_WINDOW_MS = 24 * 60 * 60 * 1000;
-const LEAD_UPDATE_FIELDS = ['name', 'business', 'serviceType', 'budget', 'timeline', 'projectDetails'];
+const LEAD_UPDATE_FIELDS = [
+    'name',
+    'targetExam',
+    'targetWpm',
+    'subjectInterest',
+    'bookInterested',
+    'paymentSubmitted',
+    'business',
+    'serviceType',
+    'budget',
+    'timeline',
+    'projectDetails'
+];
 
 const shouldUseValue = (value) => {
     return typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
@@ -138,10 +150,12 @@ const shouldUseValue = (value) => {
 const applyLeadUpdate = (userContext, leadUpdate = {}) => {
     for (const field of LEAD_UPDATE_FIELDS) {
         if (shouldUseValue(leadUpdate[field])) {
-            const nextValue = String(leadUpdate[field]).trim();
+            const nextValue = typeof leadUpdate[field] === 'boolean'
+                ? leadUpdate[field]
+                : String(leadUpdate[field]).trim();
 
             if (field === 'projectDetails' && userContext.projectDetails) {
-                if (!userContext.projectDetails.toLowerCase().includes(nextValue.toLowerCase())) {
+                if (!userContext.projectDetails.toLowerCase().includes(String(nextValue).toLowerCase())) {
                     userContext.projectDetails = `${userContext.projectDetails} | ${nextValue}`;
                 }
                 continue;
@@ -179,6 +193,11 @@ const applyContextUpdate = (userContext, contextUpdate = {}) => {
 const getLeadSnapshot = (userContext) => ({
     phone: userContext.phone || userContext.phoneNumber,
     name: userContext.name,
+    targetExam: userContext.targetExam,
+    targetWpm: userContext.targetWpm,
+    subjectInterest: userContext.subjectInterest,
+    bookInterested: userContext.bookInterested,
+    paymentSubmitted: userContext.paymentSubmitted,
     business: userContext.business,
     serviceType: userContext.serviceType,
     budget: userContext.budget,
@@ -211,7 +230,7 @@ const refreshLeadSummary = (userContext, latestMessageText = '') => {
     userContext.conversationSummary = summary;
 };
 
-const pauseAIForLead = (userContext, reason = 'Lead needs Sami handoff') => {
+const pauseAIForLead = (userContext, reason = 'Candidate needs support handoff') => {
     userContext.isAIPaused = true;
     userContext.aiPaused = true;
     userContext.aiPausedAt = new Date();
@@ -554,13 +573,8 @@ export const handleIncomingMessage = async (req, res) => {
                     timestamp: savedMessage.timestamp
                 });
 
-                const parsedLead = parseWebsiteLeadMessage(msgBody);
-                const incomingIntent = Object.keys(parsedLead).length > 0 ? 'new_project' : detectIntent(msgBody);
-                const inferredLeadUpdate = {
-                    ...inferLeadUpdateFromIntent(incomingIntent),
-                    ...inferLeadUpdateFromMessage(msgBody),
-                    ...parsedLead
-                };
+                const inferredLeadUpdate = inferLeadUpdateFromMessage(msgBody);
+                const incomingIntent = detectIntent(msgBody);
 
                 let userContext = await UserContext.findOne({ phoneNumber: from });
                 const previousLastMessageAt = userContext?.lastMessageAt;
@@ -578,12 +592,6 @@ export const handleIncomingMessage = async (req, res) => {
                 userContext.lastMessageAt = new Date();
                 userContext.intent = incomingIntent;
                 applyLeadUpdate(userContext, inferredLeadUpdate);
-                if (Object.keys(parsedLead).length > 0) {
-                    userContext.cameFromBuildPlan = true;
-                    userContext.buildPlanFormSubmitted = true;
-                    userContext.unclearCount = 0;
-                    userContext.offTopicCount = 0;
-                }
                 userContext.stage = getStageForLead(getLeadSnapshot(userContext), incomingIntent);
                 refreshLeadSummary(userContext, msgBody);
                 await userContext.save();
@@ -600,13 +608,21 @@ export const handleIncomingMessage = async (req, res) => {
                         let markUrgent = false;
 
                         // Handle List Menu Button clicks
-                        if (interactiveId === "btn_social") {
+                        if (interactiveId === "btn_typing") {
+                            textReply = `TestTayar par 1 se 10 minute tak ka touch-typing test bilkul free available hai jisme real-time WPM, Accuracy aur No-Backspace mode shamil hai: ${TESTTAYAR_KNOWLEDGE.typingTestUrl}`;
+                        } else if (interactiveId === "btn_mcqs") {
+                            textReply = `TestTayar par 8 core subjects (English, Computer, Math, Pak Studies, Islamiat, Everyday Science, GK, Current Affairs) ke timed practice quizzes available hain: ${TESTTAYAR_KNOWLEDGE.mcqsUrl}`;
+                        } else if (interactiveId === "btn_daily_drill") {
+                            textReply = `Daily Drill me 1-minute typing test + 10 mixed MCQs attempt karke aap apna Combined Readiness Score check kar sakte hain: ${TESTTAYAR_KNOWLEDGE.dailyDrillUrl}`;
+                        } else if (interactiveId === "btn_pdf_book") {
+                            textReply = `Aap kis post ya department (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ke liye preparation book / notes chahte hain?`;
+                        } else if (interactiveId === "btn_support" || interactiveId === "btn_urgent") {
+                            textReply = `Jee bilkul! Main ye chat admin / support team ko forward kar raha hoon. Wo jald hi aap se isi WhatsApp par rabta karenge. [PAUSE]`;
+                            markUrgent = true;
+                        } else if (interactiveId === "btn_social") {
                             textReply = BOT_CONFIG.SOCIAL_LINKS;
                         } else if (interactiveId === "btn_leave_msg") {
                             textReply = BOT_CONFIG.LEAVE_MESSAGE_PROMPT;
-                        } else if (interactiveId === "btn_urgent") {
-                            textReply = BOT_CONFIG.URGENT_MESSAGE_ACK;
-                            markUrgent = true;
                         }
 
                         if (textReply) {
@@ -625,8 +641,8 @@ export const handleIncomingMessage = async (req, res) => {
                         }
 
                         if (markUrgent) {
-                            // Pause AI for this user so Sami can handle it manually
-                            pauseAIForLead(userContext, 'User selected talk to Sami / urgent handoff');
+                            // Pause AI for this user so admin can handle it manually
+                            pauseAIForLead(userContext, 'User selected talk to support / urgent handoff');
                             refreshLeadSummary(userContext);
                             await userContext.save();
 
@@ -718,26 +734,45 @@ export const handleIncomingMessage = async (req, res) => {
                                 }
                             }
 
-                            const ruleReply = msgType === 'text'
-                                ? getRuleBasedAssistantResponse({
+                            let aiResult = null;
+
+                            // 1. High-priority instant rule shortcuts (safety, payment slip handoff)
+                            if (['abusive', 'payment_proof_submitted'].includes(incomingIntent)) {
+                                aiResult = getRuleBasedAssistantResponse({
                                     messageText: msgBody,
                                     intent: incomingIntent,
                                     lead: getLeadSnapshot(userContext),
                                     parsedLead
-                                })
-                                : null;
+                                });
+                            }
 
-                            const aiResult = ruleReply || await generateAIResponse(
-                                msgBody,
-                                BOT_CONFIG.LIVE_STATUS,
-                                history,
-                                base64Image,
-                                {
-                                    detectedIntent: incomingIntent,
+                            // 2. Generate intelligent Groq AI response
+                            if (!aiResult) {
+                                aiResult = await generateAIResponse(
+                                    msgBody,
+                                    BOT_CONFIG.LIVE_STATUS,
+                                    history,
+                                    base64Image,
+                                    {
+                                        detectedIntent: incomingIntent,
+                                        lead: getLeadSnapshot(userContext),
+                                        conversationSummary: userContext.conversationSummary
+                                    }
+                                );
+                            }
+
+                            // 3. Fallback to rule response if AI was unavailable or errored
+                            if (!aiResult || aiResult.reply === 'TestTayar Assistant abhi temporarily busy hai. Aap apna sawal ya requirement bhej dein, support team jald reply karegi.') {
+                                const fallbackRule = getRuleBasedAssistantResponse({
+                                    messageText: msgBody,
+                                    intent: incomingIntent,
                                     lead: getLeadSnapshot(userContext),
-                                    conversationSummary: userContext.conversationSummary
+                                    parsedLead
+                                });
+                                if (fallbackRule?.reply) {
+                                    aiResult = fallbackRule;
                                 }
-                            );
+                            }
 
                             applyLeadUpdate(userContext, aiResult.leadUpdate || {});
                             applyContextUpdate(userContext, aiResult.contextUpdate || {});

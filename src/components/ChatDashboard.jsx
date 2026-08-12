@@ -790,8 +790,10 @@ export default function ChatDashboard() {
                             {conv.lead && (
                                 <div className="lead-badges">
                                     {conv.lead.aiPaused && <span className="lead-badge paused">AI paused</span>}
-                                    {conv.lead.intent && <span className="lead-badge">{conv.lead.intent}</span>}
-                                    {conv.lead.serviceType && <span className="lead-badge service">{conv.lead.serviceType}</span>}
+                                    {conv.lead.paymentSubmitted && <span className="lead-badge success">Receipt Sent 💵</span>}
+                                    {conv.lead.bookInterested && !conv.lead.paymentSubmitted && <span className="lead-badge book">Book Rs. 300</span>}
+                                    {conv.lead.targetExam && <span className="lead-badge exam">{conv.lead.targetExam}</span>}
+                                    {conv.lead.targetWpm && <span className="lead-badge wpm">{conv.lead.targetWpm}</span>}
                                 </div>
                             )}
                             <div className="conv-preview">
@@ -837,8 +839,9 @@ export default function ChatDashboard() {
                             {activeLead && (
                                 <div className="chat-lead-line">
                                     {activeLead.name && <span>{activeLead.name}</span>}
-                                    {activeLead.serviceType && <span>{activeLead.serviceType}</span>}
-                                    {activeLead.budget && <span>Budget: {activeLead.budget}</span>}
+                                    {(activeLead.targetExam || activeLead.serviceType) && <span>{activeLead.targetExam || activeLead.serviceType}</span>}
+                                    {activeLead.targetWpm && <span>Goal: {activeLead.targetWpm}</span>}
+                                    {activeLead.bookInterested && <span>Book: Rs. 300</span>}
                                 </div>
                             )}
                         </div>
@@ -880,7 +883,7 @@ export default function ChatDashboard() {
                                 onClick={() => setIsLeadDetailsOpen(true)}
                                 disabled={!activeLead}
                             >
-                                Lead Details
+                                Candidate Details
                             </button>
                         </div>
                     </div>
@@ -913,7 +916,7 @@ export default function ChatDashboard() {
                                 <div className="lead-details-header">
                                     <div>
                                         <span className="lead-details-eyebrow">Selected Chat</span>
-                                        <h3 id="lead-details-title">Lead Details</h3>
+                                        <h3 id="lead-details-title">Candidate Details</h3>
                                         <p>+{activeNumber}</p>
                                     </div>
                                     <button
@@ -928,7 +931,7 @@ export default function ChatDashboard() {
 
                                 <div className="lead-details-body">
                                     <div className="lead-summary-heading">
-                                        <span>Lead Summary</span>
+                                        <span>Candidate Summary</span>
                                         <strong>{isActiveAIPaused ? 'Handoff mode' : 'AI active'}</strong>
                                     </div>
                                     <div className="lead-summary-grid">
@@ -941,19 +944,23 @@ export default function ChatDashboard() {
                                             <strong>{activeLead.stage || 'new'}</strong>
                                         </div>
                                         <div className="lead-info-card">
-                                            <span className="lead-label">Service</span>
-                                            <strong>{activeLead.serviceType || 'Not set'}</strong>
+                                            <span className="lead-label">Target Exam</span>
+                                            <strong>{activeLead.targetExam || activeLead.serviceType || 'Not set'}</strong>
                                         </div>
                                         <div className="lead-info-card">
-                                            <span className="lead-label">Budget</span>
-                                            <strong>{activeLead.budget || 'Not set'}</strong>
+                                            <span className="lead-label">Target WPM</span>
+                                            <strong>{activeLead.targetWpm || 'Not set'}</strong>
                                         </div>
                                         <div className="lead-info-card">
-                                            <span className="lead-label">Timeline</span>
-                                            <strong>{activeLead.timeline || 'Not set'}</strong>
+                                            <span className="lead-label">Subject Interest</span>
+                                            <strong>{activeLead.subjectInterest || 'Not set'}</strong>
                                         </div>
                                         <div className="lead-info-card">
-                                            <span className="lead-label">Lead Score</span>
+                                            <span className="lead-label">Book Status</span>
+                                            <strong>{activeLead.paymentSubmitted ? 'Payment Submitted' : activeLead.bookInterested ? 'Interested (Rs. 300)' : 'Not ordered'}</strong>
+                                        </div>
+                                        <div className="lead-info-card">
+                                            <span className="lead-label">Readiness / Lead Score</span>
                                             <strong>{activeLead.leadScore ?? 0}</strong>
                                         </div>
                                         <div className="lead-info-card lead-summary-wide">

@@ -176,9 +176,25 @@ body {
   text-overflow: ellipsis;
 }
 
-.lead-badge.service {
+.lead-badge.service,
+.lead-badge.exam {
   background: #DBEAFE;
   color: #1D4ED8;
+}
+
+.lead-badge.wpm {
+  background: #E0E7FF;
+  color: #4338CA;
+}
+
+.lead-badge.book {
+  background: #FCE7F3;
+  color: #BE185D;
+}
+
+.lead-badge.success {
+  background: #DCFCE7;
+  color: #15803D;
 }
 
 .lead-badge.paused {

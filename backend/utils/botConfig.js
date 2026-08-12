@@ -1,12 +1,12 @@
-import { SAMI_KNOWLEDGE } from '../data/samiKnowledge.js';
+import { TESTTAYAR_KNOWLEDGE } from '../data/testtayarKnowledge.js';
 
 export const BOT_CONFIG = {
     ENABLED: true,
     LIVE_STATUS: 'Available',
-    WELCOME_MESSAGE: `Jee, main ${SAMI_KNOWLEDGE.assistantName} hoon. Aap website, portal, e-commerce store, dashboard, ya custom web app ke bare mein baat karna chahte hain?`,
-    SOCIAL_LINKS: `Main website: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nDeveloper card: ${SAMI_KNOWLEDGE.developerCardUrl}\nEmail: ${SAMI_KNOWLEDGE.contactEmail}`,
-    LEAVE_MESSAGE_PROMPT: 'Aap apni project requirement bhej dein, main Sami ko proper context ke sath forward kar dunga.',
-    URGENT_MESSAGE_ACK: 'Jee zaroor. Aap topic bata dein taake main Sami ko proper context ke sath forward kar doon.'
+    WELCOME_MESSAGE: `Walaikum Assalam! Main ${TESTTAYAR_KNOWLEDGE.assistantName} hoon. TestTayar par khushamdeed! Main aapki typing test ya kisi specific exam preparation mein kya madad kar sakta hoon?`,
+    SOCIAL_LINKS: `Website: ${TESTTAYAR_KNOWLEDGE.mainWebsiteUrl}\nTyping Test: ${TESTTAYAR_KNOWLEDGE.typingTestUrl}\nMCQs Bank: ${TESTTAYAR_KNOWLEDGE.mcqsUrl}\nDaily Drill: ${TESTTAYAR_KNOWLEDGE.dailyDrillUrl}\nWhatsApp Support: ${TESTTAYAR_KNOWLEDGE.officialWhatsApp}\nEmail: ${TESTTAYAR_KNOWLEDGE.contactEmail}`,
+    LEAVE_MESSAGE_PROMPT: 'Aap apna question ya requirement bhej dein, main guide kar deta hoon ya support team ko forward kar dunga.',
+    URGENT_MESSAGE_ACK: 'Jee zaroor. Main support team ko inform kar raha hoon. Wo jald aap se contact karenge.'
 };
 
 export const buildInteractiveMenuPayload = (toPhoneNumber) => {
@@ -19,34 +19,44 @@ export const buildInteractiveMenuPayload = (toPhoneNumber) => {
             type: 'list',
             header: {
                 type: 'text',
-                text: SAMI_KNOWLEDGE.assistantName
+                text: TESTTAYAR_KNOWLEDGE.assistantName
             },
             body: {
                 text: BOT_CONFIG.WELCOME_MESSAGE
             },
             footer: {
-                text: SAMI_KNOWLEDGE.businessName
+                text: `${TESTTAYAR_KNOWLEDGE.platformName} - Exam & Typing Prep`
             },
             action: {
-                button: 'Open menu',
+                button: 'Explore options',
                 sections: [
                     {
-                        title: 'Quick options',
+                        title: 'TestTayar Tools & Books',
                         rows: [
                             {
-                                id: 'btn_social',
-                                title: 'Links',
-                                description: 'Website, portfolio and card'
+                                id: 'btn_typing',
+                                title: 'Typing Tests',
+                                description: '1-10 min test, WPM & exam rooms'
                             },
                             {
-                                id: 'btn_leave_msg',
-                                title: 'Project inquiry',
-                                description: 'Share your requirement'
+                                id: 'btn_mcqs',
+                                title: 'Subject MCQs',
+                                description: '8 core subjects & CBT quizzes'
                             },
                             {
-                                id: 'btn_urgent',
-                                title: 'Talk to Sami',
-                                description: 'Share topic for handoff'
+                                id: 'btn_daily_drill',
+                                title: 'Daily Drill',
+                                description: 'Typing + 10 MCQs + Readiness'
+                            },
+                            {
+                                id: 'btn_pdf_book',
+                                title: 'Rs. 300 PDF Book',
+                                description: 'Preparation notes for your post'
+                            },
+                            {
+                                id: 'btn_support',
+                                title: 'Talk to Support',
+                                description: 'Connect with human support'
                             }
                         ]
                     }

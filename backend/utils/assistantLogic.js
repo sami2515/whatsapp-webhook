@@ -1,19 +1,24 @@
-import { SAMI_KNOWLEDGE } from '../data/samiKnowledge.js';
+import { TESTTAYAR_KNOWLEDGE, SAMI_KNOWLEDGE } from '../data/testtayarKnowledge.js';
 
 export const LEAD_STAGES = {
     NEW: 'new',
-    ASKED_PROJECT_TYPE: 'asked_project_type',
-    ASKED_REQUIREMENTS: 'asked_requirements',
-    ASKED_TIMELINE: 'asked_timeline',
-    ASKED_BUDGET: 'asked_budget',
+    EXPLORING_TOOLS: 'exploring_tools',
+    TARGET_EXAM_IDENTIFIED: 'target_exam_identified',
+    BOOK_INTERESTED: 'book_interested',
+    PAYMENT_PENDING: 'payment_pending',
+    PAYMENT_SUBMITTED: 'payment_submitted',
     QUALIFIED: 'qualified',
     HANDED_OFF: 'handed_off',
     UNCLEAR_WAITING: 'unclear_waiting',
     PERSONAL_BOUNDARY: 'personal_boundary',
-    OFF_TOPIC_WAITING: 'off_topic_waiting'
+    OFF_TOPIC_WAITING: 'off_topic_waiting',
+    // Legacy support
+    ASKED_PROJECT_TYPE: 'asked_project_type',
+    ASKED_REQUIREMENTS: 'asked_requirements',
+    ASKED_TIMELINE: 'asked_timeline',
+    ASKED_BUDGET: 'asked_budget'
 };
 
-const WEBSITE_BUILD_PLAN_TEXT = 'hi sami, i want a web development build plan.';
 export const AUTO_RESUME_STALE_PAUSE_HOURS = 6;
 
 const SAFETY_CONFUSION_PAUSE_REASONS = [
@@ -25,18 +30,12 @@ const SAFETY_CONFUSION_PAUSE_REASONS = [
 
 const SERIOUS_LEAD_PAUSE_REASONS = [
     'Manually paused by admin',
-    'Qualified lead asked for quote',
-    'User requested call',
-    'User requested meeting',
-    'User wants to proceed',
-    'Detailed build-plan form completed',
+    'Payment proof or screenshot submitted for PDF book',
+    'User requested human support / call',
+    'User wants to proceed with book order',
     'Lead score reached threshold',
-    'Strong qualified lead reached threshold',
     'User requested human handoff',
-    'User selected talk to Sami / urgent handoff',
-    'User asked for a final quote after sharing lead details',
-    'User asked to talk to Sami after sharing lead details',
-    'User requested a call after sharing lead details'
+    'Technical complaint requiring admin intervention'
 ];
 
 const normalizeText = (text = '') => text.toLowerCase().replace(/\s+/g, ' ').trim();
@@ -51,13 +50,6 @@ const includesAny = (text, keywords) => keywords.some((keyword) => text.includes
 
 const matchesAny = (text, patterns) => patterns.some((pattern) => pattern.test(text));
 
-const includesKnownSamiDomain = (messageText = '') => normalizeText(messageText).includes('samidev.pk');
-
-const matchesReason = (reason = '', reasons = []) => {
-    const normalizedReason = normalizeText(reason);
-    return reasons.some((item) => normalizedReason.includes(normalizeText(item)));
-};
-
 const toTitleCase = (value = '') => {
     return value
         .trim()
@@ -66,8 +58,6 @@ const toTitleCase = (value = '') => {
         .join(' ');
 };
 
-const normalizeLabel = (label = '') => label.toLowerCase().replace(/\s+/g, ' ').trim();
-
 const cleanParsedValue = (value = '') => {
     return value
         .replace(/\s+/g, ' ')
@@ -75,1887 +65,494 @@ const cleanParsedValue = (value = '') => {
         .trim();
 };
 
-const escapeRegex = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
 export const isWebsiteBuildPlanMessage = (messageText = '') => {
-    return normalizeText(messageText).includes(WEBSITE_BUILD_PLAN_TEXT);
-};
-
-const buildPlanLabels = [
-    { field: 'projectDetails', labels: ['Project details', 'Project Details', 'Details'] },
-    { field: 'business', labels: ['Business'] },
-    { field: 'service', labels: ['Service'] },
-    { field: 'budget', labels: ['Budget'] },
-    { field: 'timeline', labels: ['Timeline', 'Deadline'] },
-    { field: 'name', labels: ['Name'] }
-];
-
-const buildPlanLabelToField = new Map(
-    buildPlanLabels.flatMap(({ field, labels }) => labels.map((label) => [normalizeLabel(label), field]))
-);
-
-const buildPlanLabelPattern = buildPlanLabels
-    .flatMap(({ labels }) => labels)
-    .sort((a, b) => b.length - a.length)
-    .map(escapeRegex)
-    .join('|');
-
-const PROJECT_DETAIL_SIGNAL_KEYWORDS = [
-    'website', 'web site', 'web app', 'portal', 'dashboard', 'admin', 'admin panel',
-    'ecommerce', 'e-commerce', 'store', 'shop', 'landing page', 'business website',
-    'company website', 'portfolio', 'booking', 'payment', 'checkout', 'contact form',
-    'form', 'whatsapp', 'leads', 'catalog', 'products', 'seo', 'redesign', 'maintenance',
-    'login', 'signup', 'student', 'admission', 'documents', 'blog', 'gallery', 'cms',
-    'inventory', 'orders', 'users', 'odoo', 'frontend', 'backend', 'api', 'erp', 'crm'
-];
-
-const WEAK_PROJECT_DETAIL_EXACT_VALUES = [
-    's',
-    'ss',
-    'sss',
-    'test',
-    'testing',
-    'asdf',
-    'abc',
-    'n a',
-    'na',
-    'none',
-    'no',
-    'sami',
-    'samj',
-    'samajh',
-    'sami ma ssamj'
-];
-
-export const parseBuildPlanMessage = (messageText = '') => {
-    const text = messageText.replace(/\r\n/g, '\n').replace(/\u00a0/g, ' ').trim();
-    if (!text) return {};
-
-    const labelRegex = new RegExp(`(^|[\\s.,;|])(${buildPlanLabelPattern})\\s*:\\s*`, 'gi');
-    const matches = [...text.matchAll(labelRegex)];
-    if (matches.length === 0) return {};
-
-    const parsed = {};
-
-    for (let index = 0; index < matches.length; index += 1) {
-        const match = matches[index];
-        const label = match[2];
-        const field = buildPlanLabelToField.get(normalizeLabel(label));
-        const valueStart = match.index + match[0].length;
-        const valueEnd = matches[index + 1]?.index ?? text.length;
-        const value = cleanParsedValue(text.slice(valueStart, valueEnd));
-
-        if (field && value) {
-            parsed[field] = value;
-        }
-    }
-
-    return parsed;
-};
-
-export const isMeaningfulProjectDetails = (value = '') => {
-    const text = normalizeLoose(value);
-    if (!text || WEAK_PROJECT_DETAIL_EXACT_VALUES.includes(text)) return false;
-
-    const compactText = text.replace(/\s+/g, '');
-    const words = text.split(' ').filter(Boolean);
-    const usefulWords = words.filter((word) => word.length >= 4 && !['sami', 'need', 'want', 'chahiye', 'banwana', 'banwani'].includes(word));
-
-    if (text.length < 12 || words.length < 3 || usefulWords.length === 0) return false;
-    if (/^(.)\1{2,}$/i.test(compactText)) return false;
-    if (!/\b[a-z\u0600-\u06FF]{3,}\b/i.test(text)) return false;
-
-    return /\b\d+\s*(?:pages?|page)\b/i.test(text) || includesAny(text, PROJECT_DETAIL_SIGNAL_KEYWORDS);
-};
-
-export const hasWeakBuildPlanProjectDetails = (messageText = '') => {
-    const parsed = parseBuildPlanMessage(messageText);
-    return Boolean(parsed.projectDetails && !isMeaningfulProjectDetails(parsed.projectDetails));
+    return normalizeText(messageText).includes('web development build plan') ||
+        normalizeText(messageText).includes('testtayar prep plan');
 };
 
 export const parseWebsiteLeadMessage = (messageText = '') => {
-    const parsed = parseBuildPlanMessage(messageText);
-
-    const leadUpdate = {
-        name: parsed.name,
-        business: parsed.business,
-        serviceType: parsed.service,
-        budget: parsed.budget,
-        timeline: parsed.timeline,
-        projectDetails: isMeaningfulProjectDetails(parsed.projectDetails) ? parsed.projectDetails : ''
-    };
-
-    return Object.fromEntries(Object.entries(leadUpdate).filter(([, value]) => Boolean(value)));
-};
-
-const SERVICE_CONTEXT_KEYWORDS = [
-    'website', 'web site', 'webapp', 'web app', 'portal', 'dashboard', 'admin panel',
-    'ecommerce', 'e-commerce', 'store', 'shop', 'odoo', 'portfolio', 'landing page',
-    'business', 'company', 'project', 'software', 'app', 'form', 'payment', 'booking',
-    'catalog', 'products', 'pages', 'features', 'leads', 'whatsapp', 'seo', 'design',
-    'redesign', 'maintenance', 'price', 'cost', 'quote', 'quotation', 'budget',
-    'timeline', 'deadline', 'delivery', 'call', 'meeting', 'sami', 'banwani',
-    'banwana', 'chahiye', 'kaam', 'شروع', 'ویب', 'ویب سائٹ', 'پورٹل', 'ڈیش بورڈ',
-    'قیمت', 'بجٹ', 'کال', 'میٹنگ'
-];
-
-const FEATURE_KEYWORDS = [
-    'page', 'pages', 'feature', 'features', 'contact form', 'form', 'whatsapp leads',
-    'leads', 'product catalog', 'catalog', 'products', 'payment', 'checkout',
-    'delivery', 'booking', 'appointment', 'login', 'signup', 'admin', 'dashboard',
-    'panel', 'reports', 'documents', 'student', 'admission', 'records', 'seo',
-    'blog', 'gallery', 'chat', 'cms', 'inventory', 'orders', 'users'
-];
-
-const notInterestedPhrases = [
-    'no thanks', 'not interested', 'not now', 'maybe later', 'abhi nahi', 'abi nahi',
-    'nahi chahiye', 'nai chahiye', 'zaroorat nahi', 'need nahi', 'filhal nahi',
-    'phir kabhi', 'baad mein', 'bad me', 'no need', 'no thank you', 'interest nahi',
-    'dilchaspi nahi', 'nahi krwana', 'nahi karwana', 'nai karwana', 'nai krwana',
-    'filhal nahi chahiye', 'phir kabhi sahi'
-];
-
-const personalQuestionPhrases = [
-    'sami ki age', 'sami age', 'sami married', 'sami shadi', 'sami shaadi',
-    'sami kahan rehta', 'sami kaha rehta', 'sami kidhar rehta', 'sami ka ghar',
-    'sami personal number', 'sami ka personal number', 'sami ki income',
-    'sami kitna kamata', 'sami earning', 'sami salary', 'sami ki family',
-    'sami family', 'sami ki wife', 'sami wife', 'sami ka personal address',
-    'sami address', 'sami ka cnic', 'sami cnic', 'personal baat',
-    'aap real ho', 'tum real ho', 'are you real', 'are you ai', 'are you a bot',
-    'tum insaan ho', 'tum insan ho', 'insaan ho ya ai', 'human ho ya ai',
-    'sami abhi kahan', 'sami abhi kaha', 'where is sami right now',
-    'sami kaha hai', 'sami kahan hai', 'sami kaha ha', 'sami kahan ha',
-    'sami busy kyun', 'sami busy kyu', 'is sami married', "what is sami's age",
-    'what is sami age', 'where does sami live', "sami's income", "sami's family",
-    'give sami personal number', "give sami's personal number", 'personal address',
-    'سامی کی عمر', 'سامی شادی', 'سامی کہاں رہتا', 'سامی کا گھر', 'سامی کا نمبر',
-    'سامی کی آمدنی', 'سامی کی فیملی', 'سامی کی بیوی', 'سامی کا پتہ', 'سامی کا شناختی'
-];
-
-const abusivePhrases = [
-    'fuck', 'fucking', 'shit', 'bitch', 'bastard', 'asshole', 'madarchod',
-    'behenchod', 'bhenchod', 'chutiya', 'chutia', 'harami',
-    'kutta', 'lanat', 'لعنت', 'گالی', 'حرامی'
-];
-
-const severeInappropriatePhrases = [
-    'kill you', 'i will kill', 'threat', 'porn', 'sex chat', 'nude', 'nudes',
-    'adult video', 'xxx', 'rape', 'ختم کر دوں', 'جان سے مار'
-];
-
-const offTopicPhrases = [
-    'politics', 'election', 'prime minister', 'president', 'religion debate',
-    'mazhab debate', 'firqa', 'cricket score', 'movie download', 'joke sunao',
-    'random joke', 'adult content'
-];
-
-const repeatConfusionPhrases = [
-    'dobara batao', 'dubara batao', 'phir se batao', 'samajh nahi aya',
-    'samjh nahi aya', 'samaj nahi aya', 'mujhe nahi samajh aya', 'mjy nahi samajh aya',
-    'kya?', 'kia?', 'what?', 'repeat', 'explain again', 'again explain',
-    'did not understand', "didn't understand", 'i do not understand', 'i dont understand',
-    'سمجھ نہیں آیا', 'دوبارہ بتائیں', 'پھر سے بتاؤ', 'کیا؟'
-];
-
-const affirmativePhrases = [
-    'yes', 'yes please', 'yes chahiye', 'haan', 'han', 'ha', 'jee', 'ji', 'g',
-    'bilkul', 'sure', 'ok', 'okay', 'theek', 'ٹھیک', 'جی', 'ہاں', 'بالکل'
-];
-
-const romanAffirmativePhrases = ['haan', 'han', 'ha', 'jee', 'ji', 'g', 'bilkul', 'yes chahiye', 'theek'];
-
-const handoffPhraseGroups = {
-    request_quote: [
-        'quote de do', 'quotation de do', 'quotation bhejo', 'send quote',
-        'final quote', 'exact quote', 'quote bhej do', 'quote send',
-        'کوٹیشن', 'قیمت بتا دیں'
-    ],
-    request_call: [
-        'call kar lein', 'call kar len', 'call pe baat', 'call par baat',
-        'call krni', 'call karni', 'call krni ha', 'call krni hai', 'call karni hai',
-        'phone pe baat', 'can we have a call', 'schedule a call', 'call me',
-        'call please', 'کال کر لیں', 'کال پر بات'
-    ],
-    wants_to_proceed: [
-        'proceed karna hai', 'proceed karna chahta', 'i want to proceed',
-        'lets proceed', "let's proceed", 'main proceed', 'آگے بڑھنا'
-    ],
-    ready_to_start: [
-        'kaam shuru karna hai', 'start karna hai', 'i want to start',
-        'ready to start', "let's start", 'lets start', 'start now', 'شروع کرنا'
-    ],
-    ask_next_step: [
-        'next step kya hai', 'ab kya karna hoga', 'what is the next step',
-        'next steps', 'ab kya hoga', 'آگے کیا'
-    ],
-    qualified_lead: [
-        'mujhe banwani hai', 'mujhe banwana hai', 'website chahiye',
-        'mujhe ye banwana hai', 'i need this built', 'i have shared details',
-        'details bhej di hain', 'budget ye hai', 'timeline ye hai',
-        'my budget is', 'timeline is'
-    ],
-    wants_human: [
-        'sami se baat', 'sami sy baat', 'talk to sami', 'sami ko bolo',
-        'sami ko forward', 'human se baat', 'agent se baat', 'real person',
-        'kisi insan se baat', 'manual reply'
-    ],
-    final_pricing: [
-        'final price batao', 'final rate batao', 'final price', 'final rate',
-        'how much will it cost', 'kitne mein ban jayegi', 'kitne me ban jayegi',
-        'exact price', 'total cost', 'حتمی قیمت'
-    ],
-    meeting_request: [
-        'meeting kar lein', 'meeting kar len', 'schedule meeting',
-        'book a meeting', 'can we meet', 'meeting rakh lein', 'میٹنگ'
-    ]
-};
-
-const handoffIntentPriority = [
-    'wants_human',
-    'meeting_request',
-    'request_call',
-    'wants_to_proceed',
-    'ready_to_start',
-    'final_pricing',
-    'request_quote',
-    'ask_next_step',
-    'qualified_lead'
-];
-
-const currencyAmountPattern = /(?:rs\.?|pkr|rupees|ہزار|لاکھ)\s*\d[\d,.-]*(?:\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions))?|\b\d[\d,.-]*\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions|ہزار|لاکھ)\b/i;
-const budgetRangePattern = /\b\d[\d,.-]*(?:\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions|ہزار|لاکھ))?\s*(?:-|to|se|ya|or)\s*\d[\d,.-]*\s*(?:k|lac|lakh|lacs|lakhs|thousand|thousands|hazar|hazaar|hzr|hz|m|million|millions|ہزار|لاکھ)\b/i;
-const durationPattern = /\b\d+(?:\s*(?:-|to|se|ya|or)\s*\d+)?\s*(?:days?|dayz|din|weeks?|week|wks|haftay|hafte|hafta|months?|month|mth|mahine|mahiney|mahina)\b/i;
-
-
-export const detectAffirmative = (messageText = '') => {
     const text = normalizeLoose(messageText);
-    if (!text) return false;
-    const matchesPhrase = includesAny(text, [
-        'ji bilkul', 'jee bilkul', 'haan please', 'han please',
-        'sure why not', 'why not', 'haan sahi hai', 'han sahi hai',
-        'theek hai', 'thik hai', 'bilkul sahi', 'thek hai'
-    ]);
-    if (matchesPhrase) return true;
-    return affirmativePhrases.includes(text) || /^(yes|yeah|yep|sure|ok|okay|haan|han|ha|jee|ji|g|bilkul|theek|thik|thek)\s*(please|hai|ha|boss|sir|bhai)?$/i.test(text);
-};
-
-const detectAffirmativeLanguageStyle = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    if (/[\u0600-\u06FF]/.test(messageText)) return 'urdu';
-    if (romanAffirmativePhrases.includes(text)) return 'roman';
-    return detectLanguageStyle(messageText);
-};
-
-export const detectFeaturesOrPages = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return /\b\d+\s*(?:pages?|page)\b/i.test(text) || includesAny(text, FEATURE_KEYWORDS);
-};
-
-export const extractBudget = (messageText = '', lead = {}) => {
-    const text = normalizeLoose(messageText);
-    if (includesAny(text, [
-        'need guidance', 'budget guidance', 'guide me', 'guidance needed', 'rahnumai', 'guidance',
-        'guide krden', 'guide karden', 'guide krdo', 'guide kardo', 'bataen', 'btaen'
-    ])) {
-        return 'Need guidance';
-    }
-
-    const isBudgetQuestionContext = lead && lead.lastBotQuestionType === 'budget';
-    const cleanTrimmed = messageText.trim();
-
-    const rangeMatch = messageText.match(budgetRangePattern);
-    if (rangeMatch) {
-        return cleanParsedValue(rangeMatch[0]);
-    }
-
-    const amountMatch = messageText.match(currencyAmountPattern);
-    const hasBudgetWord = includesAny(text, ['budget', 'bujut', 'range', 'بجٹ', 'milay ga', 'laga', 'paisa', 'paise', 'rupay', 'rupee', 'rupees', 'rs', 'pkr']);
-    if (amountMatch && (hasBudgetWord || isBudgetQuestionContext || /\b(?:rs\.?|pkr|rupees)\b/i.test(amountMatch[0]) || /(?:k|lac|lakh|thousand|hazar|hazaar|hzr|m|million)\b/i.test(amountMatch[0]))) {
-        return cleanParsedValue(amountMatch[0]);
-    }
-
-    if (hasBudgetWord || isBudgetQuestionContext) {
-        const plainAmount = messageText.match(/\b\d{4,8}\b/);
-        if (plainAmount) return cleanParsedValue(plainAmount[0]);
-    }
-
-    const plainRangeOrNumber = cleanTrimmed.match(/^\s*(?:rs\.?\s*)?(\d+[\d,\s]*(?:k|hazar|hazaar|hzr|thousand|lakh|lac)?|\d+[\d,\s]*(?:k|hazar|hazaar|hzr|thousand|lakh|lac)?\s*(?:-|to|se|ya|or)\s*\d+[\d,\s]*(?:k|hazar|hazaar|hzr|thousand|lakh|lac)?)\s*$/i);
-    if (plainRangeOrNumber && (cleanTrimmed.length <= 20 || isBudgetQuestionContext)) {
-        return cleanParsedValue(plainRangeOrNumber[0]);
-    }
-
-    return '';
-};
-
-export const extractTimeline = (messageText = '', lead = {}) => {
-    const text = normalizeLoose(messageText);
-    const timelinePhrases = [
-        'today', 'tomorrow', 'this week', 'next week', 'this month', 'next month',
-        'urgent', 'asap', 'jaldi', 'jldi', 'fori', 'فوری', 'جلدی', 'اگلے ہفتے', 'urgent hai',
-        '1 month', '2 months', '3 months', '1 week', '2 weeks', '3 weeks',
-        'is hafte', 'is mahine', 'jaldi se jaldi', 'as soon as possible', '1-2 days', '2-3 days'
-    ].sort((a, b) => b.length - a.length);
-    const phrase = timelinePhrases.find((item) => text.includes(item));
-    if (phrase) return phrase;
-
-    const isTimelineQuestionContext = lead && lead.lastBotQuestionType === 'timeline';
-    const duration = messageText.match(durationPattern);
-    if (duration) return cleanParsedValue(duration[0]);
-
-    if (isTimelineQuestionContext || includesAny(text, ['timeline', 'deadline', 'delivery', 'kab tak', 'کب تک', 'kb tak', 'kb tk', 'kabtk'])) {
-        const afterLabel = messageText.match(/(?:timeline|deadline|delivery|kab tak|kabtk|kb tak)\s*(?:is|hai|:|-)?\s*([^.,\n]+)/i);
-        if (afterLabel?.[1] && afterLabel[1].trim().length > 0) return cleanParsedValue(afterLabel[1]);
-        if (isTimelineQuestionContext && messageText.trim().length <= 25) {
-            return cleanParsedValue(messageText);
-        }
-    }
-
-    return '';
-};
-
-const inferServiceTypeFromText = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-
-    if (includesAny(text, ['odoo', 'odu'])) return 'Odoo Portal';
-    if (includesAny(text, [
-        'e-commerce', 'ecommerce', 'online store', 'store chahiye', 'shop', 'eshop', 'online dukan',
-        'shopify', 'woo', 'shopping website', 'dukan', 'dukan website', 'online shop', 'e-store',
-        'sales website', 'shopping site', 'dukan ki site', 'online dukan ki website'
-    ])) return 'E-commerce Store';
-    if (includesAny(text, [
-        'admission portal', 'student portal', 'school portal', 'college portal', 'university portal',
-        'result portal', 'student system', 'admission website', 'admission system', 'school management'
-    ])) return 'Student/Admission Portal';
-    if (includesAny(text, ['document portal', 'document support', 'doc portal'])) return 'Document Support Portal';
-    if (includesAny(text, [
-        'admin dashboard', 'dashboard', 'admin panel', 'panel', 'management system', 'crm', 'erp',
-        'custom panel', 'inventory dashboard', 'sales dashboard', 'admin system', 'reporting system'
-    ])) return 'Admin Dashboard';
-    if (includesAny(text, [
-        'portfolio website', 'developer portfolio', 'personal portfolio', 'cv website', 'personal site',
-        'apni website', 'resume website', 'cv site', 'apna portfolio', 'personal cv website'
-    ])) return 'Portfolio Website';
-    if (includesAny(text, [
-        'business website', 'company website', 'corporate website', 'agency website', 'landing page',
-        'business ki website', 'company ki website', 'official website', 'agency site', 'business site'
-    ])) return 'Business Website';
-    if (includesAny(text, [
-        'custom web app', 'web app', 'portal', 'software', 'custom system', 'web app banwani',
-        'custom system banwana', 'portal system', 'webapp development'
-    ])) return 'Custom Web App';
-    if (includesAny(text, [
-        'redesign', 'renew', 'design change', 'website change karni', 'website update karni',
-        'new design', 'modernize website', 'layout change', 'design update', 'theme update'
-    ])) return 'Website Redesign';
-    if (includesAny(text, [
-        'maintenance', 'fix issue', 'bugs', 'domain connect', 'hosting setup', 'website repair',
-        'error fix', 'error fixing', 'website repair karni', 'bug fixing', 'fix design'
-    ])) return 'Maintenance';
-
-    return '';
-};
-
-export const inferLeadUpdateFromMessage = (messageText = '', lead = {}) => {
     const leadUpdate = {};
-    const serviceType = inferServiceTypeFromText(messageText);
-    const budget = extractBudget(messageText, lead);
-    const timeline = extractTimeline(messageText, lead);
-    const hasFeatureDetails = detectFeaturesOrPages(messageText);
-    const cleanedMessage = cleanParsedValue(messageText);
-    const genericWebsiteIntent = hasGenericWebsiteBuildIntent(messageText);
 
-    if (serviceType) leadUpdate.serviceType = serviceType;
-    if (budget) leadUpdate.budget = budget;
-    if (timeline) leadUpdate.timeline = timeline;
+    if (includesAny(text, ['ldc', 'lower division clerk'])) leadUpdate.targetExam = 'LDC (BPS-11)';
+    else if (includesAny(text, ['udc', 'upper division clerk'])) leadUpdate.targetExam = 'UDC (BPS-13/14)';
+    else if (includesAny(text, ['police', 'islamabad police', 'asi'])) leadUpdate.targetExam = 'Islamabad Police ASI/UDC/LDC';
+    else if (includesAny(text, ['fpsc'])) leadUpdate.targetExam = 'FPSC One Paper';
+    else if (includesAny(text, ['ppsc'])) leadUpdate.targetExam = 'PPSC Screening';
+    else if (includesAny(text, ['nadra', 'deo'])) leadUpdate.targetExam = 'NADRA DEO';
+    else if (includesAny(text, ['mod', 'defence'])) leadUpdate.targetExam = 'MOD Clerical';
+    else if (includesAny(text, ['nts', 'gat', 'nat'])) leadUpdate.targetExam = 'NTS Screening';
 
-    if (
-        !genericWebsiteIntent &&
-        cleanedMessage.length > 15 &&
-        (
-            hasFeatureDetails ||
-            (
-                lead.serviceType &&
-                !budget &&
-                !timeline &&
-                includesAny(normalizeLoose(messageText), ['chahiye', 'need', 'required', 'banwana', 'banwani'])
-            )
-        )
-    ) {
-        leadUpdate.projectDetails = cleanedMessage;
+    if (includesAny(text, ['book', 'pdf', 'notes', '300'])) {
+        leadUpdate.bookInterested = true;
     }
 
     return leadUpdate;
 };
 
-export const detectNotInterested = (messageText = '') => {
-    return includesAny(normalizeLoose(messageText), notInterestedPhrases);
-};
+// Intent keyword groupings
+const GREETING_PHRASES = [
+    'aoa', 'a.o.a', 'asalam', 'assalam', 'assalamu alaikum', 'assalam o alaikum', 'assalam-o-alaikum',
+    'salam', 'slm', 'hi', 'hello', 'hey', 'hy', 'kese ho', 'kaise ho', 'kia hal hai', 'kya haal',
+    'سلام', 'اسلام علیکم', 'السلام علیکم'
+];
 
-export const detectPersonalQuestion = (messageText = '') => {
+const TYPING_TEST_PHRASES = [
+    'typing test', 'typing practice', 'typing speed', 'speed test', 'touch typing', 'wpm',
+    'typing simulator', 'typing start', 'typing link', 'typing krni hai', 'typing karni hai',
+    'typing test link', 'no backspace', 'keyboard sound', 'accuracy', 'net wpm', 'gross wpm',
+    'ٹائپنگ ٹیسٹ', 'ٹائپنگ'
+];
+
+const TYPING_SPEED_LDC_UDC_PHRASES = [
+    'ldc speed', 'udc speed', 'ldc typing speed', 'udc typing speed', 'kitni speed chahiye',
+    'speed kitni required', 'ldc pass speed', 'udc pass speed', 'passing speed', 'passing criteria',
+    '30 wpm', '40 wpm', 'ldc criteria', 'udc criteria', 'clerk speed', 'clerical speed'
+];
+
+const MCQS_PHRASES = [
+    'mcq', 'mcqs', 'quiz', 'quizzes', 'question bank', 'mcq practice', 'mcq test', 'solved directory',
+    'practice mode', 'solved mcqs', 'ام سی کیوز', 'سوالات'
+];
+
+const SUBJECT_MCQ_PHRASES = [
+    'english mcq', 'english mcqs', 'computer mcq', 'computer mcqs', 'math mcq', 'math mcqs',
+    'mathematics mcq', 'pak study', 'pak studies', 'pakistan studies', 'islamiat', 'islamic studies',
+    'everyday science', 'science mcqs', 'general knowledge', 'gk mcqs', 'current affairs'
+];
+
+const DAILY_DRILL_PHRASES = [
+    'daily drill', 'daily practice', 'daily test', 'readiness score', 'readiness rating',
+    '10 mcqs test', '10 mcqs routine', 'daily routine', 'ڈیلی ڈرل'
+];
+
+const EXAM_PREP_PHRASES = [
+    'ldc test', 'udc test', 'fpsc test', 'ppsc test', 'mod test', 'nadra test', 'nts test',
+    'fpsc one paper', 'ppsc one paper', 'negative marking', 'test preparation', 'govt test',
+    'screening test', 'cbt test', 'cbt simulator'
+];
+
+const PDF_BOOK_PHRASES = [
+    'pdf book', 'book', 'notes', 'pdf notes', 'islamabad police book', 'police book',
+    '630 mcqs', 'solved book', 'preparation book', 'book price', 'book kitne ki', 'kitne ki hai',
+    'notes chahiye', 'book chahiye', '300 book', '300 wali book', 'کتاب', 'نوٹس', 'پی ڈی ایف'
+];
+
+const BUY_PDF_BOOK_PHRASES = [
+    'book kaise buy', 'book kaise purchase', 'how to buy book', 'how to buy pdf',
+    'easypaisa number', 'jazzcash number', 'account number', 'payment method', 'kese bhejoon',
+    'kaise send kron', 'order book', 'buy now', 'book leni hai', 'book khareedni'
+];
+
+const PAYMENT_PROOF_PHRASES = [
+    'screenshot', 'screen shot', 'slip', 'receipt', 'pay kar diya', 'pay kr dia', 'payment send',
+    'payment done', '300 bhej diye', '300 send kr diye', 'easypaisa kar dia', 'jazzcash kar dia',
+    'trx id', 'transaction id', 'paise bhej diye', 'payment screenshot', 'رسید', 'اسکرین شاٹ'
+];
+
+const TALK_TO_SUPPORT_PHRASES = [
+    'talk to human', 'talk to support', 'talk to admin', 'admin se baat', 'human se baat',
+    'call me', 'call kar lein', 'call krni hai', 'support number', 'representative',
+    'agent se baat', 'real person', 'kisi insan se baat'
+];
+
+const PRICING_FREE_PHRASES = [
+    'website free hai', 'free hai kya', 'kya ye free hai', 'charges kya hain', 'fees kya hai',
+    'is it free', 'free of cost', 'free or paid'
+];
+
+const DASHBOARD_STREAKS_PHRASES = [
+    'account zaroori', 'sign up zaroori', 'login zaroori', 'streak', 'streaks', 'saved questions',
+    'wrong questions', 'bookmark'
+];
+
+const abusivePhrases = [
+    'fuck', 'fucking', 'shit', 'bitch', 'bastard', 'asshole', 'madarchod',
+    'behenchod', 'bhenchod', 'chutiya', 'chutia', 'harami', 'kutta', 'lanat', 'لعنت', 'حرامی'
+];
+
+const offTopicPhrases = [
+    'politics', 'election', 'cricket score', 'movie download', 'joke sunao', 'random joke', 'xxx'
+];
+
+const personalQuestionPhrases = [
+    'aap real ho', 'tum real ho', 'are you real', 'are you ai', 'are you a bot',
+    'tum insaan ho', 'tum insan ho', 'insaan ho ya ai'
+];
+
+const SUBJECT_KEYWORDS = [
+    'english', 'computer', 'math', 'mathematics', 'pak study', 'pak studies', 'pakistan studies',
+    'islamiat', 'islamic studies', 'everyday science', 'science', 'general knowledge', 'gk', 'current affairs'
+];
+
+const TYPING_COACHING_PHRASES = [
+    'speed kaise barhaen', 'speed kaise badhaye', 'speed barhani hai', 'speed fast kaise karein',
+    'speed increase kaise', 'speed increase krni', 'how to increase typing speed', 'how to improve wpm',
+    'mistakes kam kaise', 'accuracy kaise theek', 'typing speed slow', 'speed nahi barh rahi',
+    'speed nhi barh rhi', 'typing fast kaise kare', 'typing tips', 'speed improve'
+];
+
+const DEPARTMENT_LDC_PHRASES = [
+    'ghq ldc', 'ghq typing', 'ghq test', 'mod ldc', 'mod typing', 'mod test',
+    'fbr ldc', 'fbr typing', 'police ldc', 'police typing', 'paf ldc', 'navy ldc',
+    'railway ldc', 'mes ldc', 'deo typing'
+];
+
+export const detectIntent = (messageText = '', history = [], lead = {}) => {
     const text = normalizeLoose(messageText);
-    if (detectMainWebsiteRequest(messageText, { paused: true }) || detectPortfolioRequest(messageText) || detectCompletedWorkRequest(messageText)) {
-        return false;
-    }
-    const hasBusinessContext = includesAny(text, ['project', 'website', 'service', 'portfolio', 'work', 'business', 'quote']);
-    if (!hasBusinessContext && includesAny(text, ['tumhara naam kya hai', 'aapka naam kya hai', 'what is your name'])) {
-        return true;
-    }
-    return includesAny(text, personalQuestionPhrases);
-};
-
-const detectPersonalFollowUp = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return includesAny(text, [
-        'age', 'umar', 'married', 'shadi', 'shaadi', 'wife', 'family', 'address',
-        'ghar', 'kahan', 'kaha', 'number', 'personal number', 'income', 'salary',
-        'kamata', 'busy', 'real ho', 'ai ho'
-    ]);
-};
-
-export const detectAbusiveOrInappropriate = (messageText = '') => {
-    const text = ` ${normalizeLoose(messageText)} `;
-    const severe = includesAny(text, severeInappropriatePhrases);
-    const abusive = severe || includesAny(text, abusivePhrases);
-
-    return {
-        isAbusive: abusive,
-        severity: severe ? 'severe' : (abusive ? 'moderate' : 'none')
-    };
-};
-
-export const detectRepeatConfusion = (messageText = '') => {
-    return includesAny(normalizeLoose(messageText), repeatConfusionPhrases);
-};
-
-export const isBareWebsiteRequest = (messageText = '') => normalizeLoose(messageText) === 'website';
-
-export const hasGenericWebsiteBuildIntent = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return includesAny(text, [
-        'website banwani hai',
-        'website banwana hai',
-        'site banwani hai',
-        'site banwana hai',
-        'web development chahiye',
-        'web development karwani hai',
-        'web development karwana hai',
-        'website chahiye',
-        'website chaiye',
-        'project banwana hai',
-        'project banwani hai'
-    ]);
-};
-
-export const detectCompletedWorkRequest = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return includesAny(text, [
-        'project jo complete kie',
-        'project jo complete kiye',
-        'completed projects',
-        'complete projects',
-        'complete projects dikhao',
-        'projects dikhao',
-        'kaam dikhao',
-        'work samples',
-        'previous work',
-        'examples',
-        'proof',
-        'client work',
-        'live project',
-        'live website',
-        'zmg',
-        'education portal',
-        'sami ke projects',
-        'sami ka kaam',
-        'demo',
-        'demos',
-        'live website link',
-        'apna kaam dikhao',
-        'kuch kaam dikhao',
-        'live work',
-        'samples dikhao',
-        'kam dikhao',
-        'work portfolio',
-        'previous project',
-        'purana kaam',
-        'purane projects'
-    ]);
-};
-
-export const detectPortfolioRequest = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    if (includesAny(text, [
-        'portfolio website banwani', 'portfolio website banwana', 'portfolio website chahiye',
-        'portfolio website banwani hai', 'portfolio website banwana hai'
-    ])) return false;
-    return includesAny(text, [
-        'portfolio', 'portfolio dikhao', 'sami ka portfolio', 'portfolio link', 'portfolio link do',
-        'portfolio bhej', 'portfolio send', 'portfoli', 'port folio', 'portpholio'
-    ]);
-};
-
-export const detectDeveloperCardRequest = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    const rawText = normalizeText(messageText);
-    if (rawText.includes('card.samidev.pk')) return true;
-    if (['card', 'developer card', 'dev card', 'digital card', 'profile card', 'business card', 'visiting card'].includes(text)) return true;
-
-    return includesAny(text, [
-        'developer card',
-        'dev card',
-        'sami developer card',
-        'sami dev card',
-        'sami card',
-        'digital card',
-        'profile card',
-        'business card',
-        'visiting card',
-        'card link',
-        'card dikhao',
-        'card bhej',
-        'card do',
-        'card bata',
-        'card bta'
-    ]);
-};
-
-export const detectMainWebsiteRequest = (messageText = '', { paused = false } = {}) => {
-    const text = normalizeLoose(messageText);
-    const rawText = normalizeText(messageText);
-    if (!text || hasGenericWebsiteBuildIntent(messageText) || detectCompletedWorkRequest(messageText)) return false;
-    if (paused && isBareWebsiteRequest(messageText)) return true;
-    if (rawText.includes('samidev.pk') && !rawText.includes('portfolio.samidev.pk') && !rawText.includes('card.samidev.pk')) return true;
-
-    return includesAny(text, [
-        'website dikhao',
-        'main website',
-        'main website dikhao',
-        'website link',
-        'site link',
-        'your website',
-        'you website',
-        'sami ki website',
-        'sami ki website kaha ha',
-        'sami ki website kaha hai',
-        'sami website',
-        'samidev.pk',
-        'any site'
-    ]);
-};
-
-export const detectContactEmailRequest = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    if (['email', 'e mail', 'mail', 'mail id', 'email id', 'gmail'].includes(text)) return true;
-
-    return includesAny(text, [
-        'contact email',
-        'business email',
-        'official email',
-        'email address',
-        'mail address',
-        'email do',
-        'email bata',
-        'email bta',
-        'email kya',
-        'email chahiye',
-        'email bhej',
-        'mail do',
-        'mail bata',
-        'mail bta',
-        'mail kya',
-        'mail chahiye',
-        'mail bhej',
-        'your email',
-        'your mail',
-        'sami email',
-        'sami ka email',
-        'sami ki email',
-        'sami mail',
-        'sami ka mail',
-        'sami ki mail',
-        'company email',
-        'company mail',
-        'gmail'
-    ]);
-};
-
-const detectPausedTimelineQuestion = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return includesAny(text, [
-        'timeline',
-        'kab tak',
-        'delivery time',
-        'how many days',
-        'kitne din',
-        'kitna time',
-        'time lagega',
-        'hafty',
-        'haftay',
-        'hafta',
-        'ban jaigi',
-        'ban jaegi',
-        'ban jayegi',
-        'banegi',
-        'banegi?'
-    ]) || /\b\d+\s*(?:days?|din|weeks?|week|hafty|haftay|hafta)\b/i.test(text);
-};
-
-const detectPausedForwardAckRequest = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return includesAny(text, [
-        'detail forward',
-        'details forward',
-        'details gayi',
-        'meri details gayi',
-        'message mila',
-        'sami ko bheja',
-        'forward kardi',
-        'forward kar di',
-        'forward ho gayi',
-        'dobara forward',
-        'urgent ha',
-        'urgent hai',
-        'reply kab',
-        'kab reply',
-        'sami reply',
-        'any update',
-        'koi update'
-    ]);
-};
-
-const detectShortRepeatAck = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return ['dobara', 'dubara', 'again', 'repeat'].includes(text);
-};
-
-export const hasClearProjectIntent = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    return hasGenericWebsiteBuildIntent(messageText) || includesAny(text, [
-        'business website',
-        'company website',
-        'ecommerce store',
-        'e-commerce store',
-        'online store',
-        'portal chahiye',
-        'portal banana',
-        'dashboard chahiye',
-        'dashboard banana',
-        'odoo ka kaam',
-        'odoo work',
-        'custom web app',
-        'build plan',
-        'project discuss karna hai',
-        'project discuss krna hai'
-    ]);
-};
-
-export const hasUsefulProjectContext = (messageText = '', leadUpdate = {}) => {
-    const text = normalizeLoose(messageText);
-    return Boolean(
-        leadUpdate.serviceType ||
-        leadUpdate.projectDetails ||
-        leadUpdate.budget ||
-        leadUpdate.timeline ||
-        inferServiceTypeFromText(messageText) ||
-        extractBudget(messageText) ||
-        extractTimeline(messageText) ||
-        detectFeaturesOrPages(messageText) ||
-        hasClearProjectIntent(messageText) ||
-        includesAny(text, ['website banwani', 'website banwana', 'web development', 'project banwana'])
-    );
-};
-
-export const detectOffTopicOrNonsense = (messageText = '', lead = {}) => {
-    const text = normalizeLoose(messageText);
-    if (!text) return true;
-    const greetingRegex = /^(hi|hello|hey|salam|salaam|assalam|aoa|hy|yo|helo)(?:\s+(?:there|dear|bro|bhai|sir|sami|friends?|guys?|everyone|all|o\s+al[a-z]+|o\s+ale[a-z]+))?$/i;
-    if (greetingRegex.test(text)) return false;
-    if (detectNotInterested(messageText)) return false;
-    if (hasUsefulProjectContext(messageText)) return false;
-    if (detectPersonalQuestion(messageText)) return false;
-    if (detectAbusiveOrInappropriate(messageText).isAbusive) return false;
-    if (/(https?:\/\/|www\.)/i.test(messageText) && !includesKnownSamiDomain(messageText)) return true;
-    if (includesAny(text, SERVICE_CONTEXT_KEYWORDS)) return false;
-
-    if ((lead.offTopicCount || lead.unclearCount || 0) > 0 && includesAny(text, ['tum kya kar sakte ho', 'what can you do'])) {
-        return true;
-    }
-
-    const words = text.split(' ').filter(Boolean);
-    const hasNumber = /\d/.test(text);
-    const hasMostlySymbols = text.length > 0 && text.replace(/[a-z0-9\s\u0600-\u06FF]/gi, '').length / text.length > 0.45;
-
-    return Boolean(
-        includesAny(text, offTopicPhrases) ||
-        /^(ha+|haha+|lol|ok|hmm|acha|theek|asdf+|test)$/i.test(text) ||
-        (words.length <= 4 && hasNumber) ||
-        (words.length <= 2 && !includesAny(text, SERVICE_CONTEXT_KEYWORDS)) ||
-        hasMostlySymbols
-    );
-};
-
-export const detectHandoffIntent = (messageText = '') => {
-    const text = normalizeLoose(messageText);
-    const intents = [];
-
-    for (const [intentName, phrases] of Object.entries(handoffPhraseGroups)) {
-        if (includesAny(text, phrases)) {
-            intents.push(intentName);
-        }
-    }
-
-    if (matchesAny(text, [/\border\s+confirm(?:ed)?\b/i, /\bproject\s+confirm(?:ed)?\b/i, /\bkaam\s+confirm\b/i])) {
-        intents.push('wants_to_proceed');
-    }
-
-    const uniqueIntents = [...new Set(intents)];
-    const primaryIntent = handoffIntentPriority.find((intentName) => uniqueIntents.includes(intentName)) || '';
-
-    return {
-        intents: uniqueIntents,
-        primaryIntent,
-        request_quote: uniqueIntents.includes('request_quote'),
-        request_call: uniqueIntents.includes('request_call'),
-        wants_to_proceed: uniqueIntents.includes('wants_to_proceed'),
-        ready_to_start: uniqueIntents.includes('ready_to_start'),
-        ask_next_step: uniqueIntents.includes('ask_next_step'),
-        qualified_lead: uniqueIntents.includes('qualified_lead'),
-        wants_human: uniqueIntents.includes('wants_human'),
-        final_pricing: uniqueIntents.includes('final_pricing'),
-        meeting_request: uniqueIntents.includes('meeting_request')
-    };
-};
-
-export const calculateLeadScore = (lead = {}, messageText = '') => {
-    const handoffIntent = detectHandoffIntent(messageText);
-    let score = 0;
-
-    if (lead.serviceType) score += 2;
-    if ((lead.projectDetails || '').length > 25) score += 2;
-    if (lead.business) score += 1;
-    if (lead.budget) score += 2;
-    if (lead.timeline) score += 2;
-    if (handoffIntent.request_quote || handoffIntent.final_pricing) score += 2;
-    if (handoffIntent.request_call || handoffIntent.meeting_request) score += 2;
-    if (handoffIntent.wants_to_proceed || handoffIntent.ready_to_start) score += 3;
-    if (lead.cameFromBuildPlan || lead.buildPlanFormSubmitted) score += 2;
-    if (detectFeaturesOrPages(messageText) || detectFeaturesOrPages(lead.projectDetails || '')) score += 2;
-
-    return score;
-};
-
-const hasAnsweredQualificationQuestion = (lead = {}) => Boolean(
-    lead.serviceType ||
-    lead.projectDetails ||
-    lead.business ||
-    lead.budget ||
-    lead.timeline ||
-    lead.cameFromBuildPlan ||
-    lead.buildPlanFormSubmitted ||
-    [
-        LEAD_STAGES.ASKED_PROJECT_TYPE,
-        LEAD_STAGES.ASKED_REQUIREMENTS,
-        LEAD_STAGES.ASKED_BUDGET,
-        LEAD_STAGES.ASKED_TIMELINE
-    ].includes(lead.stage)
-);
-
-const isThinLeadMessage = ({ lead = {}, messageText = '', intent = '' }) => {
-    const handoffIntent = detectHandoffIntent(messageText);
-    const hasHardHandoff = handoffIntent.request_call ||
-        handoffIntent.meeting_request ||
-        handoffIntent.wants_human ||
-        handoffIntent.wants_to_proceed ||
-        handoffIntent.ready_to_start;
-
-    if (hasHardHandoff) return false;
-    if (intent === 'greeting' || intent === 'ask_portfolio' || intent === 'ask_services') return true;
-    if ((handoffIntent.request_quote || handoffIntent.final_pricing) && !(lead.serviceType || lead.projectDetails)) return true;
-    if (intent === 'new_project' && !detectFeaturesOrPages(messageText) && !extractBudget(messageText) && !extractTimeline(messageText)) return true;
-    if (
-        ['ask_business_website', 'ask_ecommerce', 'ask_admin_dashboard', 'ask_custom_web_app', 'ask_odoo'].includes(intent) &&
-        !detectFeaturesOrPages(messageText) &&
-        !extractBudget(messageText) &&
-        !extractTimeline(messageText) &&
-        !(handoffIntent.request_quote || handoffIntent.final_pricing)
-    ) {
-        return true;
-    }
-
-    return false;
-};
-
-export const shouldPauseForQualifiedLead = ({ lead = {}, messageText = '', intent = '', stage = '' }) => {
-    const leadWithStage = { ...lead, stage: stage || lead.stage };
-    const handoffIntent = detectHandoffIntent(messageText);
-    const leadScore = calculateLeadScore(leadWithStage, messageText);
-    const hasServiceOrDetails = Boolean(leadWithStage.serviceType || leadWithStage.projectDetails);
-    const hasBudgetAndTimeline = Boolean(leadWithStage.budget && leadWithStage.timeline);
-
-    if (handoffIntent.wants_human) {
-        return { shouldPause: true, leadScore, handoffReason: 'User requested human handoff' };
-    }
-    if (handoffIntent.request_call || handoffIntent.meeting_request) {
-        return { shouldPause: true, leadScore, handoffReason: handoffIntent.meeting_request ? 'User requested meeting' : 'User requested call' };
-    }
-    if ((handoffIntent.request_quote || handoffIntent.final_pricing) && hasServiceOrDetails) {
-        return { shouldPause: true, leadScore, handoffReason: 'Qualified lead asked for quote' };
-    }
-    if (handoffIntent.wants_to_proceed || handoffIntent.ready_to_start) {
-        return { shouldPause: true, leadScore, handoffReason: 'User wants to proceed' };
-    }
-    if (
-        (leadWithStage.cameFromBuildPlan || leadWithStage.buildPlanFormSubmitted) &&
-        [LEAD_STAGES.ASKED_REQUIREMENTS, LEAD_STAGES.ASKED_BUDGET, LEAD_STAGES.ASKED_TIMELINE].includes(leadWithStage.stage) &&
-        (detectFeaturesOrPages(messageText) || extractBudget(messageText) || extractTimeline(messageText))
-    ) {
-        return { shouldPause: true, leadScore, handoffReason: 'Detailed build-plan form completed' };
-    }
-    if (
-        leadScore >= 5 &&
-        hasAnsweredQualificationQuestion(leadWithStage) &&
-        Boolean(
-            hasBudgetAndTimeline ||
-            ((leadWithStage.cameFromBuildPlan || leadWithStage.buildPlanFormSubmitted) && (leadWithStage.budget || leadWithStage.timeline)) ||
-            handoffIntent.ask_next_step
-        ) &&
-        !isThinLeadMessage({ lead: leadWithStage, messageText, intent })
-    ) {
-        return {
-            shouldPause: true,
-            leadScore,
-            handoffReason: leadScore >= 7 ? 'Strong qualified lead reached threshold' : 'Lead score reached threshold'
-        };
-    }
-
-    return { shouldPause: false, leadScore, handoffReason: '' };
-};
-
-export const shouldPauseForSafetyOrConfusion = ({ userContext = {}, messageText = '', intent = '' }) => {
-    if (intent === 'personal_question' && (userContext.personalQuestionCount || 0) > 0) {
-        return { shouldPause: true, handoffReason: 'Repeated personal/private question' };
-    }
-
-    const abusive = detectAbusiveOrInappropriate(messageText);
-    if (abusive.isAbusive && (abusive.severity === 'severe' || (userContext.abuseCount || 0) > 0)) {
-        return { shouldPause: true, handoffReason: 'Abusive or inappropriate message' };
-    }
-
-    if (
-        detectRepeatConfusion(messageText) &&
-        ((userContext.unclearCount || 0) > 0 || ['clarification', 'unclear', 'off_topic', 'repeat_confusion'].includes(userContext.lastBotQuestionType))
-    ) {
-        return { shouldPause: true, handoffReason: 'Repeated confusion after clarification' };
-    }
-
-    if ((intent === 'off_topic' || intent === 'nonsense') && ((userContext.offTopicCount || 0) > 0 || (userContext.unclearCount || 0) > 0)) {
-        return { shouldPause: true, handoffReason: 'Repeated unclear/off-topic messages' };
-    }
-
-    return { shouldPause: false, handoffReason: '' };
-};
-
-export const getPauseReasonType = (reason = '') => {
-    if (matchesReason(reason, SAFETY_CONFUSION_PAUSE_REASONS)) return 'safety_confusion';
-    if (matchesReason(reason, SERIOUS_LEAD_PAUSE_REASONS)) return 'serious_lead';
-    return reason ? 'manual_or_unknown' : '';
-};
-
-export const isSafetyConfusionPause = (reason = '') => getPauseReasonType(reason) === 'safety_confusion';
-
-export const isSeriousLeadPause = (reason = '') => {
-    const reasonType = getPauseReasonType(reason);
-    return reasonType === 'serious_lead' || reasonType === 'manual_or_unknown';
-};
-
-export const getPausedAutoResumeStatus = ({ lead = {}, messageText = '', parsedLead = {}, now = new Date() }) => {
-    const pausedAt = lead.aiPausedAt ? new Date(lead.aiPausedAt) : null;
-    const pauseAgeHours = pausedAt && !Number.isNaN(pausedAt.getTime())
-        ? (now.getTime() - pausedAt.getTime()) / (1000 * 60 * 60)
-        : 0;
-    const reasonType = getPauseReasonType(lead.handoffReason || '');
-    const staleSafetyPause = reasonType === 'safety_confusion' && pauseAgeHours >= AUTO_RESUME_STALE_PAUSE_HOURS;
-    const projectIntent = Object.keys(parsedLead || {}).length > 0 || hasClearProjectIntent(messageText);
-
-    return {
-        eligible: Boolean(staleSafetyPause && projectIntent),
-        reasonType,
-        pauseAgeHours,
-        staleSafetyPause,
-        projectIntent
-    };
-};
-
-export const detectLanguageStyle = (messageText = '') => {
-    const text = normalizeText(messageText);
-    const hasUrduScript = /[\u0600-\u06FF]/.test(messageText);
-    if (hasUrduScript) return 'urdu';
-
-    const romanUrduMarkers = [
-        'jee', 'ji', 'han', 'haan', 'mujhe', 'mjy', 'chahiye', 'chahye', 'banwani',
-        'banwana', 'dikhao', 'kya', 'kia', 'kitna', 'krni', 'karni', 'kaam', 'baat',
-        'hai', 'hain', 'ha', 'ho', 'karte', 'kar', 'bata', 'batao', 'bta', 'bhejo',
-        'de do', 'link do', 'bhej do', 'lein', 'len', 'pe', 'par', 'chahta',
-        'chahti', 'mein', 'me', 'ka', 'ki', 'se', 'ke liye', 'aoa', 'salam',
-        'assalam', 'kese', 'kaise', 'bhai', 'bro', 'yaar', 'ab', 'kab', 'tab',
-        'btaen', 'bataen', 'shukriya', 'tameer', 'kharab', 'kuch', 'sath',
-        'baad', 'hoga', 'hogi', 'hoge', 'raha', 'rahi', 'rahe'
-    ];
-    const englishMarkers = [
-        'need', 'business', 'website', 'company', 'project', 'price', 'cost',
-        'services', 'portfolio', 'build', 'plan', 'store', 'dashboard'
-    ];
-
-    const looksRomanUrdu = includesAny(text, romanUrduMarkers);
-    const looksEnglish = includesAny(text, englishMarkers);
-
-    if (looksRomanUrdu && looksEnglish) return 'mixed';
-    if (looksRomanUrdu) return 'roman';
-    return 'english';
-};
-
-export const detectIntent = (messageText = '') => {
-    const text = normalizeText(messageText);
     if (!text) return 'unknown';
 
-    if (detectCompletedWorkRequest(messageText)) return 'ask_completed_work';
-    if (detectPortfolioRequest(messageText)) return 'ask_portfolio';
-    if (detectDeveloperCardRequest(messageText)) return 'ask_developer_card';
-    if (detectMainWebsiteRequest(messageText, { paused: true })) return 'ask_main_website';
-    if (detectContactEmailRequest(messageText)) return 'ask_contact_email';
+    // 1. Critical Safety & Boundaries
+    if (includesAny(text, abusivePhrases)) return 'abusive';
+    if (includesAny(text, offTopicPhrases)) return 'off_topic';
+    if (includesAny(text, personalQuestionPhrases)) return 'personal_question';
 
-    if (detectPersonalQuestion(messageText)) return 'personal_question';
+    // 2. High-Priority Payment Proof / Slip
+    if (includesAny(text, PAYMENT_PROOF_PHRASES)) return 'payment_proof_submitted';
 
-    const abusive = detectAbusiveOrInappropriate(messageText);
-    if (abusive.isAbusive) return 'abusive';
+    // 3. Talk to Support / Human
+    if (includesAny(text, TALK_TO_SUPPORT_PHRASES)) return 'talk_to_support';
 
-    if (/(https?:\/\/|www\.)/.test(text) && !includesKnownSamiDomain(messageText)) return 'spam';
-    if (includesAny(text, ['casino', 'betting', 'crypto profit', 'loan offer', 'adult'])) return 'spam';
+    // 4. Buy PDF Book & Payment Details
+    if (includesAny(text, BUY_PDF_BOOK_PHRASES)) return 'buy_pdf_book';
 
-    const handoffIntent = detectHandoffIntent(messageText);
-    if (
-        handoffIntent.primaryIntent &&
-        !(
-            handoffIntent.primaryIntent === 'qualified_lead' &&
-            !extractBudget(messageText) &&
-            !extractTimeline(messageText) &&
-            !detectFeaturesOrPages(messageText) &&
-            !includesAny(normalizeLoose(messageText), ['details bhej', 'i have shared details'])
-        )
-    ) {
-        return handoffIntent.primaryIntent;
+    // 5. PDF Book General Inquiry
+    if (includesAny(text, PDF_BOOK_PHRASES)) return 'ask_pdf_book';
+
+    // 6. Specific Subject MCQs (Check before general MCQs)
+    const isSubjectMcq = includesAny(text, SUBJECT_MCQ_PHRASES) || (includesAny(text, SUBJECT_KEYWORDS) && includesAny(text, ['mcq', 'mcqs', 'quiz', 'quizzes', 'question', 'bank', 'tayari', 'tayyari', 'practice']));
+    if (isSubjectMcq) return 'ask_subject_mcq';
+
+    // 7. Typing Speed Coaching (How to increase speed)
+    if (includesAny(text, TYPING_COACHING_PHRASES)) return 'ask_typing_coaching';
+
+    // 8. Specific Department LDC / UDC
+    if (includesAny(text, DEPARTMENT_LDC_PHRASES) || (includesAny(text, ['ghq', 'mod', 'fbr', 'police', 'mes', 'paf', 'navy', 'railway']) && includesAny(text, ['ldc', 'udc', 'typing', 'speed', 'test', 'criteria']))) {
+        return 'ask_department_ldc';
     }
 
-    if (includesAny(text, ['sami se baat', 'sami sy baat', 'talk to sami', 'sami ko bolo', 'sami ko forward'])) {
-        return 'talk_to_sami';
+    // 9. General Typing Speed Passing Criteria for LDC / UDC
+    if (includesAny(text, TYPING_SPEED_LDC_UDC_PHRASES) || (includesAny(text, ['ldc', 'udc', 'clerk']) && includesAny(text, ['speed', 'wpm', 'typing']))) {
+        return 'ask_typing_speed_ldc_udc';
     }
-    if (includesAny(text, ['call', 'phone', 'baat karni', 'baat krni', 'krni ha', 'urgent'])) {
-        return 'urgent_call';
-    }
-    if (includesAny(text, ['portfolio', 'work', 'sample', 'samples', 'projects', 'kaam dikhao', 'kaam dekhna', 'previous work'])) {
-        return 'ask_portfolio';
-    }
-    if (includesAny(text, ['timeline', 'kitna time', 'time lagega', 'delivery', 'kab tak'])) return 'ask_timeline';
-    if (includesAny(text, ['price', 'charges', 'kitna', 'cost', 'rate', 'budget', 'quote', 'quotation'])) {
-        return 'ask_price';
-    }
-    if (includesAny(text, ['services', 'service list', 'kya kaam', 'konse kaam', 'what do you build', 'what can you do', 'tum kya kar sakte ho'])) {
-        return 'ask_services';
-    }
-    if (includesAny(text, ['odoo'])) return 'ask_odoo';
-    if (includesAny(text, ['ecommerce', 'e-commerce', 'online store', 'shop', 'store chahiye'])) return 'ask_ecommerce';
-    if (includesAny(text, ['business website', 'company website', 'corporate website'])) return 'ask_business_website';
-    if (includesAny(text, ['admin dashboard', 'dashboard', 'panel', 'admin panel'])) return 'ask_admin_dashboard';
-    if (includesAny(text, ['custom web app', 'web app', 'portal', 'software'])) return 'ask_custom_web_app';
-    if (includesAny(text, ['existing client', 'old client', 'already client', 'maintenance', 'change karni', 'bug'])) {
-        return 'existing_client';
-    }
-    if (
-        isWebsiteBuildPlanMessage(text) ||
-        hasGenericWebsiteBuildIntent(messageText) ||
-        includesAny(text, ['website banwani', 'website banwana', 'web development', 'build plan', 'project banwana', 'site banwani', 'mujhe banwani', 'mujhe banwana', 'mujhe ye banwana'])
-    ) {
-        return 'new_project';
-    }
-    const looseText = normalizeLoose(messageText);
-    const greetingRegex = /^(hi|hello|hey|salam|salaam|assalam|aoa|hy|yo|helo)(?:\s+(?:there|dear|bro|bhai|sir|sami|friends?|guys?|everyone|all|o\s+al[a-z]+|o\s+ale[a-z]+))?$/i;
-    if (greetingRegex.test(looseText)) return 'greeting';
 
-    if (detectRepeatConfusion(messageText)) return 'low_signal_repeated';
-    if (detectOffTopicOrNonsense(messageText)) return 'nonsense';
+    // 10. General Typing Test Tools
+    if (includesAny(text, TYPING_TEST_PHRASES)) return 'ask_typing_test';
+
+    // 11. General MCQs Bank
+    if (includesAny(text, MCQS_PHRASES)) return 'ask_mcqs';
+
+    // 12. Daily Drill
+    if (includesAny(text, DAILY_DRILL_PHRASES)) return 'ask_daily_drill';
+
+    // 13. CBT Exam Prep Tracks
+    if (includesAny(text, EXAM_PREP_PHRASES)) return 'ask_exam_prep';
+
+    // 14. Free Platform / Pricing Check
+    if (includesAny(text, PRICING_FREE_PHRASES)) return 'ask_pricing';
+
+    // 15. Dashboard & Streaks
+    if (includesAny(text, DASHBOARD_STREAKS_PHRASES)) return 'ask_dashboard_streaks';
+
+    // 16. Greeting
+    if (includesAny(text, GREETING_PHRASES)) return 'greeting';
 
     return 'unknown';
 };
 
-export const inferLeadUpdateFromIntent = (intent) => {
-    const serviceMap = {
-        ask_odoo: 'Odoo Portal',
-        ask_ecommerce: 'E-commerce Store',
-        ask_business_website: 'Business Website',
-        ask_admin_dashboard: 'Admin Dashboard',
-        ask_custom_web_app: 'Custom Web App'
-    };
-
-    return serviceMap[intent] ? { serviceType: serviceMap[intent] } : {};
-};
-
-export const getStageForLead = (lead = {}, intent = 'unknown') => {
-    if (lead.aiPaused || lead.isAIPaused) return LEAD_STAGES.HANDED_OFF;
-    if (intent === 'personal_question') return LEAD_STAGES.PERSONAL_BOUNDARY;
-    if (intent === 'off_topic' || intent === 'nonsense') return LEAD_STAGES.OFF_TOPIC_WAITING;
-    if (intent === 'low_signal_repeated') return LEAD_STAGES.UNCLEAR_WAITING;
-    if (['ask_price', 'request_quote', 'final_pricing', 'ask_next_step', 'qualified_lead'].includes(intent)) return LEAD_STAGES.ASKED_REQUIREMENTS;
-    if (intent === 'ask_timeline') return LEAD_STAGES.ASKED_TIMELINE;
-    if (!lead.serviceType && intent === 'new_project') return LEAD_STAGES.ASKED_PROJECT_TYPE;
-    if (lead.serviceType && !hasEnoughLeadDetails(lead)) return LEAD_STAGES.ASKED_REQUIREMENTS;
-    if (hasEnoughLeadDetails(lead)) return LEAD_STAGES.QUALIFIED;
-    return lead.stage || LEAD_STAGES.NEW;
-};
-
-export const hasEnoughLeadDetails = (lead = {}) => {
-    const details = lead.projectDetails || lead.requirementSummary || '';
-    return Boolean(
-        lead.serviceType &&
-        (
-            details.length >= 40 ||
-            (lead.business && (lead.budget || lead.timeline))
-        )
-    );
-};
-
-export const isLowSignalMessage = (messageText = '') => {
-    const text = normalizeText(messageText);
-    const words = text.split(' ').filter(Boolean);
-    const hasServiceWord = includesAny(text, [
-        'website', 'web', 'portfolio', 'ecommerce', 'store', 'dashboard', 'odoo',
-        'portal', 'app', 'service', 'price', 'cost', 'sami', 'call'
-    ]);
-    return words.length <= 4 && !hasServiceWord;
-};
-
-const template = (style, variants) => {
-    if (style === 'english') return variants.english;
-    if (style === 'urdu') return variants.urdu;
-    return variants.roman;
-};
-
-const getSafeReplyStyle = (messageText = '') => {
+export const inferLeadUpdateFromMessage = (messageText = '', lead = {}) => {
     const text = normalizeLoose(messageText);
-    if (
-        isBareWebsiteRequest(messageText) ||
-        includesAny(text, [
-            'dikhao',
-            'dobara',
-            'dubara',
-            'kaha',
-            'ha',
-            'hai',
-            'ki',
-            'ka',
-            'krdo',
-            'kardo',
-            'krdi',
-            'kardi',
-            'hafty',
-            'haftay',
-            'ban jaigi',
-            'banegi'
-        ])
-    ) {
-        return 'roman';
+    const update = {};
+
+    // Exam Extraction
+    if (includesAny(text, ['ghq ldc', 'ghq'])) update.targetExam = 'GHQ LDC (BPS-11)';
+    else if (includesAny(text, ['mod ldc', 'mod', 'defence'])) update.targetExam = 'MOD Clerical / LDC';
+    else if (includesAny(text, ['islamabad police', 'police book', 'police', 'asi'])) update.targetExam = 'Islamabad Police ASI/LDC/UDC';
+    else if (includesAny(text, ['fbr ldc', 'fbr'])) update.targetExam = 'FBR LDC/UDC';
+    else if (includesAny(text, ['ldc', 'lower division clerk'])) update.targetExam = 'LDC (BPS-11)';
+    else if (includesAny(text, ['udc', 'upper division clerk'])) update.targetExam = 'UDC (BPS-13/14)';
+    else if (includesAny(text, ['fpsc'])) update.targetExam = 'FPSC One Paper';
+    else if (includesAny(text, ['ppsc'])) update.targetExam = 'PPSC Screening';
+    else if (includesAny(text, ['nadra', 'deo'])) update.targetExam = 'NADRA DEO';
+    else if (includesAny(text, ['nts'])) update.targetExam = 'NTS Screening';
+
+    // Subject Extraction
+    if (includesAny(text, ['computer', 'ms office', 'information technology']) || /\b(it|comp)\b/i.test(text)) update.subjectInterest = 'Computer Knowledge';
+    else if (includesAny(text, ['english', 'grammar', 'vocab', 'preposition'])) update.subjectInterest = 'English';
+    else if (includesAny(text, ['math', 'mathematics', 'arithmetic', 'algebra'])) update.subjectInterest = 'Mathematics';
+    else if (includesAny(text, ['pak study', 'pak studies', 'pakistan studies'])) update.subjectInterest = 'Pakistan Studies';
+    else if (includesAny(text, ['islamiat', 'islamic studies', 'islamic'])) update.subjectInterest = 'Islamic Studies';
+    else if (includesAny(text, ['everyday science', 'science mcq', 'science'])) update.subjectInterest = 'Everyday Science';
+    else if (includesAny(text, ['general knowledge', 'gk mcq', 'gk'])) update.subjectInterest = 'General Knowledge';
+    else if (includesAny(text, ['current affairs', 'affairs'])) update.subjectInterest = 'Current Affairs';
+
+    // WPM Extraction
+    const wpmMatch = text.match(/\b(\d{2,3})\s*(?:wpm|words per minute|speed)\b/i);
+    if (wpmMatch) update.targetWpm = `${wpmMatch[1]} WPM`;
+
+    // Book Interest
+    if (includesAny(text, ['book', 'pdf', 'notes', '300', 'islamabad police book'])) {
+        update.bookInterested = true;
     }
 
-    return detectLanguageStyle(messageText);
+    // Payment Submitted
+    if (includesAny(text, PAYMENT_PROOF_PHRASES)) {
+        update.paymentSubmitted = true;
+    }
+
+    // Name Extraction
+    const nameMatch = messageText.match(/(?:mera naam|my name is|naam|name)\s*(?:hai|is|:)?\s*([a-zA-Z\s]{2,25})/i);
+    if (nameMatch && nameMatch[1].trim().length >= 2) {
+        update.name = toTitleCase(nameMatch[1].trim());
+    }
+
+    return update;
 };
 
-export const getServiceQualificationQuestion = (serviceType = '', style = 'roman') => {
-    const service = normalizeText(serviceType);
-
-    if (service.includes('e-commerce') || service.includes('ecommerce') || service.includes('store') || service.includes('shop')) {
-        return template(style, {
-            english: 'Around how many products will there be, and what payment/delivery flow do you need?',
-            roman: 'Approx kitne products honge, aur payment/delivery ka flow kaise chahiye?',
-            urdu: 'تقریباً کتنے products ہوں گے، اور payment/delivery کا flow کیسے چاہیے؟'
-        });
-    }
-    if (service.includes('odoo')) {
-        return template(style, {
-            english: 'Do you need Odoo setup, portal/frontend, integration, or a custom module?',
-            roman: 'Aapko Odoo setup chahiye, portal/frontend, integration, ya custom module?',
-            urdu: 'آپ کو Odoo setup چاہیے، portal/frontend، integration، یا custom module؟'
-        });
-    }
-    if (service.includes('dashboard') || service.includes('admin')) {
-        return template(style, {
-            english: 'What data should the dashboard manage - users, orders, records, reports, or documents?',
-            roman: 'Dashboard mein kis type ka data manage hoga - users, orders, records, reports, ya documents?',
-            urdu: 'Dashboard میں کس type کا data manage ہوگا - users, orders, records, reports، یا documents؟'
-        });
-    }
-    if (service.includes('portfolio')) {
-        return template(style, {
-            english: 'Is it a personal portfolio, developer portfolio, company portfolio, or creative portfolio?',
-            roman: 'Portfolio personal chahiye, developer portfolio, company portfolio, ya creative portfolio?',
-            urdu: 'Portfolio personal چاہیے، developer portfolio، company portfolio، یا creative portfolio؟'
-        });
-    }
-    if (service.includes('business') || service.includes('website')) {
-        return template(style, {
-            english: 'Please share approximate pages/features - basic website, or contact form, product catalog, and WhatsApp leads too?',
-            roman: 'Approx pages/features bata dein - basic website chahiye ya contact form, product catalog, WhatsApp leads bhi chahiye?',
-            urdu: 'Approx pages/features بتا دیں - basic website چاہیے یا contact form, product catalog, WhatsApp leads بھی چاہیے؟'
-        });
-    }
-
-    return template(style, {
-        english: 'What main features do you need in this project?',
-        roman: 'Is project mein main features kya chahiye?',
-        urdu: 'اس project میں main features کیا چاہئیں؟'
-    });
+export const inferLeadUpdateFromIntent = (intent, userMessage, lead = {}) => {
+    return inferLeadUpdateFromMessage(userMessage, lead);
 };
 
-const getNewProjectQuestion = (style) => template(style, {
-    english: 'Sure. What type of project do you need - business website, portfolio, e-commerce store, portal, dashboard, or custom web app?',
-    roman: 'Jee bilkul. Aap kis type ka project banwana chahte hain - business website, portfolio, e-commerce store, portal, ya custom web app?',
-    urdu: 'جی بالکل۔ آپ کس type کا project بنوانا چاہتے ہیں - business website، portfolio، e-commerce store، portal، یا custom web app؟'
-});
-
-const getAffirmativeServiceChoiceReply = (style) => template(style, {
-    english: 'Great. Which one do you need - website, portal, e-commerce store, dashboard, or custom web app?',
-    roman: 'Jee, kis type ka project chahiye - website, portal, e-commerce store, dashboard ya custom web app?',
-    urdu: 'جی، آپ کو کس type کا project چاہیے - website، portal، e-commerce store، dashboard یا custom web app?'
-});
-
-const getPortfolioReply = (style) => template(style, {
-    english: `Sure, you can view Sami's portfolio here: ${SAMI_KNOWLEDGE.portfolioUrl}\n\nWhat type of work would you like to see - business websites, portals, e-commerce, or dashboards?`,
-    roman: `Jee, Sami ka portfolio yahan dekh sakte hain: ${SAMI_KNOWLEDGE.portfolioUrl}\n\nAap kis type ka kaam dekhna chahenge - website, portal, e-commerce, ya dashboard?`,
-    urdu: `جی، Sami کا portfolio یہاں دیکھ سکتے ہیں: ${SAMI_KNOWLEDGE.portfolioUrl}\n\nآپ کس type کا کام دیکھنا چاہیں گے - website، portal، e-commerce، یا dashboard؟`
-});
-
-const getWebsiteReply = (style) => template(style, {
-    english: `Main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\n\nYou can also send a build plan request from there.`,
-    roman: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\n\nAap direct build plan request bhi bhej sakte hain.`,
-    urdu: `جی، main website یہاں ہے: ${SAMI_KNOWLEDGE.mainWebsiteUrl}\n\nآپ وہاں سے direct build plan request بھی بھیج سکتے ہیں۔`
-});
-
-const getPortfolioLinkReply = (style) => template(style, {
-    english: `Sure, portfolio is here: ${SAMI_KNOWLEDGE.portfolioUrl}`,
-    roman: `Jee, portfolio yahan hai: ${SAMI_KNOWLEDGE.portfolioUrl}`,
-    urdu: `Jee, portfolio yahan hai: ${SAMI_KNOWLEDGE.portfolioUrl}`
-});
-
-const getMainWebsiteLinkReply = (style) => template(style, {
-    english: `Sure, main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
-    roman: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
-    urdu: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`
-});
-
-const getDeveloperCardReply = (style) => template(style, {
-    english: `Sure, Sami's developer card is here: ${SAMI_KNOWLEDGE.developerCardUrl}`,
-    roman: `Jee, Sami ka developer card yahan hai: ${SAMI_KNOWLEDGE.developerCardUrl}`,
-    urdu: `Jee, Sami ka developer card yahan hai: ${SAMI_KNOWLEDGE.developerCardUrl}`
-});
-
-const getContactEmailReply = (style) => template(style, {
-    english: `Sure, Sami's email is ${SAMI_KNOWLEDGE.contactEmail}`,
-    roman: `Jee, Sami ka email ${SAMI_KNOWLEDGE.contactEmail} hai.`,
-    urdu: `Jee, Sami ka email ${SAMI_KNOWLEDGE.contactEmail} hai.`
-});
-
-const getCompletedWorkReply = (style) => template(style, {
-    english: `Sure, you can view completed work here:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`,
-    roman: `Jee, completed work yahan dekh sakte hain:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`,
-    urdu: `Jee, completed work yahan dekh sakte hain:\n\nPortfolio: ${SAMI_KNOWLEDGE.portfolioUrl}\nZMG Education Portal: https://zmgeducation.com`
-});
-
-const getWebsiteDisambiguationReply = (style) => template(style, {
-    english: 'Do you need a website, or do you want to view the website link?',
-    roman: 'Website chahiye ya website link dekhna hai?',
-    urdu: 'Website chahiye ya website link dekhna hai?'
-});
-
-const getPausedForwardAckReply = (style) => template(style, {
-    english: "Yes, details have been forwarded. If it is urgent, I'm noting that; Sami will reply manually soon.",
-    roman: 'Jee, details forward ho gayi hain. Agar urgent hai to main isay note kar raha hoon; Sami jaldi manually reply karenge.',
-    urdu: 'Jee, details forward ho gayi hain. Agar urgent hai to main isay note kar raha hoon; Sami jaldi manually reply karenge.'
-});
-
-const getPausedTimelineReply = (style) => template(style, {
-    english: 'Sami will confirm the timeline after reviewing the requirements. Your message has been received.',
-    roman: 'Timeline requirements dekh kar Sami confirm karenge. Aapki message receive ho gayi hai.',
-    urdu: 'Timeline requirements dekh kar Sami confirm karenge. Aapki message receive ho gayi hai.'
-});
-
-const getShortNotedReply = (style) => template(style, {
-    english: 'Noted.',
-    roman: 'Jee, noted.',
-    urdu: 'Jee, noted.'
-});
-
-const getGreetingReply = (style) => template(style, {
-    english: 'Hi, I am Sami Assistant. Are you looking for a website, portal, e-commerce store, dashboard, or custom web app?',
-    roman: 'Jee, main Sami ka assistant hoon. Aap website, portal, e-commerce store, dashboard, ya custom web app ke bare mein baat karna chahte hain?',
-    urdu: 'جی، میں Sami کا assistant ہوں۔ آپ website، portal، e-commerce store، dashboard، یا custom web app کے بارے میں بات کرنا چاہتے ہیں؟'
-});
-
-const getPriceReply = (style) => template(style, {
-    english: 'Price depends on pages, features, and timeline. Do you need a basic website, or forms, admin panel, payment, or portal features too?',
-    roman: 'Price pages, features aur timeline par depend karegi. Aapko basic website chahiye ya forms, admin panel, payment, ya portal features bhi chahiye?',
-    urdu: 'Price pages، features اور timeline پر depend کرے گی۔ آپ کو basic website چاہیے یا forms، admin panel، payment، یا portal features بھی؟'
-});
-
-const getServicesReply = (style) => template(style, {
-    english: `Sami builds business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, and custom web apps.\n\nWhich one do you need?`,
-    roman: 'Sami business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, aur custom web apps build karte hain.\n\nAapko kis service ki zaroorat hai?',
-    urdu: 'Sami business websites، portfolio websites، e-commerce stores، admin dashboards، Odoo portals، اور custom web apps build کرتے ہیں۔\n\nآپ کو کس service کی ضرورت ہے؟'
-});
-
-const getTalkToSamiReply = (style, shouldPause) => {
-    if (shouldPause) {
-        return template(style, {
-            english: 'Perfect, I am forwarding these details to Sami. He will reply to you soon.',
-            roman: 'Perfect, main ye details Sami ko forward kar raha hoon. Wo jaldi aapko reply karenge.',
-            urdu: 'Perfect، میں یہ details Sami کو forward کر رہا ہوں۔ وہ جلدی آپ کو reply کریں گے۔'
-        });
-    }
-
-    return template(style, {
-        english: 'Sure. Please share the topic so I can forward it to Sami with proper context.',
-        roman: 'Jee zaroor. Aap topic bata dein taake main Sami ko proper context ke sath forward kar doon.',
-        urdu: 'جی ضرور۔ آپ topic بتا دیں تاکہ میں Sami کو proper context کے ساتھ forward کر دوں۔'
-    });
+export const getStageForLead = (lead = {}) => {
+    if (lead.isAIPaused || lead.aiPaused) return LEAD_STAGES.HANDED_OFF;
+    if (lead.paymentSubmitted) return LEAD_STAGES.PAYMENT_SUBMITTED;
+    if (lead.bookInterested) return LEAD_STAGES.BOOK_INTERESTED;
+    if (lead.targetExam) return LEAD_STAGES.TARGET_EXAM_IDENTIFIED;
+    if (lead.subjectInterest || lead.targetWpm) return LEAD_STAGES.EXPLORING_TOOLS;
+    return LEAD_STAGES.NEW;
 };
 
-const getCallReply = (style, shouldPause) => {
-    if (shouldPause) return getTalkToSamiReply(style, true);
-
-    return template(style, {
-        english: 'Sure. Please share the topic and preferred time so Sami has the right context for the call.',
-        roman: 'Jee zaroor. Topic aur preferred time bata dein taake Sami ko call ke liye proper context mil jaye.',
-        urdu: 'جی ضرور۔ Topic اور preferred time بتا دیں تاکہ Sami کو call کے لیے proper context مل جائے۔'
-    });
+export const calculateLeadScore = (lead = {}) => {
+    let score = 10;
+    if (lead.name) score += 15;
+    if (lead.targetExam) score += 25;
+    if (lead.targetWpm || lead.subjectInterest) score += 20;
+    if (lead.bookInterested) score += 15;
+    if (lead.paymentSubmitted) score = 100;
+    return Math.min(100, score);
 };
 
-const getClarificationReply = (style) => template(style, {
-    english: 'Could you clarify your project requirement a little?',
-    roman: 'Samajh nahi aya. Aap website ya project requirement thori clear bata dein?',
-    urdu: 'سمجھ نہیں آیا۔ آپ website یا project requirement تھوڑی clear بتا دیں؟'
-});
-
-const getBuildPlanDetailClarificationReply = (style) => template(style, {
-    english: 'I received the form, but the project details are not clear. Please share the website/app type and key pages or features.',
-    roman: 'Form receive ho gaya, lekin project details clear nahi hain. Website/app ka type aur main pages/features thori detail se bata dein.',
-    urdu: 'Form receive ho gaya, lekin project details clear nahi hain. Website/app ka type aur main pages/features thori detail se bata dein.'
-});
-
-const getUnclearOffTopicReply = (style) => template(style, {
-    english: 'I did not fully understand. If you want to discuss a website, portal, e-commerce store, dashboard, or custom web app, please share a little more context.',
-    roman: 'Samajh nahi aya. Agar aap website, portal, e-commerce, dashboard ya custom web app ke bare mein baat karna chahte hain to thora clear bata dein.',
-    urdu: 'سمجھ نہیں آیا۔ اگر آپ website، portal، e-commerce، dashboard یا custom web app کے بارے میں بات کرنا چاہتے ہیں تو تھوڑا clear بتا دیں۔'
-});
-
-const getRepeatedUnclearHandoffReply = (style) => template(style, {
-    english: 'I am forwarding this conversation to Sami so he can review it manually.',
-    roman: 'Main ye conversation Sami ke liye forward kar raha hoon taake wo manually dekh saken.',
-    urdu: 'میں یہ conversation Sami کے لیے forward کر رہا ہوں تاکہ وہ manually دیکھ سکیں۔'
-});
-
-const getPersonalBoundaryReply = (style) => template(style, {
-    english: "I can't share personal details. If you want to discuss a website, portal, dashboard, or web system, I can help.",
-    roman: 'Main personal details share nahi kar sakta. Agar aap website, portal, dashboard ya web system ke related baat karna chahte hain to main help kar sakta hoon.',
-    urdu: 'میں personal details share نہیں کر سکتا۔ اگر آپ website، portal، dashboard یا web system کے related بات کرنا چاہتے ہیں تو میں help کر سکتا ہوں۔'
-});
-
-const getPersonalHandoffReply = (style) => template(style, {
-    english: "I can't share personal details. I'm forwarding this conversation to Sami.",
-    roman: 'Main personal details share nahi kar sakta. Main ye conversation Sami ke liye forward kar raha hoon.',
-    urdu: 'میں personal details share نہیں کر سکتا۔ میں یہ conversation Sami کے لیے forward کر رہا ہوں۔'
-});
-
-const getAbuseReply = (style) => template(style, {
-    english: 'I cannot continue this type of conversation. If you need help with a website or project, please send a clear requirement.',
-    roman: 'Main is tarah ki conversation continue nahi kar sakta. Agar aapko website ya project ke related help chahiye ho to clear requirement bhej dein.',
-    urdu: 'میں اس طرح کی conversation continue نہیں کر سکتا۔ اگر آپ کو website یا project کے related help چاہیے ہو تو clear requirement بھیج دیں۔'
-});
-
-const getNotInterestedReply = (style) => template(style, {
-    english: 'No problem. Whenever you are ready, you can message here.',
-    roman: 'Theek hai, koi masla nahi. Jab zaroorat ho aap yahan message kar sakte hain.',
-    urdu: 'کوئی مسئلہ نہیں۔ جب ضرورت ہو آپ یہاں message کر سکتے ہیں۔'
-});
-
-const getTimelineOrBudgetQuestion = (style, lead = {}) => {
-    if (!lead.timeline && lead.budget) {
-        return template(style, {
-            english: 'Got it. What timeline do you need for this?',
-            roman: 'Jee samajh gaya. Is project ki timeline kya chahiye?',
-            urdu: 'جی سمجھ گیا۔ اس project کی timeline کیا چاہیے؟'
-        });
-    }
-
-    if (!lead.budget && lead.timeline) {
-        return template(style, {
-            english: 'Got it. Do you have a budget range in mind?',
-            roman: 'Jee samajh gaya. Aapke mind mein budget range hai?',
-            urdu: 'جی سمجھ گیا۔ آپ کے mind میں budget range ہے؟'
-        });
-    }
-
-    return template(style, {
-        english: 'Got it. Please share your timeline or budget range so Sami can guide you properly.',
-        roman: 'Jee samajh gaya. Timeline ya budget range share kar dein taake Sami proper guide kar saken.',
-        urdu: 'جی سمجھ گیا۔ Timeline یا budget range share کر دیں تاکہ Sami proper guide کر سکیں۔'
-    });
+export const buildLeadSummary = (lead = {}) => {
+    const parts = [];
+    if (lead.name) parts.push(`Name: ${lead.name}`);
+    if (lead.targetExam) parts.push(`Target Exam: ${lead.targetExam}`);
+    if (lead.targetWpm) parts.push(`Target Speed: ${lead.targetWpm}`);
+    if (lead.subjectInterest) parts.push(`Subject: ${lead.subjectInterest}`);
+    if (lead.bookInterested) parts.push(`Book Interested: Yes (Rs. 300)`);
+    if (lead.paymentSubmitted) parts.push(`Payment Status: Receipt Submitted`);
+    return parts.join(' | ') || 'New visitor exploring TestTayar tools';
 };
 
-const getPausedAcknowledgementReply = (style) => template(style, {
-    english: 'Sami will reply manually as soon as possible.',
-    roman: 'Sami jald hi manually reply karenge.',
-    urdu: 'Sami جلد ہی manually reply کریں گے۔'
-});
+/**
+ * Rule-Based Fallback Responses for TestTayar.pk
+ */
+export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 = []) => {
+    let intent = arg1;
+    let userMessage = arg2;
+    let lead = arg3;
+    let history = arg4;
 
-const getRomanBudgetPhrase = (budget = '') => {
-    const normalizedBudget = normalizeText(budget);
-    if (!budget) return '';
-    if (normalizedBudget.includes('need guidance') || normalizedBudget.includes('guidance')) {
-        return 'aur budget guidance needed hai';
-    }
-    return `aur budget ${budget.trim()} hai`;
-};
-
-const getFormReply = (leadUpdate, style) => {
-    const namePart = leadUpdate.name ? `${toTitleCase(leadUpdate.name)}, ` : '';
-    const question = leadUpdate.serviceType
-        ? getServiceQualificationQuestion(leadUpdate.serviceType, style)
-        : getNewProjectQuestion(style);
-
-    if (style === 'english') {
-        const businessPart = leadUpdate.business ? ` for ${leadUpdate.business}` : '';
-        const budgetPart = leadUpdate.budget ? ` Budget noted: ${leadUpdate.budget}.` : '';
-        const servicePart = leadUpdate.serviceType ? `${leadUpdate.serviceType}${businessPart}` : 'your project';
-        return `Got it ${namePart}you need ${servicePart}.${budgetPart} ${question}`;
+    if (arg1 && typeof arg1 === 'object') {
+        intent = arg1.intent;
+        userMessage = arg1.messageText || arg1.userMessage || '';
+        lead = arg1.lead || arg1.parsedLead || {};
+        history = arg1.history || [];
     }
 
-    if (style === 'urdu') {
-        const businessPart = leadUpdate.business ? `${leadUpdate.business} business کے لیے ` : '';
-        const budgetPart = leadUpdate.budget ? ` Budget noted: ${leadUpdate.budget}.` : '';
-        const servicePart = leadUpdate.serviceType ? `${businessPart}${leadUpdate.serviceType}` : 'project';
-        return `جی ${namePart}سمجھ گیا۔ آپ ${servicePart} چاہتے ہیں.${budgetPart} ${question}`;
-    }
+    const k = TESTTAYAR_KNOWLEDGE;
+    const text = normalizeLoose(userMessage);
 
-    const businessPart = leadUpdate.business ? `${leadUpdate.business} business ke liye ` : '';
-    const budgetPart = leadUpdate.budget ? ` ${getRomanBudgetPhrase(leadUpdate.budget)}` : '';
-    const servicePart = leadUpdate.serviceType ? `${businessPart}${leadUpdate.serviceType.toLowerCase()}` : 'project';
-    return `Jee ${namePart}samajh gaya. Aap ${servicePart} chahte hain${budgetPart}. ${question}`;
-};
-
-const getLegacyRuleBasedAssistantResponse = ({ messageText = '', intent, lead = {}, parsedLead = {} }) => {
-    const isPrefilledWebsiteMessage = isWebsiteBuildPlanMessage(messageText);
-    const style = isPrefilledWebsiteMessage ? 'roman' : detectLanguageStyle(messageText);
-    const weakBuildPlanDetails = hasWeakBuildPlanProjectDetails(messageText);
-    const leadUpdate = {
-        ...inferLeadUpdateFromIntent(intent),
-        ...parsedLead
-    };
-    const mergedLead = { ...lead, ...leadUpdate };
-    const lowerText = normalizeText(messageText);
-
-    if (weakBuildPlanDetails) {
-        return {
-            reply: getBuildPlanDetailClarificationReply(style),
-            leadUpdate,
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
-            contextUpdate: {
-                cameFromBuildPlan: true,
-                buildPlanFormSubmitted: false,
-                unclearCount: (lead.unclearCount || 0) + 1,
-                lastBotQuestionType: 'requirements'
-            }
-        };
-    }
-
-    if (Object.keys(parsedLead).length > 0) {
-        return {
-            reply: getFormReply(leadUpdate, style),
-            leadUpdate,
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false
-        };
-    }
-
-    if (isPrefilledWebsiteMessage) {
-        return {
-            reply: getNewProjectQuestion(style),
-            leadUpdate,
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'spam') {
-        return {
-            reply: getClarificationReply(style),
-            leadUpdate,
-            intent,
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'ask_portfolio') {
-        return {
-            reply: getPortfolioReply(style),
-            leadUpdate,
-            intent,
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
-        return {
-            reply: getDeveloperCardReply(style),
-            leadUpdate,
-            intent: 'ask_developer_card',
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
-        return {
-            reply: getContactEmailReply(style),
-            leadUpdate,
-            intent: 'ask_contact_email',
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false
-        };
-    }
-
-    if (includesAny(lowerText, ['samidev.pk', 'main website', 'website link', 'build plan page'])) {
-        return {
-            reply: getWebsiteReply(style),
-            leadUpdate,
-            intent: intent === 'unknown' ? 'ask_services' : intent,
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'greeting') {
-        return {
-            reply: getGreetingReply(style),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'ask_services') {
-        return {
-            reply: getServicesReply(style),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'ask_price') {
-        const finalQuoteRequest = includesAny(lowerText, ['final quote', 'final quotation', 'exact quote', 'final price', 'quotation bhejo']);
-        const shouldPause = finalQuoteRequest && hasEnoughLeadDetails(mergedLead);
-
-        if (shouldPause) {
+    switch (intent) {
+        case 'greeting':
             return {
-                reply: getTalkToSamiReply(style, true),
-                leadUpdate,
-                intent,
-                stage: LEAD_STAGES.HANDED_OFF,
-                pauseAI: true,
-                handoffReason: 'User asked for a final quote after sharing lead details'
+                reply: `Walaikum Assalam! TestTayar par khushamdeed. Main aapki typing test ya kisi exam preparation mein kya madad kar sakta hoon?`,
+                intent: 'greeting',
+                pauseAI: false
+            };
+
+        case 'ask_typing_coaching':
+            return {
+                reply: `Typing speed barhane ke liye pehle tez type karne ke bajaye 95%+ accuracy par focus karein. Fingers ko hamesha Home Row (ASDF - JKL;) par rakhein aur keyboard ki taraf dekhne se parhez karein. Abhi aapki average speed kitni aa rahi hai? Practice shuru karein: ${k.typingTestUrl}`,
+                intent: 'ask_typing_coaching',
+                pauseAI: false
+            };
+
+        case 'ask_department_ldc':
+            if (includesAny(text, ['ghq', 'mod'])) {
+                return {
+                    reply: `GHQ aur MOD clerical (LDC) test ke liye standard 30 WPM passing speed hoti hai, lekin safe merit ke liye 35+ WPM target karein kyunke wahan accuracy par strict checking hoti hai. TestTayar ka No-Backspace MOD simulator try karein: ${k.typingTestUrl}/mod`,
+                    intent: 'ask_department_ldc',
+                    pauseAI: false
+                };
+            }
+            if (includesAny(text, ['police', 'islamabad police'])) {
+                return {
+                    reply: `Islamabad Police / Provincial Police LDC ke liye 30 WPM aur UDC ke liye 40 WPM required hai. 100 MCQs written paper ki tayari ke liye hamara exam simulator dekhein: ${k.mainWebsiteUrl}/ldc-test`,
+                    intent: 'ask_department_ldc',
+                    pauseAI: false
+                };
+            }
+            if (includesAny(text, ['ppsc'])) {
+                return {
+                    reply: `PPSC Junior Clerk (BPS-11) ke liye 25-30 WPM English typing + MS Office proficiency test hota hai, aur written exam mein -0.25 negative marking hoti hai: ${k.mainWebsiteUrl}/ppsc-one-paper-test`,
+                    intent: 'ask_department_ldc',
+                    pauseAI: false
+                };
+            }
+            return {
+                reply: `Federal aur provincial departments (FBR, MES, Railway, Ministries) mein LDC (BPS-11) ke liye minimum 30 WPM (90%+ accuracy) aur UDC ke liye 30-40+ WPM required hoti hai. Specific room yahan try karein: ${k.typingTestUrl}/ldc`,
+                intent: 'ask_department_ldc',
+                pauseAI: false
+            };
+
+        case 'ask_typing_test':
+            return {
+                reply: `TestTayar par 1 se 10 minute tak ka touch-typing test bilkul free available hai jisme real-time WPM, Accuracy aur No-Backspace mode shamil hai. Practice shuru karein: ${k.typingTestUrl}`,
+                intent: 'ask_typing_test',
+                pauseAI: false
+            };
+
+        case 'ask_typing_speed_ldc_udc':
+            return {
+                reply: `Federal aur provincial jobs ke liye LDC (BPS-11) ke liye minimum 30 WPM (90%+ accuracy) aur UDC (BPS-13/14) ke liye 30-40+ WPM required hoti hai. Aap LDC/UDC specific typing simulator yahan try kar sakte hain: ${k.typingTestUrl}/ldc`,
+                intent: 'ask_typing_speed_ldc_udc',
+                pauseAI: false
+            };
+
+        case 'ask_subject_mcq':
+        case 'ask_mcqs':
+            return {
+                reply: `TestTayar par 8 core subjects (English, Computer, Math, Pak Studies, Islamiat, Everyday Science, GK, Current Affairs) ke timed practice quizzes aur solved directories available hain: ${k.mcqsUrl}`,
+                intent: 'ask_mcqs',
+                pauseAI: false
+            };
+
+        case 'ask_daily_drill':
+            return {
+                reply: `Daily Drill ek 3-stage routine hai jisme 1-minute typing test + 10 mixed MCQs attempt karke aap apna Combined Readiness Score check kar sakte hain: ${k.dailyDrillUrl}`,
+                intent: 'ask_daily_drill',
+                pauseAI: false
+            };
+
+        case 'ask_exam_prep':
+            return {
+                reply: `Hamare CBT Exam Simulators me LDC, UDC, MOD, NADRA, FPSC One Paper aur PPSC (with -0.25 negative marking) shamil hain. Complete tracks yahan dekhein: ${k.testPreparationUrl}`,
+                intent: 'ask_exam_prep',
+                pauseAI: false
+            };
+
+        case 'ask_pdf_book': {
+            const hasPost = Boolean(lead?.targetExam) || includesAny(text, ['police', 'asi', 'ghq', 'mod', 'ldc', 'udc', 'fia', 'asf', 'clerk', 'deo']);
+            if (!hasPost) {
+                return {
+                    reply: `Aap kis post ya department (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ke liye preparation book / notes chahte hain?`,
+                    intent: 'ask_pdf_book',
+                    pauseAI: false
+                };
+            }
+
+            const isUniform = includesAny(text, ['police', 'asi', 'fia', 'asf']) || (lead?.targetExam && includesAny(lead.targetExam.toLowerCase(), ['police', 'asi', 'fia', 'asf']));
+            const packageDesc = isUniform
+                ? 'Isme relevant laws & acts, is month ke updated current affairs, General Knowledge, past papers ke solved MCQs aur short notes shamil hain.'
+                : 'Isme past papers ke solved MCQs, short revision notes, GK & is month ke updated current affairs, complete computer knowledge aur typing test guidelines shamil hain.';
+
+            return {
+                reply: `${packageDesc}\n\n*Price:* Rs. 300 only\n\n*JazzCash:*\nAccount Title: MUHAMMAD SAMI\nNumber: \`03039512277\` (Tap to copy)\n\n*Meezan Bank:*\nAccount Title: MUHAMMAD SAMI\nAccount Number: \`01990112309796\` (Tap to copy)\nIBAN: \`PK69MEZN0001990112309796\` (Tap to copy)\n\nPayment bhej kar screenshot isi chat par share karein, PDF book foran deliver kar di jayegi.`,
+                intent: 'ask_pdf_book',
+                pauseAI: false
             };
         }
 
-        return {
-            reply: getPriceReply(style),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false
-        };
+        case 'buy_pdf_book':
+            return {
+                reply: `Rs. 300 PDF Book payment ke liye account details:\n\n*JazzCash:*\nAccount Title: MUHAMMAD SAMI\nNumber: \`03039512277\` (Tap to copy)\n\n*Meezan Bank:*\nAccount Title: MUHAMMAD SAMI\nAccount Number: \`01990112309796\` (Tap to copy)\nIBAN: \`PK69MEZN0001990112309796\` (Tap to copy)\n\nPayment bhej kar screenshot isi chat par share karein, PDF book foran deliver kar di jayegi.`,
+                intent: 'buy_pdf_book',
+                pauseAI: false
+            };
+
+        case 'payment_proof_submitted':
+            return {
+                reply: `Bohat shukriya! Main screenshot verify karke aapko PDF book yahan WhatsApp par deliver kar raha hoon. [PAUSE]`,
+                intent: 'payment_proof_submitted',
+                pauseAI: true,
+                handoffReason: 'Payment proof submitted for PDF Book'
+            };
+
+        case 'talk_to_support':
+            return {
+                reply: `Jee bilkul! Main ye chat admin / support team ko forward kar raha hoon. Wo jald hi aap se isi WhatsApp par rabta karenge. [PAUSE]`,
+                intent: 'talk_to_support',
+                pauseAI: true,
+                handoffReason: 'User requested human support'
+            };
+
+        case 'ask_pricing':
+            return {
+                reply: `TestTayar website par all typing tests, subject MCQs aur daily drills 100% bilkul free hain! Sirf optional preparation notes / solved PDF book aapki specific post ke mutabiq Rs. 300 mein provide ki jaati hai.`,
+                intent: 'ask_pricing',
+                pauseAI: false
+            };
+
+        case 'ask_dashboard_streaks':
+            return {
+                reply: `Guest mode mein practice bilkul free hai. Lekin free account banane se aapki daily streaks save rehti hain aur wrong questions ko revision ke liye bookmark kar sakte hain: ${k.dashboardUrl}`,
+                intent: 'ask_dashboard_streaks',
+                pauseAI: false
+            };
+
+        case 'off_topic':
+            return {
+                reply: `Main sirf TestTayar.pk ki test preparation, typing tests aur subject MCQs ke baare mein guide kar sakta hoon. Aap kisi specific government exam ya typing practice ke baare mein kuch poochna chahte hain?`,
+                intent: 'off_topic',
+                pauseAI: false
+            };
+
+        case 'personal_question':
+            return {
+                reply: `Main TestTayar.pk ka official AI Assistant hoon. Main typing tests, MCQs practice, syllabus aur Rs. 300 preparation PDF book ke baare mein guide kar sakta hoon.`,
+                intent: 'personal_question',
+                pauseAI: false
+            };
+
+        case 'abusive':
+            return {
+                reply: `Kripya shaishta zaban istemal karein taake hum aapki test preparation mein sahi madad kar sakein. [PAUSE]`,
+                intent: 'abusive',
+                pauseAI: true,
+                handoffReason: 'Abusive language detected'
+            };
+
+        default:
+            return {
+                reply: `TestTayar.pk par aap Typing Tests (${k.typingTestUrl}), Subject MCQs (${k.mcqsUrl}) ya Daily Drill (${k.dailyDrillUrl}) free practice kar sakte hain. Kisi specific exam ke baare mein janna chahte hain?`,
+                intent: 'unknown',
+                pauseAI: false
+            };
     }
-
-    if (intent === 'talk_to_sami') {
-        const shouldPause = hasEnoughLeadDetails(mergedLead);
-        return {
-            reply: getTalkToSamiReply(style, shouldPause),
-            leadUpdate,
-            intent,
-            stage: shouldPause ? LEAD_STAGES.HANDED_OFF : (lead.stage || LEAD_STAGES.NEW),
-            pauseAI: shouldPause,
-            handoffReason: shouldPause ? 'User asked to talk to Sami after sharing lead details' : ''
-        };
-    }
-
-    if (intent === 'urgent_call') {
-        const shouldPause = hasEnoughLeadDetails(mergedLead);
-        return {
-            reply: getCallReply(style, shouldPause),
-            leadUpdate,
-            intent,
-            stage: shouldPause ? LEAD_STAGES.HANDED_OFF : (lead.stage || LEAD_STAGES.NEW),
-            pauseAI: shouldPause,
-            handoffReason: shouldPause ? 'User requested a call after sharing lead details' : ''
-        };
-    }
-
-    if (intent === 'ask_timeline') {
-        return {
-            reply: template(style, {
-                english: 'Timeline depends on pages and features. What type of website or app do you need?',
-                roman: 'Timeline pages aur features par depend karti hai. Aapko kis type ki website ya app chahiye?',
-                urdu: 'Timeline pages اور features پر depend کرتی ہے۔ آپ کو کس type کی website یا app چاہیے؟'
-            }),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'existing_client') {
-        return {
-            reply: template(style, {
-                english: 'Sure. Please share the website/project name and what change or issue you need fixed.',
-                roman: 'Jee. Website/project ka naam aur jo change ya issue hai wo bata dein.',
-                urdu: 'جی۔ Website/project کا نام اور جو change یا issue ہے وہ بتا دیں۔'
-            }),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false
-        };
-    }
-
-    if (['ask_odoo', 'ask_ecommerce', 'ask_business_website', 'ask_admin_dashboard', 'ask_custom_web_app'].includes(intent)) {
-        return {
-            reply: getServiceQualificationQuestion(leadUpdate.serviceType, style),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false
-        };
-    }
-
-    if (intent === 'new_project') {
-        return {
-            reply: getNewProjectQuestion(style),
-            leadUpdate,
-            intent,
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false
-        };
-    }
-
-    if (isLowSignalMessage(messageText)) {
-        return {
-            reply: getClarificationReply(style),
-            leadUpdate,
-            intent: 'unknown',
-            stage: lead.stage || LEAD_STAGES.NEW,
-            pauseAI: false
-        };
-    }
-
-    return null;
-};
-
-export const getRuleBasedAssistantResponse = ({ messageText = '', intent, lead = {}, parsedLead = {} }) => {
-    const isPrefilledWebsiteMessage = isWebsiteBuildPlanMessage(messageText);
-    const style = isPrefilledWebsiteMessage ? 'roman' : detectLanguageStyle(messageText);
-    const weakBuildPlanDetails = hasWeakBuildPlanProjectDetails(messageText);
-    const messageLeadUpdate = inferLeadUpdateFromMessage(messageText, lead);
-    const leadUpdate = {
-        ...inferLeadUpdateFromIntent(intent),
-        ...messageLeadUpdate,
-        ...parsedLead
-    };
-    const mergedLead = { ...lead, ...leadUpdate };
-    const lowerText = normalizeText(messageText);
-    const usefulProjectContext = hasUsefulProjectContext(messageText, leadUpdate);
-    const resetContextUpdate = usefulProjectContext
-        ? { unclearCount: 0, offTopicCount: 0, lastBotQuestionType: '' }
-        : {};
-    const withDefaults = (result) => ({
-        leadUpdate,
-        intent,
-        stage: lead.stage || LEAD_STAGES.NEW,
-        pauseAI: false,
-        contextUpdate: resetContextUpdate,
-        ...result
-    });
-
-    // 1. Abuse Detection
-    const abuse = detectAbusiveOrInappropriate(messageText);
-    if (intent === 'abusive' || abuse.isAbusive) {
-        const shouldPause = abuse.severity === 'severe' || (lead.abuseCount || 0) > 0;
-
-        return withDefaults({
-            reply: getAbuseReply(style),
-            intent: 'abusive',
-            stage: shouldPause ? LEAD_STAGES.HANDED_OFF : LEAD_STAGES.OFF_TOPIC_WAITING,
-            pauseAI: shouldPause,
-            handoffReason: shouldPause ? 'Abusive or inappropriate message' : '',
-            contextUpdate: {
-                abuseCount: (lead.abuseCount || 0) + 1,
-                offTopicCount: (lead.offTopicCount || 0) + 1,
-                lastBotQuestionType: 'abuse_warning'
-            }
-        });
-    }
-
-    // 2. Parsed Lead Forms / Website Build Plan
-    if (Object.keys(parsedLead).length > 0) {
-        const detailedBuildPlan = Boolean(mergedLead.serviceType && mergedLead.projectDetails && (mergedLead.budget || mergedLead.timeline));
-
-        return withDefaults({
-            reply: detailedBuildPlan ? getTalkToSamiReply(style, true) : getFormReply(leadUpdate, style),
-            intent: 'new_project',
-            stage: detailedBuildPlan ? LEAD_STAGES.HANDED_OFF : LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: detailedBuildPlan,
-            handoffReason: detailedBuildPlan ? 'Detailed build-plan form completed' : '',
-            contextUpdate: {
-                ...resetContextUpdate,
-                cameFromBuildPlan: true,
-                buildPlanFormSubmitted: true,
-                lastBotQuestionType: 'service_follow_up'
-            }
-        });
-    }
-
-    if (isPrefilledWebsiteMessage) {
-        return withDefaults({
-            reply: getNewProjectQuestion(style),
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_PROJECT_TYPE,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                lastBotQuestionType: 'service_choice'
-            }
-        });
-    }
-
-    if (weakBuildPlanDetails) {
-        return withDefaults({
-            reply: getBuildPlanDetailClarificationReply(style),
-            intent: 'new_project',
-            stage: LEAD_STAGES.ASKED_REQUIREMENTS,
-            pauseAI: false,
-            contextUpdate: {
-                ...resetContextUpdate,
-                cameFromBuildPlan: true,
-                buildPlanFormSubmitted: false,
-                unclearCount: (lead.unclearCount || 0) + 1,
-                lastBotQuestionType: 'requirements'
-            }
-        });
-    }
-
-    // Default to falling back to Gemini
-    return null;
-};
-
-export const getPausedSafeAssistantResponse = ({ messageText = '', intent = '', lead = {} }) => {
-    const style = getSafeReplyStyle(messageText);
-    const text = normalizeLoose(messageText);
-    const pauseReasonType = getPauseReasonType(lead.handoffReason || '');
-
-    if (detectShortRepeatAck(messageText)) {
-        return {
-            reply: getShortNotedReply(style),
-            intent: 'paused_acknowledgement'
-        };
-    }
-
-    if (detectPausedTimelineQuestion(messageText)) {
-        return {
-            reply: getPausedTimelineReply(style),
-            intent: 'paused_timeline'
-        };
-    }
-
-    if (intent === 'ask_completed_work' || detectCompletedWorkRequest(messageText)) {
-        return {
-            reply: getCompletedWorkReply(style),
-            intent: 'ask_completed_work'
-        };
-    }
-
-    if (intent === 'ask_portfolio' || detectPortfolioRequest(messageText)) {
-        return {
-            reply: getPortfolioLinkReply(style),
-            intent: 'ask_portfolio'
-        };
-    }
-
-    if (intent === 'ask_developer_card' || detectDeveloperCardRequest(messageText)) {
-        return {
-            reply: getDeveloperCardReply(style),
-            intent: 'ask_developer_card'
-        };
-    }
-
-    if (intent === 'ask_contact_email' || detectContactEmailRequest(messageText)) {
-        return {
-            reply: getContactEmailReply(style),
-            intent: 'ask_contact_email'
-        };
-    }
-
-    if (intent === 'ask_main_website' || detectMainWebsiteRequest(messageText, { paused: true })) {
-        return {
-            reply: getMainWebsiteLinkReply(style),
-            intent: 'ask_main_website'
-        };
-    }
-
-    if (detectPausedForwardAckRequest(messageText)) {
-        return {
-            reply: getPausedForwardAckReply(style),
-            intent: 'paused_acknowledgement'
-        };
-    }
-
-    if (detectPersonalQuestion(messageText)) {
-        return {
-            reply: getPersonalBoundaryReply(style),
-            intent: 'personal_question'
-        };
-    }
-
-    if (intent === 'ask_portfolio' || includesAny(text, ['portfolio', 'portfolio dikhao', 'work samples', 'sample', 'samples', 'kaam dikhao'])) {
-        return {
-            reply: template(style, {
-                english: `Sure, portfolio is here: ${SAMI_KNOWLEDGE.portfolioUrl}`,
-                roman: `Jee, portfolio yahan hai: ${SAMI_KNOWLEDGE.portfolioUrl}`,
-                urdu: `Jee, portfolio yahan hai: ${SAMI_KNOWLEDGE.portfolioUrl}`
-            }),
-            intent: 'ask_portfolio'
-        };
-    }
-
-    if (includesAny(text, ['developer card', 'dev card', 'card link', 'card dikhao', 'card bhej'])) {
-        return {
-            reply: getDeveloperCardReply(style),
-            intent: 'ask_developer_card'
-        };
-    }
-
-    if (includesAny(text, ['main website', 'website link', 'your website', 'you website', 'website?', 'samidev.pk', 'site link', 'any site'])) {
-        return {
-            reply: template(style, {
-                english: `Sure, main website is here: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
-                roman: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`,
-                urdu: `Jee, main website yahan hai: ${SAMI_KNOWLEDGE.mainWebsiteUrl}`
-            }),
-            intent: 'ask_services'
-        };
-    }
-
-    if (includesAny(text, [
-        'detail forward',
-        'details forward',
-        'details gayi',
-        'message mila',
-        'sami ko bheja',
-        'forward kardi',
-        'forward kar di',
-        'forward ho gayi'
-    ])) {
-        return {
-            reply: template(style, {
-                english: 'Yes, details have been forwarded. Sami will reply manually soon.',
-                roman: 'Jee, details forward ho gayi hain. Sami jaldi manually reply karenge.',
-                urdu: 'Jee, details forward ho gayi hain. Sami jaldi manually reply karenge.'
-            }),
-            intent: 'paused_acknowledgement'
-        };
-    }
-
-    if (includesAny(text, ['reply kab', 'kab reply', 'sami reply', 'any update', 'koi update', 'waiting', 'jaldi reply'])) {
-        return {
-            reply: template(style, {
-                english: 'Sami will reply manually soon.',
-                roman: 'Sami jaldi manually reply karenge.',
-                urdu: 'Sami jaldi manually reply karenge.'
-            }),
-            intent: 'paused_acknowledgement'
-        };
-    }
-
-    const leadUpdate = inferLeadUpdateFromMessage(messageText, lead);
-    if (
-        pauseReasonType !== 'safety_confusion' &&
-        Boolean(pauseReasonType) &&
-        (intent === 'new_project' || hasUsefulProjectContext(messageText, leadUpdate))
-    ) {
-        return {
-            reply: template(style, {
-                english: 'Got it, your additional details have been received. Sami will reply manually soon.',
-                roman: 'Jee, aapki additional details receive ho gayi hain. Sami jaldi manually reply karenge.',
-                urdu: 'Jee, aapki additional details receive ho gayi hain. Sami jaldi manually reply karenge.'
-            }),
-            intent: 'paused_additional_details'
-        };
-    }
-
-    if (intent === 'ask_services' || includesAny(text, ['services', 'service list', 'what do you build', 'tum kya kar sakte ho'])) {
-        return {
-            reply: template(style, {
-                english: 'Sami builds business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, and custom web apps.',
-                roman: 'Sami business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, aur custom web apps build karte hain.',
-                urdu: 'Sami business websites, portfolio websites, e-commerce stores, admin dashboards, Odoo portals, aur custom web apps build karte hain.'
-            }),
-            intent: 'ask_services'
-        };
-    }
-
-    if (includesAny(text, ['reply kab', 'kab reply', 'sami reply', 'any update', 'koi update', 'waiting', 'jaldi reply'])) {
-        return {
-            reply: getPausedAcknowledgementReply(style),
-            intent: 'paused_acknowledgement'
-        };
-    }
-
-    return null;
 };
 
 export const sanitizeAssistantReply = (reply = '') => {
     return reply.replace(/\[PAUSE\]/gi, '').trim();
 };
 
-export const buildLeadSummary = (lead = {}) => {
-    const parts = [];
-    if (lead.phone || lead.phoneNumber) parts.push(`Phone: ${lead.phone || lead.phoneNumber}`);
-    if (lead.name) parts.push(`Name: ${lead.name}`);
-    if (lead.business) parts.push(`Business: ${lead.business}`);
-    if (lead.serviceType) parts.push(`Service: ${lead.serviceType}`);
-    if (lead.budget) parts.push(`Budget: ${lead.budget}`);
-    if (lead.timeline) parts.push(`Timeline: ${lead.timeline}`);
-    if (lead.projectDetails) parts.push(`Details: ${lead.projectDetails}`);
-    if (lead.intent) parts.push(`Last intent: ${lead.intent}`);
-    if (typeof lead.leadScore === 'number') parts.push(`Lead score: ${lead.leadScore}`);
-    if (typeof lead.unclearCount === 'number') parts.push(`Unclear count: ${lead.unclearCount}`);
-    if (typeof lead.personalQuestionCount === 'number') parts.push(`Personal question count: ${lead.personalQuestionCount}`);
-    if (typeof lead.offTopicCount === 'number') parts.push(`Off-topic count: ${lead.offTopicCount}`);
-    if (lead.handoffReason) parts.push(`Handoff reason: ${lead.handoffReason}`);
-    if (lead.stage) parts.push(`Stage: ${lead.stage}`);
-    return parts.join(' | ');
+export const getPauseReasonType = (reason = '') => {
+    const text = normalizeText(reason);
+    if (SAFETY_CONFUSION_PAUSE_REASONS.some((r) => text.includes(normalizeText(r)))) return 'safety';
+    if (SERIOUS_LEAD_PAUSE_REASONS.some((r) => text.includes(normalizeText(r)))) return 'lead';
+    return 'general';
+};
+
+export const getPausedSafeAssistantResponse = (messageText = '', reason = '') => {
+    return 'Aap ka message receive ho chuka hai. Representative jald aap ko reply karenge.';
+};
+
+export const getPausedAutoResumeStatus = (userContext = {}) => {
+    if (!userContext.isAIPaused && !userContext.aiPaused) {
+        return { shouldResume: false, hoursRemaining: 0 };
+    }
+    const pausedAt = userContext.aiPausedAt ? new Date(userContext.aiPausedAt) : new Date();
+    const elapsedHours = (Date.now() - pausedAt.getTime()) / (1000 * 60 * 60);
+    const shouldResume = elapsedHours >= AUTO_RESUME_STALE_PAUSE_HOURS;
+    const hoursRemaining = Math.max(0, Math.ceil(AUTO_RESUME_STALE_PAUSE_HOURS - elapsedHours));
+    return { shouldResume, hoursRemaining };
 };
