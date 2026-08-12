@@ -1,0 +1,72 @@
+import express from 'express';
+import multer from 'multer';
+import {
+    verifyWebhook,
+    handleIncomingMessage,
+    sendWhatsAppMessage,
+    getConversations,
+    getChatHistory,
+    getMedia,
+    uploadAndSendAudio,
+    uploadAndSendImage,
+    getBotSettings,
+    updateBotSettings,
+    subscribeToPush,
+    unsubscribeFromPush,
+    getPushPublicKey,
+    deleteInactivePushSubscriptions,
+    sendReaction,
+    deleteMessage,
+    resumeAIForConversation,
+    pauseAIForConversation,
+    getUserContextForConversation
+} from '../controllers/whatsappController.js';
+
+const router = express.Router();
+const upload = multer({ dest: 'uploads/' });
+
+// Webhook Verification Route (Meta requires GET requests for verification)
+router.get('/webhook', verifyWebhook);
+
+// Webhook Event Route (Meta sends POST requests when you receive messages/statuses)
+router.post('/webhook', handleIncomingMessage);
+
+// Custom API to trigger outgoing messages from your React frontend
+router.post('/send', sendWhatsAppMessage);
+
+// Upload and send an audio file
+router.post('/send-audio', upload.single('audio'), uploadAndSendAudio);
+
+// Upload and send an image file
+router.post('/send-image', upload.single('image'), uploadAndSendImage);
+
+// Fetch media from Meta
+router.get('/media/:mediaId', getMedia);
+
+// Fetch list of unique conversations
+router.get('/conversations', getConversations);
+
+// Fetch chat history for a specific phone number
+router.get('/messages/:phoneNumber', getChatHistory);
+
+// Get and Update Bot Configuration (ON/OFF and Live Status)
+router.get('/bot-settings', getBotSettings);
+router.post('/bot-settings', updateBotSettings);
+router.post('/resume-ai/:phoneNumber', resumeAIForConversation);
+router.get('/users/:phone/context', getUserContextForConversation);
+router.post('/users/:phone/resume-ai', resumeAIForConversation);
+router.post('/users/:phone/pause-ai', pauseAIForConversation);
+
+// Subscribe a device for Web Push Notifications
+router.post('/subscribe', subscribeToPush);
+router.post('/unsubscribe', unsubscribeFromPush);
+router.get('/push/public-key', getPushPublicKey);
+router.delete('/push/subscriptions/inactive', deleteInactivePushSubscriptions);
+
+// Send a reaction to a specific message
+router.post('/send-reaction', sendReaction);
+
+// Delete a message locally from the Admin Dashboard
+router.delete('/messages/:messageId', deleteMessage);
+
+export default router;
