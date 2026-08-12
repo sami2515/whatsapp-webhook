@@ -198,6 +198,11 @@ const DEPARTMENT_LDC_PHRASES = [
     'railway ldc', 'mes ldc', 'deo typing'
 ];
 
+const DISCOUNT_PHRASES = [
+    'munasib', 'kam paise', 'discount', 'kam krdo', 'kam kar do', 'thora kam', 'thoda kam',
+    'zyada paise', 'ziada paise', 'riayat', 'concession', 'kam price'
+];
+
 export const detectIntent = (messageText = '', history = [], lead = {}) => {
     const text = normalizeLoose(messageText);
     if (!text) return 'unknown';
@@ -213,10 +218,13 @@ export const detectIntent = (messageText = '', history = [], lead = {}) => {
     // 3. Talk to Support / Human
     if (includesAny(text, TALK_TO_SUPPORT_PHRASES)) return 'talk_to_support';
 
-    // 4. Buy PDF Book & Payment Details
+    // 4. Discount / Bargaining
+    if (includesAny(text, DISCOUNT_PHRASES)) return 'ask_discount';
+
+    // 5. Buy PDF Book & Payment Details
     if (includesAny(text, BUY_PDF_BOOK_PHRASES)) return 'buy_pdf_book';
 
-    // 5. PDF Book General Inquiry
+    // 6. PDF Book General Inquiry
     if (includesAny(text, PDF_BOOK_PHRASES)) return 'ask_pdf_book';
 
     // 6. Specific Subject MCQs (Check before general MCQs)
@@ -445,7 +453,7 @@ export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 =
             const hasPost = Boolean(lead?.targetExam) || includesAny(text, ['police', 'asi', 'ghq', 'mod', 'ldc', 'udc', 'fia', 'asf', 'clerk', 'deo']);
             if (!hasPost) {
                 return {
-                    reply: `Aap kis post ya department (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ke liye preparation book / notes chahte hain?`,
+                    reply: `Aap kis post ya test (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ki tayari kar rahe hain?`,
                     intent: 'ask_pdf_book',
                     pauseAI: false
                 };
@@ -462,6 +470,13 @@ export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 =
                 pauseAI: false
             };
         }
+
+        case 'ask_discount':
+            return {
+                reply: `Rs. 300 already bohot munasib aur fixed price hai complete solved past papers, short notes aur updated current affairs material ke liye.`,
+                intent: 'ask_discount',
+                pauseAI: false
+            };
 
         case 'buy_pdf_book':
             return {

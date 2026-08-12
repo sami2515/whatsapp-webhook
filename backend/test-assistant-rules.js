@@ -42,6 +42,12 @@ const testCases = [
         text: 'GHQ LDC ke liye typing test ka kya criteria hai?',
         expectedIntent: 'ask_department_ldc',
         checkReply: (reply) => reply.includes('GHQ') && reply.includes('30 WPM')
+    },
+    {
+        name: 'Discount / Bargaining Inquiry',
+        text: 'kuch paise munasib ho sakte hain kya book ke?',
+        expectedIntent: 'ask_discount',
+        checkReply: (reply) => reply.includes('300') && reply.includes('munasib')
     }
 ];
 
