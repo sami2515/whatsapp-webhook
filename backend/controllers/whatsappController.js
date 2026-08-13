@@ -573,9 +573,6 @@ export const handleIncomingMessage = async (req, res) => {
                     timestamp: savedMessage.timestamp
                 });
 
-                const inferredLeadUpdate = inferLeadUpdateFromMessage(msgBody);
-                const incomingIntent = detectIntent(msgBody);
-
                 let userContext = await UserContext.findOne({ phoneNumber: from });
                 const previousLastMessageAt = userContext?.lastMessageAt;
 
@@ -591,6 +588,22 @@ export const handleIncomingMessage = async (req, res) => {
                         } else {
                             throw err;
                         }
+                    }
+                }
+
+                const inferredLeadUpdate = inferLeadUpdateFromMessage(msgBody);
+                let incomingIntent = detectIntent(msgBody);
+
+                // If user sends an image, check if it's a payment screenshot/slip
+                if (msgType === 'image') {
+                    const isLikelyPaymentSlip = userContext?.bookInterested ||
+                        userContext?.paymentSubmitted ||
+                        ['ask_pdf_book', 'buy_pdf_book', 'ask_discount'].includes(userContext?.intent) ||
+                        includesAny(normalizeLoose(msgBody), ['paid', 'done', 'slip', 'screenshot', 'payment', 'pavement', 'photo']);
+                    if (isLikelyPaymentSlip) {
+                        incomingIntent = 'payment_proof_submitted';
+                        inferredLeadUpdate.paymentSubmitted = true;
+                        inferredLeadUpdate.bookInterested = true;
                     }
                 }
 
@@ -623,7 +636,7 @@ export const handleIncomingMessage = async (req, res) => {
                         } else if (interactiveId === "btn_daily_drill") {
                             textReply = `Daily Drill me 1-minute typing test + 10 mixed MCQs attempt karke aap apna Combined Readiness Score check kar sakte hain: ${TESTTAYAR_KNOWLEDGE.dailyDrillUrl}`;
                         } else if (interactiveId === "btn_pdf_book") {
-                            textReply = `Aap kis post ya department (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ke liye preparation book / notes chahte hain?`;
+                            textReply = `Aap kis post ya test (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ki tayari kar rahe hain?`;
                         } else if (interactiveId === "btn_support" || interactiveId === "btn_urgent") {
                             textReply = `Jee bilkul! Main ye chat admin / support team ko forward kar raha hoon. Wo jald hi aap se isi WhatsApp par rabta karenge. [PAUSE]`;
                             markUrgent = true;
@@ -661,46 +674,9 @@ export const handleIncomingMessage = async (req, res) => {
                     } else if (!isInteractive && (msgType === 'text' || msgType === 'image')) {
                         let isAIPaused = userContext.isAIPaused || userContext.aiPaused;
 
-                        if (isAIPaused && msgType === 'text') {
-                            const autoResumeStatus = getPausedAutoResumeStatus({
-                                lead: getLeadSnapshot(userContext),
-                                messageText: msgBody,
-                                parsedLead
-                            });
-
-                            if (autoResumeStatus.eligible) {
-                                userContext.isAIPaused = false;
-                                userContext.aiPaused = false;
-                                userContext.aiPausedAt = null;
-                                userContext.handoffReason = '';
-                                userContext.status = 'open';
-                                userContext.unclearCount = 0;
-                                userContext.offTopicCount = 0;
-                                userContext.personalQuestionCount = 0;
-                                userContext.lastBotQuestionType = '';
-                                userContext.stage = getStageForLead(getLeadSnapshot(userContext), incomingIntent);
-                                refreshLeadSummary(userContext, msgBody);
-                                await userContext.save();
-                                isAIPaused = false;
-                            } else {
-                                const pausedReply = getPausedSafeAssistantResponse({
-                                    messageText: msgBody,
-                                    intent: incomingIntent,
-                                    lead: getLeadSnapshot(userContext)
-                                });
-
-                                if (pausedReply?.reply) {
-                                    userContext.intent = pausedReply.intent || incomingIntent;
-                                    refreshLeadSummary(userContext, msgBody);
-                                    await userContext.save();
-                                    await sendAndSaveAssistantText({
-                                        phoneNumberId,
-                                        to: from,
-                                        text: sanitizeAssistantReply(pausedReply.reply),
-                                        token
-                                    });
-                                }
-                            }
+                        // If AI is paused, remain completely silent so human admin can chat manually
+                        if (isAIPaused) {
+                            console.log(`[AI PAUSED] Silence maintained for ${from}. Message recorded for human admin.`);
                         }
 
                         if (!isAIPaused && !isRapidMessage) {

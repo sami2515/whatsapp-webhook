@@ -2,16 +2,22 @@ import { detectIntent, getRuleBasedAssistantResponse, inferLeadUpdateFromMessage
 
 const testCases = [
     {
-        name: 'Greeting (Natural Walaikum Assalam)',
+        name: 'Islamic Greeting (Walaikum Assalam)',
         text: 'Assalam o Alikum',
-        expectedIntent: 'greeting',
+        expectedIntent: 'greeting_salam',
         checkReply: (reply) => reply.startsWith('Walaikum Assalam') && !reply.includes('Rs. 300')
+    },
+    {
+        name: 'English Greeting (Hello / Hi)',
+        text: 'Hello',
+        expectedIntent: 'greeting_hello',
+        checkReply: (reply) => reply.startsWith('Hello') && !reply.includes('Walaikum Assalam')
     },
     {
         name: 'General Book Inquiry (Must ask for post)',
         text: 'Mujhe preparation book aur pdf notes chahiye',
         expectedIntent: 'ask_pdf_book',
-        checkReply: (reply) => reply.includes('kis post') || reply.includes('department')
+        checkReply: (reply) => reply.includes('kis post') || reply.includes('tayari')
     },
     {
         name: 'GHQ LDC Book Inquiry (Clerical Tailored + Direct Accounts)',
@@ -28,6 +34,12 @@ const testCases = [
     {
         name: 'Payment Proof Handoff (Direct delivery acknowledgment + [PAUSE])',
         text: 'Meny JazzCash se 300 rupay bhej diye hain ye screenshot hai book send kr dein',
+        expectedIntent: 'payment_proof_submitted',
+        checkReply: (reply) => reply.includes('[PAUSE]') && reply.includes('deliver')
+    },
+    {
+        name: 'Payment Proof Typo (Done pavement)',
+        text: 'Done pavement',
         expectedIntent: 'payment_proof_submitted',
         checkReply: (reply) => reply.includes('[PAUSE]') && reply.includes('deliver')
     },

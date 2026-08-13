@@ -91,10 +91,13 @@ export const parseWebsiteLeadMessage = (messageText = '') => {
 };
 
 // Intent keyword groupings
-const GREETING_PHRASES = [
+const GREETING_SALAM_PHRASES = [
     'aoa', 'a.o.a', 'asalam', 'assalam', 'assalamu alaikum', 'assalam o alaikum', 'assalam-o-alaikum',
-    'salam', 'slm', 'hi', 'hello', 'hey', 'hy', 'kese ho', 'kaise ho', 'kia hal hai', 'kya haal',
-    'سلام', 'اسلام علیکم', 'السلام علیکم'
+    'assalamoalaikum', 'walikum asalam', 'walaikum assalam', 'salam', 'slm', 'سلام', 'اسلام علیکم', 'السلام علیکم'
+];
+
+const GREETING_HELLO_PHRASES = [
+    'hi', 'hello', 'hey', 'hy', 'hola', 'kese ho', 'kaise ho', 'kia hal hai', 'kya haal'
 ];
 
 const TYPING_TEST_PHRASES = [
@@ -111,19 +114,19 @@ const TYPING_SPEED_LDC_UDC_PHRASES = [
 ];
 
 const MCQS_PHRASES = [
-    'mcq', 'mcqs', 'quiz', 'quizzes', 'question bank', 'mcq practice', 'mcq test', 'solved directory',
-    'practice mode', 'solved mcqs', 'ام سی کیوز', 'سوالات'
+    'mcq', 'mcqs', 'quiz', 'quizzes', 'question bank', 'practice question', 'subject mcq',
+    'subject wise', 'solved mcq', 'mcqs bank', 'ام سی کیوز', 'سوالات'
 ];
 
 const SUBJECT_MCQ_PHRASES = [
-    'english mcq', 'english mcqs', 'computer mcq', 'computer mcqs', 'math mcq', 'math mcqs',
-    'mathematics mcq', 'pak study', 'pak studies', 'pakistan studies', 'islamiat', 'islamic studies',
-    'everyday science', 'science mcqs', 'general knowledge', 'gk mcqs', 'current affairs'
+    'english mcq', 'computer mcq', 'math mcq', 'pak studies mcq', 'islamiat mcq', 'science mcq',
+    'gk mcq', 'current affairs mcq', 'english quiz', 'computer quiz', 'math quiz', 'gk quiz',
+    'ms office mcq', 'it mcq', 'grammar mcq'
 ];
 
 const DAILY_DRILL_PHRASES = [
-    'daily drill', 'daily practice', 'daily test', 'readiness score', 'readiness rating',
-    '10 mcqs test', '10 mcqs routine', 'daily routine', 'ڈیلی ڈرل'
+    'daily drill', 'drill', 'readiness score', 'combined score', 'daily test', 'daily practice',
+    'daily routine'
 ];
 
 const EXAM_PREP_PHRASES = [
@@ -146,8 +149,10 @@ const BUY_PDF_BOOK_PHRASES = [
 
 const PAYMENT_PROOF_PHRASES = [
     'screenshot', 'screen shot', 'slip', 'receipt', 'pay kar diya', 'pay kr dia', 'payment send',
-    'payment done', '300 bhej diye', '300 send kr diye', 'easypaisa kar dia', 'jazzcash kar dia',
-    'trx id', 'transaction id', 'paise bhej diye', 'payment screenshot', 'رسید', 'اسکرین شاٹ'
+    'payment done', 'done payment', 'done pavement', 'pavement', 'payement', 'paid', '300 bhej diye',
+    '300 send kr diye', 'easypaisa kar dia', 'jazzcash kar dia', 'jazzcash se', 'meezan se',
+    'trx id', 'transaction id', 'paise bhej diye', 'payment screenshot', 'payment kr di', 'payment krdi',
+    'pesy bhej diye', 'pesay bhej diye', 'bhej diye hain', 'bhej di hai', 'رسید', 'اسکرین شاٹ'
 ];
 
 const TALK_TO_SUPPORT_PHRASES = [
@@ -227,43 +232,44 @@ export const detectIntent = (messageText = '', history = [], lead = {}) => {
     // 6. PDF Book General Inquiry
     if (includesAny(text, PDF_BOOK_PHRASES)) return 'ask_pdf_book';
 
-    // 6. Specific Subject MCQs (Check before general MCQs)
+    // 7. Specific Subject MCQs (Check before general MCQs)
     const isSubjectMcq = includesAny(text, SUBJECT_MCQ_PHRASES) || (includesAny(text, SUBJECT_KEYWORDS) && includesAny(text, ['mcq', 'mcqs', 'quiz', 'quizzes', 'question', 'bank', 'tayari', 'tayyari', 'practice']));
     if (isSubjectMcq) return 'ask_subject_mcq';
 
-    // 7. Typing Speed Coaching (How to increase speed)
+    // 8. Typing Speed Coaching (How to increase speed)
     if (includesAny(text, TYPING_COACHING_PHRASES)) return 'ask_typing_coaching';
 
-    // 8. Specific Department LDC / UDC
+    // 9. Specific Department LDC / UDC
     if (includesAny(text, DEPARTMENT_LDC_PHRASES) || (includesAny(text, ['ghq', 'mod', 'fbr', 'police', 'mes', 'paf', 'navy', 'railway']) && includesAny(text, ['ldc', 'udc', 'typing', 'speed', 'test', 'criteria']))) {
         return 'ask_department_ldc';
     }
 
-    // 9. General Typing Speed Passing Criteria for LDC / UDC
+    // 10. General Typing Speed Passing Criteria for LDC / UDC
     if (includesAny(text, TYPING_SPEED_LDC_UDC_PHRASES) || (includesAny(text, ['ldc', 'udc', 'clerk']) && includesAny(text, ['speed', 'wpm', 'typing']))) {
         return 'ask_typing_speed_ldc_udc';
     }
 
-    // 10. General Typing Test Tools
+    // 11. General Typing Test Tools
     if (includesAny(text, TYPING_TEST_PHRASES)) return 'ask_typing_test';
 
-    // 11. General MCQs Bank
+    // 12. General MCQs Bank
     if (includesAny(text, MCQS_PHRASES)) return 'ask_mcqs';
 
-    // 12. Daily Drill
+    // 13. Daily Drill
     if (includesAny(text, DAILY_DRILL_PHRASES)) return 'ask_daily_drill';
 
-    // 13. CBT Exam Prep Tracks
+    // 14. CBT Exam Prep Tracks
     if (includesAny(text, EXAM_PREP_PHRASES)) return 'ask_exam_prep';
 
-    // 14. Free Platform / Pricing Check
+    // 15. Free Platform / Pricing Check
     if (includesAny(text, PRICING_FREE_PHRASES)) return 'ask_pricing';
 
-    // 15. Dashboard & Streaks
+    // 16. Dashboard & Streaks
     if (includesAny(text, DASHBOARD_STREAKS_PHRASES)) return 'ask_dashboard_streaks';
 
-    // 16. Greeting
-    if (includesAny(text, GREETING_PHRASES)) return 'greeting';
+    // 17. Greetings (Salam vs Hello)
+    if (includesAny(text, GREETING_SALAM_PHRASES)) return 'greeting_salam';
+    if (includesAny(text, GREETING_HELLO_PHRASES)) return 'greeting_hello';
 
     return 'unknown';
 };
@@ -371,10 +377,18 @@ export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 =
     const text = normalizeLoose(userMessage);
 
     switch (intent) {
+        case 'greeting_salam':
         case 'greeting':
             return {
                 reply: `Walaikum Assalam! TestTayar par khushamdeed. Main aapki typing test ya kisi exam preparation mein kya madad kar sakta hoon?`,
-                intent: 'greeting',
+                intent: 'greeting_salam',
+                pauseAI: false
+            };
+
+        case 'greeting_hello':
+            return {
+                reply: `Hello! TestTayar par khushamdeed. Main aapki typing test ya kisi exam preparation mein kya madad kar sakta hoon?`,
+                intent: 'greeting_hello',
                 pauseAI: false
             };
 
@@ -531,7 +545,7 @@ export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 =
 
         case 'abusive':
             return {
-                reply: `Kripya shaishta zaban istemal karein taake hum aapki test preparation mein sahi madad kar sakein. [PAUSE]`,
+                reply: `Barahe karam shaishta zaban istemal karein taake hum aapki test preparation mein sahi madad kar sakein. [PAUSE]`,
                 intent: 'abusive',
                 pauseAI: true,
                 handoffReason: 'Abusive language detected'
