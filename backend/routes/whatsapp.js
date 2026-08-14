@@ -19,7 +19,8 @@ import {
     deleteMessage,
     resumeAIForConversation,
     pauseAIForConversation,
-    getUserContextForConversation
+    getUserContextForConversation,
+    resetUserContextForConversation
 } from '../controllers/whatsappController.js';
 
 const router = express.Router();
@@ -56,6 +57,9 @@ router.post('/resume-ai/:phoneNumber', resumeAIForConversation);
 router.get('/users/:phone/context', getUserContextForConversation);
 router.post('/users/:phone/resume-ai', resumeAIForConversation);
 router.post('/users/:phone/pause-ai', pauseAIForConversation);
+router.post('/users/:phone/reset-details', resetUserContextForConversation);
+router.post('/users/:phone/reset-lead', resetUserContextForConversation);
+router.post('/reset-lead/:phoneNumber', resetUserContextForConversation);
 
 // Subscribe a device for Web Push Notifications
 router.post('/subscribe', subscribeToPush);

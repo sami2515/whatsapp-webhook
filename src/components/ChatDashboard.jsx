@@ -12,6 +12,7 @@ import {
     deleteLocalMessage,
     resumeAI,
     pauseAI,
+    resetUserContext,
     getUserContext,
     getPushPublicKey,
     subscribeToPush,
@@ -649,6 +650,29 @@ export default function ChatDashboard() {
         }
     };
 
+    const handleResetLead = async () => {
+        if (!activeNumber) return;
+
+        const confirmReset = window.confirm(
+            "Are you sure you want to reset this candidate's AI details? (Chat history will remain saved)."
+        );
+        if (!confirmReset) return;
+
+        setIsUpdatingBot(true);
+        setChatControlMessage('');
+        try {
+            const response = await resetUserContext(activeNumber);
+            setActiveLeadContext(response.lead);
+            await fetchConversations();
+            await fetchUserContext(activeNumber);
+            setChatControlMessage('Candidate AI details reset successfully.');
+        } catch (error) {
+            setChatControlMessage(`Failed to reset candidate details: ${error.response?.data?.error || error.message}`);
+        } finally {
+            setIsUpdatingBot(false);
+        }
+    };
+
     return (
         <div className={`chat-container ${activeNumber ? 'chat-active' : ''}`}>
             {/* Sidebar */}
@@ -987,6 +1011,35 @@ export default function ChatDashboard() {
                                             <span className="lead-label">Summary</span>
                                             <strong>{activeLead.requirementSummary || activeLead.projectDetails || 'Not set'}</strong>
                                         </div>
+                                    </div>
+
+                                    <div className="lead-drawer-footer" style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                                        <button
+                                            type="button"
+                                            className="lead-reset-btn"
+                                            onClick={handleResetLead}
+                                            disabled={isUpdatingBot}
+                                            style={{
+                                                width: '100%',
+                                                padding: '10px 14px',
+                                                backgroundColor: '#dc2626',
+                                                color: '#ffffff',
+                                                border: 'none',
+                                                borderRadius: '6px',
+                                                fontWeight: '600',
+                                                cursor: 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '8px',
+                                                fontSize: '13px'
+                                            }}
+                                        >
+                                            🔄 Reset Candidate AI Details
+                                        </button>
+                                        <p style={{ margin: '8px 0 0', color: 'rgba(255,255,255,0.5)', fontSize: '11px', textAlign: 'center' }}>
+                                            Chat history will remain saved in database. Only AI memory will be cleared.
+                                        </p>
                                     </div>
                                 </div>
                             </aside>

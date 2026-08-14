@@ -100,6 +100,11 @@ export const pauseAI = async (phoneNumber) => {
   return response.data;
 };
 
+export const resetUserContext = async (phoneNumber) => {
+  const response = await axios.post(`${BASE_URL}/users/${phoneNumber}/reset-details`);
+  return response.data;
+};
+
 export const getUserContext = async (phoneNumber) => {
   const response = await axios.get(`${BASE_URL}/users/${phoneNumber}/context`);
   return response.data;

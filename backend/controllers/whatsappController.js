@@ -591,6 +591,40 @@ export const handleIncomingMessage = async (req, res) => {
                     }
                 }
 
+                // 20-Day Inactivity Auto-Reset for AI Memory (History in Message collection is preserved)
+                const INACTIVITY_RESET_WINDOW_MS = 20 * 24 * 60 * 60 * 1000; // 20 days
+                if (userContext?.lastInteraction) {
+                    const elapsedMs = Date.now() - new Date(userContext.lastInteraction).getTime();
+                    if (elapsedMs > INACTIVITY_RESET_WINDOW_MS) {
+                        console.log(`[Auto-Reset] 20+ days inactivity detected for ${from}. Resetting AI candidate memory while keeping chat history intact.`);
+                        userContext.targetExam = '';
+                        userContext.targetWpm = '';
+                        userContext.subjectInterest = '';
+                        userContext.bookInterested = false;
+                        userContext.paymentSubmitted = false;
+                        userContext.business = '';
+                        userContext.serviceType = '';
+                        userContext.budget = '';
+                        userContext.timeline = '';
+                        userContext.projectDetails = '';
+                        userContext.requirementSummary = '';
+                        userContext.conversationSummary = '';
+                        userContext.intent = 'unknown';
+                        userContext.stage = 'new';
+                        userContext.status = 'open';
+                        userContext.leadScore = 0;
+                        userContext.handoffReason = '';
+                        userContext.isAIPaused = false;
+                        userContext.aiPaused = false;
+                        userContext.aiPausedAt = null;
+                        userContext.unclearCount = 0;
+                        userContext.personalQuestionCount = 0;
+                        userContext.offTopicCount = 0;
+                        userContext.abuseCount = 0;
+                        userContext.lastBotQuestionType = '';
+                    }
+                }
+
                 const inferredLeadUpdate = inferLeadUpdateFromMessage(msgBody);
                 let incomingIntent = detectIntent(msgBody);
 
@@ -1409,6 +1443,57 @@ export const pauseAIForConversation = async (req, res) => {
     } catch (error) {
         console.error('Error pausing AI:', error);
         res.status(500).json({ error: 'Failed to pause AI.' });
+    }
+};
+
+export const resetUserContextForConversation = async (req, res) => {
+    try {
+        const phoneNumber = req.params.phone || req.params.phoneNumber;
+        if (!phoneNumber) return res.status(400).json({ error: 'Phone number is required.' });
+
+        const userContext = await UserContext.findOneAndUpdate(
+            { phoneNumber },
+            {
+                phone: phoneNumber,
+                name: '',
+                targetExam: '',
+                targetWpm: '',
+                subjectInterest: '',
+                bookInterested: false,
+                paymentSubmitted: false,
+                business: '',
+                serviceType: '',
+                budget: '',
+                timeline: '',
+                projectDetails: '',
+                requirementSummary: '',
+                conversationSummary: '',
+                intent: 'unknown',
+                stage: 'new',
+                status: 'open',
+                leadScore: 0,
+                handoffReason: '',
+                isAIPaused: false,
+                aiPaused: false,
+                aiPausedAt: null,
+                unclearCount: 0,
+                personalQuestionCount: 0,
+                offTopicCount: 0,
+                abuseCount: 0,
+                lastBotQuestionType: '',
+                lastInteraction: new Date()
+            },
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+        );
+
+        res.status(200).json({
+            success: true,
+            message: 'Candidate AI details reset successfully',
+            lead: formatLeadContextResponse(userContext)
+        });
+    } catch (error) {
+        console.error('Error resetting user context:', error);
+        res.status(500).json({ error: 'Failed to reset candidate AI details.' });
     }
 };
 
