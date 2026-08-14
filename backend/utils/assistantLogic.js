@@ -138,13 +138,16 @@ const EXAM_PREP_PHRASES = [
 const PDF_BOOK_PHRASES = [
     'pdf book', 'book', 'notes', 'pdf notes', 'islamabad police book', 'police book',
     '630 mcqs', 'solved book', 'preparation book', 'book price', 'book kitne ki', 'kitne ki hai',
-    'notes chahiye', 'book chahiye', '300 book', '300 wali book', 'کتاب', 'نوٹس', 'پی ڈی ایف'
+    'notes chahiye', 'book chahiye', '300 book', '300 wali book', 'notes chia', 'pdf chia',
+    'guide chia', 'notes chia hian', 'pdf book chia', 'preparation notes', 'english notes',
+    'کتاب', 'نوٹس', 'پی ڈی ایف'
 ];
 
 const BUY_PDF_BOOK_PHRASES = [
     'book kaise buy', 'book kaise purchase', 'how to buy book', 'how to buy pdf',
     'easypaisa number', 'jazzcash number', 'account number', 'payment method', 'kese bhejoon',
-    'kaise send kron', 'order book', 'buy now', 'book leni hai', 'book khareedni'
+    'kaise send kron', 'order book', 'buy now', 'book leni hai', 'book khareedni',
+    'pdf leni hai', 'notes lene hain', 'notes kaise milenge', 'book kaise milegi'
 ];
 
 const PAYMENT_PROOF_PHRASES = [
@@ -590,22 +593,13 @@ export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 =
             };
 
         case 'ask_pdf_book': {
-            const hasPost = Boolean(lead?.targetExam) || includesAny(text, ['police', 'asi', 'ghq', 'mod', 'ldc', 'udc', 'fia', 'asf', 'clerk', 'deo']);
-            if (!hasPost) {
-                return {
-                    reply: `Aap kis post ya test (e.g. GHQ LDC, Islamabad Police, FIA, MOD, Clerical) ki tayari kar rahe hain?`,
-                    intent: 'ask_pdf_book',
-                    pauseAI: false
-                };
-            }
-
             const isUniform = includesAny(text, ['police', 'asi', 'fia', 'asf']) || (lead?.targetExam && includesAny(lead.targetExam.toLowerCase(), ['police', 'asi', 'fia', 'asf']));
             const packageDesc = isUniform
                 ? 'Isme relevant laws & acts, is month ke updated current affairs, General Knowledge, past papers ke solved MCQs aur short notes shamil hain.'
-                : 'Isme past papers ke solved MCQs, short revision notes, GK & is month ke updated current affairs, complete computer knowledge aur typing test guidelines shamil hain.';
+                : 'Isme complete solved past papers, short revision notes, subject MCQs (English, Computer, GK, Science) aur updated current affairs shamil hain.';
 
             return {
-                reply: `${packageDesc}\n\n*Price:* Rs. 300 only\n\n*JazzCash:*\nAccount Title: MUHAMMAD SAMI\nNumber: \`03039512277\` (Tap to copy)\n\n*Meezan Bank:*\nAccount Title: MUHAMMAD SAMI\nAccount Number: \`01990112309796\` (Tap to copy)\nIBAN: \`PK69MEZN0001990112309796\` (Tap to copy)\n\nPayment bhej kar screenshot isi chat par share karein, PDF book foran deliver kar di jayegi.`,
+                reply: `Aap ki exam preparation ke liye complete Solved PDF Notes Book available hai.\n\n${packageDesc}\n\n*Price:* Rs. 300 only\n\n*JazzCash:*\nAccount Title: MUHAMMAD SAMI\nNumber: \`03039512277\` (Tap to copy)\n\n*Meezan Bank:*\nAccount Title: MUHAMMAD SAMI\nAccount Number: \`01990112309796\` (Tap to copy)\nIBAN: \`PK69MEZN0001990112309796\` (Tap to copy)\n\nPayment bhej kar screenshot isi chat par share karein aur apni post (e.g. NTS, LDC, Police, FIA) batayein, PDF book foran deliver kar di jayegi.`,
                 intent: 'ask_pdf_book',
                 pauseAI: false
             };

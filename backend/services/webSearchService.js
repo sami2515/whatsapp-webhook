@@ -11,46 +11,53 @@ import { getCachedAcademicData, setCachedAcademicData } from './academicCache.js
 
 const SEARCH_TIMEOUT_MS = 3500;
 
-// Provider 1: DuckDuckGo Instant HTML & Lite Scraper
-class DuckDuckGoProvider {
-    name = 'DuckDuckGo';
+function decodeBingUrl(rawUrl = '') {
+    if (!rawUrl) return '';
+    const match = rawUrl.match(/[?&]u=a1([a-zA-Z0-9_\-]+)/);
+    if (match) {
+        try {
+            let base64 = match[1].replace(/-/g, '+').replace(/_/g, '/');
+            while (base64.length % 4) base64 += '=';
+            return Buffer.from(base64, 'base64').toString('utf-8');
+        } catch {}
+    }
+    return rawUrl;
+}
+
+// Provider 1: Bing Live Web Scraper & Search (Fast & High-Reliability)
+class BingProvider {
+    name = 'Bing';
 
     async search(query = '', limit = 5) {
         try {
             const encoded = encodeURIComponent(query);
-            const response = await axios.get(`https://html.duckduckgo.com/html/?q=${encoded}`, {
+            const response = await axios.get(`https://www.bing.com/search?q=${encoded}`, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
                 },
                 timeout: SEARCH_TIMEOUT_MS
             });
 
-            const html = response.data || '';
+            const itemMatches = response.data?.match(/<li class="b_algo"[\s\S]*?<\/li>/gi) || [];
             const results = [];
-            const resultRegex = /<a class="result__url"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<a class="result__snippet"[^>]*>([\s\S]*?)<\/a>/gi;
-            let match;
 
-            while ((match = resultRegex.exec(html)) !== null && results.length < limit) {
-                let link = match[1];
-                if (link.includes('uddg=')) {
-                    const actualUrlMatch = link.match(/uddg=([^&]+)/);
-                    if (actualUrlMatch) link = decodeURIComponent(actualUrlMatch[1]);
-                }
-                const title = match[2].replace(/<[^>]+>/g, '').trim();
-                const snippet = match[3].replace(/<[^>]+>/g, '').trim();
+            for (const item of itemMatches.slice(0, limit)) {
+                const linkMatch = item.match(/<h2[^>]*><a[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a><\/h2>/i) || item.match(/<a[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i);
+                const snippetMatch = item.match(/<p[^>]*>([\s\S]*?)<\/p>/i) || item.match(/<div class="b_caption"[\s\S]*?<p[^>]*>([\s\S]*?)<\/p>/i);
 
-                if (link && snippet) {
-                    results.push({
-                        url: link,
-                        title,
-                        snippet
-                    });
+                const rawUrl = linkMatch ? linkMatch[1] : '';
+                const url = decodeBingUrl(rawUrl);
+                const title = linkMatch ? linkMatch[2].replace(/<[^>]+>/g, '').trim() : '';
+                const snippet = snippetMatch ? snippetMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+
+                if (url && snippet) {
+                    results.push({ url, title, snippet });
                 }
             }
 
             return results;
         } catch (err) {
-            console.warn(`[WebSearchProvider: DuckDuckGo] Query "${query}" failed or timed out: ${err.message}`);
+            console.warn(`[WebSearchProvider: Bing] Query "${query}" failed or timed out: ${err.message}`);
             return [];
         }
     }
@@ -88,8 +95,49 @@ class TavilyProvider {
     }
 }
 
+// Provider 3: DuckDuckGo Instant HTML
+class DuckDuckGoProvider {
+    name = 'DuckDuckGo';
+
+    async search(query = '', limit = 5) {
+        try {
+            const encoded = encodeURIComponent(query);
+            const response = await axios.get(`https://html.duckduckgo.com/html/?q=${encoded}`, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+                },
+                timeout: SEARCH_TIMEOUT_MS
+            });
+
+            const html = response.data || '';
+            const results = [];
+            const resultRegex = /<a class="result__url"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>[\s\S]*?<a class="result__snippet"[^>]*>([\s\S]*?)<\/a>/gi;
+            let match;
+
+            while ((match = resultRegex.exec(html)) !== null && results.length < limit) {
+                let link = match[1];
+                if (link.includes('uddg=')) {
+                    const actualUrlMatch = link.match(/uddg=([^&]+)/);
+                    if (actualUrlMatch) link = decodeURIComponent(actualUrlMatch[1]);
+                }
+                const title = match[2].replace(/<[^>]+>/g, '').trim();
+                const snippet = match[3].replace(/<[^>]+>/g, '').trim();
+
+                if (link && snippet) {
+                    results.push({ url: link, title, snippet });
+                }
+            }
+
+            return results;
+        } catch (err) {
+            return [];
+        }
+    }
+}
+
 export class WebSearchEngine {
     constructor() {
+        this.bingProvider = new BingProvider();
         this.tavilyProvider = new TavilyProvider();
         this.ddgProvider = new DuckDuckGoProvider();
     }
@@ -180,12 +228,15 @@ export class WebSearchEngine {
         for (const query of plannedQueries) {
             let results = null;
 
-            // Try Tavily if available
-            if (process.env.TAVILY_API_KEY) {
+            // 1. Try Bing Provider (Fast & reliable live web search)
+            results = await this.bingProvider.search(query, 4);
+
+            // 2. Try Tavily if available
+            if ((!results || results.length === 0) && process.env.TAVILY_API_KEY) {
                 results = await this.tavilyProvider.search(query, 4);
             }
 
-            // Fallback to DuckDuckGo
+            // 3. Fallback to DuckDuckGo
             if (!results || results.length === 0) {
                 results = await this.ddgProvider.search(query, 4);
             }

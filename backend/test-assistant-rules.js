@@ -14,10 +14,10 @@ const testCases = [
         checkReply: (reply) => reply.startsWith('Hello') && !reply.includes('Walaikum Assalam')
     },
     {
-        name: 'General Book Inquiry (Must ask for post)',
+        name: 'General Book Inquiry (Must provide details & ask for post)',
         text: 'Mujhe preparation book aur pdf notes chahiye',
         expectedIntent: 'ask_pdf_book',
-        checkReply: (reply) => reply.includes('kis post') || reply.includes('tayari')
+        checkReply: (reply) => reply.includes('post') && reply.includes('300')
     },
     {
         name: 'GHQ LDC Book Inquiry (Clerical Tailored + Direct Accounts)',
