@@ -60,6 +60,30 @@ const testCases = [
         text: 'kuch paise munasib ho sakte hain kya book ke?',
         expectedIntent: 'ask_discount',
         checkReply: (reply) => reply.includes('300') && reply.includes('munasib')
+    },
+    {
+        name: 'Website Guide Link (NTS Preparation Guide)',
+        text: 'Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:\n\nPage Link: https://testtayar.pk/guides/nts-test-preparation-guide-syllabus-and-strategy',
+        expectedIntent: 'website_page_guide',
+        checkReply: (reply) => reply.includes('NTS') && reply.includes('Rs. 300')
+    },
+    {
+        name: 'Website Typing Room Link (LDC Room)',
+        text: 'Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:\n\nPage Link: https://testtayar.pk/typing-test/ldc',
+        expectedIntent: 'website_page_typing',
+        checkReply: (reply) => reply.includes('30 WPM') && reply.includes('accuracy')
+    },
+    {
+        name: 'Website MCQs Link (Current Affairs)',
+        text: 'Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:\n\nPage Link: https://testtayar.pk/mcqs/current-affairs',
+        expectedIntent: 'website_page_mcqs',
+        checkReply: (reply) => reply.includes('Current Affairs') && reply.includes('free')
+    },
+    {
+        name: 'Wrong MCQ / Bug Report',
+        text: 'is mcq ka option b ghalat hai sahi answer option c hai mistake in mcq',
+        expectedIntent: 'report_bug_or_wrong_mcq',
+        checkReply: (reply) => reply.includes('editorial team') && reply.includes('point out')
     }
 ];
 

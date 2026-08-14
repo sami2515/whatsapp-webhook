@@ -197,6 +197,110 @@ const TYPING_COACHING_PHRASES = [
     'speed nhi barh rhi', 'typing fast kaise kare', 'typing tips', 'speed improve'
 ];
 
+export const parseWebsitePageLink = (messageText = '') => {
+    const linkMatch = messageText.match(/Page Link:\s*(https?:\/\/[^\s]+)/i) ||
+                      messageText.match(/(https?:\/\/(?:www\.)?testtayar\.pk\/[^\s]+)/i);
+    if (!linkMatch) return null;
+
+    const urlString = linkMatch[1] || linkMatch[0];
+    try {
+        const url = new URL(urlString);
+        const path = url.pathname.toLowerCase();
+
+        if (path.startsWith('/guides')) {
+            const slug = path.replace(/^\/guides\/?/, '');
+            let topic = 'Test Preparation & Syllabus Guide';
+            let exam = '';
+            if (slug.includes('nts')) { topic = 'NTS Test Preparation & Strategy'; exam = 'NTS Screening'; }
+            else if (slug.includes('fpsc')) { topic = 'FPSC Exam Preparation & Syllabus'; exam = 'FPSC One Paper'; }
+            else if (slug.includes('ppsc')) { topic = 'PPSC Exam Preparation & Strategy'; exam = 'PPSC Screening'; }
+            else if (slug.includes('ldc') || slug.includes('clerk')) { topic = 'LDC / Clerical Exam & Typing Guide'; exam = 'LDC (BPS-11)'; }
+            else if (slug.includes('udc')) { topic = 'UDC Exam & Typing Guide'; exam = 'UDC (BPS-13/14)'; }
+            else if (slug.includes('police') || slug.includes('asi')) { topic = 'Islamabad Police & ASI Preparation Guide'; exam = 'Islamabad Police ASI/UDC/LDC'; }
+            else if (slug.includes('mod') || slug.includes('defence')) { topic = 'MOD (Ministry of Defence) Exam Guide'; exam = 'MOD Clerical'; }
+            else if (slug.includes('fia')) { topic = 'FIA Exam Preparation Guide'; exam = 'FIA Assistant / Sub-Inspector'; }
+
+            return {
+                type: 'guide',
+                url: urlString,
+                slug,
+                topic,
+                exam
+            };
+        }
+
+        if (path.startsWith('/typing-test')) {
+            const slug = path.replace(/^\/typing-test\/?/, '');
+            let room = 'Typing Simulator';
+            let exam = '';
+            if (slug.includes('mod')) { room = 'MOD No-Backspace Typing Room'; exam = 'MOD Clerical'; }
+            else if (slug.includes('ldc')) { room = 'LDC (30 WPM) Typing Room'; exam = 'LDC (BPS-11)'; }
+            else if (slug.includes('udc')) { room = 'UDC (40 WPM) Typing Room'; exam = 'UDC (BPS-13/14)'; }
+            else if (slug.includes('fpsc')) { room = 'FPSC Typing Room'; exam = 'FPSC One Paper'; }
+            else if (slug.includes('ppsc')) { room = 'PPSC Junior Clerk Typing Room'; exam = 'PPSC Screening'; }
+            else if (slug.includes('nadra')) { room = 'NADRA DEO Typing Room'; exam = 'NADRA DEO'; }
+            else if (slug.includes('nts')) { room = 'NTS Typing Room'; exam = 'NTS Screening'; }
+
+            return {
+                type: 'typing_test',
+                url: urlString,
+                slug,
+                room,
+                exam
+            };
+        }
+
+        if (path.startsWith('/mcqs')) {
+            const subjectSlug = path.replace(/^\/mcqs\/?/, '');
+            let subject = 'Subject MCQs';
+            if (subjectSlug.includes('current-affairs')) subject = 'Current Affairs';
+            else if (subjectSlug.includes('computer')) subject = 'Computer Knowledge';
+            else if (subjectSlug.includes('english')) subject = 'English';
+            else if (subjectSlug.includes('mathematics') || subjectSlug.includes('math')) subject = 'Mathematics & IQ';
+            else if (subjectSlug.includes('pakistan-studies') || subjectSlug.includes('pak-studies')) subject = 'Pakistan Studies';
+            else if (subjectSlug.includes('islamiat')) subject = 'Islamic Studies (Islamiat)';
+            else if (subjectSlug.includes('everyday-science') || subjectSlug.includes('science')) subject = 'Everyday Science';
+            else if (subjectSlug.includes('general-knowledge') || subjectSlug.includes('gk')) subject = 'General Knowledge';
+
+            return {
+                type: 'mcqs',
+                url: urlString,
+                subjectSlug,
+                subject
+            };
+        }
+
+        if (path.startsWith('/daily-drill')) {
+            return {
+                type: 'daily_drill',
+                url: urlString
+            };
+        }
+
+        if (path.startsWith('/books') || path.includes('book') || path.includes('pdf')) {
+            return {
+                type: 'book',
+                url: urlString
+            };
+        }
+
+        return {
+            type: 'website_general',
+            url: urlString,
+            path
+        };
+    } catch {
+        return null;
+    }
+};
+
+const WRONG_MCQ_BUG_PHRASES = [
+    'wrong mcq', 'mcq ghalat', 'mcq galat', 'answer ghalat', 'answer galat', 'wrong answer',
+    'option ghalat', 'option galat', 'mistake in mcq', 'ghalti hai', 'galati hai', 'bug report',
+    'website error', 'page error', 'typo in mcq', 'option b nahi', 'option c nahi', 'option a nahi',
+    'report mcq', 'galat answer', 'ghalat answer'
+];
+
 const DEPARTMENT_LDC_PHRASES = [
     'ghq ldc', 'ghq typing', 'ghq test', 'mod ldc', 'mod typing', 'mod test',
     'fbr ldc', 'fbr typing', 'police ldc', 'police typing', 'paf ldc', 'navy ldc',
@@ -220,54 +324,67 @@ export const detectIntent = (messageText = '', history = [], lead = {}) => {
     // 2. High-Priority Payment Proof / Slip
     if (includesAny(text, PAYMENT_PROOF_PHRASES)) return 'payment_proof_submitted';
 
-    // 3. Talk to Support / Human
+    // 3. Wrong MCQ / Bug Report
+    if (includesAny(text, WRONG_MCQ_BUG_PHRASES)) return 'report_bug_or_wrong_mcq';
+
+    // 4. Talk to Support / Human
     if (includesAny(text, TALK_TO_SUPPORT_PHRASES)) return 'talk_to_support';
 
-    // 4. Discount / Bargaining
+    // 5. Discount / Bargaining
     if (includesAny(text, DISCOUNT_PHRASES)) return 'ask_discount';
 
-    // 5. Buy PDF Book & Payment Details
+    // 6. Buy PDF Book & Payment Details
     if (includesAny(text, BUY_PDF_BOOK_PHRASES)) return 'buy_pdf_book';
 
-    // 6. PDF Book General Inquiry
+    // 7. PDF Book General Inquiry
     if (includesAny(text, PDF_BOOK_PHRASES)) return 'ask_pdf_book';
 
-    // 7. Specific Subject MCQs (Check before general MCQs)
+    // 8. Website Page Link Routing (from website button)
+    const pageLink = parseWebsitePageLink(messageText);
+    if (pageLink) {
+        if (pageLink.type === 'guide') return 'website_page_guide';
+        if (pageLink.type === 'typing_test') return 'website_page_typing';
+        if (pageLink.type === 'mcqs') return 'website_page_mcqs';
+        if (pageLink.type === 'daily_drill') return 'ask_daily_drill';
+        if (pageLink.type === 'book') return 'ask_pdf_book';
+    }
+
+    // 9. Specific Subject MCQs (Check before general MCQs)
     const isSubjectMcq = includesAny(text, SUBJECT_MCQ_PHRASES) || (includesAny(text, SUBJECT_KEYWORDS) && includesAny(text, ['mcq', 'mcqs', 'quiz', 'quizzes', 'question', 'bank', 'tayari', 'tayyari', 'practice']));
     if (isSubjectMcq) return 'ask_subject_mcq';
 
-    // 8. Typing Speed Coaching (How to increase speed)
+    // 10. Typing Speed Coaching (How to increase speed)
     if (includesAny(text, TYPING_COACHING_PHRASES)) return 'ask_typing_coaching';
 
-    // 9. Specific Department LDC / UDC
+    // 11. Specific Department LDC / UDC
     if (includesAny(text, DEPARTMENT_LDC_PHRASES) || (includesAny(text, ['ghq', 'mod', 'fbr', 'police', 'mes', 'paf', 'navy', 'railway']) && includesAny(text, ['ldc', 'udc', 'typing', 'speed', 'test', 'criteria']))) {
         return 'ask_department_ldc';
     }
 
-    // 10. General Typing Speed Passing Criteria for LDC / UDC
+    // 12. General Typing Speed Passing Criteria for LDC / UDC
     if (includesAny(text, TYPING_SPEED_LDC_UDC_PHRASES) || (includesAny(text, ['ldc', 'udc', 'clerk']) && includesAny(text, ['speed', 'wpm', 'typing']))) {
         return 'ask_typing_speed_ldc_udc';
     }
 
-    // 11. General Typing Test Tools
+    // 13. General Typing Test Tools
     if (includesAny(text, TYPING_TEST_PHRASES)) return 'ask_typing_test';
 
-    // 12. General MCQs Bank
+    // 14. General MCQs Bank
     if (includesAny(text, MCQS_PHRASES)) return 'ask_mcqs';
 
-    // 13. Daily Drill
+    // 15. Daily Drill
     if (includesAny(text, DAILY_DRILL_PHRASES)) return 'ask_daily_drill';
 
-    // 14. CBT Exam Prep Tracks
+    // 16. CBT Exam Prep Tracks
     if (includesAny(text, EXAM_PREP_PHRASES)) return 'ask_exam_prep';
 
-    // 15. Free Platform / Pricing Check
+    // 17. Free Platform / Pricing Check
     if (includesAny(text, PRICING_FREE_PHRASES)) return 'ask_pricing';
 
-    // 16. Dashboard & Streaks
+    // 18. Dashboard & Streaks
     if (includesAny(text, DASHBOARD_STREAKS_PHRASES)) return 'ask_dashboard_streaks';
 
-    // 17. Greetings (Salam vs Hello)
+    // 19. Greetings (Salam vs Hello)
     if (includesAny(text, GREETING_SALAM_PHRASES)) return 'greeting_salam';
     if (includesAny(text, GREETING_HELLO_PHRASES)) return 'greeting_hello';
 
@@ -278,10 +395,18 @@ export const inferLeadUpdateFromMessage = (messageText = '', lead = {}) => {
     const text = normalizeLoose(messageText);
     const update = {};
 
+    // Page Link Lead Extraction
+    const pageLink = parseWebsitePageLink(messageText);
+    if (pageLink) {
+        if (pageLink.exam) update.targetExam = pageLink.exam;
+        if (pageLink.subject) update.subjectInterest = pageLink.subject;
+        if (pageLink.type === 'book') update.bookInterested = true;
+    }
+
     // Exam Extraction
     if (includesAny(text, ['ghq ldc', 'ghq'])) update.targetExam = 'GHQ LDC (BPS-11)';
     else if (includesAny(text, ['mod ldc', 'mod', 'defence'])) update.targetExam = 'MOD Clerical / LDC';
-    else if (includesAny(text, ['islamabad police', 'police book', 'police', 'asi'])) update.targetExam = 'Islamabad Police ASI/LDC/UDC';
+    else if (includesAny(text, ['islamabad police', 'police book', 'police', 'asi'])) update.targetExam = 'Islamabad Police ASI/UDC/LDC';
     else if (includesAny(text, ['fbr ldc', 'fbr'])) update.targetExam = 'FBR LDC/UDC';
     else if (includesAny(text, ['ldc', 'lower division clerk'])) update.targetExam = 'LDC (BPS-11)';
     else if (includesAny(text, ['udc', 'upper division clerk'])) update.targetExam = 'UDC (BPS-13/14)';
@@ -301,17 +426,18 @@ export const inferLeadUpdateFromMessage = (messageText = '', lead = {}) => {
     else if (includesAny(text, ['current affairs', 'affairs'])) update.subjectInterest = 'Current Affairs';
 
     // WPM Extraction
-    const wpmMatch = text.match(/\b(\d{2,3})\s*(?:wpm|words per minute|speed)\b/i);
-    if (wpmMatch) update.targetWpm = `${wpmMatch[1]} WPM`;
+    const wpmMatch = text.match(/(\d{1,3})\s*(?:wpm|words?\s*per\s*min(?:ute)?)/i) || text.match(/(?:speed|wpm)\s*(\d{1,3})/i);
+    if (wpmMatch) {
+        update.targetWpm = `${wpmMatch[1]} WPM`;
+    }
 
-    // Book Interest
-    if (includesAny(text, ['book', 'pdf', 'notes', '300', 'islamabad police book'])) {
+    if (includesAny(text, ['book', 'pdf', 'notes', '300'])) {
         update.bookInterested = true;
     }
 
-    // Payment Submitted
     if (includesAny(text, PAYMENT_PROOF_PHRASES)) {
         update.paymentSubmitted = true;
+        update.bookInterested = true;
     }
 
     // Name Extraction
@@ -499,12 +625,47 @@ export const getRuleBasedAssistantResponse = (arg1, arg2 = '', arg3 = {}, arg4 =
                 pauseAI: false
             };
 
+        case 'website_page_guide': {
+            const pageLink = parseWebsitePageLink(userMessage);
+            const topicName = pageLink?.topic || 'Syllabus & Preparation Guide';
+            return {
+                reply: `Walaikum Assalam! Humne aapka guide reference (${topicName}) note kar liya hai. Aapko is test ke syllabus, typing criteria ya preparation strategy mein kya help chahiye? Hamari Rs. 300 Solved Prep PDF Book bhi quick offline revision ke liye available hai. Aap kis post ke liye apply kar rahe hain?`,
+                intent: 'website_page_guide',
+                pauseAI: false
+            };
+        }
+
+        case 'website_page_typing': {
+            return {
+                reply: `Walaikum Assalam! TestTayar typing test simulator par practice ke liye LDC target 30 WPM aur UDC target 40 WPM hai (90%+ accuracy ke sath). Focus accuracy par karein, backspace kam use karein aur daily 3-5 tests lagayein. Abhi aapki typing speed kitni aa rahi hai?`,
+                intent: 'website_page_typing',
+                pauseAI: false
+            };
+        }
+
+        case 'website_page_mcqs': {
+            const pageLink = parseWebsitePageLink(userMessage);
+            const subjectName = pageLink?.subject || 'Subject MCQs';
+            return {
+                reply: `Walaikum Assalam! TestTayar par ${subjectName} ke hazaron solved MCQs aur timed quizzes 100% free available hain. Aap is subject ke konse topic ya exam ke liye tayari kar rahe hain?`,
+                intent: 'website_page_mcqs',
+                pauseAI: false
+            };
+        }
+
+        case 'report_bug_or_wrong_mcq':
+            return {
+                reply: `Bohat shukriya ghalti point out karne ka! Hum ne report note kar li hai aur hamari editorial team isay review kar ke update kar degi.`,
+                intent: 'report_bug_or_wrong_mcq',
+                pauseAI: false
+            };
+
         case 'payment_proof_submitted':
             return {
-                reply: `Bohat shukriya! Main screenshot verify karke aapko PDF book yahan WhatsApp par deliver kar raha hoon. [PAUSE]`,
+                reply: `Bohat shukriya! Aap ki payment receipt mil gayi hai, hamari team 2-5 minutes mein verify kar ke complete PDF book isi chat mein deliver kar rahi hai. [PAUSE]`,
                 intent: 'payment_proof_submitted',
                 pauseAI: true,
-                handoffReason: 'Payment proof submitted for PDF Book'
+                handoffReason: 'Payment receipt submitted for Rs. 300 PDF Book'
             };
 
         case 'talk_to_support':

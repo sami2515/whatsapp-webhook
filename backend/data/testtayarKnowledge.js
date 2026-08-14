@@ -126,6 +126,32 @@ export const TESTTAYAR_KNOWLEDGE = {
         }
     ],
 
+    websitePageRouting: {
+        guides: {
+            prefix: 'https://testtayar.pk/guides/',
+            description: 'Guides covering syllabus, paper patterns, past papers analysis, and preparation strategies for NTS, FPSC, PPSC, LDC, UDC, Police, MOD, and FIA.',
+            action: 'Acknowledge the exact guide the user was reading. Ask how to assist with this syllabus, typing criteria or exam strategy. Mention the optional Rs. 300 Solved Prep PDF Book for offline revision.'
+        },
+        typingTests: {
+            prefix: 'https://testtayar.pk/typing-test/',
+            description: 'Interactive typing test simulator with 1, 2, 3, 5, 10 min modes and department exam rooms.',
+            action: 'Guide on typing speed targets (LDC: 30 WPM, UDC: 40 WPM, 90%+ accuracy). Give accuracy and home row tips, and ask their current speed.'
+        },
+        mcqs: {
+            prefix: 'https://testtayar.pk/mcqs/',
+            description: '8 subject MCQ banks with practice and directory modes.',
+            action: 'Acknowledge the subject, provide quick tips, and guide on practicing the topic.'
+        },
+        bugReporting: {
+            description: 'When user reports a wrong MCQ, typo, or bug on the website.',
+            reply: 'Bohat shukriya ghalti point out karne ka! Hum ne report note kar li hai aur hamari editorial team isay review kar ke update kar degi.'
+        },
+        paymentReceipt: {
+            description: 'When user shares payment screenshot or confirms money transfer.',
+            reply: 'Bohat shukriya! Aap ki payment receipt mil gayi hai, hamari team 2-5 minutes mein verify kar ke complete PDF book isi chat mein deliver kar rahi hai. [PAUSE]'
+        }
+    },
+
     handoffRules: [
         'User sends payment screenshot, receipt, or transaction ID for the Rs. 300 PDF book',
         'User asks to talk to support or human representative',
