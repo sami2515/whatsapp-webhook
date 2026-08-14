@@ -289,23 +289,44 @@ export const generateAIResponse = async (
 
             messages.push({ role: 'user', content: latestText });
 
-            const groqResponse = await groqClient.chat.completions.create({
-                model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
-                messages,
-                response_format: { type: 'json_object' },
-                temperature: 0.3,
-                max_tokens: 1000
-            });
+            const groqModels = [
+                process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
+                'llama-3.3-70b-versatile',
+                'mixtral-8x7b-32768'
+            ];
 
-            const rawReply = groqResponse.choices[0]?.message?.content || '';
-            const parsedRes = parseAIResponse(rawReply);
+            let groqResponse = null;
+            let lastError = null;
 
-            // Merge student profile updates into leadUpdate
-            if (studentProfile.targetDegree && !parsedRes.leadUpdate.targetExam) {
-                parsedRes.leadUpdate.targetExam = `${studentProfile.university || ''} ${studentProfile.targetDegree}`.trim();
+            for (const modelName of groqModels) {
+                try {
+                    groqResponse = await groqClient.chat.completions.create({
+                        model: modelName,
+                        messages,
+                        response_format: { type: 'json_object' },
+                        temperature: 0.3,
+                        max_tokens: 800
+                    });
+                    if (groqResponse?.choices?.[0]?.message?.content) {
+                        break;
+                    }
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`Groq Model ${modelName} returned error: ${err.message}. Trying next model...`);
+                }
             }
 
-            return parsedRes;
+            if (groqResponse?.choices?.[0]?.message?.content) {
+                const rawReply = groqResponse.choices[0].message.content;
+                const parsedRes = parseAIResponse(rawReply);
+
+                // Merge student profile updates into leadUpdate
+                if (studentProfile.targetDegree && !parsedRes.leadUpdate.targetExam) {
+                    parsedRes.leadUpdate.targetExam = `${studentProfile.university || ''} ${studentProfile.targetDegree}`.trim();
+                }
+
+                return parsedRes;
+            }
         } catch (err) {
             console.error(`Groq AI Generation Error: ${err.message}. Falling back to Gemini...`);
         }
