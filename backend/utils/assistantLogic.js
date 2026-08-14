@@ -140,6 +140,7 @@ const PDF_BOOK_PHRASES = [
     '630 mcqs', 'solved book', 'preparation book', 'book price', 'book kitne ki', 'kitne ki hai',
     'notes chahiye', 'book chahiye', '300 book', '300 wali book', 'notes chia', 'pdf chia',
     'guide chia', 'notes chia hian', 'pdf book chia', 'preparation notes', 'english notes',
+    'pdf', 'pf', 'book bhe chia', 'book bhe chia hian', 'book bhi chahiye', 'pdf chahiyeh',
     'کتاب', 'نوٹس', 'پی ڈی ایف'
 ];
 

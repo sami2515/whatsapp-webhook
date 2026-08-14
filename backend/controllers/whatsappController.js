@@ -713,7 +713,7 @@ export const handleIncomingMessage = async (req, res) => {
                             console.log(`[AI PAUSED] Silence maintained for ${from}. Message recorded for human admin.`);
                         }
 
-                        if (!isAIPaused && !isRapidMessage) {
+                        if (!isAIPaused) {
 
                             // 1. Fetch Chat History (Memory) - Exclude current message
                             const recentContext = await Message.find({

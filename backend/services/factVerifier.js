@@ -109,6 +109,17 @@ export const buildVerifiedAcademicFacts = (studentProfile = {}, searchResults = 
         sourceAttributions.push({ name: cuiPharmD.sourceName, url: cuiPharmD.sourceUrl });
     }
 
+    if (/aiou/i.test(university || '') || /open university/i.test(university || '')) {
+        verifiedFacts.push({
+            topic: 'AIOU Admissions & Programs',
+            fact: `AIOU Autumn Semester admissions for Matric/FA open in July/August, and BS/ADP/Postgraduate open in August/September. Spring Semester admissions open in January/February. Official online application portal: https://online.aiou.edu.pk | Main portal: https://aiou.edu.pk`,
+            sourceName: 'Allama Iqbal Open University (AIOU)',
+            sourceUrl: 'https://aiou.edu.pk',
+            confidence: 0.99,
+            isOfficial: true
+        });
+    }
+
     // 3. Schedule & Future Dates Verification (Anti-Hallucination Rule)
     const futureYearsRequested = (requestedYears || []).filter((y) => y >= 2027);
     if (futureYearsRequested.length > 0) {
