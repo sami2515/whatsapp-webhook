@@ -45,11 +45,15 @@ export const extractStudentProfile = (messageText = '', previousProfile = {}) =>
         profile.targetDegree = 'Pharm-D';
     } else if (/\b(dpt|doctor of physical therapy|physiotherapy)\b/i.test(text)) {
         profile.targetDegree = 'DPT';
+    } else if (/\b(adp|ada|ads|adc|associate degree)\b/i.test(text)) {
+        profile.targetDegree = 'ADP (Associate Degree Program)';
+    } else if (/\b(bed|b\.ed|med|m\.ed)\b/i.test(text)) {
+        profile.targetDegree = 'B.Ed';
     } else if (/\b(bs[- ]?cs|computer science|cs)\b/i.test(text)) {
         profile.targetDegree = 'BS Computer Science';
     } else if (/\b(bs[- ]?se|software engineering|se)\b/i.test(text)) {
         profile.targetDegree = 'BS Software Engineering';
-    } else if (/\b(bs[- ]?ai|artificial intelligence|ai)\b/i.test(text)) {
+    } else if (/\b(bs[- ]?ai|b\.s[- ]?ai|degree in ai|artificial intelligence)\b/i.test(text)) {
         profile.targetDegree = 'BS Artificial Intelligence';
     } else if (/\b(bs[- ]?data science|data science|ds)\b/i.test(text)) {
         profile.targetDegree = 'BS Data Science';
@@ -75,8 +79,12 @@ export const extractStudentProfile = (messageText = '', previousProfile = {}) =>
         profile.targetDegree = 'Tehsildar / Naib Tehsildar';
     }
 
-    // 4. Target University & Testing Commissions
-    if (/\b(comsats|cui|comsat)\b/i.test(text)) {
+    // 4. Target University & Testing Commissions & Boards
+    if (/\b(aiou|allama iqbal open university|open university)\b/i.test(text)) {
+        profile.university = 'AIOU';
+    } else if (/\b(vu|virtual university)\b/i.test(text)) {
+        profile.university = 'Virtual University';
+    } else if (/\b(comsats|cui|comsat)\b/i.test(text)) {
         profile.university = 'COMSATS';
     } else if (/\b(nust)\b/i.test(text)) {
         profile.university = 'NUST';
@@ -98,7 +106,43 @@ export const extractStudentProfile = (messageText = '', previousProfile = {}) =>
         profile.university = 'GIKI';
     } else if (/\b(ned)\b/i.test(text)) {
         profile.university = 'NED University';
-    } else if (/\b(fpsc)\b/i.test(text)) {
+    } else if (/\b(bzu|bahauddin zakariya)\b/i.test(text)) {
+        profile.university = 'BZU';
+    } else if (/\b(uos|university of sargodha)\b/i.test(text)) {
+        profile.university = 'UOS';
+    } else if (/\b(uog|university of gujrat)\b/i.test(text)) {
+        profile.university = 'UOG';
+    }
+
+    // Education Boards (BIEK, FBISE, BISE)
+    if (/\b(biek|karachi board|bsek)\b/i.test(text)) {
+        profile.board = 'BIEK Karachi';
+    } else if (/\b(fbise|federal board)\b/i.test(text)) {
+        profile.board = 'FBISE Federal Board';
+    } else if (/\b(biselahore|lahore board)\b/i.test(text)) {
+        profile.board = 'BISE Lahore';
+    } else if (/\b(biserwp|rawalpindi board)\b/i.test(text)) {
+        profile.board = 'BISE Rawalpindi';
+    } else if (/\b(bisefaisalabad|faisalabad board)\b/i.test(text)) {
+        profile.board = 'BISE Faisalabad';
+    } else if (/\b(bisemultan|multan board)\b/i.test(text)) {
+        profile.board = 'BISE Multan';
+    } else if (/\b(bisegujranwala|gujranwala board)\b/i.test(text)) {
+        profile.board = 'BISE Gujranwala';
+    } else if (/\b(bisesahiwal|sahiwal board)\b/i.test(text)) {
+        profile.board = 'BISE Sahiwal';
+    } else if (/\b(bisesargodha|sargodha board)\b/i.test(text)) {
+        profile.board = 'BISE Sargodha';
+    } else if (/\b(bisep|peshawar board)\b/i.test(text)) {
+        profile.board = 'BISE Peshawar';
+    } else if (/\b(bisehyd|hyderabad board|bisesukkur|sukkur board)\b/i.test(text)) {
+        profile.board = 'Sindh BISE Board';
+    } else if (/\b(biseqta|quetta board)\b/i.test(text)) {
+        profile.board = 'BISE Quetta';
+    }
+
+    // Testing Agency
+    if (/\b(fpsc)\b/i.test(text)) {
         profile.testingAgency = 'FPSC';
     } else if (/\b(ppsc)\b/i.test(text)) {
         profile.testingAgency = 'PPSC';

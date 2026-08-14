@@ -6,26 +6,32 @@
  */
 
 const SEARCH_REQUIRED_PATTERNS = [
-    // 1. Date & Schedule Queries
-    /\b(schedule|date|dates|last date|deadline|kab hoga|kab ha|kab hai|timing|timetable)\b/i,
-    /\b(2027|2028|2029|next year|future|upcoming)\b/i,
-    /\b(latest|current|abhi|is saal|this year|recent|new policy)\b/i,
+    // 1. Date, Schedule & Deadline Queries (including typos like 'kb ha', 'kab tk')
+    /\b(schedule|date|dates|last date|deadline|kab hoga|kb hoga|kab ha|kb ha|kab hai|kb hai|kab tk|kb tk|timing|timetable|kab start|start kab|kab open|open kab)\b/i,
+    /\b(2025|2026|2027|2028|2029|next year|future|upcoming)\b/i,
+    /\b(latest|current|curent|abhi|is saal|this year|recent|new policy|update|updates)\b/i,
 
-    // 2. Admission & Intake Queries
-    /\b(admission|admissions|admissions open|intake|spring|fall|apply online|registration open)\b/i,
+    // 2. Admission, Dakhla & Intake Queries (including typos like 'amission', 'admisn')
+    /\b(admission|admissions|amission|admisn|dakhla|dakhlay|intake|spring|fall|autumn|apply online|registration open|portal)\b/i,
     /\b(eligibility|criteria|minimum marks|percentage|required marks|merit|closing merit|fee|fees|fee structure)\b/i,
 
-    // 3. Program & University Policy Specifics
-    /\b(is this offered|offer hota hai|kis campus mein|campuses|available programs|prospectus)\b/i,
-    /\b(accept karta hai|accept hota hai|valid hai|equivalent)\b/i,
-    /\b(result date|merit list|aggregate formula|how aggregate)\b/i
+    // 3. Results & Board Announcements (BIEK, FBISE, BISE, Entry Tests)
+    /\b(result|rsult|results|result agya|agya result|kab aya|aya result|gazette|announcement|announced)\b/i,
+    /\b(biek|fbise|bise|karachi board|lahore board|federal board)\b/i,
+
+    // 4. Jobs & Vacancies (Current jobs, Sindh jobs, screening test queries)
+    /\b(jobs?|curent jobs|current jobs|asami|asamiyan|bharti|vacanc(?:y|ies)|walk in interview|without test|bina test|screening test|siba|sts)\b/i,
+
+    // 5. University, Testing Agency & Program Names
+    /\b(aiou|allama iqbal open university|vu|virtual university|comsats|nust|fast|uet|pu|qau|lums|iba|giki|pieas|bzu|uos|uog)\b/i,
+    /\b(adp|b\.?ed|m\.?phil|phd|llb|lat|mdcat|nums|ecat|fpsc|ppsc|spsc|kppsc|bpsc|fia|asf)\b/i
 ];
 
 const SEARCH_NOT_REQUIRED_PATTERNS = [
     // Simple greetings
     /^(hi|hello|hey|salam|aoa|assalam o alaikum|walikum asalam|hola|kia hal hai|kese ho)\s*$/i,
 
-    // Pure Typing Coaching & Speed Rules
+    // Pure Typing Coaching & Speed Rules (when no test date is mentioned)
     /\b(speed kaise barhaen|typing tips|mistakes kam|home row|accuracy|finger placement)\b/i,
 
     // Pure Payment Receipt & Proof Handoff
@@ -39,41 +45,35 @@ export const isSearchRequired = (messageText = '', context = {}) => {
     const text = (messageText || '').trim();
     if (!text) return { required: false, reasons: [] };
 
-    // 1. If explicit non-search pattern matches with no freshness keywords, skip
-    const isPureSkip = SEARCH_NOT_REQUIRED_PATTERNS.some((p) => p.test(text));
+    // 1. If message contains date, schedule, job, or admission question, SEARCH ALWAYS WINS
     const hasFreshnessKeyword = SEARCH_REQUIRED_PATTERNS.some((p) => p.test(text));
+    const isPureHandoff = /^(screenshot|slip|receipt|done payment|paid|talk to human|admin se baat)\b/i.test(text);
 
-    if (isPureSkip && !hasFreshnessKeyword) {
+    if (isPureHandoff && !hasFreshnessKeyword) {
         return {
             required: false,
-            reasons: ['matches_routine_conversation_or_handoff']
+            reasons: ['matches_payment_or_handoff']
         };
     }
 
-    // 2. Check for freshness triggers
-    const matchedReasons = [];
-    if (/\b(2027|2028|2029|next year)\b/i.test(text)) matchedReasons.push('future_schedule_check');
-    if (/\b(schedule|date|dates|kab hoga|kab hai|deadline|last date)\b/i.test(text)) matchedReasons.push('live_schedule_verification');
-    if (/\b(admission|admissions open|intake|merit|fee|closing merit)\b/i.test(text)) matchedReasons.push('university_admission_policy');
-    if (/\b(eligibility|percentage|criteria|accept karta hai|valid hai)\b/i.test(text)) matchedReasons.push('eligibility_verification');
-
-    if (hasFreshnessKeyword || matchedReasons.length > 0) {
+    if (hasFreshnessKeyword) {
         return {
             required: true,
-            reasons: matchedReasons.length > 0 ? matchedReasons : ['general_freshness_inquiry']
+            reasons: ['matches_freshness_or_academic_inquiry']
         };
     }
 
-    // 3. Fallback: If student mentioned university or specific degree with uncertainty, search
-    if (/\b(comsats|nust|fast|uet|pu|pharm-d|pharmacy|mbbs|dpt)\b/i.test(text) && /\b(kya|kaise|bata dein|guide|info)\b/i.test(text)) {
+    // 2. If student profile already has university/exam/board and user asks a follow-up question
+    if ((context.university || context.targetExam || context.targetDegree || context.board || context.testingAgency) &&
+        /\b(btao|batao|kab|ky lie|start|info|detail|details|dates?|marks|criteria)\b/i.test(text)) {
         return {
             required: true,
-            reasons: ['university_program_inquiry']
+            reasons: ['context_inherited_freshness_inquiry']
         };
     }
 
     return {
         required: false,
-        reasons: ['stable_knowledge_sufficient']
+        reasons: ['routine_conversation']
     };
 };

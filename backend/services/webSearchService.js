@@ -147,19 +147,33 @@ export class WebSearchEngine {
      */
     planSearchQueries(studentProfile = {}, rawQuery = '') {
         const queries = [];
-        const { targetDegree, university, likelyTest, testingAgency, requestedYears } = studentProfile;
+        const { targetDegree, university, likelyTest, testingAgency, board, requestedYears } = studentProfile;
         const raw = rawQuery.toLowerCase();
 
-        // 1. Testing Agency / Commission Queries (FPSC, PPSC, SPSC, FIA, ASF, PMDC)
-        if (testingAgency === 'FPSC' || /fpsc/i.test(raw)) {
+        // 1. Education Board Result Queries (BIEK, FBISE, BISE)
+        if (board || /biek|fbise|bise|result/i.test(raw)) {
+            if (/biek/i.test(raw) || board === 'BIEK Karachi') {
+                queries.push(`site:biek.edu.pk HSC Part 2 Pre Engineering result 2026 announcement date`);
+                queries.push(`BIEK Karachi 12th class Pre Engineering result 2026 announcement date`);
+            } else if (/fbise/i.test(raw) || board === 'FBISE Federal Board') {
+                queries.push(`site:fbise.edu.pk HSSC Part 2 result announcement date 2026`);
+            } else if (board) {
+                queries.push(`${board} 12th class intermediate result announcement date 2026`);
+            } else if (/result/i.test(raw)) {
+                queries.push(`${rawQuery} announcement date Pakistan`);
+            }
+        }
+
+        // 2. Testing Agency / Commission Queries (FPSC, PPSC, SPSC, FIA, ASF, PMDC)
+        if (testingAgency === 'FIA' || /fia/i.test(raw)) {
+            queries.push(`site:npftas.pk FIA LDC typing test schedule date 2025 2026`);
+            queries.push(`FIA LDC typing test schedule date roll number slip`);
+        } else if (testingAgency === 'FPSC' || /fpsc/i.test(raw)) {
             queries.push(`site:fpsc.gov.pk ${targetDegree || likelyTest || 'syllabus'} syllabus criteria`);
             queries.push(`FPSC ${targetDegree || likelyTest || 'exam'} syllabus test pattern`);
         } else if (testingAgency === 'PPSC' || /ppsc/i.test(raw)) {
             queries.push(`site:ppsc.gop.pk ${targetDegree || likelyTest || 'syllabus'} syllabus paper pattern`);
             queries.push(`PPSC ${targetDegree || likelyTest || 'exam'} test criteria`);
-        } else if (testingAgency === 'FIA' || /fia/i.test(raw)) {
-            queries.push(`site:fia.gov.pk ${targetDegree || 'recruitment'} syllabus physical criteria`);
-            queries.push(`FIA ${targetDegree || 'jobs'} test syllabus past papers`);
         } else if (testingAgency === 'ASF' || /asf/i.test(raw)) {
             queries.push(`site:joinasf.gov.pk ${targetDegree || 'ASI'} physical test written test syllabus`);
         } else if (/mdcat/i.test(raw) || likelyTest === 'MDCAT') {
@@ -169,23 +183,38 @@ export class WebSearchEngine {
             queries.push(`site:etc.hec.gov.pk Law Admission Test LAT syllabus pattern`);
         }
 
-        // 2. University & Program Specific Queries
-        if (university && targetDegree) {
-            if (/comsats/i.test(university)) {
-                queries.push(`site:comsats.edu.pk ${targetDegree} admission eligibility NTS`);
-                queries.push(`site:lahore.comsats.edu.pk ${targetDegree} admission requirements`);
+        // 3. University & Program Specific Queries (AIOU, VU, COMSATS, NUST, etc.)
+        if (university || /aiou|vu/i.test(raw)) {
+            if (/aiou/i.test(university) || /aiou/i.test(raw)) {
+                queries.push(`site:aiou.edu.pk ${targetDegree || 'ADP'} admission last date schedule 2026`);
+                queries.push(`AIOU ${targetDegree || 'Associate Degree'} admission schedule last date 2026`);
+            } else if (/vu/i.test(university) || /vu|virtual/i.test(raw)) {
+                queries.push(`site:vu.edu.pk ${targetDegree || 'admission'} last date schedule 2026`);
+            } else if (/comsats/i.test(university)) {
+                queries.push(`site:comsats.edu.pk ${targetDegree || 'Pharm-D'} admission eligibility NTS`);
+                queries.push(`site:lahore.comsats.edu.pk ${targetDegree || 'Pharm-D'} admission requirements`);
             } else if (/nust/i.test(university)) {
-                queries.push(`site:nust.edu.pk ${targetDegree} NET admission eligibility criteria`);
+                queries.push(`site:nust.edu.pk ${targetDegree || 'NET'} admission eligibility criteria`);
             } else if (/fast|nuces/i.test(university)) {
-                queries.push(`site:nu.edu.pk ${targetDegree} admission eligibility test criteria`);
+                queries.push(`site:nu.edu.pk ${targetDegree || 'admission'} eligibility test criteria`);
             } else if (/uet/i.test(university)) {
-                queries.push(`site:uet.edu.pk ${targetDegree} ECAT admission criteria`);
+                queries.push(`site:uet.edu.pk ${targetDegree || 'ECAT'} admission criteria`);
             } else {
-                queries.push(`${university} ${targetDegree} admission eligibility criteria Pakistan`);
+                queries.push(`${university} ${targetDegree || 'admission'} eligibility criteria last date 2026 Pakistan`);
             }
         }
 
-        // 3. NTS Test Schedule & Pattern Queries
+        // 4. Jobs & Vacancies without screening test
+        if (/job|sindh|without test|bina test|screening/i.test(raw)) {
+            if (/sindh/i.test(raw)) {
+                queries.push(`Sindh government jobs without screening test STS IBA`);
+                queries.push(`Sindh govt jobs walk in interview BPS 1 to 4 daily jang express`);
+            } else {
+                queries.push(`${rawQuery} Pakistan jobs`);
+            }
+        }
+
+        // 5. NTS Test Schedule & Pattern Queries
         if (likelyTest && /nat|gat/i.test(likelyTest) || /nts/i.test(raw)) {
             const testName = likelyTest || 'NAT';
             if (requestedYears && (requestedYears.includes(2027) || requestedYears.includes(2028))) {
@@ -197,7 +226,7 @@ export class WebSearchEngine {
             }
         }
 
-        // 4. General / Out-of-topic queries (e.g. shopping, prices, general knowledge)
+        // 6. General / Out-of-topic queries
         if (queries.length === 0) {
             const clean = rawQuery
                 .replace(/[^\w\s-]/g, ' ')
