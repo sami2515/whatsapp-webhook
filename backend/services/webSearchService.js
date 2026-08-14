@@ -99,20 +99,46 @@ export class WebSearchEngine {
      */
     planSearchQueries(studentProfile = {}, rawQuery = '') {
         const queries = [];
-        const { targetDegree, university, likelyTest, requestedYears } = studentProfile;
+        const { targetDegree, university, likelyTest, testingAgency, requestedYears } = studentProfile;
+        const raw = rawQuery.toLowerCase();
 
-        // 1. University & Program Specific Queries
+        // 1. Testing Agency / Commission Queries (FPSC, PPSC, SPSC, FIA, ASF, PMDC)
+        if (testingAgency === 'FPSC' || /fpsc/i.test(raw)) {
+            queries.push(`site:fpsc.gov.pk ${targetDegree || likelyTest || 'syllabus'} syllabus criteria`);
+            queries.push(`FPSC ${targetDegree || likelyTest || 'exam'} syllabus test pattern`);
+        } else if (testingAgency === 'PPSC' || /ppsc/i.test(raw)) {
+            queries.push(`site:ppsc.gop.pk ${targetDegree || likelyTest || 'syllabus'} syllabus paper pattern`);
+            queries.push(`PPSC ${targetDegree || likelyTest || 'exam'} test criteria`);
+        } else if (testingAgency === 'FIA' || /fia/i.test(raw)) {
+            queries.push(`site:fia.gov.pk ${targetDegree || 'recruitment'} syllabus physical criteria`);
+            queries.push(`FIA ${targetDegree || 'jobs'} test syllabus past papers`);
+        } else if (testingAgency === 'ASF' || /asf/i.test(raw)) {
+            queries.push(`site:joinasf.gov.pk ${targetDegree || 'ASI'} physical test written test syllabus`);
+        } else if (/mdcat/i.test(raw) || likelyTest === 'MDCAT') {
+            queries.push(`site:pmdc.pk MDCAT syllabus registration dates eligibility`);
+            queries.push(`MDCAT PMDC latest syllabus paper pattern`);
+        } else if (/lat/i.test(raw) || likelyTest === 'LAT') {
+            queries.push(`site:etc.hec.gov.pk Law Admission Test LAT syllabus pattern`);
+        }
+
+        // 2. University & Program Specific Queries
         if (university && targetDegree) {
             if (/comsats/i.test(university)) {
                 queries.push(`site:comsats.edu.pk ${targetDegree} admission eligibility NTS`);
                 queries.push(`site:lahore.comsats.edu.pk ${targetDegree} admission requirements`);
+            } else if (/nust/i.test(university)) {
+                queries.push(`site:nust.edu.pk ${targetDegree} NET admission eligibility criteria`);
+            } else if (/fast|nuces/i.test(university)) {
+                queries.push(`site:nu.edu.pk ${targetDegree} admission eligibility test criteria`);
+            } else if (/uet/i.test(university)) {
+                queries.push(`site:uet.edu.pk ${targetDegree} ECAT admission criteria`);
             } else {
-                queries.push(`${university} ${targetDegree} admission eligibility NTS criteria`);
+                queries.push(`${university} ${targetDegree} admission eligibility criteria Pakistan`);
             }
         }
 
-        // 2. NTS Test Schedule & Pattern Queries
-        if (likelyTest || /nts/i.test(rawQuery)) {
+        // 3. NTS Test Schedule & Pattern Queries
+        if (likelyTest && /nat|gat/i.test(likelyTest) || /nts/i.test(raw)) {
             const testName = likelyTest || 'NAT';
             if (requestedYears && (requestedYears.includes(2027) || requestedYears.includes(2028))) {
                 queries.push(`site:nts.org.pk ${testName} 2027 schedule announcement`);
@@ -123,10 +149,15 @@ export class WebSearchEngine {
             }
         }
 
-        // 3. Fallback targeted clean query
+        // 4. General / Out-of-topic queries (e.g. shopping, prices, general knowledge)
         if (queries.length === 0) {
-            const clean = rawQuery.replace(/[^\w\s-]/g, ' ').replace(/\s+/g, ' ').trim();
-            queries.push(`Pakistan ${clean}`);
+            const clean = rawQuery
+                .replace(/[^\w\s-]/g, ' ')
+                .replace(/\b(kia|kya|hai|hein|h|batao|bata|dyn|dein|sr|sir|please|plz)\b/gi, '')
+                .replace(/\s+/g, ' ')
+                .trim();
+            queries.push(`${clean} Pakistan`);
+            queries.push(clean);
         }
 
         return queries.slice(0, 3);

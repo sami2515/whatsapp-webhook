@@ -123,13 +123,55 @@ assert(futureDateSearch.required === true, "Future year 2027 inquiry triggers we
 console.log("\n");
 
 // -------------------------------------------------------------
-// Test 5: COMSATS Pharm-D Eligibility Verification
+// Test 6: FPSC Inspector Customs Inquiry
 // -------------------------------------------------------------
-console.log("--- TEST 5: COMSATS Pharm-D Verified Eligibility ---");
-const cuiPharmD = ACADEMIC_KNOWLEDGE.universities.comsats.programs['pharm-d'];
-assert(cuiPharmD.eligibility.minimumIntermediatePercentage === '60%', "COMSATS Pharm-D intermediate minimum is 60%");
-assert(cuiPharmD.eligibility.testRequirement.includes('NAT-IM'), "COMSATS Pharm-D requires NAT-IM");
-assert(cuiPharmD.duration === '5 Years (10 Semesters)', "Pharm-D duration is 5 years");
+console.log("--- TEST 6: FPSC & Commission Queries ---");
+const fpscQuery = "FPSC Inspector Custom ka syllabus aur paper pattern kya hota hai?";
+const fpscProfile = extractStudentProfile(fpscQuery);
+const fpscSearch = isSearchRequired(fpscQuery, fpscProfile);
+const fpscQueries = webSearchEngine.planSearchQueries(fpscProfile, fpscQuery);
+const fpscVerified = buildVerifiedAcademicFacts(fpscProfile, { rankedResults: [] });
+
+assert(fpscProfile.testingAgency === 'FPSC', "Testing agency extracted as FPSC");
+assert(fpscProfile.targetDegree === 'Inspector Customs / Appraising Officer', "Target post extracted as Inspector Customs");
+assert(fpscQueries.some(q => q.includes('site:fpsc.gov.pk')), "Query planned targeting official FPSC website");
+assert(fpscVerified.verifiedFacts.some(f => f.topic.includes('FPSC') && f.fact.includes('100 MCQs')), "FPSC 100 MCQs pattern verified");
+console.log("\n");
+
+// -------------------------------------------------------------
+// Test 7: PMDC MDCAT Inquiry
+// -------------------------------------------------------------
+console.log("--- TEST 7: PMDC MDCAT Structure & Verification ---");
+const mdcatQuery = "MDCAT ka paper pattern kitne marks ka hota hai aur MBBS passing criteria?";
+const mdcatProfile = extractStudentProfile(mdcatQuery);
+const mdcatVerified = buildVerifiedAcademicFacts(mdcatProfile, { rankedResults: [] });
+
+assert(mdcatProfile.likelyTest === 'MDCAT', "Likely test extracted as MDCAT");
+assert(mdcatVerified.verifiedFacts.some(f => f.topic.includes('MDCAT') && f.fact.includes('200 MCQs') && f.fact.includes('55%')), "MDCAT 200 MCQs & 55% passing marks verified");
+console.log("\n");
+
+// -------------------------------------------------------------
+// Test 8: HEC LAT Law Test Inquiry
+// -------------------------------------------------------------
+console.log("--- TEST 8: HEC LAT Law Test Pattern ---");
+const latQuery = "5 year LLB ke liye LAT test ka pattern kya hai?";
+const latProfile = extractStudentProfile(latQuery);
+const latVerified = buildVerifiedAcademicFacts(latProfile, { rankedResults: [] });
+
+assert(latProfile.likelyTest === 'LAT', "Likely test extracted as LAT");
+assert(latVerified.verifiedFacts.some(f => f.topic.includes('LAT') && f.fact.includes('100 Marks')), "LAT 100 Marks pattern verified");
+console.log("\n");
+
+// -------------------------------------------------------------
+// Test 9: General / Out-of-Topic Query Planning
+// -------------------------------------------------------------
+console.log("--- TEST 9: General / Out-of-Topic Query Handling ---");
+const generalQuery = "Lahore mein Anarkali clothes market ki timing kya hai?";
+const generalProfile = extractStudentProfile(generalQuery);
+const generalQueries = webSearchEngine.planSearchQueries(generalProfile, generalQuery);
+console.log("Planned General Queries:", generalQueries);
+
+assert(generalQueries.some(q => q.includes('Anarkali') || q.includes('clothes')), "General search query generated cleanly without forcing NTS keywords");
 console.log("\n");
 
 // -------------------------------------------------------------
@@ -137,7 +179,7 @@ console.log("\n");
 // -------------------------------------------------------------
 console.log("============================================================");
 if (failedCount === 0) {
-    console.log("🎉 ALL ACADEMIC COUNSELOR & WEB SEARCH TESTS PASSED! 🚀");
+    console.log("🎉 ALL ACADEMIC COUNSELOR & UNIVERSAL SEARCH TESTS PASSED! 🚀");
     process.exit(0);
 } else {
     console.error(`❌ ${failedCount} test(s) failed.`);

@@ -45,6 +45,54 @@ export const buildVerifiedAcademicFacts = (studentProfile = {}, searchResults = 
             confidence: 0.99,
             isOfficial: true
         });
+    } else if (likelyTest === 'MDCAT' || /mdcat|mbbs|bds/i.test(targetDegree || '')) {
+        const mdcatInfo = ACADEMIC_KNOWLEDGE.testingAgencies.pmdc?.mdcat;
+        if (mdcatInfo) {
+            verifiedFacts.push({
+                topic: 'PMDC MDCAT Paper Pattern & Passing Criteria',
+                fact: `Total 200 MCQs (No Negative Marking). Breakdown: Biology (68 MCQs), Chemistry (54 MCQs), Physics (54 MCQs), English (18 MCQs), Logical Reasoning (6 MCQs). Passing criteria: 55% for MBBS and 50% for BDS admissions.`,
+                sourceName: 'Pakistan Medical & Dental Council (PMDC)',
+                sourceUrl: 'https://pmdc.pk',
+                confidence: 0.99,
+                isOfficial: true
+            });
+        }
+    } else if (likelyTest === 'LAT' || /llb|law/i.test(targetDegree || '')) {
+        const latInfo = ACADEMIC_KNOWLEDGE.testingAgencies.hec?.lat;
+        if (latInfo) {
+            verifiedFacts.push({
+                topic: 'HEC Law Admission Test (LAT) Pattern',
+                fact: `Total 100 Marks (Passing Marks: 50). Breakdown: Essay in Urdu/English (15 Marks), Personal Statement (10 Marks), MCQs (75 Marks: English 20, GK 20, Islamic Studies 10, Pak Studies 10, Urdu 10, Math 5).`,
+                sourceName: 'HEC Higher Education Commission',
+                sourceUrl: 'https://etc.hec.gov.pk',
+                confidence: 0.99,
+                isOfficial: true
+            });
+        }
+    } else if (/fpsc/i.test(studentProfile.testingAgency || '') || /inspector custom|appraising officer|ad/i.test(targetDegree || '')) {
+        const fpscInfo = ACADEMIC_KNOWLEDGE.testingAgencies.commissions?.fpsc;
+        if (fpscInfo) {
+            verifiedFacts.push({
+                topic: 'FPSC General Recruitment One-Paper Pattern',
+                fact: `Total 100 MCQs (100 Marks, 100 Minutes). Part-I: English (20 Marks: Grammar, Vocabulary, Sentence Structuring). Part-II: General Intelligence / Professional / Subject Knowledge (80 Marks).`,
+                sourceName: 'Federal Public Service Commission (FPSC)',
+                sourceUrl: 'https://www.fpsc.gov.pk',
+                confidence: 0.98,
+                isOfficial: true
+            });
+        }
+    } else if (/ppsc/i.test(studentProfile.testingAgency || '') || /tehsildar|junior clerk/i.test(targetDegree || '')) {
+        const ppscInfo = ACADEMIC_KNOWLEDGE.testingAgencies.commissions?.ppsc;
+        if (ppscInfo) {
+            verifiedFacts.push({
+                topic: 'PPSC Screening Test Pattern & Negative Marking',
+                fact: `Total 100 MCQs (90 Minutes) with -0.25 Negative Marking per wrong answer. Covers General Knowledge, Pakistan Studies, Current Affairs, Islamiat, Geography, Basic Math, English, Urdu, Everyday Science, Computer Skills. Junior Clerk also requires 25-30 WPM English typing + MS Office test.`,
+                sourceName: 'Punjab Public Service Commission (PPSC)',
+                sourceUrl: 'https://www.ppsc.gop.pk',
+                confidence: 0.98,
+                isOfficial: true
+            });
+        }
     }
 
     // 2. University Program Eligibility Facts

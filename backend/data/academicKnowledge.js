@@ -137,6 +137,53 @@ export const ACADEMIC_KNOWLEDGE = {
             }
         },
 
+        pmdc: {
+            mdcat: {
+                name: 'Medical & Dental College Admission Test (MDCAT)',
+                purpose: 'Mandatory centralized entry test for admission into public and private MBBS and BDS colleges across Pakistan.',
+                totalMarks: 200,
+                passingPercentage: 'MBBS: 55%, BDS: 50%',
+                breakdown: 'Biology (68 MCQs), Chemistry (54 MCQs), Physics (54 MCQs), English (18 MCQs), Logical Reasoning (6 MCQs). Total: 200 MCQs (No Negative Marking).',
+                conductedBy: 'Provincial Admitting Universities under PMDC regulations (UHS Punjab, DUHS Sindh, KMU KPK, BUMHS Balochistan, SZABMU Islamabad).',
+                sourceUrl: 'https://pmdc.pk'
+            }
+        },
+
+        commissions: {
+            fpsc: {
+                name: 'Federal Public Service Commission (FPSC)',
+                website: 'https://www.fpsc.gov.pk',
+                description: 'Conducts General Recruitment (GR) One-Paper MCQs screening tests (100 Marks, 100 MCQs, 100 Minutes) and CSS Competitive Examination.',
+                onePaperPattern: 'Part-I: English (Grammar, Vocabulary, Sentence Structuring) - 20 Marks. Part-II: General Intelligence / Professional / Subject Knowledge - 80 Marks.',
+                keyPosts: ['Inspector Customs', 'Appraising Officer', 'Assistant Director FIA', 'Inspector FIA', 'Patrol Officer', 'Preventive Officer']
+            },
+            ppsc: {
+                name: 'Punjab Public Service Commission (PPSC)',
+                website: 'https://www.ppsc.gop.pk',
+                description: 'Conducts Provincial Single Paper MCQs Tests (100 MCQs, 90 Minutes) with -0.25 Negative Marking and PMS Examination.',
+                onePaperPattern: '100 MCQs covering General Knowledge, Pakistan Studies, Current Affairs, Islamic Studies, Geography, Basic Math, English, Urdu, Everyday Science, Basic Computer Skills.',
+                keyPosts: ['Junior Clerk (25-30 WPM Typing + MS Office)', 'Tehsildar / Naib Tehsildar', 'Sub-Inspector', 'Assistant', 'Lecturer']
+            }
+        },
+
+        uniformAndDefence: {
+            fia: {
+                name: 'Federal Investigation Agency (FIA)',
+                posts: ['Assistant Director (BPS-17)', 'Inspector (BPS-16)', 'Sub-Inspector (BPS-14)', 'Assistant Sub-Inspector (BPS-09)', 'Constable (BPS-05)'],
+                screeningStages: 'Physical Test (Running, Height, Chest) -> Written MCQs Test -> Interview.'
+            },
+            asf: {
+                name: 'Airports Security Force (ASF)',
+                posts: ['Assistant Director', 'Inspector', 'ASI (BPS-09)', 'Corporal (BPS-07)'],
+                screeningStages: 'Physical / Medical Test -> Written Test -> Interview.'
+            },
+            police: {
+                name: 'Islamabad Police & Provincial Police',
+                posts: ['ASI', 'Constable', 'LDC', 'UDC', 'DEO'],
+                requirements: 'LDC: 30 WPM typing, UDC: 40 WPM typing. Written test has 100 MCQs.'
+            }
+        },
+
         hec: {
             lat: {
                 name: 'Law Admission Test (LAT)',
@@ -221,6 +268,18 @@ export const ACADEMIC_KNOWLEDGE = {
             officialWebsite: 'https://uet.edu.pk',
             testName: 'ECAT (Engineering Colleges Admission Test)',
             description: 'Mandatory for all engineering universities in Punjab.'
+        },
+
+        lums: {
+            name: 'Lahore University of Management Sciences (LUMS)',
+            officialWebsite: 'https://lums.edu.pk',
+            testPolicy: 'Accepts SAT / LCAT scores with high academic distinction.'
+        },
+
+        iba: {
+            name: 'Institute of Business Administration (IBA Karachi)',
+            officialWebsite: 'https://iba.edu.pk',
+            testPolicy: 'Conducts IBA Online / Paper Entry Test for BBA, BS CS, BS Economics.'
         }
     }
 };
