@@ -1,0 +1,51 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/
+Bot: Walaikum Assalam Usman! Hamari team mein khushamdeed.
+Main TestTayar.pk ka assistant hoon. Hum aapki competitive exams aur jobs ki tayari mein madad karte hain, jaise ke preparation books (PDF), typing practice, aur job applications.
+Aap kis post ya department ki tayari ke liye information lena chahte hain?
+Business: walaikumAssalam
+Business: g bolen
+You: My. Kpt apparentship test will be next month
+You: So from where I should learn
+Business: KPT apprenticeship test ki tayari ke liye hum mukammal solved PDF preparation book provide karte hain jiski price Rs. 300 hai. Is book mein aapki post ke mutabiq updated notes, General Knowledge, Current Affairs aur past papers shamil hote hain taake aap behtar tayari kar saken.
+Kya aap ye PDF book hasil karna chahte hain?
+You: If you give me the PDF of mcq I would be grateful
+Context: KPT apprenticeship test ki tayari ke liye hum mukammal solved PDF preparation book provide karte hain jiski price Rs. 300 hai. Is book mein aapki post ke mutabiq updated notes, General Knowledge, Current Affairs aur past papers shamil hote hain taake aap behtar tayari kar saken.
+Kya aap ye PDF book hasil karna chahte hain?
+You: Isme sare subject ka mcq mix hote ha
+Business: topic wise
+Business: mix ni hoty
+Business: alag alag hoty hain heading k sath
+You: English Urdu chemistry iq general knowledge wagera one to all Jo subject ainge
+You: Next month written test h
+Business: g sab hongy
+Business: current affairs 2 months ky bhe hongt alag pdf ma
+Business: har question k nechy explanation bhe hogi
+You: Ap aik page send krskhte han Sirf aik idea ka lia ka kis Tarah. Honge
+Business: Islamabad police ka kron?
+You: Mtlb
+Business: pora pdf kr deta hon
+Business: idea ky lie share
+Business: idea hojaiga ek apko
+You: Bhjdain
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: ek user ne manga tha sham ko to osko send kia tha
+Business: isme current affairs nahi hain oska alag pdf hota ha
+Business: <Unsupported Message>
+Business: ma so rha hon agr chia hua to pesy bhej dena suba uth kr 30 50mint lagengy bana kr songa syllabus nikalonga phir past papers baki current affairs bany hue to foran send kr demgy apko
+You: Apko apparentship b class trade ka h us hisab sa hoga na
+Business: yes sir
+Business: achi tyari hojaigi apki osse
+You: Diesel mechanic field h
+Business: g isi ky oepr hoga sari knowledge apko di jaigi iski
+Business: mutmain hogy ap osse
+Business: 3000 ka bhe don to log lengy lemin munasib price ha
+You: Price 300 h na
+Business: yes only 300
+You: Ma phir apko inshallah Kal tk btadunga
+Business: theek ha
+You: Ap apna jazzcash ya easypaisa ka number send krdein
+Business: jazzcash muhammad sami 03039512277
+You: Ok

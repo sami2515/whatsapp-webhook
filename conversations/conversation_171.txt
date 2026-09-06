@@ -1,0 +1,24 @@
+You: Assalam-o-Alaikum, maine Rs. 300 transfer kar diye hain testtayar.pk se complete NADRA Test solved PDF guide book ke liye. Yeh payment receipt screenshot hai.
+You: {"image":{"image_id":"1415261497110046","caption":""}}
+Bot: Walaikum Assalam! Aapki payment ki malomat mil gayi hain. Maine aapki payment confirmation hamari team ko bhej di hai taake wo isay verify kar saken.
+
+Maine aapki payment confirmation team ko verify karne ke liye bhej di hai. Jald hi aap se raabta kiya jayega.
+You: ???
+You: What about pdf book
+Business: thori der ma mil jaigi apko
+Business: update ho rhi ha pdf new mcqs ky sath
+You: Ok thanks
+Business: nadra k lie chia na?
+You: G office in charge post k leyay apply kia hay
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: current afairs july ky
+You: Salam Sir G
+You: Grammar Orr management k mcqs NAHI hy
+Business: website per hain
+Business: waha sedekhlo
+Context: website per hain
+You: Konsay website per
+Business: https://testtayar.pk/mcqs/english?tab=solved

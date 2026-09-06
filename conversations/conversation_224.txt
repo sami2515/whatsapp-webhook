@@ -1,0 +1,83 @@
+Business: PK69MEZN0001990112309796
+Business: 01990112309796
+Business: jlfo
+Business: i
+Business: <Unsupported Message>
+You: {"image":{"image_id":"968022052700217","caption":""}}
+Business: 98950107308771
+Business: Voice Transcription: یار میرے account سے نہیں جا رہے ناصر بھائی کہہ رہا ہے limited increase پتا نہیں کیا بول رہا ہے ایک لاکھ پچھتر اس پہ بھیجو میں جا کے بھیجتا ہوں گھر پہ
+Business: Voice Transcription: فیضان بینک ہے جمال الدین نام ہے.
+Business: Voice Transcription: جا کے اے ٹی ایم پہ جا کے بھیجوں گا اس سے آ جائیں گے. ایک پچھتر بھیجنا ہے اس پہ. جمال الدین نام ہے اور میدان بینک ہے.
+You: Voice Transcription: اچھا تمہارا میں نے تمہارے نمبر پہ بھیج دیا ہے اس کے نمبر پہ تم ڈائریکٹ اسی کے نمبر پہ مجھ سے منگواتے نا.
+You: Voice Transcription: 
+Business: Voice Transcription: बोल, अपने सामने इसके सामने भेज दूँगा, अपने नंबर से।
+Business: Voice Transcription: पचहत्तर भेजने जमालुद्दीन नाम है मैदान में।
+Business: isper
+You: {"image":{"image_id":"1278835857563937","caption":""}}
+Business: 175 bhejna hain
+Business: 75 bhej die
+Business: 1or bhejo isko
+You: {"image":{"image_id":"1519614739672488","caption":""}}
+Business: apna account do jisper bhejna hain
+Business: 250bhejne hain apko
+Business: Voice Transcription: 
+You: 🤣🤣🤣🤣🤣
+You: 175
+175 
+350
+Business: oh han
+Business: <Unsupported Message>
+Business: 350
+Business: acc do
+You: Muhammad Nasir
+Meezan bank limited.
+Pk60mezn0001990109411210.
+Business: Voice Transcription: اچھا اپنی limit میں نے بڑھائی ہے دو لاکھ تو اس نے دو گھنٹے کا timer دیا ہے میرے کو اب دو گھنٹے بعد میرے account سے ایک پچھتر نکلیں گے اور گھر جا کے میں پھر اے ٹی ایم سے بھی ایک پچھتر مارتا ہوں اور اپنے account سے بھی ایک پچھتر ماروں گا صحیح ہے
+You: Voice Transcription: ارے تو میزان بینک تو نارمل پانچ لاکھ روپے لیمٹ ہوتی ہے ایک دن کی سینڈ کرنے کی. اس کے بعد آپ بڑھا سکتے ہو تھوڑا ٹائم بعد میں نے تیس لاکھ روپے میری ایک دن کی ٹائمنگ ہے ایک بیچنے کی.
+Business: Voice Transcription: یہ تو مجھے بھی پتا تھا دو لاکھ limit تھی لیکن جب ہی تو میں گیا ہوں تو اب میں گیا ہوں تو دو لاکھ جا ہی نہیں رہے جب اس کو کیا وہ انگوٹھے مانگ رہا ہے پھر ابھی انگوٹھے اس کو دیے دو لاکھ کی ہے ابھی اب وہ دو گھنٹے کا timer اس نے دے دیا
+Business: 175 cash le aon 175 account ma ya 350 account ma?
+You: Voice Transcription: जैसे तुम्हें बेहतर लगे।
+Business: {"image":{"image_id":"1347396957254008","caption":""}}
+Business: ghr ja rha apke 175 dene
+Context: ghr ja rha apke 175 dene
+You: Ok
+Business: de dia
+You: Voice Transcription: السلام علیکم اچھا سامعین یہ مجھے بتاؤ کسی کا جی میل ہیک ہو جائے گا مطلب جی میل اگر ہمارے کو بندے کا معلوم ہو تو وہ اگر ہم کرنا چاہیں وہ ہے ہو جائے گا ہیک
+Business: Voice Transcription: ہو جائے گا کچھ نہ کچھ ہونا چاہیے یا آخری کا password اس کا آخری کے four digit password آنا چاہیے یا پھر کوئی backup code وغیرہ ہو آپ کے پاس جس سے آپ login کرو یا recovery میں آپ کی email ہو یا اس کے ای میل پہ آپ کا نمبر دینا ہو بس ایک بار بھول کے نا اس کا پھر سب چیزیں change ہو جائیں گی آخر
+Business: Voice Transcription: ہم ہیک کرتے ہیں نا بغیر پاسورڈ کے یا کوئی اور طریقے سے آپ کرتے ہو مثال کے طور پہ تو وہ اگر کمپلین کرے گا نا تو وہ اس کو ریکور کر کے گوگل والے دے دیتے ہیں.
+Business: Voice Transcription: بھلے آپ نے password change کر دیا ہر چیز اس کی ہٹا دی پھر بھی اس کو دے دیتے ہیں
+You: Voice Transcription: चलो मैं बताऊंगा ना ये वाला करना है मेरे laptop की ना screen तोड़ दी ऊपर चढ़ गया screen टूट गई उसकी तो कहाँ से बताओ वो कह रहे हैं कि उधर पता नहीं में tower पता नहीं कौन सा plaza है वहाँ जा के डलवानी पड़ेगी laptop की screen टूट गई
+Business: acha
+Business: Voice Transcription: अगर आपका अपना account है तो फिर बन जाएगा उसका मसला नहीं खुल जाएगा आपके mobile में अगर खुलना चाहो तो
+You: Tariqmehmood164376@gmail.com
+You: Voice Transcription: अपना नहीं मेरा ये partner का है ना इसका मैंने निकलवाना है data जितना निकल सकता है दो महीने चार महीने का जितना कोशिश करो जरा तुम
+You: 03082021555
+Business: acha
+You: Yeh number osme add hoga
+Business: apkw pas ha sim?
+You: Nahi
+You: Osi k paas
+You: Aesa kuch ho osko pata na chale
+Business: pta to chalta ha
+Business: late night try kre banda
+Context: late night try kre banda
+You: Matlab
+Business: adhi rat ko
+Business: jab wo so rha ho
+You: Voice Transcription: लेकिन जब वो सुबह उठेगा तो उसको पता लगेगा ना या कोई आईडी के साथ छेड़ रहा था
+Business: ylg
+Business: g
+Business: Voice Transcription: وہ تو اکثر آتے رہتے ہیں ہمارے ساتھ بھی آتے رہتے ہیں وہ تو کوئی نہ کوئی لگا ہی ہوتا ہے کچھ نہ کچھ ہو ہی رہا ہوتا ہے
+You: Voice Transcription: देख लो, फिर।
+You: Voice Transcription: चलो, तुझे बताता हूँ मैं और एक और एक और ईमेल है, शायद वो निकलवाता हूँ।
+Business: {"image":{"image_id":"2035516473668525","caption":""}}
+Business: Voice Transcription: आपके पास है या उसके पास है?
+You: Voice Transcription: Yo sí que pasa
+Business: 19000 ki screen ha laptop ki holesale rate
+You: Kaha se
+Business: saddar.
+You: Chalna eid k baad
+Business: Voice Transcription: Whole sale shop ہے وہاں سے یہ ہے کہ خریدنی پڑتی ہے اور پھر کسی بھی shop والے سے لگوا لوں ریگل پہ shop ہے اس کے اوپر گودام type کی ہے بیچنے والی shop میں first فلور پہ ایک ہے بلٹی ہو کے جاتا ہے مال اس کا لاہور ہال road واہ واہ لیکن ایک دے دے گا وہ hole sale ریٹ انیس مہینے بعد کی انیس ہزار گزر رہا ہے اس سے لے کے پھر کسی بھی شوق سے لگواؤ گے وہ پانچ سو ہزار اس کی دے گا پھر
+Business: ok
+Business: bussiness account ma ayse status n lagaya kro banned hojaiga number permanent agr kisi ne report kr dia lekin report k bagair bhe hota ha nazar ma aye to
+You: Oh

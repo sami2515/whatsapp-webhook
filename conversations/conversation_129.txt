@@ -1,0 +1,68 @@
+Business: Hello,
+
+I just placed an order on your website. Here are the details:
+
+*Order Number:* #6489
+*Name:* Muhammad Sami
+*Items:*
+- You Were Not Supposed To Wake Up - Signed Copy (Qty: 1)
+
+*Total Amount:* ₨ 3,500
+
+Please confirm my order. Thank you!
+Business: achy se likhna bhut gift krna ha kisi ko
+Business: Bank transfer kia ha taky return ka dar na ho
+Business: For Saba — Stay curious, seek truth, and live with purpose.
+Business: kon likhyga imtinan sir signed k sath likhengy?
+Business: ye likhna ha
+Business: sign ky sath ye likhna ha
+Business: ??
+Business: sir bagair likhy dispatch ni krna
+You: Assalam-o-Alaikum
+You: Send me the screenshot of your payment
+You: Book Order Confirmed From Askimtinan!
+
+Hello,
+
+Thank you for ordering "You Were Not Supposed To Wake Up" by Imtinan Ahmad. Your order has been successfully received and confirmed.
+
+💳 Payment Status:
+Total Amount: 3500
+Payment Method: Advance Payment Received (Fully Paid) ✅
+(You do not need to pay anything to the rider at the time of delivery.)
+
+📢 Important Update:
+The book is launching on July 8th. Your shipment will be dispatched right after the launch, and Delivery may take 2 to 3 weeks after dispatch, depending on your location and courier service.
+
+Thank you for your incredible support and patience!
+
+Best regards,
+Team Imtinan Ahmad
+Business: {"image":{"image_id":"971419202612330","caption":""}}
+Business: ma bar bar keh rha hon sir muja likhy bagair dispatch ni krna ye book per likhna ha ye sign ky sath
+Business: konsi delivery service ha aysi jo 2,3 weaks lagati ha ?
+You: Voice Transcription: السلام علیکم first of all آ جو ہے sign copy ہی آپ کی ہم نے کی ہوئی ہے ابھی order آپ کو dispatch ہوا نہیں ہے ٹھیک ہے آپ کا جو order dispatch ہوگا تو آپ کو ایک ای میل آ جائے گی اس میں mention ہوگا اور وہ آپ کو deliver ہو جائے گا ٹھیک ہے اگر آپ specially کوئی لکھوانا ہے تو آ اس کے لیے مجھے آ جو ہے نا mention کرنا پڑے گا کیونکہ آچانک ہی آپ کو order dispatch ہو جائے sign copy ہوتی ہے تو اس میں جو ہے نا signature ہوتے ہیں تو وہ ساتھ ہی آپ کو وہ copy ملتی ہے تو باقی یہ کہ میں جو ڈیلیوری ہے وہ آپ کو leopard سے ملے گی آ leopard یا track سے تو پچیس سے اٹھائیس جولائی یا first اگست سے پہلے پہلے انشاءاللہ پارسل آپ کو مل جائے گا۔
+Business: Voice Transcription: السلام علیکم یہ لکھوانا لازمی ہے کیونکہ یہ مجھے اپنے لیے نہیں چاہیے نا مجھے کسی کو گفٹ کرنا ہے. اور یہ اس کے لیے سائن کے ساتھ اگر سائن پہلے نہیں ہوتا بعد میں سر کرتے ہیں تو سر بعد میں لکھ کے سائن کر دیں. اگر سائن پہلے سے ہوا ہوتا ہے تو سر بعد میں لکھ کے سائن اسی جس پین سے لکھا ہو گا اسی پین سے لکھ دیں تاکہ اچھا بھی لگے اور گفٹ کا گفٹ بھی ہو جائے. اور ڈیلیوری کا مسئلہ نہیں ہے بھلے پندرہ دن لگ جائیں ایک تک ایک تاریخ تک ہو جائے ڈیلیوری لیکن شرط یہ ہے کہ لازمی ہونا چاہیے ڈیلیوری کا مسئلہ نہیں ہے باقی ٹھیک ہے mention لازمی کرنا ایسے نہیں کہ میں گفٹ کروں اور اس پہ پھر کچھ لکھا نہیں ہو پھر اچھا نہیں لگے گا نا اور میں نے order کرنے سے پہلے دوسرے نمبر پہ کنفرم کیا تھا میں نے بتایا تھا ان کو کہ یہ لکھوانا ہے مجھے تو انہوں نے کہا کہ آپ order کر دیں اور اس کے بعد order آئی ڈی دے دینا تو میں mention کر دوں گا پھر انہوں نے کہا کہ جو بک والا نمبر ہے ان کو بتا دیں اس لیے میں نے پھر آپ کو بھی بتایا
+You: Voice Transcription: آہ چلیں ٹھیک ہے میم میں کروا دیتا ہوں.
+Business: Voice Transcription: اب ایک کام کرو فاسٹ ڈیلیوری کرواؤ جو ڈیلیوری کے چارجز ہیں وہ میں پے کر دوں گا اور آپ جو ہے ڈیلیوری کروا دو جلدی اس طرح آپ کروا سکتے ہو express ڈیلیوری
+You: Voice Transcription: देखिए, अभी नया स्टॉक आता है तो वो आएगा मंडे को या ट्यूसडे को? आप मंडे या ट्यूसडे को मुझे ट्यूसडे को मुझे कॉल कर देना या मंडे को मुझे कॉल कर देना, मैं फिर आप करवा दूँगा।
+Business: AssalamOalaikum stock agaya?
+Business: meny jo kaha tha likhwany k lie alag krdi meri book apne likhwa kar?
+Business: jawab dedo ap log jawab hi nahi dety
+Business: ???
+Business: dear team please reply
+Business: ??
+Business: Voice Transcription: السلام علیکم یہ order نمبر ہے order نمبر آپ دیکھو اور آپ کو میں نے request کی تھی کہ اس پہ لکھنا ہے ٹھیک ہے جو اس پہ لکھنا ہے وہ بھی اوپر لکھا ہوا ہے اور آپ نے کہا تھا کہ Monday یا Tuesday کو رابطہ کرنا stock آئے گا اس کے بعد میں آپ کا الگ کر کے لکھوا کے بھجوا دوں گا آپ نہ message کر رہے ہو نہ کال اٹھا رہے ہو
+You: Assalam-o-Alaikum
+You: Voice Transcription: ये आपकी request के मुताबिक ही आपको भेजा है parcel ठीक है आपने जो कहा था ये line लिखनी है वो हम मैंने specially लिखवाई है और आपको मैंने वहाँ से move करवाया है already आपके पास move हुआ हुआ है कल का ah कभी कभी भी देना आपके पास लड़का देने आ जाएगा may be आज कल या परसों तक ah expected जब कोई delivery बनती है उस दिन लड़का देने आ जाएगा
+Business: walaikumAssalam  shukria bhut koi tracking number ho to share kr dein
+Business: Voice Transcription: السلام علیکم! مجھے آپ نے کہا تھا کہ جب discharge ہوگا تو email آئے گی. اس میں taking number ہوگا. مجھے کوئی بھی email نہیں آئی ابھی تک.
+Business: {"image":{"image_id":"1005474568996172","caption":""}}
+Business: jazak allah shukria bhut
+Business: acha meny note kia ha ky indian or bhe bhut log pdf mang rhy hain ma apki website ma hi ebook apke lie bana kr de skta hon jo log apki website per hi jo kharedyga wo acess kar sakyga limitations k sath pdf ni dia jaiga reading type acess dia jaiga sirf screenshots ni le sakega koi bhut acha setup ban jaiga save koi bhe ni kr sakyga sir se bat krke batana muja ma developer hon samidev.pk meri website ha mamoli sa charge kronga bs
+Business: account login required hoga.
+purchased books “My Library” mein nazar aayengi. watermark ky sath misal licensed to: sa***@gmail.com
+Order: AI-10832
+reader last position remember karega.
+buyer specific watermark nazar aayega.
+devices aur concurrent sessions limit kiye ja sakenge.

@@ -1,0 +1,25 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/mcqs/computer?tab=practice&start=true
+Bot: Walaikum Assalam Rahib! Hum aapki kaise madad kar sakte hain? Aapne computer MCQs practice page ka link share kiya hai—kya aapko typing test ya preparation material ke hawale se koi sawal puchna hai?
+Context: Walaikum Assalam Rahib! Hum aapki kaise madad kar sakte hain? Aapne computer MCQs practice page ka link share kiya hai—kya aapko typing test ya preparation material ke hawale se koi sawal puchna hai?
+You: Preparation material
+Business: post or deprtment btayen pna
+Business: apn
+Context: post or deprtment btayen pna
+You: Deta executive  NADRA
+Business: mil jaiga sir
+Context: mil jaiga sir
+You: Ok
+Business: 500 price hogi osme nadra acts tamam laws sab shamil hongy
+Business: nadra ordinance 2000
+You: Mtlb
+Business: gk current affairs english
+Business: ye sab zarori hota ha test preparation k li
+Business: ye sab hoga book ma
+Context: ye sab zarori hota ha test preparation k li
+You: Ap mjy details dein
+Business: ye sab syllabus ha ye sab include hoga
+Context: ye sab syllabus ha ye sab include hoga
+You: Axhaaa
+Business: osse apki pori tyari hojaigi

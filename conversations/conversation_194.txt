@@ -1,0 +1,58 @@
+You: Le li ?
+Business: han
+Business: 180
+Context: 180
+You: Behtreen
+You: ..
+You: ??
+Business: hn
+You: Yar mamma KY nic par easy paisa bana Raha hu
+You: Aik chiz samajh nahi aa rahi
+Business: dai ka name.ppch rha hoga
+Business: kya
+Business: dadi
+Context: dai ka name.ppch rha hoga
+You: ?
+You: Nahi
+Business: phir
+You: Aik minut
+You: End me Jo option aa Raha hy
+You: <Unsupported Message>
+You: {"image":{"image_id":"1572696504583406","caption":""}}
+You: Is par hi open karo
+Business: basic kro
+Business: 3lack.momth tk rakh skty
+You: {"image":{"image_id":"1315846497371876","caption":""}}
+Business: biometric app we hojaigi
+Business: ya shop se krwa lo
+Business: easypaisa wali
+You: Yar sim pappa KY name par hy
+Business: jiske bhe ho
+Business: Ami ki.hogi bs
+Business: finger lagygi shop pr
+You: {"image":{"image_id":"1011558721360493","caption":""}}
+Business: login kro ab
+You: {"image":{"image_id":"1341736127894175","caption":""}}
+You: Ok Kari ?
+Business: hn
+You: {"image":{"image_id":"1024455913382912","caption":"Aby Yar ye to hang ho gaya chal hi nahi raha"}}
+Business: Voice Transcription: کنٹینیو جو بائیو میٹرک کرو اور اپنی امی کی جو ہے فنگر پرنٹ لگاؤ. کیمرہ صاف کر کے ہاتھ زیادہ گیلا ویلا نہیں ہو کیمرہ صاف ہو گا تو سکین کرے گا اگر کیمرہ صاف نہیں ہے اچھا نہیں ہے پھر سکین نہیں کرے گا. اور فوکس کرنے دینا جب وہ کیمرہ فوکس کرے نا. وہ خود کھینچے گا تصویر ہاتھ ہلانا نہیں ورنہ فوکس کرتا رہے گا وہ.
+Context: Voice Transcription: کنٹینیو جو بائیو میٹرک کرو اور اپنی امی کی جو ہے فنگر پرنٹ لگاؤ. کیمرہ صاف کر کے ہاتھ زیادہ گیلا ویلا نہیں ہو کیمرہ صاف ہو گا تو سکین کرے گا اگر کیمرہ صاف نہیں ہے اچھا نہیں ہے پھر سکین نہیں کرے گا. اور فوکس کرنے دینا جب وہ کیمرہ فوکس کرے نا. وہ خود کھینچے گا تصویر ہاتھ ہلانا نہیں ورنہ فوکس کرتا رہے گا وہ.
+You: Ho gay active
+Business: memy bola.tha apko tahir chaho ka nic ki copy chia
+Business: <Unsupported Message>
+Business: ayengy to le lena onse bolna shehzad ka death certificate banwana ha oske lie chia
+You: Kab bola tha ??
+Business: apki am ko bola tha shayad
+You: Wo nahi dengy Yar panchait karengy
+Business: pochna onse
+Business: bol kr dekhna dedi to sai ha warna chor dena
+Business: kabhi onko bhe zaroorat prygi oski phir ma dekhta hon kesy lety hain
+Business: nadra record ma to bhai ha na onka
+Business: <Unsupported Message>
+You: To Tum keu banwa rahy ho ?
+Business: chia muja
+Business: kam ha
+Business: mubarak
+Context: mubarak
+You: Kher mubarak

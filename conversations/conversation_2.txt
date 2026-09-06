@@ -1,0 +1,11 @@
+Business: assalamOalaikum
+Business: https://hondazone.pk/product/honda-70-carburetor-euro-ii/?srsltid=AfmBOop1LhR7vlno97OupIYhGSNKi1lkIxequvmRtWoXM4BEyG-C-G3e
+Business: {"image":{"image_id":"2623627638071014","caption":"ye keima ka ha ya kehin ka?"}}
+You: W SALAM
+You: 5700
+Business: keima ka ya kahin?
+You: ATLAS HONDA
+Business: {"image":{"image_id":"1544026710832792","caption":""}}
+You: IS KA NH PATA
+You: ORDER CONIFRM KARO GAY DEKH K BATA DONGA
+Business: bataogy to  Confirm kronga n a

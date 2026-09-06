@@ -1,0 +1,63 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/mcqs/general-knowledge
+Bot: Walaikum Assalam S Y E D Z U B A I R! Ham TestTayar.pk ki team se hain. Aap ne General Knowledge MCQs ke page ke havale se message kiya hai. Ham aap ki kaise madad kar sakte hain?
+You: I want to order complete MCQs Solved Questions in these subjects
+You: {"image":{"image_id":"927007003792821","caption":""}}
+You: Do you have any better idea for these subjects?
+Business: yes
+Business: is hisab se mil jaiga
+Business: laws acts bhe
+You: I need MCQs base updated book
+You: And price bta de ap
+Business: Hmare paas complete solved PDF preparation book Rs. 300 mein available hai. Is mein aap ke bataye gaye subjects ke mutabiq updated MCQs, laws, acts, aur past papers shamil hain. Aap ko kis specific post ya department ke liye book chahiye?
+Business: Islamabad police ki mil.jaigi 300 ma updated ha new
+Business: jazzcash muhammad sami 03039512277
+Context: Hmare paas complete solved PDF preparation book Rs. 300 mein available hai. Is mein aap ke bataye gaye subjects ke mutabiq updated MCQs, laws, acts, aur past papers shamil hain. Aap ko kis specific post ya department ke liye book chahiye?
+You: Me NCCIA me Technical Assistant k liye Apply kr raha hun to is k liye chahiye
+Business: syllabus to apne Islamabad police ka bheja ha
+Business: g mil.jaiga
+Context: syllabus to apne Islamabad police ka bheja ha
+You: Sir ye Syllabus NCCIA k liye jb ap apply krte he to ap k sath share krte he wo
+You: Ye kese deliver hogi book ?
+Business: testing service ek hi ha jo Islamabad police ot nccia ki tests leti ha
+Business: pdf bheja jaiga
+Context: testing service ek hi ha jo Islamabad police ot nccia ki tests leti ha
+You: Ok bs mujhe is test k kiye chahiye
+Context: pdf bheja jaiga
+You: Ok so let me share the amount ?
+Business: 300 only
+You: K
+Business: no sir
+Business: 3k nahi 300
+Context: 3k nahi 300
+You: Hahaha mene kaha ok but wo k just type ho gaya
+Business: munasib is lie kie hain log pehle.hi challans bharty hain
+You: Me krta hun apko sent
+Business: pdf creation charges hain ye sirf baki free hi ha mcqs
+You: Ok ek mint dede ap
+Business: bhej kar screenshot bhej dena
+Context: bhej kar screenshot bhej dena
+You: Ok
+You: {"image":{"image_id":"28680836528190618","caption":""}}
+You: Check sir
+Business: wait kro 30 , 40 mint
+Business: subject ky hisab se apke mcqs add kr rha hon new
+Context: subject ky hisab se apke mcqs add kr rha hon new
+You: Ok sir
+You: ??
+Business: wait kro
+You: Ok
+Business: apne technical assistant per apply kia jiska test hard ha kafi apne jo sylabus bheja tha wo islamabad police ka tha
+Business: totl 800 se 850 mcqs hongy jo ma bhejnga sath har mcqs per nechy explanation di hogi roman urdu ma
+Business: achy se tyari krna
+Context: totl 800 se 850 mcqs hongy jo ma bhejnga sath har mcqs per nechy explanation di hogi roman urdu ma
+You: Ok ap bhej de inshahAllah Tayari karunga 🥰
+Business: <Unsupported Message>
+Business: https://www.trustpilot.com/review/testtayar.pk
+Business: hamari website ka url khol kr review dal do acha sa please
+Context: hamari website ka url khol kr review dal do acha sa please
+You: Ok sir
+You: {"image":{"image_id":"1861575384813850","caption":""}}
+You: {"image":{"image_id":"1549763999963870","caption":""}}
+Business: thank you

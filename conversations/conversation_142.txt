@@ -1,0 +1,10 @@
+Business: AssalamOalaikum
+Business: {"image":{"image_id":"1616747709824085","caption":""}}
+Business: {"image":{"image_id":"921375550431719","caption":""}}
+Business: {"image":{"image_id":"1360611842339702","caption":""}}
+Business: {"image":{"image_id":"1060251456397182","caption":""}}
+Business: ye dummy mtlb kya ha
+You: Fake
+You: Book
+Business: fake mtlb kesi hogi khulygi ni ya blank hogi
+You: Voice Transcription: කොලේ ගෙඩිය

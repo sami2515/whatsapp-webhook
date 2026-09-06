@@ -1,0 +1,18 @@
+Business: AssalamOalaikum
+Business: LOAD SHEDDING SCHEDULES
+MAINTENANCE SCHEDULES
+9:05:00 AMto12:05:00 PM
+1:35:00 PMto4:35:00 PM
+6:05:00 PMto9:35:00 PM
+11:35:00 PMto2:05:00 AM
+Context: LOAD SHEDDING SCHEDULES
+MAINTENANCE SCHEDULES
+9:05:00 AMto12:05:00 PM
+1:35:00 PMto4:35:00 PM
+6:05:00 PMto9:35:00 PM
+11:35:00 PMto2:05:00 AM
+You: Voice Transcription: ٹھیک ہے چار پینتیس پہ جو آ رہی ہے نا میں آ جاتا ہوں ٹھیک ہے اور اس کو آگے کر دینا آپ گھر پہ رہنا صحیح ہے میں بس نکل رہا ہوں چار پینتیس پہ exact پہنچ جاؤں گا ٹھیک ہے اور نیچے کام کرنا ہو گا ہمیں اور اوپر کی طرف جو ہے یہاں سے گئے تھے ٹھیک ہے
+Business: theek ha
+Business: m ni bhe hua to ahmed hoa
+Business: hoga
+You: {"image":{"image_id":"2906821806354611","caption":""}}

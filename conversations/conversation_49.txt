@@ -1,0 +1,43 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+walaikum assalam
+Bot: Walaikum Assalam, Mrs. Zeeshan Qamar! Hum aapki kaise madad kar sakte hain?
+Business: walaikum assalam
+You: how can you help me?
+Business: what kind
+Business: kis bary ma
+You: pehle ap ye btaen k apne mjhse kese contact kiya
+Business: smjha nahi ma
+Business: apne mujhse kia ha meny apse nahi kia
+You: acha phr chor den me kisi or ko msg karna chahrahi thi ,ek app me ye no aya tha
+Business: Koi baat nahi! Hum TestTayar.pk hain aur hum competitive exams ki tayari mein madad karte hain. Agar aapko kabhi test preparation ya exams se mutalik koi sawal ho, toh zaroor poochiye ga.
+You: ji me test tayar se preparation karrahi thi to apka msg aya ,me paec jr assistant admin II k liye ,to app use karte hue apse contact hogaya
+Business: Zaroor! PAEC Junior Assistant Admin II ki tayari ke liye hamare paas mukammal solved PDF preparation book maujud hai jiski qeemat Rs. 300 hai. Kya aap ye book lena chahengi taake aap apni tayari behtar tareeqe se kar saken?
+You: ap mjhe btaen k mjhe kis pr zada focus karna chahye
+Context: Zaroor! PAEC Junior Assistant Admin II ki tayari ke liye hamare paas mukammal solved PDF preparation book maujud hai jiski qeemat Rs. 300 hai. Kya aap ye book lena chahengi taake aap apni tayari behtar tareeqe se kar saken?
+You: mcqs k liye?
+Business: yess
+Business: sab ki topics dekhlo jo.hain criteria ma
+You: thori si guide karden plz
+Context: yess
+You: mcqs ki tayyari to ki he mene , wese aap , mjhe btaen kiya process hain  book lene ki
+You: wese test tayyar me paec k baare me likha nahii he kuch bhi ,bkya idaro ka zikr he
+Business: jazzcash muhammad sami 03039512277
+Business: gg
+Business: bhej do pesy bhej donga
+Business: 1. English — high priority
+2. Basic Math + IQ — high priority
+3. General Knowledge + Pakistan Studies
+4. Islamiat
+5. Everyday Science
+6. Admin/Office-related preparation
+Context: 1. English — high priority
+2. Basic Math + IQ — high priority
+3. General Knowledge + Pakistan Studies
+4. Islamiat
+5. Everyday Science
+6. Admin/Office-related preparation
+You: Thank you so much
+You: Pr isme islamiat to nahi hota sir
+You: Every day science bhi nahi hota is post ke liye
+Business: har post ma hota ha ye dono

@@ -1,0 +1,85 @@
+Business: assalamOalaikum
+Business: website ma tester per msla ha apki video attach krdi ha https://drive.google.com/file/d/12OtZxarxoYPd6qgFt4cqIysWdHOTqfGW/view?usp=sharing
+Business: tester product per
+Context: assalamOalaikum
+You: W/Salam
+Context: tester product per
+You: Sir kia Order karne main issue aa raha hai?
+Business: Voice Transcription: اچھا میں آرڈر تو نہیں کر رہا تھا میں چیک کر رہا تھا لیکن جو پرفیومز والی سائیڈ ہے نا وہ چیک آؤٹ بھی اس سے ہو رہا ہے اور کارڈ میں بھی جا رہا ہے. لیکن جو ٹیسٹر ہے نا ٹریسٹر میں نہ چیک آؤٹ ہو رہا ہے نہ کارڈ میں جا رہا ہے آئٹم اور اگر کارڈ میں پہلے سے کوئی پرفیوم ہو اور ٹیسٹر کو چیک آؤٹ کرو تو پرفیوم چیک آؤٹ ہوتا ہے کارڈ تب بھی نہیں آتا اس میں. کارڈ میں تب بھی نہیں آتا وہ.
+Context: Voice Transcription: اچھا میں آرڈر تو نہیں کر رہا تھا میں چیک کر رہا تھا لیکن جو پرفیومز والی سائیڈ ہے نا وہ چیک آؤٹ بھی اس سے ہو رہا ہے اور کارڈ میں بھی جا رہا ہے. لیکن جو ٹیسٹر ہے نا ٹریسٹر میں نہ چیک آؤٹ ہو رہا ہے نہ کارڈ میں جا رہا ہے آئٹم اور اگر کارڈ میں پہلے سے کوئی پرفیوم ہو اور ٹیسٹر کو چیک آؤٹ کرو تو پرفیوم چیک آؤٹ ہوتا ہے کارڈ تب بھی نہیں آتا اس میں. کارڈ میں تب بھی نہیں آتا وہ.
+You: Sir i think tester out of stock hai that's why
+Business: assalamOalaikum
+Business: https://ghanialoud.com/collections/attar-collection
+Business: attar recommend kro acha sa
+Business: location kya ha apki
+Business: Order #7057
+Business: bhai Oud Al Fatim order kia ha  kisi ko gift krna ha karachi ma kab tak deliver hoga?
+Business: 2500 bhej deta hon online kal.hi deliver krwa do
+You: Assalamualaikum
+You: {"image":{"image_id":"37988973514034182","caption":""}}
+You: Kindly confirm your Order 
+پلیز اپنا آرڈر کنفرم کریں۔
+Context: attar recommend kro acha sa
+You: <Unsupported Message>
+Context: attar recommend kro acha sa
+You: <Unsupported Message>
+Context: attar recommend kro acha sa
+You: <Unsupported Message>
+Context: bhai Oud Al Fatim order kia ha  kisi ko gift krna ha karachi ma kab tak deliver hoga?
+You: Inshallah 4-5 working days main aapko receive ho jaega
+Context: 2500 bhej deta hon online kal.hi deliver krwa do
+You: Voice Transcription: جی سر بالکل ہو جائے گا لیکن آپ کو twenty five hundred بھیجنے کی ضرورت نہیں ہے جو چوبیس سو روپے کا amount ہے آپ مجھے وہ آن لائن pay کریں گے اس کا طریقہ کار یہ ہوتا ہے آپ مجھے جیسے ہی آن لائن pay کریں گے میں آگے account سے کنفرم کروں گا کہ آپ کی payment receive ہو گئی ہے بس میں پھر اس کے بعد یہاں سے تقریبا چار سے پانچ بجے کے قریب آپ کا پارسل بائیکاٹ کروا دوں گا آپ کی طرف اور ڈیلیوری بھی ہماری طرف سے ہو گی آپ نے بس اپنا پارسل پک کرنا ہو گا جس کو ارجنٹ چاہیے ہوتا ہے نا بس ہماری پالیسی یہ ہے کہ جس کو ارجنٹ چاہیے وہ پوری پیمنٹ جو بنتی ہے وہ میں دینا پڑتی ہے اگر آپ اس طرح سے ہیں تو بالکل آپ بتا دیجیے گا میں آپ کو یہاں سے انشاءاللہ آج پانچ بجے تک یہاں سے dispatch کروا دوں گا
+Business: payment details bhej do
+Business: walaikumAssalam
+Business: confirm ha bs ye bata do oud al Fatim sab se acha ha na?
+You: {"image":{"image_id":"2500842220338920","caption":""}}
+Context: confirm ha bs ye bata do oud al Fatim sab se acha ha na?
+You: Voice Transcription: सर ये डिपेंड करता है कि आप किस तरह की फ्रैगनेंस पसंद करते हैं अगर आप स्वीट खुशबूएं पसंद करते हैं तो ऑब्वियस्ली ये आपके लिए बेस्ट है और दूसरा ये कि हमारे पास इसके अंदर ऊद में दो और भी हैं एक ऊद अगर के नाम से और एक है ऊद के नाम से जो है वो वाइट के जैसा है और जो है वो थोड़ा सा और हार्ड है तो जिस भी तरह का आप पसंद करते हैं आप अगर उस तरह का मंगाना चाहें वरना वैसे ये भी बेस्ट है
+You: Voice Transcription: اور تینوں ہی ماشاءاللہ سے اچھے خاصے چلنے والے ہیں۔
+Business: {"image":{"image_id":"1758409741855132","caption":""}}
+Context: {"image":{"image_id":"1758409741855132","caption":""}}
+You: RCVD
+Business: kaha ha apka outlet ha kaha se bykea krwaongy?
+Context: kaha ha apka outlet ha kaha se bykea krwaongy?
+You: Gulshan e Iqbal
+Context: kaha ha apka outlet ha kaha se bykea krwaongy?
+You: Voice Transcription: नहीं सर हमारा physical आउटलेट नहीं है हमारा ऑफिस है तो हम अपने ऑफिस के through आपके पास बाइकें करवा देंगे ठीक है
+You: Voice Transcription: اور جب یہاں سے بائیکیں کروائیں گے تو بائیکے والے کا نمبر اور نام آپ کو بھیج دیا جائے گا اور آپ کو انفارم کر دیں گے ہم یہاں سے رائڈر کو نکالنے سے پہلے تاکہ آپ بھی الرٹ ہو جائیں ٹھیک ہے.
+Business: Voice Transcription: ठीक है, राइडर तो अपना होता है ना? आपका भरोसे वाला होता है या नहीं?
+Context: Voice Transcription: ठीक है, राइडर तो अपना होता है ना? आपका भरोसे वाला होता है या नहीं?
+You: Voice Transcription: جی سر رائیڈر proper book کرتے ہیں اس کی ساری information ہوتی ہے ہمارے پاس اور rare cases میں اگر لے کے بھاگ بھی جائے گا تو وہ ساری responsibility ہماری ہے آپ کے پاس انشاءاللہ آپ کا parcel صحیح سلامت پہنچے گا کوئی بھی issue ہوتا ہے کوئی بھی مسئلہ ہوتا ہے اس کے ذمہ دار ہم ہیں ٹھیک ہے
+Business: Voice Transcription: اچھا اس کا کوئی oil وغیرہ بھی ہوتا ہے میں نے وہ یوٹیوب میں کوئی ویڈیو تھی وہ اپلائے کرنا بتا رہا تھا short تھی تو اس میں وہ پتا نہیں oil کیا لگا رہا تھا اور اس کے اوپر اس نے لگایا پھر اس نے اس کو max کیا ایسے کچھ اس نے کیا
+You: Voice Transcription: سر یہ جو عطر ہوتے ہیں نا basically یہی oil ہوتا ہے دیکھیں عطر میں اور perfumes میں یہ فرق ہوتا ہے کہ عطر جو ہوتے ہیں نا یہ اوریجنل pure oil کے ہوتے ہیں مطلب جو عطر اس طرح کے ہوتے ہیں نا جو جلدی اڑ جاتے ہیں وہ یعنی کہ اس میں ملاوٹ ہوتی ہے جو اوریجنل عطر ہوتے ہیں نا وہ صرف oil ہوتا ہے اس کے اندر کسی قسم کا کوئی ایتھن آئل وغیرہ کچھ بھی نہیں ہوتا جس کی وجہ سے وہ بہت زیادہ دیر تک last کرتے ہیں اور بہت زیادہ heavy بھی ہوتا ہے perfume کے اندر یہ ہوتا ہے کہ اس میں ایتھن آئل ہوتا ہے آئل کے ساتھ ساتھ تو اس وجہ سے وہ پرفیوم ہوتا ہے ایکسٹرا اس کے اوپر کوئی آئل نہیں لگتا ہے.
+You: {"image":{"image_id":"1051526047805971","caption":""}}
+You: Voice Transcription: السلام علیکم سر مجھے ذرا کنفرم کیجیے گا کہ آپ کی ان میں سے کون سی والی مسجد ہے محمدی مسجد جو ہے آپ کے nearby house پہ وہ کون سی ہے ان میں سے آپ مجھے بتا سکتے ہیں please
+Business: al hassan likho
+Business: {"image":{"image_id":"1395642499348135","caption":""}}
+Business: ye first wali location per bhej do osko ma ajaonga leny
+Business: al hasan bakery per khary hona osko bolo
+You: {"image":{"image_id":"1077353365231487","caption":""}}
+Business: 1st
+You: +92 327 2717607
+Sameer
+Business: ok
+You: Voice Transcription: السلام علیکم سر آپ کا پارسل dispatch کروا دیا ہے یہاں سے انشاءاللہ تعالیٰ آپ کے پاس کچھ دیر کے بعد آجائے گا اس کو کوئی charges وغیرہ نہیں دینے ہیں جو ڈیلیوری charges تھے وہ اس کو دے دیے ہیں آپ نے بس اپنا parcel receive کرنا ہے ٹھیک ہے
+Business: ok
+Business: Voice Transcription: निकल गया या निकलेगा
+You: Voice Transcription: نہیں نہیں سر یہ نکل گیا ہے اس کو دیر ہو گئی ہے پانچ دس منٹ تو ہو گئے ہیں آپ اس کو کال کر کے رابطہ کر لیں اگر رابطہ نہ ہو تو مجھے بتا دیجیے گا
+Business: ok
+You: Sir baat ho gai aapki?
+Business: ni ni ajaiga adrees per call k
+You: Sir jab parcel receive ho gaye tu mujhe inform kar di jiayeg
+Business: g abbi abhi aya
+Business: {"image":{"image_id":"1508207124408283","caption":""}}
+Business: {"image":{"image_id":"1901425720527004","caption":"ye isi trha tha khula hua"}}
+Business: pack ni tha
+Business: fragness kafi achi meny first time use kia oud
+You: Voice Transcription: جی ٹھیک ہے سر thank you so much جزاکم اللہ خیر اچھا دوسرا یہ کہ یہ عطر ہے نا تو عطر کے اوپر پلاسٹک کی packaging نہیں ہوتی کیونکہ عطر کا جو oil ہوتا ہے نا وہ پھر لیک ہونا شروع ہو جاتا ہے تو اس وجہ سے اس کی صرف soft packing ہوتی ہے بس مجھے یہ پوچھنا تھا آپ سے کہ آپ کے پاس خیر خیریت سے آپ کی امانت جو تھی وہ پہنچ گئی تو اب تسلی ہو گئی ٹھیک ہے سر جزاکم اللہ خیر thank you
+You: Thank you Sir jazakallah khairan.
+Business: <Unsupported Message>
+Business: tools ma jakr ai on kro na is number per zaroori details sari dedo apke lie asani hogi bhut adhy sawal ky jawab wo dega khudi jesy apki website kya ha ye wo
+Context: tools ma jakr ai on kro na is number per zaroori details sari dedo apke lie asani hogi bhut adhy sawal ky jawab wo dega khudi jesy apki website kya ha ye wo
+You: Voice Transcription: سر یہ actually ہم نے کرنے کا سوچا تھا لیکن ہمارے جو customers ہیں نا وہ nationwide ہیں. I mean all over پاکستان سے ہوتے ہیں زیادہ تر customers ایسے ہوتے ہیں ہمارے کہ جو messages کو مطلب اتنا ایکسپٹ نہیں کرتے. ان کو یا تو voice کرنی پڑتی ہے یا پھر ہمیں کال کر کے direct ان سے بات کرنی ہوتی ہے. تو customers کے لیے پریشانی ہو جاتی ہے. تو پھر that's why ہمارے owner نے refuse کر دیا تھا. But thank you so much آپ نے ایک اچھا مشورہ دیا. Honest مشورہ دیا. Thank you
+Business: OK THANKS
+Business: Voice Transcription: السلام علیکم یہ جو میں نے آپ سے لیا تھا یہ تو یہ مجھے تھوڑا سا لائیٹ لگ رہا ہے. میں نے اس ٹائم کونسا بائے کروں آپ کچھ بتائیں تھوڑا گائیڈ کریں یعنی پریگننس تو اس کی اچھی ہے لیکن یہ مجھے تھوڑا سا لائیٹ فیل ہو رہا ہے. میں نے لگایا تھا تو میں نے دوست سے پوچھا تو دوست کو اس کی پریگننس آ ہی نہیں رہی تھی اتنا لائٹ اس کو اس کو لگ رہا ہے.
+You: Voice Transcription: وعلیکم السلام. سر اس کو آپ اپنی ہتھیلی پہ لے کے استعمال نہیں کیجیے گا. یہ جو ہمارا انگوٹھے کا اوپر والا حصہ ہوتا ہے نا جہاں سے ہم عطر چیک کرتے ہیں. اس کے اوپر آپ عطر لگائیں. اس کے بعد اس کو اپنے جو انڈر آرم کے ایریا ہوتا ہے بغل والا ایریا وہاں پہ لگائیں. اور خاص طور پہ جو آپ کے کان کی لو ہوتی ہے نا اس کے پیچھے والا ایریا پہ عطر لگاتے ہیں. یہاں پہ دو حصے میں لگا لیں اور چاہیں تو اپنی گردن کی سائیڈ پہ لگا لیں. اور جو ہماری کلائیاں ہوتی ہیں. اس پہ ہلکا ہلکا سا ٹچ کرنا ہوتا ہے. اتنا کافی ہوتا ہے عطر اچھا خاصا جو ہے نا تیز ہوتا ہے کیونکہ ابھی گرمیوں کا موسم ہے اگر اس سے زیادہ لگائیں گے تو وہ بہت زیادہ ہیوی ہو جائے گا. الٹا آپ کے سر میں درد ہو جائے گا. تو اور پھر دھوپ وغیرہ ڈسٹ وغیرہ کی وجہ سے بھی کبھی کبھی خوشبو کم ہو جاتی ہے لیکن جیسے جیسے سردیاں آئیں گی. یا موسم تھوڑا بہت بھی اچھا ہو گا نا پھر آپ کو یہی مزہ دے دے گا. لیکن اگر اس کو آپ زیادہ کوانٹٹی میں لگائیں گے تو آپ کے سر میں درد ہو جائے گا.

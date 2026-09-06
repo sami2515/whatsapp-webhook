@@ -1,0 +1,12 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/mcqs/computer?tab=practice&start=true
+You: nots download ni ho rhy
+Bot: Notes download nahi ho rahe? Hamari website par aap daily 50 MCQs ki practice bilkul free kar sakte hain. Agar aapko mukammal solved PDF preparation book chahiye, jis mein past papers aur current affairs bhi shamil hon, to wo *Rs. 300* ki premium service hai.
+Aapko kis post (jaise LDC, UDC, ya NADRA) ke notes chahiye? Main un ki mazeed details check kar leta hoon.
+You: web site pr free kr skty hn tou wo opn kiu ni ho rhy
+Bot: Website par free MCQs sirf online practice ke liye hain, download ki sahulat sirf hamari solved PDF book mein hai jo *Rs. 300* ki hai. Maine aap ko team se connect kar diya hai taake wo website page open na hone ka technical masla check kar sakein.
+Business: https://testtayar.pk/mcqs/computer?tab=downloads
+Context: Website par free MCQs sirf online practice ke liye hain, download ki sahulat sirf hamari solved PDF book mein hai jo *Rs. 300* ki hai. Maine aap ko team se connect kar diya hai taake wo website page open na hone ka technical masla check kar sakein.
+You: mny b online hi prepare krna
+Business: agar ap post department batogy to hm laws acts gk pora syllabus + past papers se bana kr apko share krengy 300 ma

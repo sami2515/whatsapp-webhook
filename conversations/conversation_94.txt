@@ -1,0 +1,211 @@
+Business: Voice Transcription: 
+You: Voice Transcription: ابھی چل جائے گا ابھی اور میرا battery down ہوگا
+Business: Voice Transcription: یار ڈاؤنلوڈ وغیرہ کچھ بھی صحیح نہیں ہو رہا ایک ایم بی سے بھی کم میں ہو رہا ہے پینتیس ایم بی کا package ہے اور کچھ ڈاؤن لوڈ کر رہا ہوں نا تو سپیڈ ایک ایم بی ڈاؤن لوڈ یعنی کہ ایک ایم بی سے تیز پہ ڈاؤن لوڈ نہیں ہو رہا پہلے جب چالیس ایم بی package ہوتا تھا نا تو تین چار ایم بی پہ ڈاؤن لوڈ ہوتا تھا پر سیکنڈ اور جب پچاس ایم بی ہوتا تھا نا package تو پانچ ایم بی یا چھ ایم بی پہ ڈاؤن لوڈ ہوتی تھی فائل اب تک گیم ڈاؤن لوڈ کر رہا تھا وہ بہت بڑا تھا تو ابھی کل سے وہ لگا ہوا ہے ڈاؤن لوڈ ہی نہیں ہو رہا
+You: Voice Transcription: اس کو ایسے کرو نا ڈائریکٹ موبائل سے کر رہا ہوں. موبائل سے کر رہا ہوں. سے
+Business: {"image":{"image_id":"1044037198050589","caption":""}}
+You: Voice Transcription: 
+Business: {"image":{"image_id":"2116862435918227","caption":""}}
+You: Voice Transcription: मसला चल रहा है भाई समंदर में तार कट लिए। जो भाई ने न्यारा है ना Pakistan वो तार दोबारा कट गई इसमें मुझे मशरा रहा है
+Business: Voice Transcription: کب تک صحیح کرے گا بتاؤ?
+You: Voice Transcription: हमारा काम नहीं है, वो हुकूमत का काम है ना? हुकूमत में वो उतरेगा समंदर में, समंदर में वो लोग बनाते हैं, हुकूमत बनाते हैं। हमारा काम उसमें नहीं है, Pakistan।
+Business: Voice Transcription: اچھا میں نے چیک کیا ہے پی ٹی آئی, پی ٹی سی ایل فورڈ نوٹس کوئی بھی نہیں ملا. نہ ایون نیٹ ورک کا ملا ہے کانٹ کمیونیکیشن, فائبر, ایون پی ٹی سی ایل کسی کا بھی نہیں ملا, مسئلہ چیک کر تیری طرف سے ہو گا. جو کیبل والا مسئلہ تھا وہ مئی کے مہینے میں ہوا تھا. مینٹیننس وغیرہ کا ہوا تھا میرے خیال میں اور وہ اٹھارہ مئی کو وہ بھی حل ہو گیا تھا اٹھارہ مئی تک
+You: Voice Transcription: 
+Business: Voice Transcription: ہو جا تجھے یہ تھوڑی بولا ہے کہ ابھی تو صحیح کر اس کو تیرے کو بولا ہے کل دیکھ لو جب اٹھے گا نا کل دیکھ لے مسئلہ تھوڑی
+Business: mera connection hata dy
+Business: Voice Transcription: ایک کام کر میری تار کھلا کے دوپہر کے ٹائم آجا میری تار نکال لے ٹھیک ہے کھمبے سے
+You: Voice Transcription: क्यों निकाल रहे हो? क्या मज़ा आ रहा है?
+You: {"image":{"image_id":"818532071190568","caption":""}}
+You: Voice Transcription: 
+Business: Voice Transcription: سو والا کہہ رہا ہے کون سا?
+You: 35
+Context: 35
+You: Voice Transcription: والا لگایا ہے صحیح ہے ابھی آپ کو card ختم ہو جائے گا
+Business: {"image":{"image_id":"939163185812649","caption":""}}
+Business: {"image":{"image_id":"1703401627362242","caption":""}}
+Business: {"image":{"image_id":"1719962069352926","caption":""}}
+You: {"image":{"image_id":"2193696621429010","caption":""}}
+You: Voice Transcription: یہ پینتیس ایم بی کے میرے گھر گئے ہیں پینتیس ایم بی میرے گھر گئے. اور فور جی لگایا فائیو جی لگایا سے میں نے سپیڈ مارا ہے. سپیڈ مارا ہے میں نے.
+Business: {"image":{"image_id":"1789520965743590","caption":""}}
+Business: {"image":{"image_id":"1032837495925504","caption":""}}
+You: Voice Transcription: بھائی جان میں آپ کو ابھی card ختم ہو گا نا آپ کو میں پچاس والا card ڈال دوں گا صحیح ہے تیرا بھائی زندہ ہے نا آپ کو میں نے بول دینا ابھی اس مہینے میں اب ختم ہوگا نا میرے کو پچاس میں ڈال دوں گا دو ہزار روپے میں بس صحیح ہے تیرا خراب ہوا ہے نا اس میں پورا کر دے بس تین ہزار روپے میں ہوتا ہے نا پچاس ایم پی نا میں تیرے کو دو ہزار ملے گا بس خوش
+Business: ok
+Business: Voice Transcription: تو ایک کام کر دے package میرا ختم کرو پچاس ایم بی میرا لگا اور وہ صحیح چلے گا نا پھر
+Business: Voice Transcription: 
+You: Voice Transcription: یار وہ بھی ابھی یہ ختم نہیں ہوگا نا یار جانی یہ ختم ہوگا پھر ہوگا نا اب یہ کیسے کروں
+You: Voice Transcription: तेरा card खत्म होगा उन्नीस तारीख को फिर चढ़ाएगा ऐसे नहीं चढ़ता ना ये card खत्म हुआ फिर
+Business: Voice Transcription: پھر ایک کام کر آئی ڈی اپڈیٹ کر دے. ابھی میرے ابو کی ڈلی ہوئی ہے نا میری ڈال دے پھر اس کو بھی کچھ کر دے.
+You: Voice Transcription: क्या बोल रहे मैं आपकी बात समझ नहीं आई मेरे को भाई आप क्या बोल रहे हो समझ नहीं आई आपकी बात मेरे को
+Business: Voice Transcription: آئی ڈی بول رہا ہوں. این آئی سی میرے ابو کا بھی دیا ہوا ہے نا اور تو نے میرے کو آئی ڈی دی ہوئی ہے. سیون ایچ ٹی دو ہزار بیالیس تو نیو آئی ڈی بنا دے کوئی. اور میرے نام پہ میرے این آئی سی پہ اور اس پہ پھر بھی کچھ کر لے. اگر اس طرح ہو سکتا ہے.
+You: Voice Transcription: वो क्या बोलते हैं वो कंपनी अभी दस बजे बंद हो जाती है ना, सेटिंग करने वाले कंपनी बंद हो जाती है, दिन में करते हैं ना? मैं घर का हड्डी तेरे को दे दूँ, वो चौबीस तारीख को खत्म होगा, वो चला चौबीस दिन उन्नीस दिन तक वो चला, उन्नीस तारीख तक वो चला, मेरा वाला वो मेरे घर के वो ले रहे हैं, वो तेरे को अभी सेंड कर दूँ, तू उसके अंदर डाल देगा।
+Business: Voice Transcription: ڈال دوں گا بتا دیں میرے کو میں ڈال دوں گا.
+You: {"image":{"image_id":"1037326582314283","caption":""}}
+You: Voice Transcription: یہ پڑی ہے نا اس کے اندر نا بیس ہو چالیس اور دو یہ ہٹا کے نا یہ ڈالنا ہے آپ کو یہ سٹار آہ دس پچپن اور نیچے ایک دو تین یہ ڈالنا ہوتا ہے اور کچھ نہیں چاہیے نا خالی یہ چیزیں تو یہ دو چیزیں نا یہ ڈالنا ہوتا ہے
+You: 7st1055
+You: Voice Transcription: ये जो रेडी पड़ी है ना, उसको हटा के ये डाल दे।
+You: 123
+Business: {"image":{"image_id":"928114520241311","caption":""}}
+You: Voice Transcription: नीचे ये डालना है एक दो तीन ये डाल दे मेरे को बता, कर दे बंद कर दे।
+You: Voice Transcription: ہاں یہ یہ نیچے لکھا ہے بیس چالیس اور دو یہ اٹھا کے کوٹ ہے نا ایک دو تین یہ ڈال دیں. صحیح ہے?
+Context: 7st1055
+You: Voice Transcription: 
+Context: 123
+You: Voice Transcription: نیچے یہ ڈال دیں بس سب کو ختم کر کے یہ ڈالنا چاہیے
+Business: Voice Transcription: जल्दी अब नहीं चल रहा अब क्या करूँ
+You: Voice Transcription: अभी खुल जाएगा, वो मैंने मेक क्लियर कर दिया ना? मेक मेरा ऑर्डर का मेक पकड़ा था, मेरे साथ नेट नहीं था, सिम का नेट ऑन किया, छत को अभी खुल जाएगा।
+Business: Voice Transcription: دو ایم بی دے رہے ہیں اور اب ڈاؤن لوڈ ہو رہا ہے ایک ایم بی سے اور سپیڈ دو ایم بی آ رہی ہے پہلے کے بی میں آ رہی تھی
+Business: Voice Transcription: اپنا مسئلہ دیکھ لیتے ہیں میرے خیال میں system میں کوئی مسئلہ ہوا ہوا ہے ڈاؤن لوڈ فل آ رہا ہے اور جو نہیں اپلوڈ فل آ رہا ہے اور ڈاؤن لوڈ نہیں آ رہا یہ مسئلہ ہوا ہوا ہے
+You: Voice Transcription: काढून
+Business: Voice Transcription: 
+You: Voice Transcription: اس میں یہ فرق ہوتا ہے
+You: Voice Transcription: 
+Business: Voice Transcription: मैं एनआईसी भेज रहा हूँ तेरे को आईडी बना मेरे एनआईसी पे और पचास एमबी से जो ऊपर पैकेज होना वो वाला पैकेज कर।
+You: {"image":{"image_id":"1245181947543087","caption":""}}
+You: Voice Transcription: आज फारिक नहीं हो दोस्त, मैंने आज छुट्टी मारा है, दुकान मैंने नहीं किया, काम से ना कल होगा, आज मैंने छुट्टी मारा है, ना आज छुट्टी है मेरी, घर का पानी का पेप डालो, टाइम लगेगा, आज नहीं होगा।
+Business: Voice Transcription: کل مسئلہ نہیں ہے کل کر لیو.
+You: Voice Transcription: چلو صحیح ہے کل کر دیں گے انشاءاللہ زندگی ہوا نا کل کر دیں گے. سو آپ صبح میرے کو گیارہ بجے بتا دینا گیارہ بجے میں اٹھ جاتا ہوں. صحیح ہے تو میرے کو اپنے شناختی کارڈ کی کاپی دونوں سیٹ پر بھیجنا. شناختی کارڈ کی کاپی پیچھے آ کے دونوں بھیج میں آپ کو ویڈیو بنا دوں.
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1330968015826850","caption":""}}
+Business: {"image":{"image_id":"1347719587327668","caption":""}}
+You: Voice Transcription: ये दूसरी दोनों page दोनों एक साथ page है single single page
+Business: Voice Transcription: ایک ساتھی بھی ہے یا الگ الگ ہے یہ. الگ الگ دو تصویریں ہیں. تو کوشش کر دس سے پہلے بنا سکتے ہیں تو بنا دے اور بس وہ خود بنا دیو یار. پچاس انگلی سے اوپر والا ٹھیک ہے.
+You: Voice Transcription: 
+Business: Voice Transcription: 
+You: {"image":{"image_id":"2276501276490615","caption":""}}
+Business: Voice Transcription: No
+You: Voice Transcription: یہاں لڑکے رات کو میں صبح پانچ بجے سویا ہوں تو نے نیند خراب کر دی میری. پھر وہ میں نے بولا اپنے الگ الگ سینڈ کر میرے کو دونوں ایک ساتھ نہیں دے چاہیے نا کہ اپنی نہیں لے گا. الگ الگ چاہیے الگ پیچھے آگے دونوں چاہیے الگ الگ
+You: {"image":{"image_id":"1536152561481228","caption":""}}
+You: Voice Transcription: ऐसे अलग-अलग चाहिए, अलग-अलग ये आपके नाम से चालू हो गया, ऐसे नहीं चालू होता ना? अलग-अलग भेजोगे ना मेरे को? ये आगे पीछे लगेगा, आगे लगेगा, अलग बनेगा, अलग बनेगा।
+Business: {"image":{"image_id":"800879402990706","caption":""}}
+Business: front
+Business: {"image":{"image_id":"1669221314281789","caption":""}}
+You: Voice Transcription: अब ये से कर अपना card number लिख के मेरे को भेज नाम बेच अलग-अलग सही है अलग-अलग बेचना मेरे को मैं इसको काबू करके ना उसपे बनाऊंगा क्योंकि मैं सिर्फ ये जितना मैं बैठा हूँ उतना मेरे साथ कोई चीज ही नहीं है रूम में सो रहा हूँ
+You: {"image":{"image_id":"1637365920673720","caption":""}}
+You: Voice Transcription: कोई चीज नहीं है, कोई चीज नहीं है ना? अपना नाम send कर मेरे को, number अलग-अलग send कर दे, video बना के कुछ send कर दे।
+Business: 42401-2709592-7
+Business: muhammad sami
+You: Voice Transcription: ابھی میرے کو آدھا گھنٹہ دے میں اس کو ابھی بناؤں. صحیح ہے ابھی میں نیند میں ہوں. صحیح بنا ہوں غلط بھی مجھے اور میں ڈال رہا ہوں صحیح ہے ساڈے میں. ساڑھے ڈال رہا ہوں صحیح
+You: 60
+Business: han
+Business: ok
+You: Voice Transcription: 
+Business: Voice Transcription: ہاں بھیج دیں یہ دیکھ یہ این آئی سی نمبر ہے اس کے نیچے نام لکھا ہوا ہے اس کو copy کر کے ڈال دیں اور ساٹھ MB کر دیں.
+You: {"image":{"image_id":"1674696667165057","caption":""}}
+You: Voice Transcription: بنا دیا ہے وہ ہٹا کے ایسے یہ ڈال دیا ہے. صحیح ہے? جیسے اس دن رات کو تم نے کیا تھا نا سٹنگ وہی طریقے کرنا ہے آپ کو.
+Business: Voice Transcription: Star six zero four two साठ बयालीस और one two three डालूँ वहीं पर
+You: Voice Transcription: ہاں وہی ڈالنا بس چالو ہو جائے گا انشاءاللہ تعالی آپ کا نام سے نیٹ ہو گیا صحیح ہے? ابھی میرے کو چھوڑ دیں میں سو جاؤں گا ایک دو دن صحیح ہے?
+Business: Voice Transcription: یہ بتا ایس ایس ٹی اے آر چھوٹا دکھنا ہے یا بڑا بڑا
+You: Voice Transcription: सब छोटे छोटे सही है, सब छोटे।
+Business: Voice Transcription: Dale
+Business: {"image":{"image_id":"1010532408572073","caption":""}}
+You: Voice Transcription: تو نیٹ کے اندر ابھی ہمارا مسئلہ چل رہا ہے. صحیح ہے ہمارے نیٹ کے اندر ابھی مسئلہ چل رہا ہے. وہ میرا سیٹھ گاؤں سے آجائے گا نا یہ مسئلے میں نکال دوں گا. اور گرمی بہت ہے نا لیٹ نہیں ہوتا اسی اسی کام نہیں کرتے نا یہ مشین بہت گرم ہوتا ہے. جیسے ابھی سیٹ آئے گا اس کے لڑکوں کی شادی ہے نا آتا ہے نا میں یہ اس ٹائم چینج کروں گا ابھی. صحیح ہے یہ نیٹ صحیح چلے گا وہی پرانا نیٹ صحیح ہو جائے گا صحیح نکالے گا.
+Business: ok
+Business: {"image":{"image_id":"1663686191532728","caption":""}}
+Context: {"image":{"image_id":"1663686191532728","caption":""}}
+You: 1700ok
+Context: 1700ok
+You: ?
+Business: Voice Transcription: तो बरकरार, थोड़ी देर में आऊँ।
+You: Voice Transcription: میرے سے پہلے آہ بتانا میں کال کرنا پھر آنا ایسے نہیں آنا کیوں میں بھی ابھی نکلوں گا تمہارے علاقے سے نا. پھر بتانا صحیح ہے? میں دس پندرہ منٹ ابھی نکل رہا ہوں تمہارے علاقے میں.
+Business: Voice Transcription: اچھا پھر ایک کام کر پھر آئیو میرے کو کال کریو میں باہر آجاؤں گا گھر کے باہر میرے آئیو کال کریو میں آ جاؤں گا پیسے دے دوں گا
+You: Ok
+You: Voice Transcription: دو دن سے
+You: ?
+Business: Voice Transcription: ہاں میں گاؤں آیا ہوا ہوں نا وہ آئی فائی بند کیا ہوا ہے.
+You: Voice Transcription: सलाम वालेकुम, कैसे हैं? ठीक हो, आगे गाँव से।
+Business: Voice Transcription: ہاں وعلیکم السلام آ گیا تھا میں پھر میں نے on کر دیا تھا
+You: Voice Transcription: 
+Business: {"image":{"image_id":"965536259904354","caption":""}}
+You: Voice Transcription: 
+You: Voice Transcription: 
+Business: Voice Transcription: Five g five g
+Business: {"image":{"image_id":"1062373866742537","caption":""}}
+You: Voice Transcription: Saya sebelum saya ni saya ni
+You: Voice Transcription: 
+Business: Voice Transcription: کیوں change کیا کیوں صحیح نہیں تھا وہ پہلے
+You: Voice Transcription: तुम पर याद नहीं करते, net सही नहीं चल रहा है, सही नहीं चल रहा है, रात को बैठ जाता था, तुम पर याद करते हो, यार ये सही नहीं चल रहा है, तीन साल हो गए, चलो इस company का नाम change कर दो, दूसरा company on कर दी है, वाला।
+You: Voice Transcription: 
+Business: Voice Transcription: 
+You: Id
+Demo
+Password
+Demo
+You: http://www.masti4u.pk/en/home
+You: http://www.dhoom.pk
+You: http://masti4u.pk
+Business: Voice Transcription: کیا ہے? ایپ ہے یہ? کس چیز کا ایپ ہے? ٹی وی کا ہے یا موبائل کا ایپ ہے?
+You: Voice Transcription: یہ وہ آہ ٹی وی کے لیے موبائل میں چلے گا. موبائل میں چلے گا اور ٹی وی کے لیے میں بات چل رہی ہے میری نا. وہ کرنا اس کا آپ کا ٹی وی سادہ ہے لیکن ہے اور نیٹ والا ہے. کون سا ہے آپ کے ساتھ?
+You: Voice Transcription: یہ موبائل کے اندر بھی چلے گا ٹی وی کے اندر بھی چلائیں گے اس کے لیے بھی ایک اپنی سی بات چل رہی ہے نا وہ انشاءاللہ دو تین دن میں وہ کرتے ہیں نا میں آپ کو بتا دوں پھر وہ موبائل میں ڈال دینا ٹی وی میں ڈال دینا
+You: Voice Transcription: ابھی موبائل میں چلا موبائل میں چل جائے گا یہ
+Business: Voice Transcription: ٹی وی میرے پاس مہنگا ہے لاکھ روپے سے اوپر والا ٹی وی ہے میرے پاس four کے بڑا ٹی وی ہے گوگل ٹی وی full four کے
+You: Voice Transcription: بس صحیح ہے انشاءاللہ اس کا طریقہ سیکھتا ہوں نا کیسا ہوتا ہے یہ نا یہ میں تیرے کو کرتا ہوں طریقہ صحیح ہے اس کا ٹی وی آن کرنا اس کو صحیح ہے
+Business: Voice Transcription: 
+You: Voice Transcription: ဒီယောကျ်ားရယ်ဟိုးအခြေ
+You: Voice Transcription: सलाम वालेकुम, मैं टीएससी टीवी। आज सत्रह तारीख है, गार्ड खत्म हो गया।
+Business: Voice Transcription: وعلیکم السلام ٹھیک ہوں وہی والا لگا دیں card صحیح ہے?
+You: Voice Transcription: ابھی ختم ہوا ہے
+Business: 60 /3200
+Business: Voice Transcription: 
+Business: Voice Transcription: یہ ساٹھ MB کا کردو بتیس سو لے لیو پچھلی بار بھی بتیس دیے تھے نہ میں نے
+You: Voice Transcription: میں آپ کو بیچ میں net صحیح نہیں چل رہا ہوتا نا اس کی میں نے خوشی سے آپ کو یہ دیا تھا پچاس یہ بتیس سو کو تینتیس سو کا ہم دیتے ہیں یہ وہ تیرے کو بس میرے کو دیا تھا اپنے.
+You: Voice Transcription: یہ ساٹھ انچ یہ آپ کو ملے گا چار ہزار روپے کے یہ آپ کو میں نے محبت میں آپ کو دیا تھا میں نے آٹھ سو روپے جیب میں دیے میں نے آٹھ سو روپے جیب سے ڈالا تھا
+Business: Voice Transcription: बोला था पचास दो हजार में ले लियो मैंने तेरे को बोला चल दो हजार में तेरा नुकसान होगा पच्चीस मैंने बोला पच्चीस तेरे को दे दूंगा अब तू बोल तू कितने बोल रहा है
+Business: Voice Transcription: सही है, फिर पचास कर ले, तीन हजार ले लियो।
+You: Voice Transcription: ابھی کون سا لگانا ہے میرے کو بتاؤ میں وہ حساب سے آپ کو بولوں پیسوں کا نا پچاس لگائے گا پچاس ہزار تیرے لیے تین ہزار روپے کر دوں گا صحیح ہے پچاس لگائے گا تیری پچاس تین ہزار روپے اور ساٹھ ایم ایل لگائے گا وہ تیرے کو چار ہزار روپے کا ملے گا میں آپ کو پینتیس سو میں دے دوں گا بس
+Business: Voice Transcription: پھر اگلے مہینے ریٹ نہیں اس مہینے دیا تھا اور اس مہینے دیا تھا پھر یہ final ریٹ ہوگا صحیح ہے
+You: Voice Transcription: ایک فیس میں ایک net چلایا کرنا کبھی بولے یہ میں کھڑا ہو جائے نا ایک سپیڈ پہ کھڑا ہو جاتا ہے کبھی market کا ریٹ ہوتا ہے کبھی کم ہو جاتا ہے کبھی سب بڑھ جاتا ہے جیسے حالات خراب ہوتے ہیں نا سونے کا ریٹ گر جاتا ہے کیسے اس کا ریٹ گر جاتا ہے ڈالر کا یہ اس ڈالر کے حساب سے چلتا ہے یہ card کے اندر ہم لوگ سو پچاس روپے رکھتے
+Business: 60
+You: Voice Transcription: 
+You: 60
+You: Voice Transcription: سوچ سوچ کے بتا رہا ہے جلدی بتا guard چڑھا دوں گا یار
+Business: Voice Transcription: ہاں ساٹھ ایم بی دال اور مجھے وہ اپنا نمبر دے وہ easy پیسوں والا یہی والا نمبر ہے نا میں تیرے کو ابھی چودہ سو روپے اس پہ بھیجتا ہوں اور باقی کے ساڑھے تین میں سے جتنے نکال جتنے بچے ہیں وہ میں تیرے کو رات کو آ کے cash دے دوں گا
+You: 03462830381
+You: Voice Transcription: ये इसी पे से नंबर ये आ गया, आपके साथ ये दो सौ रुपए पहले की बकाई देना।
+Business: Voice Transcription: سو تھے سو روپے تے اکتیس دیے
+You: Ok100
+You: Voice Transcription: 
+Business: Voice Transcription: 
+Business: 03152324818
+You: Voice Transcription: ہاں یہ نمبر غلط ہوگیا یار. نمبر غلط ہے. ایزی پیسہ نمبر چالیس ہے چالیس. یہ
+Context: 03152324818
+You: Voice Transcription: یہ جی ایچ کیش ہے صحیح ہے اس میں سے
+You: Voice Transcription: یہ بھی میرے نام سے آئے گا ابوبکر
+Business: {"image":{"image_id":"996321196360329","caption":""}}
+Context: {"image":{"image_id":"996321196360329","caption":""}}
+You: Ok
+You: Voice Transcription: کتنے بجے آئے گا? سات بج گئے میں بیٹھا ہوں دکان کے سامنے.
+Business: Voice Transcription: 
+You: Voice Transcription: खुल जाएगा, अभी आधे घंटे में खुल जाएगा, वो थोड़ा ये बहुत short हुआ है, बिजली का ना इसलिए मस रहा है।
+Business: Voice Transcription: 
+Business: {"image":{"image_id":"1028136789822795","caption":""}}
+You: {"image":{"image_id":"1494008915817607","caption":""}}
+You: Voice Transcription: یہ چوالیس گھنٹے سے آن ہے نا اس کو بند کر چالو کر پھر میں اس کو چیک کر
+Business: Voice Transcription: Niet heel erg.
+You: Voice Transcription: ऑर्डर हो गया, मेरा बंद चालू कर, आ जाएगा बंद चालू करोगे? आ जाएगा।
+You: Voice Transcription: 
+Business: Voice Transcription: 
+You: Voice Transcription: آواز نہیں آئی تیری
+Business: Voice Transcription: चल गया मैं कह रहा हूँ
+You: 💵
+Business: Voice Transcription: میرے پاس دو ڈھائی ہزار روپے پڑے ہوئے ہیں بس اور پیسے نہیں ہیں میرے پاس اور میں گیا تھا کل صابری چوک گیا تھا ادھر رشتہ دار ہیں میرے ادھر ستر ایم بی package دو ہزار روپے سائبر کا اور چشتی نگر میں دوسرے رشتے دار ہیں ان کے گھر گیا تو ان کے گھر پہ ایم ڈی package دو ہزار روپے سائبر کا ٹیکس میں خود کر کے آیا ہوں پتا نہیں چار نمبر میں کیوں مہنگا ہے سمجھ میں نہیں آ رہا اور
+Business: ?
+You: Voice Transcription: تیرے بھائی میرے کو سمجھ نہیں آیا کہ آپ کیا بول رہے ہو. آپ کی بات سمجھ نہیں آئی میرے کو اب کیا بولوں دوبارہ بولو
+Business: Voice Transcription: میں کہہ رہا ہوں کہ ابھی package میرا کر دیں پینتیس چالیس ایم بی اور میں گیا تھا کل صابری چوک وہاں پہ دو ہزار کا ستر ایم بی package ہے فائبر کا میں گیا تھا چشتی نگر چشتی نگر دیکھا ہے ادھر سو ایم بی package دو ہزار روپے کا ہے اور میرے پاس ابھی پیسے نہیں ہیں اور ابھی جتنے دو ڈھائی ہزار میں جونسا package ہوتا ہے وہ والا کر دیں شام میں آ کے پیسے دے دوں گا
+You: 40/2200
+Business: ok
+You: Ok
+Business: Voice Transcription: اچھا پینتیس دو ہزار کا تھا صحیح ہے پینتیس نہیں ہونا چاہیے پھر چالیس اور ہونا چاہیے۔
+You: Voice Transcription: سپیڈ چیک کرنا انشاءاللہ زیادہ آئے گا. صحیح ہے? سپیڈ چیک کرنا زیادہ آئے گا کم نہیں آئے گا.
+Business: ok
+Business: Voice Transcription: तेरी दुकान कब तक खुली रहती है, अब्बू अभी तक काम से नहीं आया, जब आएगा फिर मैं ऑनलाइन दिलवा के फिर तेरे को मैं भेज दूंगा, ये इसके?
+You: Ok
+You: Voice Transcription: ہاں لڑکے پیسے بھیجے نہیں تم نے یار سینڈ نہیں کیا اب تک. کہاں میں دکان میں بیٹھا ہوں.
+Business: {"image":{"image_id":"998062663271357","caption":""}}
+Context: {"image":{"image_id":"998062663271357","caption":""}}
+You: Ok
+Business: Voice Transcription: کل تین بار net گیا تھا دو بجے پھر دو ڈھائی بجے آیا تھا آخری بار جو کل گیا تھا اور دو بار پہلے بھی گیا تھا پھر آگیا تھا پھر دس دس منٹ بعد پھر چلا گیا تھا اور ابھی پھر نہیں آرہا net ایسا کچھ کر رہے ہیں بار بار جا رہا ہے کل سے
+You: Voice Transcription: 
+Business: {"image":{"image_id":"1491018739730451","caption":""}}
+Business: {"image":{"image_id":"2919550275050825","caption":""}}
+Business: Voice Transcription: ہم سے بہت تنگ کر رہا ہے net ہر دو دن میں تین سے چار بار دن میں جاتا ہے کبھی رات میں جاتا ہے کبھی تین بجے جاتا ہے کبھی چار بجے جاتا ہے
+You: Voice Transcription: अभी चल गया check करो
+You: Voice Transcription: इधर light के मस्ता होता है, light का बिजली के चक्कर होते हैं, लगा दिया अभी।

@@ -1,0 +1,143 @@
+You: Kai pway ?
+Business: kuch ni
+Business: <Unsupported Message>
+Business: abhi abhi gir kr toot gaya
+Business: pehle hi pesy tujh se lie hain kisi ko de die
+Business: ayse gandy halat chal rhy hain na
+Business: kam wam ni ha koi teri nazar ma?
+Context: kam wam ni ha koi teri nazar ma?
+You: Market ma hkga
+You: Bat sun
+You: Apna insta ky account k login dy
+Business: mery pas ni ha acc
+Business: net kitne log chala rhy hain
+Business: wifi
+Business: slow ho rha ha
+Business: is bar 700 dena mehenga hogaya pakage
+Context: net kitne log chala rhy hain
+You: Allah ky bandy hum 3 log hi hn ma pura din ghar masla h ma hota nhi h hu na bhai hota h
+Business: acha
+Business: mehenga to hogaya ha na
+Context: net kitne log chala rhy hain
+You: 10 /15 log chalay gy ksi
+Business: ma jeb se to ni donga
+Business: ni tune dia ni hoga
+Context: ni tune dia ni hoga
+You: Manai kabhi kisi gali waly ko nhi dal ky dai bahi
+Business: acha
+Business: Voice Transcription: اس کے بارے میں ابوبکر کے اچھا چار دن سے net slow چل رہا ہے ڈاؤن لوڈ دس ایم بی دے رہا ہے اور اپلوڈ پچاس دے رہا ہے جب کہ دونوں پچاس پچاس دینے چاہیے تھے اب میں نے اس کو message کیا کہ net تیرا صحیح نہیں چل رہا پہلے میرے کو مشورے دے رہا ہے کہ net کی cable لگا اس نے لیپ ٹاپ پہ پھر میں نے پرسوں کی بات ہے پھر آج میں نے اس کو message کیا میں نے بولا net صحیح نہیں چل رہا تو پھر کہہ رہا ہے جھوٹ کہہ رہا ہے کیبیلے کا ٹھیک ہے ایک net کی حکومت کا کام ہے وہ صحیح کرے گی میں نے چیک کیا بھائی میں نے search کی میں نے پھر پتہ چلا کہ مئی کے مہینے میں ایک maintenance کا کام ہو رہا تھا اٹھارہ مئی کو کام ختم ہو گیا تھا اور یہ ٹوکیاں دیتا ہے نا لوگوں کے اس طرح جھوٹ جھوٹ بولتا ہے مسئلہ اس کی طرف سے ہوتا ہے جھوٹ بولتا ہے کہ پیچھے سے مسئلہ ہے target کیا بولتا ہے میں اس کو اتنا detail میں نے اس کو message کیا نا کہ اس نے اس کو اس کی تپی اسی وجہ سے اس نے بلاک کر دیا
+Business: Voice Transcription: کہہ رہا ہے رات کو کال نہیں کیا کرو سونے کا ٹائم ہوتا ہے تم جاگتے ہو ہم سوتے ہیں ہمیں کام پہ جانا ہوتا ہے اور میں نے اس کو کال کی بھی نہیں تھی میں نے message کیا تھا
+Business: Voice Transcription: میں نے بولا ہٹ بھڑوے تیرے سے میں دس سال سے لگا رہا ہوں اور کوئی چیز نہیں ہے جاہل بندہ ہے اب اس سے لگاؤں گا اس سے نہیں لگاؤں گا وہ نہیں ہے دوسرا اس کا نام میرے سے نہیں آتا محمدی مسجد کے gate نہیں ہے اس کے کلثوم کی دکان کے سامنے جو cable ہے cable ہے اس کا پتا نہیں اس کا بیٹا ہے میرے سامنے کوئی قاری اس کا بیٹا ہے
+Business: Voice Transcription: میں نے دوسرے سے بات کی وہ پچاس ایم بی پینتیس سو اور پینتیس سو کی دوا لگانے کے بھی وہ دے گا connection جو لگائے گا وہ تو ایک ہزار دے دی وہ سات سو روپے دے دیے مجھے
+Context: Voice Transcription: کہہ رہا ہے رات کو کال نہیں کیا کرو سونے کا ٹائم ہوتا ہے تم جاگتے ہو ہم سوتے ہیں ہمیں کام پہ جانا ہوتا ہے اور میں نے اس کو کال کی بھی نہیں تھی میں نے message کیا تھا
+You: 😂
+You: Tuny ghaliya di osa? 😄
+Context: Voice Transcription: اس کے بارے میں ابوبکر کے اچھا چار دن سے net slow چل رہا ہے ڈاؤن لوڈ دس ایم بی دے رہا ہے اور اپلوڈ پچاس دے رہا ہے جب کہ دونوں پچاس پچاس دینے چاہیے تھے اب میں نے اس کو message کیا کہ net تیرا صحیح نہیں چل رہا پہلے میرے کو مشورے دے رہا ہے کہ net کی cable لگا اس نے لیپ ٹاپ پہ پھر میں نے پرسوں کی بات ہے پھر آج میں نے اس کو message کیا میں نے بولا net صحیح نہیں چل رہا تو پھر کہہ رہا ہے جھوٹ کہہ رہا ہے کیبیلے کا ٹھیک ہے ایک net کی حکومت کا کام ہے وہ صحیح کرے گی میں نے چیک کیا بھائی میں نے search کی میں نے پھر پتہ چلا کہ مئی کے مہینے میں ایک maintenance کا کام ہو رہا تھا اٹھارہ مئی کو کام ختم ہو گیا تھا اور یہ ٹوکیاں دیتا ہے نا لوگوں کے اس طرح جھوٹ جھوٹ بولتا ہے مسئلہ اس کی طرف سے ہوتا ہے جھوٹ بولتا ہے کہ پیچھے سے مسئلہ ہے target کیا بولتا ہے میں اس کو اتنا detail میں نے اس کو message کیا نا کہ اس نے اس کو اس کی تپی اسی وجہ سے اس نے بلاک کر دیا
+You: Harami h bohot ya
+Business: bat sun
+You: Dosry WhatsApp use karta hu
+You: Ya wala nhi use karta
+Business: bike chia
+Business: board office se arha hon
+You: Abhi ?
+Business: apni nikalonga msla hoga
+Business: chup kr ja rha hon
+Business: sbr btata hon jana k ni
+You: Kaha ja raha h ?
+You: Khariyat h ?
+Business: han
+You: Kai huwa h ?
+Business: kam ha
+You: Bata toh barwy
+Business: kam ha na
+Business: jaonga ya n pakka ni
+You: Bhabi ky pass ja raha h ?
+You: Jaldi bata phir ma soou ga
+Business: thora jag le
+Business: 10mint sbr r
+You: Barwy manai subha jana h
+You: Jaldi bata
+Business: sbr kr na mar ni
+You: Chabi lele
+Business: bike kaha ha
+Business: bahar hi khari krta ha?
+You: Ggar ms
+Context: bahar hi khari krta ha?
+You: Nhi ooo
+Business: phur
+You: Ghar ky ander
+You: Direct h bahir nhi chorta
+Business: andar kon krega phir
+You: Apny ghar ma kar liyo
+Business: aby apni ni nikal.skta
+Business: trri kwsy kronga
+Business: utha longa tuja
+You: Ya nichy parking ma ly jayo
+Context: utha longa tuja
+You: Ghad mar duga tari
+You: Soo ja abhi subha chala jayo
+You: Rat ko nhi ja
+Business: kam ha smjha kr
+Business: jana ha
+You: Ya jo mujha naya naya ashq huwa h ghand phat jay gi
+You: Soo ja barwy
+You: Voice Transcription: ये रात के टाइम में जो गैरकानूनी काम करने जा रहा है ना इंसान बन जाए ऐसी फंसेगा किसी से नोट तो सीधा फंस जाएगा। समझा कर ऐसी औरतें सीधे मामलात में इस टाइम तो वैसे ही किसी मामलात में नहीं घुसी हो। कोई आसरा भी नहीं करेगा मार दे खड़ा रहेगी। ये वाले काम नहीं करना मिलने जाना देखने जाना कोई चीज देने जाना कोई चीज देने जा बात को समझा कर रात के तीन बज रहे हैं वैसे ही टाइम सही नहीं है और कोई मामलात हो गए पता नहीं चलेगा कहाँ गायब हो गया
+Business: chup kr barwy
+Business: kam ha bola.ga
+You: Bhai otha h mara
+Business: avha
+You: Dimag khay ga
+Business: osko bol.kam ha
+You: Subha kar liyo bhai
+Business: suba ni ho skta na
+Business: 1 bike ni de skta
+Business: suba tu meri le lio
+You: 6 bahay ma othu ga jab chala ja
+Business: 6bajy kya kron
+Business: abhi jana.ha
+You: Barwy subha mujsy lele pura din rakh masla nhi h
+Business: abhi chia bol rha hon
+You: Bhai otha h nahi deny dy ga is time
+Business: abhi tu topi kr
+You: Allah psk ki qasam bs
+Business: scha
+You: Sooya hota ma dede ta
+Business: pedal jaon ab kya
+Business: kab sota ha wo
+You: Balky dy bhi raha tha
+Context: pedal jaon ab kya
+You: Byeai kar ly
+Business: is time
+Business: wapisi ka msla hoga jany ka ni
+You: Hn toh hoti h
+Context: wapisi ka msla hoga jany ka ni
+You: Jana ana dono kar osi ky sath
+Business: acha
+Business: kaha milyga
+You: 200 tak ly ga ya 300
+Context: kaha milyga
+You: App khol na
+You: Huwa kai hn bata toh
+Business: kuch ni
+You: 5/6 bajay chala ja
+You: 2 ghunty saber kar ly
+Business: ghr prr ha?
+You: {"image":{"image_id":"1373151761698494","caption":""}}
+You: Android ma aya h option
+Business: bola tha na bsdk
+You: 🫣😅
+You: Kai bol raha h ya ?
+Context: {"image":{"image_id":"1373151761698494","caption":""}}
+You: ?
+Business: mllilitary or operation sensible loation ni dikhana
+Business: falto ha hata dy
+You: {"image":{"image_id":"1224124836472298","caption":""}}
+Business: 1
+Business: top wala.kr
+You: Kar kai
+You: Lai
+You: {"image":{"image_id":"995790730127281","caption":""}}
+Business: rooz 3 bar live kr
+Business: 30mint k lie ek bar
+Business: Follow this link to join my WhatsApp group: https://chat.whatsapp.com/EP83gSj1VGX64bCuJLtIFJ?s=sw&p=a&mlu=4&amv=2
+You: https://www.instagram.com/p/DZ0Sg2KgCAZ/?igsh=MXdtenpud3I1amc4ag==

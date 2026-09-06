@@ -1,0 +1,12 @@
+Business: tubular batery le rha hon lagany ajao
+You: Ok
+Business: abhi ajao
+Business: Voice Transcription: بیٹری نکالنی ہے اور پونے پانچویں دکان ہے وہاں لے کے جانی ہے. وہاں سے ٹیوب ویل اٹھانی ہے. گھر لانی ہے. اور اس کو پھر اس کو لگانا ہے.
+Business: Voice Transcription: اگر آپ فارغ نہیں ہو کام کام کر رہے ہو کوئی کام ہے تو مجھے بتا دو کس طرح نکالنی ہے کس طرح لگانی ہے میں لڑکے کو پکڑ کے اس کے ساتھ اتار کے لے کے جا کے نہیں کہا کہ اس کے ساتھ پھر لگوا لوں
+You: Voice Transcription: चले सही आप जो है ना वो करें सिस्टम को ऑफ करें और पीछे से back switch निकाल के डायरेक्ट main के switch में दे दें तो आपकी लाइन ना डायरेक्ट हो जाएगी इसके अलावा टर्मिनल निकाल के जैसे पॉजिटिव नेगेटिव होते हैं वैसे ही लगा देना मेरा थोड़ा सा टाइम लगेगा आधा घंटा से एक घंटा लगेगा और पहले पता करें दुकानें ऑन है या ऑफ
+Business: on ga dukan 44 bol rha ha TX1800ky
+Business: pehle black red konsa nikalo
+You: Voice Transcription: कोई सी भी निकाल दो भाई वो flying करके battery को off करके अलग-अलग तार रख देना कुछ भी नहीं होता battery उतार देना वैसे इतना time तो नहीं
+Business: batery lett time kya kya dekhon batery ma
+Business: zyada purani ni ho ot
+Business: or

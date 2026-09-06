@@ -1,0 +1,15 @@
+You: {"image":{"image_id":"2260387498138750","caption":"Assalam-o-Alaikum, maine Rs. 300 transfer kar diye hain testtayar.pk se complete UDC Test solved PDF guide book ke liye. Yeh payment receipt screenshot hai."}}
+Bot: Walaikum Assalam! Maine aapka payment confirmation verification ke liye team ko bhej diya hai.
+
+I've forwarded your payment confirmation to our team for verification.
+Business: walaikumAssalam
+Business: post department batao
+You: Ict for udc
+Business: department
+You: Ict police
+You: Islamabad
+You: ???
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>

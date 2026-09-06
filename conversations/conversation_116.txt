@@ -1,0 +1,26 @@
+You: Assalam-o-Alaikum, maine Rs. 300 transfer kar diye hain testtayar.pk se complete LDC Test solved PDF guide book ke liye. Yeh payment receipt screenshot hai.
+Bot: Walaikum Assalam! Maine aapki payment confirmation hamari team ko verification ke liye bhej di hai.
+
+Maine aapki payment confirmation hamari team ko verification ke liye bhej di hai.
+Business: walaikumAssalam
+You: Acha bro mjhy apse ots Junior clerks written test past papers or PDF chaiye thi
+You: Acha bro mjhy apse ots Junior clerks written test past papers or PDF chaiye
+Business: mil.jaiga
+Business: 300 bhej do mil jaiga
+Business: jazzcash muhammad sami 03039512277
+You: Okay in notes ka faiyda ho gay tyari mai
+Business: apne konsi post per apply kia ha konsa department ha
+Business: yes post ky hisab se  laws acts waghera bhe hongy gk current affairs Jul 2026 ki bhe hogi or past papers se bhe
+Context: apne konsi post per apply kia ha konsa department ha
+You: Lesco junior clerk  ke Liye
+Context: yes post ky hisab se  laws acts waghera bhe hongy gk current affairs Jul 2026 ki bhe hogi or past papers se bhe
+You: Okay
+You: Mai apko jazzcash karta
+Business: ok
+You: {"image":{"image_id":"1059949593561694","caption":"Bro apko send kardiye hain"}}
+Business: bana rha hon ghnty 
+a bejhta hon
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+You: Okay Suhkria

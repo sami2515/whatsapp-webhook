@@ -1,0 +1,8 @@
+You: gi
+Bot: Hello! How can I help you today?
+You: who are you
+Bot: I'm the assistant for *TestTayar.pk*. We help with solved PDF preparation books, typing practice resources, and job application processes.
+How can I assist you today?
+You: who is owner
+Bot: I've connected you with our team. Someone will be with you shortly to help with your question about the owner.
+You: h

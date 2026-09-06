@@ -1,0 +1,74 @@
+You: Sami gas ki bil nhi i . Muje bil send kr do
+Business: https://viewbill.ssgc.com.pk/web/billpdfs/gasbill_2736421000_202605_20260612205613.pdf
+You: {"image":{"image_id":"1646135683116305","caption":"Sami bill open nhi ho rehi . Link pr click krne k bad ye aa rha hai screen shot dekh skte ho"}}
+Business: <Unsupported Message>
+Context: <Unsupported Message>
+You: Thanks sami
+Business: <Unsupported Message>
+You: Sami ye mountain wali vedio muje send kro
+Business: <Unsupported Message>
+You: Sami wapis aa gy ho . Ghar me sb theek hai naa ? Lock open k bad andr Ghar me sb brabar hai?
+Business: g theek ha
+Context: g theek ha
+You: Chalo acha hai aa gay ho . Muje rat ko 3...3 bar uth kr tumhara Ghar dekhna prta tha. Ab me skoon SE so jaya kron ga
+Business: gg
+Business: apko kesy pta chala
+You: Akelay aye ho ya sb aa gay hein
+Business: akele
+Context: apko kesy pta chala
+You: Chokidari kr rha hon tw sb Khabar rakhni prti hai . C.i.d lgai hui hai 😄
+Business: gg
+You: Chalo theek hai aram kro . Agr Kisi cheez ki zroorat ho tw Bhai smjh kr bila jhijhak bol dena
+Business: pani chia 1 bottle
+Business: thanda
+Context: thanda
+You: Bhej dia hai Pani Shani Le kr aa rha hai
+Business: thank you
+Context: thank you
+You: It's ok . Gas ki bil zra dekh lena
+Business: <Unsupported Message>
+Business: http://masti4u.pk
+Business: http://www.dhoom.pk
+Business: Voice Transcription: اچھا یہ لنک مجھے net والے نے دیے ہیں جس کا میرا net نہ ہو اس نے دی ہے یہ ان کے اپنے اس سے movies وغیرہ کوئی بھی download کرنا چاہو نا یہاں سے کر سکتے ہو آرام سے ہو جاتی ہے
+You: Thanks 👍
+You: Sami ye to good ho gya . Easy movie download ho rehi hai
+Business: Voice Transcription: یہ ایپ ہے پتہ نہیں کس چیز کی ایپ ہے. یہ بھی بھیجی تھی اس نے.
+You: {"image":{"image_id":"1786737745654836","caption":"Es app ko open krne SE ye aa rha hai"}}
+Business: chor do ya krlo mrzi ha
+Business: virus hoga
+You: Ye me ne download ki hai Lekin samne nhi aa rehi . Esy ab unstall krne ke Liye kaha dhoondu
+Business: download ni hoi apne click kia wo open kr rha tha
+Business: downlaod whatsapp ma hi hoi ha apke mobile ma ni hoi
+You: چلو ٹھیک ھے ۔ میں سیکورٹی ایشو کی وجہ سے ٹینشن میں تھا
+Business: ni ni
+Context: ni ni
+You: کہیں ایسا نا ھو کہ میں نے ڈاؤن لوڈ کر لی ھے اور میرا ڈیٹا ہیک ھو جائے
+Business: ni ni
+You: Ok
+Business: Voice Transcription: وہ جو ہے نا وہ جو لکھا ہوا ہے جس فائل میں بھی اس کا مطلب یہ کہ ہو سکتا ہے کہ یہ فائل میں وائرس ہو open کرنا چاہتے ہو یا cancel کرنا چاہتے ہو بس وہ خالی یہ message تھا
+Business: Voice Transcription: اکثر کوئی ایپ ہم direct ڈاؤن لوڈ کرتے ہیں نا کروم سے کر لیا جس طرح play store سے کرتے ہیں وہ تو پھر scan کرتا ہے خود ہی اور chrome سے کرتے ہیں تو پھر وہ تو scan نہیں کرتا وہ direct install ہو جاتی ہے install کرتے ہیں تو install ہو جاتی ہے اس میں پتا نہیں چلتا وائرس وغیرہ بھی اسی سے زیادہ تر آتے ہیں یہ تو ہو سکتا ہے اس میں ہو یا نہ ہو اس کا تو کچھ کہہ نہیں سکتے لیکن اس نے یہ دی تھی میں نے آپ کو دے دی لیکن ڈاؤن لوڈ کہیں پہ بھی نہیں ہوئی اگر آپ کروم سے ڈاؤن لوڈ کرتے نا تو وہ آپ کے اس میں فائل manager میں بھی آتی ہے اور ڈاؤن لوڈ ہو جاتی موبائل میں آ جاتی لیکن جب تک آپ اس کو install نہیں کرو گے نا وہ وائرس کچھ بھی نہیں کر سکتا ڈاؤن لوڈ ہو کے اس کو install کرو گے تب وہ اثر کرے گا اور یہ تو وہ واٹس ایپ پہ نا اس پہ تو ڈاؤن لوڈ بھی نہیں کیا سمجھو یہ تو واٹس ایپ میں ہی پڑی ہوئی ہے آپ کی. میں یہاں سے ڈیٹیل فور ایوری ون کروں گا یہ غائب ہو جائے گی. آپ کے کہیں پہ بھی موبائل میں بھی نہیں آئی. اور آپ نے اگر انسٹال نہیں کی تو پھر تو کوئی مسئلہ ہی نہیں ہے. اور ضروری نہیں ہے کہ اس میں وائرس ہو. یہ خالی بول رہا ہے کہ میں بھی
+You: {"image":{"image_id":"1507929988015834","caption":"\u00d8\u00b3\u00d9\u0085\u00db\u008c\u00d8\u00b9 \u00db\u008c\u00db\u0081 \u00d9\u00be\u00da\u0091\u00da\u00be\u00d9\u0088 \u00d8\u00b2\u00d8\u00b1\u00d8\u00a7"}}
+Business: scan krlo device antivirus se
+You: Ye sb may be harmful k neechay likha hua hai
+You: Aysa kro delete from everyone kr do plz
+Business: kr dia
+Context: kr dia
+You: Thanks
+You: {"image":{"image_id":"1626952975799938","caption":"Sami aaj WiFi nhi chal Raha connect krte waqt ye likha hua aa rha hai screen shot dekh skte ho"}}
+Business: abhi chal eha ha ya abhi bhe yhi msla ha?
+You: Connect ho jata hai Lekin koi b vedio play krta Hun ta zra see chal kr vedio ruk jati hai
+Business: bahir ao
+Business: mbl lekr
+You: Aa gya hun
+You: {"image":{"image_id":"1940168756655711","caption":"Sami dobara wese hi ho gya ... Ab to no internet aa rha hai . Screen shot dekh skte ho"}}
+Business: Voice Transcription: آپ کا نہیں گیا آپ سب کا گیا ہے اب پیچھے سے مسئلہ ہوا ہے اس کو میں message کر رہا ہوں ابھی بڑی مشکل سے بیس ایم ڈی ملی ہے ان لوگوں کو
+Context: Voice Transcription: آپ کا نہیں گیا آپ سب کا گیا ہے اب پیچھے سے مسئلہ ہوا ہے اس کو میں message کر رہا ہوں ابھی بڑی مشکل سے بیس ایم ڈی ملی ہے ان لوگوں کو
+You: Theek hai ... Me samjha k mere Sath hi aaj ye masla ho rha hai .
+Business: {"image":{"image_id":"1018414374301102","caption":""}}
+Business: {"image":{"image_id":"2724344538279365","caption":""}}
+You: Bil or payse de dena Kal bharwa duo ga
+Business: theek ha
+Business: 670
+Business: ac:3d:fa:14:da:72
+Business: ac:3d:fa:14:da:72
+Business: apke mobile ki setting ma andar mbl details ma nehy wifi mac filtering likha hoga or in dono ma ye koi ek hoga apka jo apka ha wo btao

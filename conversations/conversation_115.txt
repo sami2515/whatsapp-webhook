@@ -1,0 +1,20 @@
+Business: .
+Business: han bol na
+You: Voice Transcription: یار وہ منع کر رہا ہے یار پتا نہیں ڈرامے کر رہا ہے بول رہا ہے میں نہیں کر سکتا یہ ہوگا فلانا ہوگا بول رہا ہے پھنسوں گا میں میرا باپ میرے کو یہ کرے گا وہ کرے گا نہیں کرنا چاہ رہا وہ
+Business: tu krwa dy
+You: Voice Transcription: چل یار دیکھتے ہیں کوئی اور بندہ اس نے میرے کو دیا ہے فہد نام ہے نا اس سے کرتے ہیں رابطہ وغیرہ کچھ کرتے ہیں پھر
+Business: fahad ko chor
+Business: tu parha dy
+You: Voice Transcription: देखते हैं ना, कल सवार करूँ जा।
+Business: 1bajy jaingy kal 5star
+Business: utha hua ha bahar a
+You: Ha
+Business: kal.12 bajy suba milna
+Context: kal.12 bajy suba milna
+You: Ok
+Business: "کیا آپ کو فلاں بن فلاں کا نکاح، اتنا مہر مقرر کرکے، منظور و قبول ہے؟"
+Business: https://www.banuri.edu.pk/readquestion/nikah-parhanay-ka-tareeqa-144111201126/11-07-2020
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>

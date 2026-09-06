@@ -1,0 +1,23 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/guides/one-paper-exam-preparation?utm_source=chatgpt.com
+Bot: Walaikum Assalam! Hum apki kaise madad kar sakte hain?
+Humein batayein ke ap is page ke bare mein kya janna chahte hain ya apko kis tarah ki madad chahiye.
+Business: walaikum Assalam
+Business: chatgpt se ai ho ap?
+You: Koi group h kia?
+Context: chatgpt se ai ho ap?
+You: G
+Business: preparation krni ha?
+Business: post btao
+You: G
+You: FIA inspector
+Business: apko current affairs is month ky or fia laws sary past papers se bhe zaroori mcqs pdf milyga 300ka
+You: {"image":{"image_id":"1553265386544375","caption":""}}
+Business: bhejon detail number?
+You: Mujhe online quiz attept krny hn
+Business: topic
+Business: https://testtayar.pk/mcqs
+Business: agar kisi topic ka krna ha alag se to is page per topic per click kro or phir practice quiz per click krna https://testtayar.pk/mcqs/english?tab=practice jesy ye
+Business: notes chia hon to bta dena
+Business: <Unsupported Message>

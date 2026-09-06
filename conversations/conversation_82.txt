@@ -1,0 +1,39 @@
+Business: apka laptop ddr 4 ha ya 3
+Context: apka laptop ddr 4 ha ya 3
+You: Is ka mugha pata nahi kon sa ha
+You: https://docs.google.com/forms/d/e/1FAIpQLSeWKEmswl-a8deTrtVbmwLlKyqBflenmGx3eKjfzMKa778cUQ/viewform?usp=header
+You: Voice Transcription: 
+Bot: Thanks for reaching out! I'll ask a representative to respond. Someone will be with you shortly!
+Bot: I'm connecting you with a team member who can help you with that.
+You: Voice Transcription: ہیلو السلام علیکم یہ جو فارم ہے نا اس کو fill کر دو سارے چونکہ اس کا جو answer ہے نا اس پہ ایک بھی کر دینا صحیح ہے خود بھی کر دو اور آگے بھی share کر دو تاکہ اس میں ایک سو بیس entries چاہیے مجھے صحیح ہے بس خود بھی fill کر دو آگے بھی آگے بھی share کر دو صحیح ہے
+Business: 15, 20 krwa skta hon
+Business: q chia kya ha ye
+Context: 15, 20 krwa skta hon
+You: ok karwa do
+Context: q chia kya ha ye
+You: Voice Transcription: 
+Business: lazmi 120.pori krni ha?
+Context: lazmi 120.pori krni ha?
+You: Nahi gitni ho sacka kar lo
+Business: avha
+Business: thori der ma krta hon
+You: ok
+Business: agree agree krke kron?
+You: sara agree karo
+Business: 12 hogaye hain or baki hojaingy kuch der ma
+You: ok
+You: thanks
+Business: hdmi cable ha?
+Context: hdmi cable ha?
+You: Nahi HDMI cable nahi ha
+Business: https://docs.google.com/forms/d/e/1FAIpQLSdvsYRwoz3kl0vAL1YGzhnqlrSYj6DRStgfpppSCyRiVdzAEQ/viewform
+Business: apke pas kitni emils hain sahi hon ramdon khrab email nahi hon ghr ki jitni email hain sahi sahi on sab se ye form  submit krdo kuch bhe random kuch bhe select krke or jitne submit krogy name bata dena jo name ma dalogy wo sary name
+You: Ok
+Business: names bhe batana sab jo Daly same to aame
+Business: same
+You: Ahtisham 
+Hamza
+Haris
+Hassan
+Bot: Hello Syed Ahtisham Ali Shah! How can I help you today?
+You: Ya sab name ha

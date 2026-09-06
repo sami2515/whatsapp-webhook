@@ -1,0 +1,30 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/nadra-test
+Bot: Assalam-o-Alaikum! I'm the assistant for TestTayar.pk. How can I help you with the *NADRA test* or anything else on our site?
+Business: walaikumAssalam
+Business: typing ky hawaly se msg kia ha ya notes chia hain
+You: Mcqs chahiye
+Business: post
+Business: nadra ky laws hongy acts nadra ki pori knowledge  sath current affairs 2026 July ky or past papers se zaroori mcqs
+You: Mean
+Context: nadra ky laws hongy acts nadra ki pori knowledge  sath current affairs 2026 July ky or past papers se zaroori mcqs
+You: Yes
+You: Nadra abroad test Kay liye
+Business: kis post per apply kia ha
+Business: ham is lie pochta hain kyun ke ham sab ko alag mcqs dety hain taky achi tyari ho post ky hisab se oski
+Business: theek. ha
+Context: kis post per apply kia ha
+You: Job kartty hai meri tayri Ami UN KO abroad test clear Karna hai
+Business: Nadra overseas posting test ki tyari krni ha?
+Context: Nadra overseas posting test ki tyari krni ha?
+You: Of course
+Business: mil jaingy
+You: Kb
+Business: jab ap pay krengy
+You: Ap rehny hi dain mujy Abi tayri Karni hai thanku
+Business: NADRA Act hongy osme  ,SOPs , computer and IT knowledge hogi , english , GK , customer service public deling  hongi
+Business: g jesy apko munasib lagy foran ni milty qulity mcqs hoty hain hamary ab 2,3 hours lety hain oske bad dety hain JazakAllah
+Context: NADRA Act hongy osme  ,SOPs , computer and IT knowledge hogi , english , GK , customer service public deling  hongi
+You: No thanks I don't want mujy Google say mil Gaye jis type Kay chahiye
+Business: <Unsupported Message>

@@ -1,0 +1,73 @@
+You: Hi
+Business: han
+You: Voice Transcription: 
+Business: kitny
+You: Voice Transcription: 
+Context: Hi
+You: Voice Transcription: तू कहाँ है?
+Business: Voice Transcription: لایا تھا رش تھا پھر میں واپس چلا گیا ابھی بھی کام ہے
+You: Voice Transcription: अभी कहाँ घर पे है
+Business: Voice Transcription: یار مجھے نکالنا ہے اے ٹی ایم سے نا میں اپنے account سے تیرے کو بھیج دوں گا چھ ہزار تو چھ میرے کو cash دے دیو پھر باقی میں نکال دوں گا ٹھیک ہے کام کے لیے نکالنے ہیں
+You: Voice Transcription: सही है आजा तेरे कितने निकालने हैं और निकालने हैं तो और भी बता दिया फिर मैं उससे पूछता हूँ तूने कितने निकालने हैं
+Business: batery leni ha muja 30 nikalny hain
+You: Voice Transcription: چل پھر اتنے تو نہیں پڑے تقریبا کوئی دستک ہو جائیں گے. دس ڈال دیو پھر آ کے پیسے لے جا یہ پھر ڈال دے کتنی دیر میں آئے گا
+You: Voice Transcription: آتے ہوئے بریانی بھی لیتا ہی ہوں یہ سالن گھر بنا ہوا ہے تو بول رہا ہے ہوٹل بند ہیں آج کل.
+Business: Biryani wala band hoga
+Business: kuch bana ni ha rat ma banyga
+You: Voice Transcription: چل پھر وہ پیسے تو ڈال دیتا ہوں نا. نمبر بھیج رہا ہوں یہ ادھر ہی دکان پہ آئے گا.
+Business: sbr kr thora
+You: Voice Transcription: ओए, मस्जिद के सामने बिरयानी वाला खुला हुआ है, उससे बिरयानी लेता हूँ तेरे पैसे दे दूँ। डेढ़ सौ रुपया दो सौ रुपया chicken लेता है, ये ये खुला है के सामने वाला जो corner पे है।
+You: Voice Transcription: बस वो बिरयानी नहीं ले आई है मैं ले आया हूँ
+You: Voice Transcription: ابے پیسوں کا تیرے کو بولا تھا کہ نہیں ہے تو مجھے بتا دیں کسی اور سے ڈلوا لوں
+Business: Voice Transcription: تو کسی اور کو بولو بھائی وہ اگر ڈالتا ہے صحیح ہے نہیں ڈالتا پھر میں ڈال دوں گا صحیح ہے کل کا بول رہا ہے ابو
+You: Voice Transcription: अबे तो अब्बू कल का बोल रहा है ना पैसे भेज दे मेरे से आ के ले जाइयो कैश रख लियो तूने वैसे निकलवाने तो हैं
+You: Voice Transcription: शहजाद की दुकान भी बंद है ना, मैंने अभी घर से फोन आया, मैंने घर भेजने से।
+Business: mery account ma ni hain
+Business: bhejon 5500?
+You: Voice Transcription: 
+You: 03272185921
+You: Voice Transcription: Easy पैसा इसपे भेजिए, रानिया बीबी ना मानेगा।
+You: Voice Transcription: یا چار ہزار بھیج دیو یہ اور پڑے ہیں تو اور بھی بتا دیں یہ بھیج دیں بلکہ یہی بھیج دیتے ہیں.
+Business: Voice Transcription: میں گھر پہ نہیں ہوں گھر جا کے کروں گا ساڑھے پانچ کروں گا ٹھیک ہے
+You: Voice Transcription: 
+You: Voice Transcription: समी थोड़ा जल्दी करियो मैंने भेजने हैं फिर वो भाई दुकान पे होगा वो निकलवा के जाएगा घर ले के जाएगा
+Business: 5mint ma arha hon dukan per
+Business: {"image":{"image_id":"1679775239740864","caption":""}}
+Business: Voice Transcription: پندرہ سو روپے نکالنے ہیں تو یہ چاہیے تو بس account میں بھیج دوں گا cash دے دیو.
+You: Voice Transcription: यार बाईस सौ रुपए भेजना मुझे बाईस सौ चाहिए।
+Business: Voice Transcription: अभी पंद्रह सौ बड़े हैं, पंद्रह सौ ले ले, फिर सात सौ या जितने होंगे, फिर तुझे बता दूंगा।
+You: Voice Transcription: صحیح ہے آ جائے دکان پہ آ جائے پھر بارہ سو کردیو آجائیں جتنے چاہیں آجائیں
+Business: Voice Transcription: نہیں کرنا ابھی اتنے ہیں پندرہ لے لیں تین سو کو رکھ لیں کام آئیں گے ابھی میرے کو چاہیے کسی کو دینے ہیں پندرہ سو
+Business: {"image":{"image_id":"2822051528156610","caption":""}}
+Business: Voice Transcription: تیرے تو نے جیسے نیٹ لگایا ہے اس کی شوپ کہاں پر جو نیٹ ہے وہ جاتا ہے کہ نہیں جاتا مثال کے طور پہ جو اکثر نہیں چلتا نا نیٹ مسئلہ کرتا ہے اس طرح ہوتا ہے کہ نہیں ہوتا مہینے میں کتنی بار ایسا ہوتا ہے.
+Business: Voice Transcription: اور اس کی دکان کہاں پر ہے وہ جمعہ خان کا جو ہوٹل ہے اس کی لائن بھی گلی میں وہ دکان ہے چیز والی ایک دکان ہے اس کے اوپر جو ان کی دکان کے سامنے جو چھوٹا سا ایک cabin ٹائپ بنایا ہوا ہے اس نے وہ ہے اس سے لگوایا اس سے لگوایا کس کا ہے
+You: Voice Transcription: हाँ उसी का ही है और नेट सही चलता है, उसपे कभी खराब नहीं होता, ये जो वाले के सामने छोटा था कैबिन है, वही है।
+Business: Voice Transcription: 
+You: Voice Transcription: 
+Business: bhej
+You: 03132213146
+Business: connection k kitny pwsy lie thy osne?
+Business: tujhse
+Business: Voice Transcription: 
+Business: Voice Transcription: رش نہیں ہو رہا خالی ہو بالکل پھر میرے کو کال کریو
+Business: ?
+You: Voice Transcription: جلدی پہنچ جا جتنی ہو سکے جلدی پہنچ جا ایک بندہ آ رہا ہے اس کے آنے سے پہلے تو آ گیا تو تجھے بنا کے دوں گا اس نے تیرے سے پہلے کال کی تھی میں نے اس کو بولا تھا آجا ابھی message آیا تھا تو بھی آجا جو پہلے پہنچ گیا جلدی آجا وہ بھی نہیں آیا ابھی تک
+You: Voice Transcription: 
+Business: Voice Transcription: نکل گیا تھا میں gate پہ کھڑا تھا اب جیسے ہو جائے پھر message کر میں آ رہا ہوں
+You: Voice Transcription: 
+You: Voice Transcription: 
+Business: 5000 chiaM
+Business: ?
+Business: Voice Transcription: چاہیے تو گول دکان پہ آتا ہوں ڈال دوں گا.
+You: Voice Transcription: अभी नहीं है कल चाहिए पैसे कल आएँगे अभी थे मैंने सुबह डलवा ली
+Business: avha
+Business: {"image":{"image_id":"1576162940612372","caption":""}}
+Business: {"image":{"image_id":"4398198087115211","caption":""}}
+You: Voice Transcription: तो ये अब मुझे क्यों भेज रहा है? उसी को बता देता।
+Business: Voice Transcription: تجھے بول رہا ہوں صحیح لگ رہی ہے کہ نہیں?
+You: Voice Transcription: نہیں نہیں بہترین ماشاءاللہ وی آئی پی کر کے بنائی ہے اس نے. لوک چینج کر دیا تیرا.
+Business: Voice Transcription: کان پہ بندے ہیں کہ نہیں ہیں بتا? میں آؤں پھر?
+You: Voice Transcription: आजा आजा जल्दी पहुँचने की कर अभी तक तो कोई नहीं है जल्दी आजा
+Business: Voice Transcription: بال کٹوانے اور
+You: Voice Transcription: Phone करूँगा तेरे को अभी काम कर रहा हूँ
+Business: Voice Transcription: اور یہ چوڑیاں نہیں آیا ابھی تک۔

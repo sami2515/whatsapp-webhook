@@ -1,0 +1,61 @@
+Business: {"image":{"image_id":"2531206020641357","caption":""}}
+Business: {"image":{"image_id":"1013521484775450","caption":""}}
+Business: {"image":{"image_id":"1125943813939311","caption":""}}
+Business: price and details
+You: ROHAAN LAPTOPS لیپ ٹاپ کےحوالے سے تازا ترین اپڈیٹ اور ڈسکاونٹ حاصل کرنے کے لیے نیچے دیے گئے لنک میں موجود ہمارے یو ٹیوب چینل کو بھی ضرور سبسکرائب کریں👇👇👇👇👇👇👇👇👇👇👇👇👇👇
+https://youtube.com/@rohanlaptops?si=WnT5rHCkwH6UTW3V
+
+🛑📍MAIN REGAL CHOWK SADDAR KARACHI REGAL TRADE SQUARE CANTRE SHOP NO G:60 GROUND FLOOR▶️CALL 03122754845  CALL 03453252461
+
+🛑 GOOGLE MAPS LOCATION📍 https://maps.app.goo.gl/Qug7FkJ1oU9qCUD79?g_st=ic
+
+🛑TIMINGS 1 PM TO 8 PM SUNDAY OFF
+
+🛑 TIKTO: www.tiktok.com/@rohaanabbasi670
+
+🛑 FACEBOOK PAGE: https://www.facebook.com/share/1HToPHJw3b/?mibextid=wwXIfr
+
+🛑INSTAGRAM: https://www.instagram.com/rohan_laptops?igsh=MW11MTdtMHE2enVrOA%3D%3D&utm_source=qr
+
+🛑 CATALOG PICTURES AND PRICEFollow this link to view our catalog on WhatsApp: https://wa.me/c/923122754845
+Business: ?
+You: Available
+You: 80000
+You: Final
+Business: specs
+Context: specs
+You: I7 8th 8 Gb 256 SSD 2 GB GRAPHICS
+Business: model
+You: Model kal conform karen
+Business: pen waghera ha ?
+Business: screen orignal ha?
+Context: pen waghera ha ?
+You: Pen nahi hota is mai
+Context: screen orignal ha?
+You: Bhai bilkul har cheez original hai granted
+You: Bill par likh kar dekhngy
+You: Khula bana hua wapas
+Business: kal model confirm kro
+Business: or pictures model ko laptop ki bhejna lazmi
+Context: or pictures model ko laptop ki bhejna lazmi
+You: Ap pata kar lena
+Business: ok
+Business: kab shop kholta ga muja pics or specs bata exactly
+Context: kab shop kholta ga muja pics or specs bata exactly
+You: Khul gai shop
+You: Dell Inspiron 7586
+You: {"image":{"image_id":"1676706836945487","caption":""}}
+You: {"image":{"image_id":"982841877808114","caption":""}}
+You: {"image":{"image_id":"998896402687426","caption":""}}
+You: {"image":{"image_id":"2045039966388591","caption":""}}
+You: {"image":{"image_id":"849237061590675","caption":""}}
+Business: laptop model.num kya ha
+Context: Dell Inspiron 7586
+You: Ya
+Business: apke pas 360 hp 13.3 inch ma laptop hain?
+Business: bazel less metal body
+Business: or
+You: Jo apko chahya sb hai is ma
+Business: generation kam ha
+Business: 830 g7 ma 360 ha?
+You: Yahi hai bs

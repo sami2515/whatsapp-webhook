@@ -1,0 +1,9 @@
+Business: Voice Transcription: تو جہاں پہ کام کرتا ہے وہاں پہ مجھے لگا سکتا ہے. کام کیا ہوا ہے اور تنخواہ کتنی دیتے ہیں اور کام کیا کرنا ہوتا ہے.
+Context: Voice Transcription: تو جہاں پہ کام کرتا ہے وہاں پہ مجھے لگا سکتا ہے. کام کیا ہوا ہے اور تنخواہ کتنی دیتے ہیں اور کام کیا کرنا ہوتا ہے.
+You: Bro abhi to jaga nhi hai filhal
+Business: jaga hogi batana
+Context: jaga hogi batana
+You: Acha g okay
+You: 😍
+You: 😍
+You: 😍

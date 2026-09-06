@@ -1,0 +1,50 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: /guides/udc-test-guide-government-clerical-jobs
+Bot: Assalam-o-Alaikum! Welcome to TestTayar.pk.
+I'd be happy to help you with the UDC test guide or any questions about clerical job preparation. What specific information are you looking for today?
+Business: walaikumAssalam
+You: Sir I applied for UDC in Islamabad Capital territory if pdfs are available then share it to me
+Business: 300 price
+Business: jazzcash muhammad sami 03039512277
+You: Is MN kya add ho ga?
+Business: Is book mein current affairs, General knowledge, laws, computer knowledge aur past papers ke important sawalat shamil hain. Iski qemat 300 PKR hai.
+You: Okay
+Business: You're welcome! Would you like to proceed with the payment for the UDC preparation book?
+Context: You're welcome! Would you like to proceed with the payment for the UDC preparation book?
+You: Kindly ap mujy bata sakty han book ky total pages kitny han?
+Business: yes
+Context: yes
+You: Batian
+Business: 159
+You: Okay
+Business: 33 page ma alag pdf ma current affairs hain
+Context: 33 page ma alag pdf ma current affairs hain
+You: Ok
+You: {"image":{"image_id":"1081978734331139","caption":""}}
+You: Kindly share the PDFs
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: ye ldc udc or constable teno ka ha
+You: Ok thank you
+Context: <Unsupported Message>
+You: But sir UDC MN tu MS word and MS Excel sy related questions hoty han aur is book mn tu nahi
+You: ?
+Context: <Unsupported Message>
+You: Sir ICT MN UDC ki preparation krni ha mujy aus ky notes chian
+Business: ghalat send hogaye 2mint do
+Context: ghalat send hogaye 2mint do
+You: Ok
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: mazrat khana kha rha tha jabi ghalst send hoi
+Context: mazrat khana kha rha tha jabi ghalst send hoi
+You: No problem
+You: Excuse me sir
+Business: yes
+You: Sir kindly ap dobara mujy pdfs send kr saktu han ..
+Actually MN ny ap ka number phone sy delete kya tu mary pdf reader MN sy pdfs delete ho gu abhi phir MN ny website par ja ky ap ka number wahan sy lia then abhi msg kia
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+You: Thank you sir

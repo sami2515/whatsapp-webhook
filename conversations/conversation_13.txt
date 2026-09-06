@@ -1,0 +1,9 @@
+You: Hello, I would like to get solved PDF notes from TestTayar.
+Bot: Hello Azhar! We have solved PDF guide books for various departments and posts.
+Here are a few options:
+*   *Solved PDF book (MCQs)* - Rs. 300
+*   *NADRA Preparation Book* - Rs. 300 - 500
+*   *IRSA LDC Guide* - Rs. 300
+Which post or department are you preparing for? We can also provide custom solved notes for specific positions.
+Business: post or department batao
+Business: ?

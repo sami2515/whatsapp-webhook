@@ -1,0 +1,31 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/guides/nts-test-preparation-guide-syllabus-and-strategy
+Bot: Walaikum Assalam Ayesha! How can I help you today with the NTS test preparation guide or anything else on TestTayar.pk?
+You: NTS - Medical dena h
+Business: walaikum assalam
+Business: post konsi ha
+Context: post konsi ha
+You: Intermediate complete kr lia h sr next Parm D m admission lena h Comsats m us k lie pre medical NTS _ M dena h us k syllabus bta dyn or schedule b bta dyn next year k 2027 k or 2028 k b
+Business: NTS NAT-IM dena hoga.
+NAT-IM Syllabus:
+• English: 20 MCQs
+• Analytical: 20 MCQs
+• Quantitative: 20 MCQs
+• Biology: 14 MCQs
+• Chemistry: 8 MCQs
+• Physics: 8 MCQs
+
+Total 90 MCQs hote hain aur time 120 minutes hota hai.
+Business: COMSATS Pharm-D ke liye pre-medical mein minimum 60% marks , valid NTS score required hai
+You: ok sr JazakAllah
+You: sr g is ki preparation k lie material kha s mily ga any book ye any website
+Business: provide kr deingy apko 300 ma
+Context: provide kr deingy apko 300 ma
+You: ok sr us m kia chzyn provide kryn gy ap like
+Business: ye sab subjets
+Business: subjects
+You: Past papers b chye sr
+Business: current affiars july 2026 ky
+Business: past papers se hi hoga wo
+You: Ok

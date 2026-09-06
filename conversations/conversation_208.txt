@@ -1,0 +1,48 @@
+Business: screen hoti ha laptop ki?
+You: yes
+Business: G10 hp
+Business: kitni ki ha
+Business: i5 13gen
+You: Voice Transcription: 
+Business: hp elitebook 840 g10
+You: 19000
+Business: orignal
+Business: kuch kam kro
+You: yes
+You: acha rate diya hai
+Business: bhai kro bar bar ky customer hain
+You: 18500
+Business: eid k foran bad aonga theek ha
+You: Ok
+Business: Voice Transcription: یہ ایل ای ڈی ہوگی یا ایل سی ڈی ہوگی مجھے ایل ای ڈی ایل ای ڈی چاہیے اور یہ فل ایچ ڈی ہوگی نا یو ایچ ڈی
+You: LED
+You: G FHD+
+Business: Shop kab tk khuli ha
+You: 8:30 TAKA
+Business: khulti kab ha
+Business: duba
+Business: suba
+You: 11 BAJY
+Business: 640 g10ki screen kitni ki ha
+Business: Voice Transcription: آٹھ سو چالیس جی train ہے لیکن جب میں نے ماڈل اس کا دیکھا تو چھ سو چالیس جی train ہے چھ سو چالیس جی train کی کتنے کی ہے سکرین ایل ای ڈی اوریجنل ایس ایچ ڈی
+Business: {"image":{"image_id":"1699610161082741","caption":""}}
+Business: isky rate batao
+Business: ntao m
+Business: <Unsupported Message>
+You: TOUCH HAI YA  SADA
+Business: sada
+You: 10000
+Business: fhd?
+Business: 14inch laptop ha
+Business: laga kr dedogy?
+You: HD HAI
+You: FHD  KHTAM HAI
+Business: wo kitni ki ha
+Business: fhd ki price wesy
+You: 11000
+Business: mamgwa do fhd
+You: ABI TU NHI HIA
+Business: {"image":{"image_id":"1943357699670082","caption":""}}
+Business: {"image":{"image_id":"1561900852208343","caption":""}}
+Business: 2,3 bar aysa hua ha ye kya msla ha
+Business: display blink hua ha phir ye aya ya

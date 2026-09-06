@@ -1,0 +1,4 @@
+You: Yes ?
+Bot: Hello Furqan! How can I help you today?
+Business: ghalti se hoi thi
+You: Alr

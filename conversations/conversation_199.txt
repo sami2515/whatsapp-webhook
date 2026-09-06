@@ -1,0 +1,11 @@
+You: Kahan hai bhai
+Business: kaghan
+Context: kaghan
+You: Kab gaya hai
+Business: 2ko
+Context: kaghan
+You: Vip
+Context: 2ko
+You: Acha
+You: Kab aaega
+Business: 7din bad

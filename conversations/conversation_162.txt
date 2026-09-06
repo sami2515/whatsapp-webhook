@@ -1,0 +1,359 @@
+Business: assalamOalaikum
+You: Walaikumsalam
+Business: <Unsupported Message>
+You: JzzakAllah
+Business: {"image":{"image_id":"1595798855598293","caption":""}}
+Business: <Unsupported Message>
+Business: sham ko thory or donga
+Business: typing kitni ha apki or number wo kesy aya apke pas smjh ni arha
+Context: sham ko thory or donga
+You: They he ,yad sy
+1st time koi test attempt krna he m ny
+Business: thekk ha
+Business: chatgpt ne to ni dia?
+Context: chatgpt ne to ni dia?
+You: Nhi
+Business: phir
+Context: phir
+You: Testtayar app sy
+Business: bilkul page ky end per?
+Context: bilkul page ky end per?
+You: Nhi
+Business: phir kaha dikhao
+You: {"image":{"image_id":"890895377422132","caption":""}}
+Business: acha ye wesy jazzcash ky lie tha
+Business: khair ha koi bat i
+Business: ni
+Business: typing kitni ha apki
+Context: typing kitni ha apki
+You: Just17wpm
+You: 1week abhi start kia he
+Business: theek ha barhwani ho to bta dena
+Context: theek ha barhwani ho to bta dena
+You: Kesy
+Business: ma berhwa donga
+Context: ma berhwa donga
+You: ESA ho sakta he
+Business: yes
+Context: ma berhwa donga
+You: Mujhy35 wpm krni he
+Business: hojaigi
+Context: hojaigi
+You: Kesy
+Business: sikhaonga na hojaigi
+Business: batonga tip donga
+Context: batonga tip donga
+You: JzzakAllah 💞 
+Allahpak ap ko , Imaan or sehat wali lambi zidagi Ataa farmay, Ameen Sum Ameen
+Context: sham ko thory or donga
+You: Salam..
+English, math, computer,IQ KY pdf...
+Business: bhejta hon rat tk
+Business: website se bhe dekh skty ho ap mcqs page per prh skty ho
+Context: website se bhe dekh skty ho ap mcqs page per prh skty ho
+You: Internet issue bhot he
+You: Offline tiari krni he
+Business: theek ha
+Business: <Unsupported Message>
+Business: 1000 agar bhejogy to apki speed 30 krwa donnga ma agar lekin nahi hoi 30 to wapis 500 kr donga
+Business: mehnat ka kam ha bhut
+Context: mehnat ka kam ha bhut
+You: M janti hun
+Context: 1000 agar bhejogy to apki speed 30 krwa donnga ma agar lekin nahi hoi 30 to wapis 500 kr donga
+You: Pessay ni hein mery pass 
+Is ly khud Koshish krun, inshallah kamyab ho jaun gi
+You: Math ka koi pdf
+Business: acha chalo theek ha
+Business: isme hi ha bech ma
+Context: isme hi ha bech ma
+You: Okay
+Business: abhi ap kitni fingers se type krti ho
+You: Sir business executive KY ly fresher apply select ni hoty kia
+Context: abhi ap kitni fingers se type krti ho
+You: 10 fingers
+Business: hoty hain requirement ma dekho
+You: Aj to20wpm ho gai
+Business: ab misal Sami likhna ho  S bara ga kesy likhogi
+Context: ab misal Sami likhna ho  S bara ga kesy likhogi
+You: Shift right little+ s Ring finger of left hand
+Business: ma sha allah
+Business: yess
+Context: Shift right little+ s Ring finger of left hand
+You: Shift little finger sy press kr KY right ring finger sy s
+Context: yess
+You: G m mehnat kr rhi hun
+You: {"image":{"image_id":"3519100318251739","caption":""}}
+Business: {"image":{"image_id":"1935541161136138","caption":""}}
+You: Agr short list m nam na Aya tu
+Business: ye mera ha
+Business: wo zaroorat dekhty hain onko 20 seat chia hongi to agr 20 apse schy hongy to ni ayega
+Context: ye mera ha
+You: 58wpm + 85%Accuracy excellent
+Business: lekin nadra ma larkion ko hi lety hain zyada
+You: Meri 90+ accuracy
+Business: accuracy zada ha memy testing ma bs jldi jldi kia tha
+Context: lekin nadra ma larkion ko hi lety hain zyada
+You: Kiu
+Business: pta ni
+You: Allah Hafiz
+Business: <Unsupported Message>
+Business: apnw sign up kia ha?
+Context: apnw sign up kia ha?
+You: Kia
+Business: account banaya ha ?
+You: G
+Business: ap website per kesy ayi or experience share kr do bs kya sahi ni ha
+Business: kis chez ma.msla aya
+Business: use krne ma mushkil ai
+Business: suggestion ek trha se
+You: M subha kr dun gi
+Business: theek ha
+Context: theek ha
+You: Plus Comment bhi
+Business: lazmi krna
+Context: lazmi krna
+You: Be easy..
+M kr dun gi
+Business: ok
+Business: Anam name ha na
+Context: Anam name ha na
+You: Kis ka
+Business: apka
+Business: kanwal
+Context: apka
+You: Hahaha 🤣🤣
+You: Nhi
+Business: alishba
+Business: seema
+You: In m sy tu koi nhi
+Business: {"image":{"image_id":"4322527404728877","caption":""}}
+You: Sir koi or pdf bhi he
+Business: sir ni hon na
+Business: ma
+Context: sir ni hon na
+You: Tu
+You: Better luck forever 💞
+Business: apko jo chia na topic bata do bs
+Business: ma bana kr de donga
+Business: post ky mutabik
+Context: apko jo chia na topic bata do bs
+You: Nhi 
+JzzakAllah
+Business: 20sal ka hon
+Business: bata dena pesy die hain apne
+Context: 20sal ka hon
+You: Insan ka maqam 
+Age sy nhi kaam sy hota he
+Business: wesy sai bat ha lekin log sir bolty hain aksar acha ni lagta
+Business: kis city se apply kia tha apne
+Context: wesy sai bat ha lekin log sir bolty hain aksar acha ni lagta
+You: Ap Koshish krien Allahpak ap ko apna qurb Ataa farmay.. Ameen
+Context: kis city se apply kia tha apne
+You: Multan
+Business: or ye nadra job punjab ki thi na sirf?
+Business: g
+Context: or ye nadra job punjab ki thi na sirf?
+You: Briefly ni pta
+Business: contract ki thi na?
+Business: nadra ki jobs zyada contract ki ati hain mera mashwara ha kahi or achi jaga apply kro
+Business: lekin ye bhe kro abhi
+You: MCB bank m tellor ki job
+You: Or m aik teacher hun
+You: Or life m hr aik kaam krti hun
+Business: wah
+Business: punjabi ho na?
+Context: punjabi ho na?
+You: Gg
+Business: punjab ki larkian krti hain
+Context: punjabi ho na?
+You: Kiu ap kia chaand py rehty hn?
+Business: ab na 20saal ka hon lekin meny aj tk job ni ki
+Business: karachi ma
+Context: ab na 20saal ka hon lekin meny aj tk job ni ki
+You: Ap ki Marzi
+Context: karachi ma
+You: Ok
+Business: topic btao
+Context: topic btao
+You: Math KY jitny bhi Hun, complete
+Business: theek ha
+You: Mock exam KY bhi
+Context: Mock exam KY bhi
+You: IQ
+Business: theek ha kal bhejonga lekin
+You: Ap ki qualification kia he
+Context: theek ha kal bhejonga lekin
+You: ?
+Business: guess krlo
+Business: larkon ki 20ki ag ma kya hoti
+You: Graduation
+Context: larkon ki 20ki ag ma kya hoti
+You: Inter
+Business: yes
+Context: yes
+You: Good
+Business: inter + 3 YEAR diploma
+Context: inter + 3 YEAR diploma
+You: Diploma konsa
+Business: adse aptech
+Business: software engineering
+You: Beachelor of science in information technology
+Context: adse aptech
+You: Mujhy knowledge nhi
+You: Ap ka sense of humor achha he
+Business: apki kitni ha education
+Business: ye kya hota ha
+Context: Beachelor of science in information technology
+You: Y
+Business: agr kitni ha
+Context: agr kitni ha
+You: 22
+Business: bs dua krna meey loe
+Context: bs dua krna meey loe
+You: Mtlb
+Business: meri shadi hojai
+Business: pasand ki
+You: Shadi ho hi jati he
+Business: jldi abhi hojai
+Business: ek kam.ha apse
+Context: ek kam.ha apse
+You: Bolo
+Business: ma apko pesy don or address don halwa chia multani mil.jaiga?
+Context: ma apko pesy don or address don halwa chia multani mil.jaiga?
+You: Nhi
+Business: q
+Business: ye to btao
+Business: bolo
+You: UDC or LDC KY bhi pdf
+Business: kiske lie
+Context: kiske lie
+You: Khud study krun gi
+Context: ma apko pesy don or address don halwa chia multani mil.jaiga?
+You: M bhawlpur sy hun
+Context: UDC or LDC KY bhi pdf
+You: ?
+You: Kl mil jay ga Data
+Business: g mil jaiga
+Business: kis jaga
+Business: name kya ha apka
+Context: g mil jaiga
+You: Okay JzzakAllah
+Context: name kya ha apka
+You: Kia y zarori he
+Business: g
+Context: g
+You: M btana ni chahti
+Business: waja
+Context: waja
+You: Seema
+Context: waja
+You: So
+Business: seema
+Business: kis side bahawalpur ma rehti ho
+Business: jhot q bola
+Business: ab halwa bhijwao
+Context: jhot q bola
+You: M jhot ni bolti
+You: Pdf send kro
+Business: abhi to utha hon  nashta bhe ni kia
+Context: kis side bahawalpur ma rehti ho
+You: Hajian basti, near central jail
+Business: acha
+Context: abhi to utha hon  nashta bhe ni kia
+You: Mera problem ni he
+Business: thora ruk jao abhi thora kam se ja rha kr donga dophr tk
+Business: mera ha bs
+You: Point py bat kro
+Context: thora ruk jao abhi thora kam se ja rha kr donga dophr tk
+You: Deikhty hein
+Business: khali ye chia
+Business: lekin post
+Context: khali ye chia
+You: Y tu bhejo
+Business: bhej rhw hon bana rha ho
+Context: lekin post
+You: Kon si post
+Business: specific ag r
+Context: specific ag r
+You: M tu ppsc ki bhi tiari kr rhi hun
+You: Lecturar k ly
+You: Ap ki smajh m ni ay ga? M kia krti Hun, kia nhi
+Business: dant q rhi ho kab se
+Business: bhej rha hon sbr kro\
+Business: target kis job ko kr rhi ho ya ppsc ma kis chez ki tyari kr rhi ho\
+You: Typing master py20wpm or testtayar py15wpm
+You: Sb ki
+Business: typing master alag chez ha testtayar govt job ke lie ha
+You: No target just knowledge or hr cheese seikhny k ly
+Business: abhi ma apko 40 dikha don kal ko ap fail hojao phir
+Business: acha
+Context: abhi ma apko 40 dikha don kal ko ap fail hojao phir
+You: Zabrdast
+Good work
+You: Digital marketing+free lancing bhi
+Business: <Unsupported Message>
+Business: 😂kya cheez ho ap
+You: Ap ki smajh m kabhi nhi aun gi
+Business: saba ho?
+Context: 😂kya cheez ho ap
+You: Mehndi artists, beautation expert, hand made jewelry making, hand embroidery or crochet designer or stitching bhi Sath sath
+Business: ek pdf de rha hon apko *ICT & Pakistan Laws (MCQs 495-630) wala section aur Police-specific* ko chor dena bs
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Context: ek pdf de rha hon apko *ICT & Pakistan Laws (MCQs 495-630) wala section aur Police-specific* ko chor dena bs
+You: Okay
+You: Police sy nafrat he
+You: Or medical field sy bhi
+Business: ho skta ma army ma chala jaon 2 mahine bad
+Business: kis chez ki digital marketing krogi or kya freelancing ma ?
+Context: <Unsupported Message>
+You: JzzakAllah
+Business: last ha bs ek or
+Business: oske bad ni mangna kuch
+Business: typing per dehan do bs phir
+Business: lecturar subject btao apna
+You: Suggestion Kahan deni he
+Context: kis chez ki digital marketing krogi or kya freelancing ma ?
+You: Hand made jewelry
+Business: dikhao kuch agr ha hand made
+Context: lecturar subject btao apna
+You: Computer or math
+Context: dikhao kuch agr ha hand made
+You: Rat bnaya he ,wo send krti hun
+Business: keo
+Business: kro
+You: Order py bracelet
+You: {"image":{"image_id":"2604330580007641","caption":""}}
+Business: ha to dikhao
+Business: acha
+Context: Suggestion Kahan deni he
+You: ?
+Business: jaha dill kre
+Business: jo sahi nahi lagy
+Business: ek bat pochon?
+Context: jaha dill kre
+You: Okay
+Context: ek bat pochon?
+You: G
+Business: ap jaha rehti ho bahwalpur waha bhut sakhti ha larkion per to ap nat kesy kr rhi mujhse
+Business: bat
+Context: ap jaha rehti ho bahwalpur waha bhut sakhti ha larkion per to ap nat kesy kr rhi mujhse
+You: Insan ko positive hona chahiye
+You: M NY Zindagi m koi ghuna ni kia
+You: Or Kash Mera Dil itna pak hojay KY m kabhi gunah na krun
+Business: sach ha wesy ye to
+Business: gumah ni kia pta ha
+Business: larki ha mery pas ek apke area ki hi ha
+Business: shayd
+Business: wo apne bap se itna darti ha ky shadi ka ni bol skti wo gunah kr rhi ha ?
+You: {"image":{"image_id":"1621876106010558","caption":"Is book sy tiar kr rhi hun"}}
+Context: wo apne bap se itna darti ha ky shadi ka ni bol skti wo gunah kr rhi ha ?
+You: Bap sy ni darty , un sy muhabbat krni chahiye, or larkiun ko strong hona chahiye
+Context: larki ha mery pas ek apke area ki hi ha
+You: Kon hy
+Business: g strong ha
+Business: q btao
+Context: q btao
+You: Address or name
+You: M samjahun gi usay
+You: Allah Hafiz

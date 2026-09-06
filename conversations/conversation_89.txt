@@ -1,0 +1,31 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to report/suggest something.
+
+Type:
+Page: https://testtayar.pk/typing-test/ldc
+Issue/Suggestion:
+Details:
+Bot: Walaikum Assalam! Thank you for reaching out to us with your feedback. I am going to connect you with someone who can help you.
+Business: walaikumAssalam
+Business: g
+You: Mera tewt ha
+You: LDC ka
+You: Mes ma
+You: Typing ka
+Business: g
+Business: practice kro bs practice ma typing speed se zyada accuracy meter krti ha
+Business: keyboard pc wala ho jisper kro laptop per ni kro
+You: Agr keyboard ko laptop sa connect krlo too
+Business: to sai ha
+You: Ap batay kiss type ka paragraph dega mes wala
+Business: lekin ap practice agr laptop per krogy test waly din apko laptop ni dia jaiga apki onglian phasengi
+You: Pattern
+Business: website per dekhlo
+Business: ldc udc dono ki krlo
+Context: lekin ap practice agr laptop per krogy test waly din apko laptop ni dia jaiga apki onglian phasengi
+You: Use to ka PC wala keyboard hi kro ga
+You: Screen laptop hogi
+Business: phir sahi ha
+You: {"image":{"image_id":"1521729562771145","caption":""}}
+Business: or koi msla website ma glitch error use krne ma mushkil ai ho  to btao?
+You: Ok
+Business: 300 price ha updated ha 19june tk ka ha pdf milyga pora apko wo kafi hoga apki post k lie chia hua to bata dena

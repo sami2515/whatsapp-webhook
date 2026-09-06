@@ -1,0 +1,25 @@
+Business: shop kab khulygi?
+Business: kya kam.hpga
+Business: ma interested hon
+Business: 20 age intermediate
+You: Voice Transcription: ठीक है, सर आप शॉप आ जाए, आपका इंटरव्यू ले लेते हैं, साजिद भाई फिर आपको इंशाल्लाह।
+Business: kab aon
+You: Voice Transcription: آج آ جائیں جناب دو بجے کے بعد
+Business: interview kisse related hoga
+You: Voice Transcription: کمپیوٹر کے حوالے سے ہوگا جو اس پہ لکھا ہوا ہے
+Business: cv lani ha ya ni?
+You: Voice Transcription: جی لے آنا یار سی وی بھی لے آنا بھائی.
+Business: muhamamd sami name ha cv di thi
+Business: contract krlonga
+You: ok
+Business: AssalamOalaikum
+Business: Mjhe job ka pochna chah raha thw
+You: sir lrdka hamnia rkh lae ha
+Business: acha
+Business: sodi mm 4gb laptop ram 2400mts
+Business: price kya ha
+Business: ddr4
+You: rs 5000
+Business: orignal ha?
+Context: orignal ha?
+You: G sir bilkul

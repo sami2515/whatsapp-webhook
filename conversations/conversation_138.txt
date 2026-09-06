@@ -1,0 +1,103 @@
+You: Assalam-o-Alaikum, maine Rs. 300 transfer kar diye hain testtayar.pk se complete solved PDF preparation book ke liye. Yeh payment receipt screenshot hai.
+Business: walaikumAssalam
+Business: nahi kie
+You: Kia
+Business: screenshot bhejo
+You: Job ke liye hy
+You: Ya kujh or
+Business: yes
+You: Ye konsi website hy
+Business: testtayar
+You: Firstly Provide me full details
+Business: why
+You: Then I will send
+Business: notes chiaA?
+You: I done bachelors
+Business: kisme apply kia ha
+You: Wo to aap slot dengy na
+You: Location Kidar Ki hy?
+Business: slots system nahi ha
+Business: m apko provide kroonga mukammal book
+You: Then
+You: Job location Kidar hy
+Business: updated apki post ky hisab se laws acts gk current affiars past papers se
+Business: job per ap apply krogy khudi govt job per oski prepartion ham karwaingy
+You: Bachelors of business administration
+Context: job per ap apply krogy khudi govt job per oski prepartion ham karwaingy
+You: Test kab hogi
+Business: kisme apply kia ha
+You: Online quiz tha aapka
+You: Job ke liye kab aaply karon
+You: <Unsupported Message>
+Business: abhi krlo
+You: Kese
+Business: kisme apply krna ha apko
+Business: ham karke de dengy
+You: Location Kia hy apki
+You: Job market koi b
+You: 35-40k salary monthly ho jismein
+Business: ap ko konsi post per apply krna chahty ho bas hamy bata ddo civilian ya military
+Context: ap ko konsi post per apply krna chahty ho bas hamy bata ddo civilian ya military
+You: Civilian
+You: Larkana se hn mein
+Business: karachi se ho ma
+You: Ik
+You: Ok
+Business: Upper Division
+Clerk (UDC)
+(BS-11)
+Business: per apply krlo nccia ma
+You: Upper division
+Business: g
+You: Monthly Kia pkg
+Business: typing speed kitni ha?
+You: Avreage
+Business: nccia ki job ha mehnat krogy to mil jaigi 50 55 pakage hoga
+Context: nccia ki job ha mehnat krogy to mil jaigi 50 55 pakage hoga
+You: Kab test hy
+You: Apka
+Business: mera ni ha
+Business: govt job ha meri ni ha
+You: Department
+Context: govt job ha meri ni ha
+You: Test kab hoga
+You: Apply kese karun
+Business: nation cyber crime and investigation agency
+Business: kar skty ho link bhejon?
+Business: ya hamne karwana ha
+You: G
+You: Karachi konsi area
+Business: orangi
+You: Korangi
+Business: Orangi
+You: *
+You: Orangi nhi suna
+You: Korangi suna hy
+Business: Orangi Town
+You: Ok
+You: Then
+Business: 300 charges hongy ham apply kar ke de dengy apko
+You: Aap Apply karen
+Context: 300 charges hongy ham apply kar ke de dengy apko
+You: Pehly apply Karen
+You: Fir send karunga
+Business: sath ma notes provide krengy tayari ky lie 300 rs ma
+Context: Pehly apply Karen
+You: .
+Business: abhi muja payment bheji ha kisi ne oske notes tyar kr rha hon
+You: Pehly Apply karo
+You: Aap
+Business: {"image":{"image_id":"1937730806904686","caption":""}}
+You: Record bhejogy to 300 bhejo ga
+Business: apply kar dengy itni bari website ha log bharosa karty hain
+Business: apko karna ha to kar skty ho ap bhe haram nahi khaty ham
+Business: Cnic mbl numbr email adress , pora name
+Business: matric marksheet intermeiate marsheet bechlor sab bhejogy
+Business: domicile adress postal address permanent address father name
+Business: https://npftas.pk/register
+Business: apply kar lo khudi yaha se agar note chia hue apko to bata dena
+Business: test ki tyari ky lie
+You: Test kab hy
+Business: abhi ap apply krogy jab apply khtam hoga to test ki tarikh ayengi
+Business: apply krwana ha to jldi batao
+Business: https://npftas.pk/uploads/projects/nccia2.pdf

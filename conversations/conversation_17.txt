@@ -1,0 +1,21 @@
+Business: AssalamOalaikum
+Business: {"image":{"image_id":"1575260894066511","caption":""}}
+Business: yes nadra mcqs available hain
+Context: yes nadra mcqs available hain
+You: G
+Business: post btayen apni
+Context: post btayen apni
+You: Site incharge in nadra
+Business: yes available
+Business: 300 price ha osme nadra acts, ordinance nadra laws gk sab shamil ha
+Context: 300 price ha osme nadra acts, ordinance nadra laws gk sab shamil ha
+You: Tik he number send kro
+Business: jazzcash muhammad sami 03039512277
+You: {"image":{"image_id":"1697655272369875","caption":""}}
+You: Abi send kro file
+Business: ok recieved
+Business: 2mint do
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: google per likho *trustpilot* website khulygi phir *test tayar* likho weebsite per trustpilot ki review do 5 star acha sa signup krne ko kahyg trustpilot kr lena

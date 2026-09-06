@@ -1,0 +1,18 @@
+You: Hello, I would like to get solved PDF notes from TestTayar.
+Bot: Hello! We have complete solved PDF preparation books tailored for various posts and departments like NADRA, FIA, and LDC. These guides include updated notes, past papers, and current affairs.
+The general solved book is *Rs. 300*. To make sure you get the right material, could you kindly tell me which post or department you are preparing for?
+Bot: {"media_carousel":{"product_ids":["37638831429097382","28146903354919319","39263104189954984"],"message_body_text":"Explore our products here:","locale":"en_US","enable_product_website_link":false}}
+Context: {"media_carousel":{"product_ids":["37638831429097382","28146903354919319","39263104189954984"],"message_body_text":"Explore our products here:","locale":"en_US","enable_product_website_link":false}}
+You: {"product_info_reply":{"id":"37638831429097382","title":"I'm interested"}}
+Bot: The complete solved PDF preparation book is *Rs. 300*. To help us customize the material for you, could you kindly let us know which *post or department* you are preparing for? I've connected you with our team to help finalize your purchase.
+You: UDC
+Business: <Unsupported Message>
+Business: jazzcash muhammad sami 03039512277
+Business: 300 bhej do apko preparation book de dengy department bhe bta do kis department ka udc
+You: *پــۤــࣱࣶـخیـــࣻ͢ــر راغــۤــࣱࣶـلے*🤍🌝👀
+Business: pakhair
+Context: 300 bhej do apko preparation book de dengy department bhe bta do kis department ka udc
+You: JLA KA HAI
+Context: jazzcash muhammad sami 03039512277
+You: MERA TO ACCOUNT NI HAI ME KISI SAY SEND KRWAONGA
+Business: Shop se krwa do

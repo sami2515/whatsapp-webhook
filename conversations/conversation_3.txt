@@ -1,0 +1,240 @@
+You: A.O.A
+Bot: Walaikum Assalam, *Umme Farwah*! TestTayar میں خوش آمدید۔
+میں آپ کی کیسے مدد کر سکتا ہوں؟ کیا آپ کسی مخصوص ٹیسٹ (جیسے NADRA، KPT، یا FIA) کی تیاری کے لیے پی ڈی ایف نوٹس یا معلومات تلاش کر رہے ہیں؟
+You: {"image":{"image_id":"1443841164272835","caption":""}}
+Bot: میں نے آپ کی ادائیگی کی تصدیق ہماری ٹیم کو بھیج دی ہے تاکہ وہ اس کی پڑتال کر سکیں۔
+You: Yes I have applied for the election commission post senior assistant -15 and sub Assistant 11
+You: Sure I need pdf for that post
+Business: iski official price 3000 ha lekin filhal 300 ma dia ja rha ha agr apne is pdf se tyari krli to ap in sha allah zaroor select hogy
+You: Inshallah thank you
+Business: <Unsupported Message>
+You: Per post ka 300 hai ? 
+Filhal ?
+Business: yess
+Business: filhal ni hameesha ky lie
+You: Okay thank you I need for the UDC 11 for the NCCIA post also
+You: Let me send payment .
+Business: okay
+Business: pehle dekhlo pora pdf topics sary
+Business: agr waqai lagta lena chia to lena warna n8
+Business: ni
+You: NCCIA k new post ayn hn FIA department sy Alg hua hai yh cyber crime ka Alg uska liye UDC ka basically Jo last time FIA ka test hua tha bht logically tha kafi lengthy statement us trha k preparation k notes chaiye
+Context: agr waqai lagta lena chia to lena warna n8
+You: Ok let me check
+Business: g ossi trha milyga
+Context: agr waqai lagta lena chia to lena warna n8
+You: Yeah the all thy completed
+Context: g ossi trha milyga
+You: Sure for the post of UDC-13
+Business: NCCIA  UDC ky lie Chia?
+Business: FIa ka apne kis post ka dia tha?
+Business: lekin apki  typing speed  22WPM ha UDC ky lie kam ha
+You: But I'll try to improve
+Business: https://testtayar.pk/guides/nccia-jobs-2026-all-posts-eligibility-test-preparation-guide
+You: UDC m inki typing speed waisy mngi ni hai senotypist m mngi hai post py likha
+Context: https://testtayar.pk/guides/nccia-jobs-2026-all-posts-eligibility-test-preparation-guide
+You: Let me check
+Context: lekin apki  typing speed  22WPM ha UDC ky lie kam ha
+You: 2-3 or websites py k thi main test us 28 or 30 thi
+You: But I think I can work on it
+You: Kyuki Mera daily ka laptop ka Kam hai
+Context: NCCIA  UDC ky lie Chia?
+You: Yes
+You: NCCIA for 11 grade UDC
+Business: lekin typing laptop per ni krni
+You: Keyboard py?
+Business: yes
+Business: PC  waly per kro
+You: Okay sure thank you Mai buy krologi inshallah 1-2 m
+Business: 500 tk mil jaiga
+Business: Fia ma konsi post ka apne test dia tha
+Context: Fia ma konsi post ka apne test dia tha
+You: LDC Kelia but preparation ni k thi khas
+You: Ab time hai that's why I'm doing preparation for the post
+Business: patern pora share kr do jo aya tha
+Business: english, gk , pakistan study , Current Affairs , Mathematics / Arithmetic  , Computer / IT , MS Office ,Office/clerical skills  nccia laws acts isi se ayega paper
+You: 1st m English py logical statement wlay question thy almost 20 kafi lengthy statement thi jisko prhnaw hai not just Grammer logical thinking type .
+Then some mcqs from the chemistry and physics 
+Then from GK mid level 
+Maths from the 1st year book almost .
+Zada mcqs maths ke about the profit and loss and percentage.
+English mcqs are tough.
+GK sy current affairs .
+IT MS office m Asan thy
+Context: 1st m English py logical statement wlay question thy almost 20 kafi lengthy statement thi jisko prhnaw hai not just Grammer logical thinking type .
+Then some mcqs from the chemistry and physics 
+Then from GK mid level 
+Maths from the 1st year book almost .
+Zada mcqs maths ke about the profit and loss and percentage.
+English mcqs are tough.
+GK sy current affairs .
+IT MS office m Asan thy
+You: FIA k paper
+You: Last wala
+Context: english, gk , pakistan study , Current Affairs , Mathematics / Arithmetic  , Computer / IT , MS Office ,Office/clerical skills  nccia laws acts isi se ayega paper
+You: Chemistry k b thy mcqs physics k bh at least 10
+Business: g
+Business: Chia?
+You: {"image":{"image_id":"1825568325098618","caption":""}}
+Context: Chia?
+You: Yes ,
+Context: {"image":{"image_id":"1825568325098618","caption":""}}
+You: For NCCIA
+Business: English  ,Logical reasoning  , Physics ,Chemistry  ,GK  ,Current Affairs  , Mathematics  , Percentage  , Profit & Loss  ,IT / MS Office,  Basic Computer
+Business: isme se bana kr donga
+Business: kal bana kr don msla to ni apko?
+Context: English  ,Logical reasoning  , Physics ,Chemistry  ,GK  ,Current Affairs  , Mathematics  , Percentage  , Profit & Loss  ,IT / MS Office,  Basic Computer
+You: Sure
+Context: kal bana kr don msla to ni apko?
+You: Yes no issue
+You: I'll remind you tomorrow
+You: Thank you
+Business: <Unsupported Message>
+Business: Ecp ky pdf ma current affairs nahi thy ye 2 months ky all world current affairs hain
+Business: isme se ap jitna perhogy otna hi knowledge hasil krogy
+Context: isme se ap jitna perhogy otna hi knowledge hasil krogy
+You: Yes exactly.
+Let's see Pakistan k easy hai remind krna world wide trick use krni Prygi maybe
+Business: 1. English & Grammar
+   - Parts of Speech
+   - Noun, Pronoun, Verb, Adjective, Adverb
+   - Articles
+   - Sentence Structure
+   - Singular/Plural
+   - Gender
+   - Countable/Uncountable Nouns
+   - Tenses
+   - Prepositions
+   - Conjunctions
+   - Subject-Verb Agreement
+   - Helping Verbs
+   - Active & Passive Voice
+   - Direct & Indirect Speech
+   - Sentence Correction
+   - Error Detection
+
+2. Vocabulary / Verbal English
+   - Synonyms
+   - Antonyms
+   - One Word Substitution
+   - Idioms & Phrases
+   - Spellings
+   - Confused Words
+   - Analogies
+   - Fill in the Blanks
+   - Basic Comprehension
+
+3. General Knowledge
+   - World GK
+   - Countries, Capitals, Currencies
+   - Continents
+   - Oceans & Seas
+   - Major Cities & Geography
+   - Famous Personalities
+   - Books & Authors
+   - Scientists, Discoveries, Inventions
+   - Awards
+
+4. International Organizations
+   - UN
+   - WHO
+   - IMF
+   - World Bank
+   - UNESCO
+   - UNICEF
+   - OIC
+   - SAARC
+   - SCO
+   - NATO
+
+5. Pakistan GK / Pakistan Studies
+   - National Symbols
+   - Provinces & Capitals
+   - Rivers, Dams, Mountains
+   - Pakistan Movement
+   - Two-Nation Theory
+   - Sir Syed
+   - Aligarh Movement
+   - Allama Iqbal
+   - Quaid-e-Azam
+   - Muslim League
+   - Lahore Resolution
+
+6. Computer
+   - Computer Fundamentals
+   - Hardware/Software
+   - Input/Output Devices
+   - CPU
+   - RAM/ROM
+   - Storage
+   - Operating Systems & Windows
+   - MS Word
+   - MS Excel
+   - Internet & Email
+   - Networking
+   - Cyber Security
+
+7. Islamic Studies
+   - Basic Islamic Studies
+   - Arkan-e-Islam
+   - Iman
+   - Tauheed & Risalat
+   - Namaz, Roza, Zakat, Hajj
+   - Quran & Hadith
+   - Seerat-un-Nabi ﷺ
+   - Khulafa & Islamic History
+
+8. Analytical / IQ Reasoning
+   - Number Series
+   - Alphabet Series
+   - Analogy
+   - Classification
+   - Odd One Out
+   - Coding-Decoding
+   - Directions
+   - Blood Relations
+   - Ranking
+   - Logical Statements
+   - Puzzles
+   - Pattern Reasoning
+   - Basic Arithmetic
+   - Percentage, Ratio, Average
+
+9. Constitution / Pakistan Law
+   - Constitution 1973
+   - Fundamental Rights
+   - Principles of Policy
+   - President
+   - Prime Minister
+   - Parliament
+   - National Assembly
+   - Senate
+   - Provincial Government
+   - Judiciary
+   - Constitutional Articles
+   - Federal/Provincial Powers
+
+10. Election / ECP
+   - Election Commission of Pakistan
+   - Chief Election Commissioner
+   - ECP Powers & Duties
+   - Electoral Rolls
+   - Delimitation
+   - Candidates & Nomination
+   - Polling Process
+   - Ballot Papers
+   - Election Results
+   - Election Expenses
+   - Election Offences
+   - Election Tribunals
+   - Pakistan Electoral System
+
+11. MS Word Practical
+   - Formatting
+   - Shortcuts
+   - Page Setup
+   - Header/Footer
+   - Tables
+   - Printing etc.
+Business: *English ,GK  ,Current Affairs ,/ MS Office,  Basic Computer* ye jo bold kie hain wo nahi donga kal UDC ky lie baki ,Logical reasoning  , Physics ,Chemistry    , Mathematics  , Percentage  , Profit & Loss  ,IT , laws acts donga
+Business: kyun ky wo sab isme hain pehle se

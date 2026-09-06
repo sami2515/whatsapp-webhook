@@ -1,0 +1,10 @@
+Business: AssalamOalaikum
+Business: sector 11 wala ghr ki video ha?
+Business: ??
+Context: sector 11 wala ghr ki video ha?
+You: w.salam
+Business: ad dekha ha apka a
+You: sale hogaya
+Business: 11 ½ walam
+Business: or hain koi ghr isi ilaqy ma orwngi 4,5,1,10,11number ma
+You: nahi

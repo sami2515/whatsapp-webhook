@@ -1,0 +1,20 @@
+You: Sami yrr wifi nahi chal raha
+Bot: Hi Sami, I'm sorry to hear you're having trouble with your Wi-Fi. Let me connect you with someone who can help you with that.
+Business: Voice Transcription: ابھی دیکھا نہیں چل رہا تھا پھر میں نے restart restart کی device تو چل جائے گا ویسے بند نہیں ہوتا میرے کو پتا ہے مہینے مہینے چلتا ہے بند نہیں ہوتا لیکن بند ہوا ہے تو کوئی مسئلہ ہوگا چھوٹا سا مسئلہ ہوگا یہ وہ device change کر رہا ہوگا پانچ منٹ لگیں گے اگر زیادہ سے زیادہ بیس پچیس منٹ لگیں گے آ جائے گا انشاءاللہ لیکن پانچ منٹ میں آ جائے گا ٹھیک ہے لیکن وہ آیا ہو گا پھر
+You: Acha thik hai
+You: Sami yrr Ami Kay mobile me chal raha hai mery Waly me nahi chal raha
+Business: <Unsupported Message>
+Business: kesi bani
+You: Achi hai
+Business: is bar 700 dena
+Business: pakage mehenga hogaya ha
+Business: suba 500 lazmi dena
+Business: Voice Transcription: ٹھیک ہے یہ شام کو اس کو دینے ہیں یہ کش میں نے کروا دیا ہے
+You: Voice Transcription: समझ नहीं आ रहा क्या हुआ पैकेज करवा दिए शाम को आऊंगा पैसा मेरे से।
+Business: ok
+Business: han krwa lia
+Context: han krwa lia
+You: Acha
+Business: ?
+You: Voice Transcription: تھوڑی دیر میں آ رہا ہوں پھر تیرے کو پیسے دے رہا ہوں ابھی باہر بیٹھا ہوا ہوں تھوڑی دیر میں گھر پر آ رہا ہوں پھر پیسے دے رہا ہوں
+Business: ok

@@ -1,0 +1,23 @@
+Business: AssalamOalaikum
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: Voice Transcription: السلام علیکم وہ جو کاغذات دیے ہیں نا اس میں یہ سیکنڈ year کی mark sheet کم تھی وہ اس کی خالی پرنٹ نکالنا ہے آپ کو اس کے ساتھ لگا لینا اور وہ پورا set بن جائے گا
+Business: {"image":{"image_id":"1587660096060998","caption":""}}
+You: Ok
+You: {"image":{"image_id":"1082594930835092","caption":""}}
+Business: ?
+Business: {"image":{"image_id":"2354430708661365","caption":""}}
+Business: {"image":{"image_id":"1774784096997372","caption":""}}
+Business: Deputy Director Labour (Administration), Block-86, Sindh Secretariat IV-B, Court Road, Karachi.
+Business: <Unsupported Message>
+Business: Voice Transcription: اس میں بھی اپلائے کیا ہوا ہے میں نے night classes میں
+You: Ok

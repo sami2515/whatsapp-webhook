@@ -1,0 +1,17 @@
+Business: AssalamOalaikum
+Business: dp waala drone kitne ja ha
+Business: acha quality ka kitne ka ha
+Context: acha quality ka kitne ka ha
+You: Plane hai yai 3800
+Business: isse achi quality ka kitne ka ha
+Context: isse achi quality ka kitne ka ha
+You: Sub sai acha 5500 ka hai
+Business: range kitni ha urnw ki
+Context: Sub sai acha 5500 ka hai
+You: Fighter plane
+Context: range kitni ha urnw ki
+You: 100 meter
+Business: website ha apki koi?
+You: Video dhaikai
+Business: kiski
+Business: Voice Transcription: بناتا ہوں ویب سائٹ تو میں آپ کی پوچھ رہا ہوں کہ آپ کی بنی ہوئی ہے کہ نہیں?

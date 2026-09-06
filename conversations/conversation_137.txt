@@ -1,0 +1,19 @@
+You: Assalam-o-Alaikum, maine Rs. 300 transfer kar diye hain testtayar.pk se complete solved PDF preparation book ke liye. Yeh payment receipt screenshot hai.
+You: {"image":{"image_id":"1075040288846440","caption":""}}
+Business: walaikumAssalam
+Business: g bolen kya chia
+Business: kis post pr apply kia ha
+Context: kis post pr apply kia ha
+You: Ldc
+Business: deprtment
+You: Islamabad police
+You: Virtual university
+You: Waly test conduct kar rhy h bhai
+You: Us s related chaye
+Business: <Unsupported Message>
+You: ?
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: https://www.trustpilot.com/review/testtayar.pk
+Business: hamari website ka url khol kr review dal do acha sa please
+You: Ok bhsi

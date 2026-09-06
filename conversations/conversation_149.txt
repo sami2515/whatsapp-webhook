@@ -1,0 +1,25 @@
+Business: assalamOalaikum
+Business: {"image":{"image_id":"1738475213820111","caption":""}}
+Context: assalamOalaikum
+You: Walikum Salam
+You: I'm an SEO Content Writer. If you need quality content, I'd love to help.
+Business: sample do
+You: https://docs.google.com/document/d/12TzpSXNEtPsPTeKfTEOZPklV7i5sKw9A5TOGLrQrG2g/edit?usp=sharing
+You: Hi, If you liked my article, I'd be happy to write high-quality, SEO-friendly articles for you as well.
+Business: ek fiend ha meri wo likh rhi ha filhal testtayar.pk per dekh bhe skti hain ap apka number ma.save kr rha hon kab zaroorat parygi dobara apko msg kronga
+Context: ek fiend ha meri wo likh rhi ha filhal testtayar.pk per dekh bhe skti hain ap apka number ma.save kr rha hon kab zaroorat parygi dobara apko msg kronga
+You: Ok
+Business: ap pakistan se ho na?
+Context: ap pakistan se ho na?
+You: G ma Pakistan sa ho
+Business: revenue basic per kam krlogi?
+Context: revenue basic per kam krlogi?
+You: Yes
+Business: theek ha save kr rha number apko bta donga jldi
+Context: theek ha save kr rha number apko bta donga jldi
+You: Ok
+You: Assalam u alaikum
+You: Kesy ha ap sir
+Business: walaikum assalam theek ap sunao
+Context: walaikum assalam theek ap sunao
+You: Theak

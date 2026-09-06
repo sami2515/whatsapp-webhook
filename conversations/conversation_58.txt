@@ -1,0 +1,22 @@
+Business: AssalamOalaikum
+Business: <Unsupported Message>
+Business: 📢 Job Vacancy – Pickers Needed Urgently
+Business: job ki zaroorat ha location ka msla ni ha  asakta hon ma
+You: 1.Full Name Apka?
+2.Kahan rehty hein ?
+3.Qualification kia hai ?
+4.Age kia h ?
+5.CNIC hai ?
+6.CV Dy dein.
+Bot: I'm not able to help with that. Is there something else I can help you with?
+Business: muhammad sami 
+karachi orangi town 4 number 
+20
+42401-2709592-7
+Business: <Unsupported Message>
+Business: aptech se diploma bhe kia ha 3year ka sath 6month cit bhe ha
+You: Door parhy ga apko shahfaisal m jaga h mere pass bs
+Business: or jaga nasdeek thora kab ayegi?
+Business: shahfaisal Colony ma.kitny num per h?
+Business: details bata dein ap thori working hours salary phir ma apko bta donga manage kar skta hon ya nahi
+Business: agr ap 35 salary dety ho to ma join kr longa night shift ma taky traffic ka msla na ho

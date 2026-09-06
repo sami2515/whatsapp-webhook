@@ -1,0 +1,24 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: /typing-test/nadra
+Bot: Assalam-o-Alaikum! Welcome to *TestTayar.pk*.
+I see you're interested in our *NADRA typing test* practice. You can practice directly on our website at TestTayar.pk https://www.testtayar.pk/ to improve your speed and accuracy.
+For the NADRA Site in Charge or similar tests, we also offer complete solved *PDF preparation books* that include relevant laws, acts, general knowledge, and past papers tailored to the post.
+How can I help you with your preparation today?
+You: Help me on the buggings cause I'm new
+You: Sorry biggin
+Business: g bolen
+You: What should I do first
+Business: kitni speed haa typing apki?
+You: Speed tu 70%
+You: 80 something
+Business: 70WMP ha ya Accuracy?
+You: accuracy
+Business: or WPM ?
+Business: NADRA ki preparation book chia?
+You: Yes
+Business: post
+You: Data entry
+Business: 300 price ha osme nadra acts, Nadra ordinance nadra laws gk sab shamil ha Data Entry Operator post ky lie
+Context: 300 price ha osme nadra acts, Nadra ordinance nadra laws gk sab shamil ha Data Entry Operator post ky lie
+You: Ok

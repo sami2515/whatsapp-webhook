@@ -1,0 +1,26 @@
+You: Hlo
+You: Yr apni Ami KO bol k meri SIM p call krwao BT krni h zruri
+Business: namaz perh rhi ha
+Business: {"image":{"image_id":"1047129054510796","caption":""}}
+You: 29 30
+Context: 29 30
+You: Zainab sy pcho
+You: Ya 1 or 2 krlo
+Business: offline ha
+You: 4 or 5
+Context: 4 or 5
+You: Final kro
+Business: lahore thokar se kron?
+You: Hn
+Business: 17 18 ho rha ha
+Business: shuru ki 3 lines mehengi ho rhi hain
+Context: 17 18 ho rha ha
+You: Krdo
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"4524194471192067","caption":""}}
+Business: {"image":{"image_id":"1313945890890868","caption":""}}
+Business: {"image":{"image_id":"1707477180581100","caption":""}}
+Business: {"image":{"image_id":"1635159727544408","caption":""}}
+Business: Voice Transcription: मैंने तीन store देखे और तीनों बंदे
+You: Voice Transcription: یہاں پہ نا سگنل کا بہت زیادہ مسئلہ ہے تو تم لوگ بارہ بجے سے پہلے پہلے یہاں سے check out کر کے سامان اپنا لو ٹھیک ہے ہو سکتا ہے وہ آدھے گھنٹے میں پونے گھنٹے میں کھل جائے ساڑھے دس گیارہ بجے تک کھل جائے مجھے اس نے کہا تھا نو بجے کھلے گا تو store کھلے گا ٹھیک ہے وہاں سے ڈبہ پکڑ لینا اگر in case وہاں سے نہیں بھی ملتا نہ تو آگے جہاں اوپر جاؤ گے نہ تو آگے بھی شہر آتے ہیں تو ڈبہ تمہیں مل جائے گا ڈبے کا مسئلہ نہیں ہے ٹھیک ہے
+You: Voice Transcription: لیکن کوشش کرنا اپنا کہ جب یہاں سے check out کر کے نکلو نا اسی road پہ تم لوگوں نے جانا ہے جب گاڑی میں بیٹھو سامان رکھ کے آدھے گھنٹے گھنٹے تک ناشتہ کر کے تو اس کے بعد جو ہے نا وہ پل والے road سے ہی تم لوگوں نے گزر کے جانا ہے آگے اوپر کی طرف تو دوبارہ ایک دفعہ وہاں پہ چیک کر لینا medical کھلا ہو گا وہاں سے مل جائے گا میں کل لے لیتا لیکن مسئلہ یہ تھا میں نے ادھر میرے پاس cash پڑا تھا میں نے ہوٹل والے کو دے دیے تھے advance اس لیے پھر میں نہیں لے سکا پھر میں نے لاہور سے cash منگوا کے تو آن لائن پھر اب اس کو transfer کیا ہے میں نے

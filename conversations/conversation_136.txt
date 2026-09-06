@@ -1,0 +1,54 @@
+Business: AssalamOalaikum bt sun
+You: Salam 
+Main free hokar apse rabta kartan hun 
+Jazaka Allah
+Business: wo memy kam bola tha tuja oska kuch karna
+Context: wo memy kam bola tha tuja oska kuch karna
+You: Konsa kam
+You: Mujhe yad nahi hai
+Business: nikah wala
+You: Voice Transcription: ابے کتنا پرانا ٹائم ہو گیا یار وہ کتنا پرانی بات ہو گئی اس چیز کی تو بی میں تمہارا چکر ختم ہو گیا تھا سمجھ سے باہر ہے اب دوبارہ start ہو گیا کیا سین ہے
+Business: Voice Transcription: کچھ بھی ختم نہیں ہوا کچھ بھی دوبارہ start نہیں ہوا وہی ہے تیرے کو بولا ہوا تھا پھر ایک دو لڑکوں کو اور بولا پھر سوچا ہے میں نے ایک بات سوچی ہے وہ میں آؤں گا نا ملے گا پھر بتاؤں گا تجھے اس طریقے سے یہ کہ ہو جائے گا آرام سے
+You: Voice Transcription: ٹھیک ہے بھائی میں تو ready ہوں بھائی صحیح ہے
+Business: Voice Transcription: کام کر تو خود پڑھا لے آ ایک ایک دو گوا لیا اور ایک دو میں لے آؤں گا اور پڑھانے والا تو تو بھی پڑھا سکتا ہے تیرے کو تو آتا ہے documents کی کوئی ضرورت نہیں ہے خالی بس ایسے ہی پڑھا دے کچھ بھی کاغذ واغاز نہیں چاہیے
+You: Voice Transcription: بھائی میرا میرے کو نہیں کہا گیا میں گنہگار آدمی صحیح ہے میں اس قابل نہیں ہوں اور نہ میں کر سکتا ہوں ٹھیک ہے تو ایک کام کر تو مدثر کو بول دیو مدثر جو ہے اپنا اعتکاف والا
+You: Voice Transcription: مدثر کے ساتھ بیٹھ کے کچھ کرتے نہ صبر کر
+Business: tu perha dy wo ni perha rha
+You: Voice Transcription: अरे भाई पागल हो गए क्या? मैं कैसे पढ़ाऊंगा? कुछ करते हैं ना? चल, मैं और मुजस्सिम मिलते हैं ना? कुछ करते हैं? देखते हैं क्या करते हैं?
+Business: acha tu gawa ban jana
+Business: ma bst krta hon kisi or se
+You: Voice Transcription: ہاں ہاں ٹھیک ہے بھائی میں گواہ بن جاؤں گا. باقی تو دیکھ لے مجھے صرف ملتے ہیں نا دیکھتے ہیں کیا ہوتا ہے.
+Business: acha
+Business: kal ha sai ha ajaiga ?
+Business: gawah k lie
+You: Han aajayon ga
+You: Lkn kahan aana hai or kis time
+Business: 1 banda kam ha or
+Business: ya 5mumber
+Business: ya 5star food street
+Business: 2 se 5
+You: Chalo dekhte dekhte hain
+Business: acha
+You: Voice Transcription: چل صحیح ہے تو دیکھ لے تو نے انتظامات وغیرہ جو کچھ بھی ہے جس کو تو کرنا ہے دیکھ لے میرے کو جب تو بلائے گا میں آجاؤں گا بھائی.
+Business: theek ha
+Business: kal lazmi ha abdullah
+Business: 5star jaingy dophr tk please ajana
+Business: 1 ,2 bandon ka intizam kar na yar
+You: Voice Transcription: ہاں ٹھیک ہے وہ میں آ جاؤں گا میرے کو مسئلہ نہیں ہے. باقی ابھی تو فی الحال میں جوہر میں ہوں میں گھر جا کے تیرے سے بات کرتا ہوں ٹھیک ہے.
+Business: jo perha rha tha wo ab dar rha ha ni perha rha
+Business: jo gawah tha wo perha rha ha
+You: Voice Transcription: یار اس ٹائم بندوں والا مشکل ہے یار ٹھیک ہے پہلے ہو سکتا تھا میں نے بولا تھا لیکن اب مشکل ہے.
+Business: hafiz ha wo bhe
+Business: 1bajy jaingy kl 5star hogaya intizam
+You: Ok
+You: Jis jaga pohnchna hai mujhe location send kardena
+Business: <Unsupported Message>
+Business: Voice Transcription: جو پڑھا رہا تھا نا وہ صبح باہر کھڑا ہوا تھا وہ اور اس کا ابو نے جب بائیک نکالی تو پھر میں نے ابھی اس کو کال کی تو وہ کہہ رہا ہے کہ میرے کزن کا انتقال ہو گیا ابھی میں اس سے پوچھتا ہوں کہ کروائے گا کہ نہیں کروا رہا ہے پھر بتاتا ہوں تیرے کو
+You: Ok
+You: Voice Transcription: ٹھیک ہے میں ڈیڑھ بجے تک wait کروں گا بھائی صحیح ہے
+Business: ok
+Business: chal.  chor
+You: Kher
+Business: kam ha kahi?
+Business: mery lie bat kar na agar ha to
+You: Voice Transcription: 

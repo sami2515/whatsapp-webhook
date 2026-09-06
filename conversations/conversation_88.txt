@@ -1,0 +1,60 @@
+Business: .
+You: G
+You: Helo
+Bot: Hello! How can I help you today?
+You: Oy
+Business: g
+Context: g
+You: Bike Chayai thi yrr
+Business: ni ha
+Context: ni ha
+You: Khari too haa
+Business: ja rha ho
+Context: ja rha ho
+You: De Dena
+You: Yrr
+You: .
+Business: bol
+Business: {"image":{"image_id":"1498780485604203","caption":""}}
+Business: yhi ha?
+You: {"image":{"image_id":"1061255199845314","caption":""}}
+You: .
+Business: <Unsupported Message>
+Business: leja dedy
+Business: kaha ha
+Business: yhi ha ?
+You: Ghr
+You: Abhi Aya kaam saa
+Business: itni jlfi
+Business: aja dono jaty hain
+Business: cv dety hain bs guard ko
+Context: itni jlfi
+You: 3 bja chuti hoo jati ha
+Business: 2 shift hain na
+Business: dosri shift kab shuru hogi
+Context: 2 shift hain na
+You: Hmm
+Business: 5tk jaty hain cv dekr ajaingy
+You: Abhi cv nhi de suba ka time dio
+Business: acha
+Context: acha
+You: Hmm
+Business: kal suba tu guard ko de dega?
+Context: kal suba tu guard ko de dega?
+You: Ma nhi de sktaa abhi pagal
+You: Abhi time hii nhi itna mujhaa
+Business: phir sath jaingy
+Business: akela ni jana
+You: 6 din huaa ha
+Business: sai ha
+Business: kis time jata ha ma uth jaonga
+Context: kis time jata ha ma uth jaonga
+You: 8 bja
+Business: ok lazmi awaz dena muja
+Context: ok lazmi awaz dena muja
+You: Shi
+Business: suba kam jaha tu krta ha waha phunch kar muja live location bhejna apni
+Business: <Unsupported Message>
+Business: send your current location per click krega ayse ayegi
+Business: ma 10bajy tk ajaonga
+Business: ?

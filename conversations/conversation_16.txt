@@ -1,0 +1,5 @@
+Business: hi
+You: Hello.is this Hassan?
+Business: no
+Business: You’ve been messaging me for a while. Who are you, where are you from, and who gave you my number?
+Business: ?

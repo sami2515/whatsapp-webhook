@@ -1,0 +1,9 @@
+Business: AssalamOalaikum
+Business: balakot se karachi bus jati ha apki?
+Business: Gujarat express
+Business: <Unsupported Message>
+You: Voice Transcription: جی جی بالاکوٹ سے کراچی جاتی ہے جی.
+Business: kab jaigi timing
+You: Voice Transcription: روزانہ صبح آٹھ بجے بالاکوٹ سے جی
+Business: karachi ma.sohrabh goth?
+You: Voice Transcription: 

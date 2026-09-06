@@ -1,0 +1,50 @@
+Business: AssalamOalaikum
+You: Walikum as salam
+Business: balakot se karachi jana ha
+You: Kab sir
+Business: 10
+You: Kitni seat
+Business: 1
+Business: achi service ho
+Business: <Unsupported Message>
+Business: ma yaha hon sab se qareeb se konsi bus jaigi karachi?
+You: Gujjar express
+Business: sab se nazdeek konsa terminal.ha jiski karachi k lie bus jati ha?
+You: Balakot se gari ati he
+Business: konsi gri or timing
+Business: <Unsupported Message>
+You: Gujjar express
+You: Suba 7 30 ati he gari
+Business: rooz nikalti ha?
+You: Suba ak ati he
+You: Gari
+Business: rooz suba?
+Business: ticket kitne ka ha
+You: 7500
+You: Book karni he
+Business: sbr btata hon
+Business: agr rat ko balakot to karachi ticket krwao hojaiga kal suba ka?
+You: Suba 8 30 balakot se nikle gi gari
+Business: rat ko ticket mil.jaiga?
+You: G
+You: Available huwa to
+Business: aj rat ki koi or gari ha?
+You: 6 baje
+You: Manserha se
+Business: ticket price
+Business: lari adda se?
+You: 6500
+Business: lari adda?
+Business: location
+You: Terminal se
+You: Pano pe gujjar express ka terminal he
+Business: location ha to bhej do
+Business: gujjar express jati ha 6 bajy mansehra de
+Business: se
+You: Kitni seat he
+Business: 1
+Business: krdo bhai
+Business: confirm krdk
+Business: gari ma hon mansehra ja rha hon
+You: 03468915546
+You: Is pe rabta kar a

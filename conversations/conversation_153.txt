@@ -1,0 +1,11 @@
+Business: assalamOalaikum
+Business: {"image":{"image_id":"1396489562378656","caption":""}}
+Business: ye dita ka kitne ka ha?
+You: Walikum Assalam
+You: 2500
+You: Without box
+Business: muja acha chashma chia jo bara bhe ni ho dikhne ma acha bhe lagy
+You: Mil jai ga
+Business: dikha dein acha sa
+You: Ok
+Business: dukhao na

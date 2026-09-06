@@ -1,0 +1,7 @@
+Business: AssalamOalaikum
+Business: ab kya rate ha
+You: Wsalam
+You: Kis k rate ?
+You: Konsi battery?
+Business: TX 1800 phoenix
+You: 46000

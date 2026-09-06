@@ -1,0 +1,8 @@
+Business: AssalamOalaikum
+Business: bhai meri id pubg ki dedo wapis
+Business: ggalat kia ha apne bhut 1 id apko bhut mehengi parygi
+You: Yr sorry wo id meri khud hi kis or na hack kar di
+Context: AssalamOalaikum
+You: Ws
+Business: Voice Transcription: بس جمعہ کا دن ہے بڑی بات نہیں کر رہا باقی آپ جانے آپ کا خدا جانے آئی ڈی جانے اور آپ جانے جب آپ نے خود اس طرح نہیں دی تو آپ کے پاس خود نہیں ٹھیک ہو اب آپ نے میرے سے تو لی ہے میں تو آپ کو جانتا ہوں میں تو تیسرے بندے کو نہیں جانتا آپ کی مرضی ہے آپ کو دینی ہوئی تو دے دینا ٹھیک ہے ہفتے کا ٹائم آپ کو دے رہا ہوں اگر نہیں دینی ہفتے بعد آپ خود بھی دو گے تب بھی میں نہیں لوں گا یہ یاد رکھنا بس
+Business: Voice Transcription: وہ آئی ڈی آئی ڈی آپ کے لیے آئی ڈی ہوگی لیکن میرے لیے آئی ڈی نہیں تھی وہ محنت تھی میری ٹھیک ہے آپ نے جو لے لی.

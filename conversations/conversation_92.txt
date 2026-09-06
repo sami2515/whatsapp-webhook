@@ -1,0 +1,24 @@
+You: 🥶
+Bot: Hello! How can I help you today?
+You: Kaha hn Sami
+Business: ghr ma
+Business: <Unsupported Message>
+Business: Voice Transcription: گیس نہیں آرہی ہے حلیم والوں کے گھر پہ بغیر مشین کے اتنی لمبی گیس آرہی ہے
+Business: Voice Transcription: کھیل کی آ رہی ہے.
+You: Voice Transcription: कब की बात कर रहा है, अभी की बात कर रहा है या ओह कब की बात कर रहा है? ये तो बता पहले, अभी की वो तो कल नहीं आया, वो तो सुबह भी तो हमारी आ रही थी, सही टाइम आ रही थी, दस नौ बजे तक आ रही थी।
+You: {"image":{"image_id":"1621452369651122","caption":""}}
+Bot: Salam Noman! Aap is image ke baare mein kya jaanna chahte hain, ya main isse aapki kaise madad kar sakta hoon?
+You: Voice Transcription: السلام علیکم سمیع اس کو سمی اس کو edit کر دے تصویر ہٹا کے میری لگا دے اور اس میں یو سی یو سی six کر دے فائیو اے اور مومن آباد ٹاون کر دے اور اس میں بقایا تو سب صحیح ہے نام نیچے میرا دے دیو
+Business: photo do apni
+You: {"image":{"image_id":"1032697592922843","caption":""}}
+You: Voice Transcription: فوٹو کو تھوڑا edit کر دیں صحیح ہے background
+Business: noman bhai muja light ki timing batao jis timing per light ni hoti ma sakht complain kr rha hon
+You: Voice Transcription: لائٹ کی timing صبح نو سے لے کے بارہ تک ہے اور دوپہر میں اور جو دوپہر کی timing ہے وہ ڈیڑھ سے لے کے ساڑھے چار تک ہے اور اور جو شام والی timing ہے وہ چھ سے لے کے رات نو دس بھی بج جاتی ہے ساڑھے دس بھی بج جاتے ہیں پھر رات کو کبھی ساڑھا ساڑھے گیارہ بجے یا بارہ ساڑھے مطلب ساڑھے گیارہ بارہ بجے لائیٹ جاتی ہے ساڑھے گیارہ جاتی ہے پھر کبھی دو بجے آتی ہے کبھی چار تین بجے آ جاتی ہے مطلب مختلف timing وہ نہیں ہے ان کا دین ایمان نہیں ہے.
+Business: 9:05:00 AMto12:05:00 PM
+1:35:00 PMto4:35:00 PM
+6:05:00 PMto9:35:00 PM
+11:35:00 PMto2:05:00 AM
+Business: ye to timing ha lekin jati zyada ha light
+You: Ha
+Business: zyada jo ja rhi ha na oper jo ja rhi ha wo batao timing
+You: Voice Transcription: ہاں بارہ گھنٹے میرے خیال سے لائٹ نہیں ہوتی ہے نا ٹوٹل بارہ تیرہ گھنٹے چودہ بھی گھنٹے بھی ہو جاتے ہیں. ہاں اس طرح ہی ہے.

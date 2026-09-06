@@ -1,0 +1,6 @@
+You: {"image":{"image_id":"1757058151985705","caption":""}}
+You: Voice Transcription: اسلام علیکم بیٹا بابا کو بولنا یہ بل جو ہے نا paid ہو گیا ہے ٹھیک ہے
+Bot: I've forwarded your payment confirmation to our team for verification.
+Business: ok
+You: {"image":{"image_id":"38965686773022031","caption":""}}
+You: Voice Transcription: बेटा, ये भी बता देना, वालिद साहब को चाहिए सुबह। उनको सुबह बताना, ये पेमेंट लगा दिया।

@@ -1,0 +1,44 @@
+You: N
+Bot: Hello! How can I help you today?
+You: {"image":{"image_id":"2549334375495958","caption":""}}
+You: <Unsupported Message>
+You: {"image":{"image_id":"2500038723802110","caption":""}}
+You: {"image":{"image_id":"1560849012084423","caption":""}}
+You: Salam
+My Account detail
+Account tital: sheeraz Mahmood/Nazia Sheeraz
+Bank :Meezan bank liaquatabad branch
+Branch code: 0152
+A/c no : 0101430193
+You: Voice Transcription: अस्सलाम वालेकुम, रहमतुल्लाह बरकातहू। अह समी अह ये जो है ना वो अकाउंट detail जो है ना same as it is जो इसके ऊपर लिखा हुआ है अकाउंट title Sheraz Mehmood Naziya Sheraz Bank Mizan Bank Liabtaabad branch branch code zero one five two account number zero one zero one four three zero one nine three same as it is यही पे order पे डालना है ठीक है, अबू को बता देना।
+You: Voice Transcription: और अब्बू को बोलना वो भाई कह रहे थे जो जिन्होंने बेचा है ना मकान वो कह रहे थे कि कल कल पे order बनवा दीजिएगा ठीक है
+Business: walaikumAssalam
+Business: Voice Transcription: یہ جو نام میں لکھا ہوا ہے شیراز محمود slash نازیہ شیراز یہ مطلب اس کا کیا ہے یہ same to same account title اس سے پوچھو یہی ہے joint account ہے یہ اور جو account title ہے وہ same to same اس پہ ایسا ہی ہونا چاہیے جیسے انہوں نے بھیجا ہے
+Business: Voice Transcription: بس ٹھیک ہے میں نے ٹائٹل چیک کیا ہے اسی طرح کا ہے اسی طرح لکھا ہوا ہے اس کا ٹائٹل
+Business: Voice Transcription: اب اس کو بولو نا اس کے مکان کے کاغذات کی فوٹو copy یا تصویریں بھیجیں نا verification کرواؤ
+You: 03128801106
+Context: 03128801106
+You: Khuram bhai
+Business: ok
+Business: Voice Transcription: السلام علیکم وہ میں نے چیک کیا نا دس لاکھ پہ چھ ہزار ایف بی آر کا ٹیکس ہے pay order پہ تو ٹوٹل یہ بارہ ہزار خالی ٹیکس ہو جائے گا اس طرح اگر ہم کریں گے نا تو ایک دوسرا طریقہ ہے کہ وہ جو بندہ ہے نا وہ ہمارے ساتھ ہی branch جائے قریبی branch یہ پانچ نمبر چورنگی والی نہیں ہے یہاں پہ direct اس کو fund transfer کر دیں گے ہاتھ کے ہاتھ اس سے یہ ہوگا کہ پیسے بھی دو تین سو لگیں گے اور پیسے بھی ہاتھ کے ہاتھ اس کے فورا transfer ہو جائیں گے اس کے سامنے ہی
+You: Voice Transcription: अभी Khuram भाई आपको ah message करेंगे या आपसे call पे बात करेंगे ना तो आप setting बना लो फिर अगर ऐसा है कि कल ah जाकर के direct transfer कर देते हैं उनके account में या उनके हवाले कर देते हैं bank bank to bank मतलब जाके ना वही पाँच number में तो कोई setting बना लो Khuram भाई के साथ मिलके उनके साथ चले जाना अगर मैं सोया हुआ भी हूँ तो Khuram भाई के साथ आप लोग चले जाना सही है तो फिर मैं तकरीबन डेढ़ दो बजे जब नमाज़ के लिए उठूँगा तो फिर मैं agreement मँगवाकर entry मार दूँगा उसके ऊपर ठीक है agreement के ऊपर entry मरवा दूँगा तो सुबह आप ये काम जो है ना भाई के साथ जाके निपटा देना
+You: Khuram Bhai ka msg aye ga abhi
+You: Apko
+You: Tax zyada ha 12000 ka loss ha
+Business: ok
+Business: kal ap 12bajy tk uth jana lazmi sath hi chaly jaingy
+You: Voice Transcription: Okay சொல்லிட்டு இருக்கேன். மறுபடியும்
+Business: ok
+You: Voice Transcription: اچھا وہ میں نے خرم بھائی کو فون کر دیا ہے. صبح بارہ بجے ان کو بھی میں نے پابند کر دیا ہے. تو بارہ بجے چلیں گے بینک اور ایگریمنٹ ساتھ لے کے آئیے گا پھر نا. کیونکہ وہاں ان کو پیسے ٹرانسفر وغیرہ کروا کے پھر ہم وہ ادھر آفس میں جا کے ساری مطلب انٹری کروانی ہے سٹام پیپر پہ. پارٹ پیمنٹ میں جو ہے نا سارا لکھوانے ہیں ہم لوگوں نے. اور انگوٹھے لگوانے ہیں. خرم بھائی کے بھی اور آپ لوگوں کے بھی. ٹھیک ہے نا. تو ایگریمنٹ صبح ساتھ لے کے آئیے گا. ٹھیک.
+Business: theek ha
+Business: {"image":{"image_id":"1555346766143069","caption":""}}
+Business: Voice Transcription: السلام علیکم یہ میں نے اس کو چودہ بھیج دیے اور گیارہ اس کو آج شام تک میں بھیجوں گا تو یہ پچیس یہ ہو جائیں گے اور پانچ جو بیانہ دیا تھا تیس ٹوٹل ہو جائیں گے اور پھر شام کو آپ میرے ساتھ چلنا اس نے کہا ہے کہ دوپہر کو آپ کو فوٹو copy دوں گا فوٹو copy بھی اس سے لے لیں گے اور وہ اس پہ لکھوا بھی لیں گے
+You: Voice Transcription: ओके ठीक है, समीर ठीक है, बेहतर है, सही है, फिर इंशाल्लाह, के बाद तकरीबन आठ साढ़े आठ बजे जाएंगे, ठीक है।
+Business: ok
+Business: 7tak jaty hain
+You: {"image":{"image_id":"905786092052176","caption":""}}
+You: {"image":{"image_id":"1785265582644434","caption":""}}
+Business: {"image":{"image_id":"1484430213699276","caption":""}}
+You: Voice Transcription: अस्सलाम वालेकुम, शमी आ गया, तुम नाजिमबाद से?
+Business: Voice Transcription: ٹائم بتا دو پھر اس ٹائم پہ چلے جائیں گے.
+You: Voice Transcription: السلام علیکم سمیع رات تک ذرا wait کرو رات تک میں صورتحال پتہ کر لیتا ہوں خرم بھائی سے تو وہ کیا setting بنا رہے ہیں پھر میں وہ setting بتا دوں گا رات تک wait کرو ٹھیک ہے

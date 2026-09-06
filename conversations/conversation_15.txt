@@ -1,0 +1,538 @@
+You: Assalam o Alaikum!
+Bot: Walaikum Assalam 4ńöñ§! Hum TestTayar.pk se bol rahe hain—aapki test preparation mein hum kaise madad kar sakte hain?
+You: Mujhey apsey phone pe baat kerni hai
+Bot: I've connected you with our team. Someone will be with you shortly.
+Business: g bolen
+You: Sir call pe baat ho sakti hai?
+Business: ayse hi. bata dein
+Business: preparation book chia?
+You: Aap waisey kahan se hain
+Business: karachi
+Context: karachi
+You: Ok
+You: Apko baba guru nanak university ka pata hai kya?
+Business: g
+You: Woh kdr hai?
+Business: Baba Guru Nanak University Nankana Sahib mein waqe hai.
+You: Voice Transcription: جی جی آپ بالکل ٹھیک کہہ رہے ہیں. میں نے نا دراصل وہاں پہ نا کمپیوٹر پروگرامر بی ایس سیونٹین سکیل کے لیے نا اپلائی کیا ہے. بی ایس سیونٹین سکیل کی سیٹ کے لیے اپلائی کیا تھا. تو ابھی ان کا ٹیسٹ آگیا ہے. تو دو دن پہلے مجھے ان کی ای میل آئی تھی کہ آپ کا ٹیسٹ جونسا ہے نا وہ چودہ تاریخ چودہ ستمبر دو ہزار چھبیس کو ہے. تو ابھی مجھے اس کی ٹیسٹ کی پریپریشن کرنی ہے تو مجھے کچھ سمجھ نہیں آ رہی کہ میں کیا چیز تیار کروں? کیونکہ میں نے پاس پیپر دیکھے ہیں تو وہ کمپیوٹر کے پی پی ایس سی کے بھی پاس پیپرز دیکھے ہیں کچھ اور اہ اور بھی دیکھے ہیں پاس پیپر تو بڑا عجیب سا تھا. Structure کوئی ایم ایس کمپیوٹر کا پوچھ رہا تھا یعنی کہ micro soft کے بارے میں کافی تھے پھر database کا کچھ تھے تو مجھے کچھ سمجھ نہیں آ رہی میں تو میں خود بھی ایک کمپیوٹر program اور software developer ہوں تو ابھی مجھے preparation کرنی ہے ٹیسٹ کی تو اس کے لیے بتا دیں کہ آپ مجھے preparation کروا سکتے ہیں ٹیسٹ کی personal classes کے لیے کیونکہ ایک ہفتہ باقی رہ گیا ہے تو آپ بتا دیں please
+Business: Ham BS-17 Computer Programmer ki tayari ke liye customized PDF preparation books provide karte hain, jin mein post ke mutabiq updated notes, computer knowledge, past papers, general knowledge or programming  knowledge current affairs shamil hongy In preparation books ki price 600 PKR hai.
+Business: har mcqs ky nechy explanation hogi taky asani se smjh aye pora question
+Business: Programming + OOP
+Data Structures & Algorithms
+DBMS + SQL
+Operating Systems
+Computer Networks
+Software Engineering
+Web Development + Cyber Security
+Computer Architecture + basic IT
+Business: sab shamil hoga
+You: Voice Transcription: اچھا سر جو آپ کہہ رہے ہیں کہ آپ book provide کریں گے اور ہر ایم سی کی اس کے نیچے اس کی explanation ہو گی تاکہ آسانی سے سمجھ آئے پورا question وہ تو آپ کی بات ٹھیک ہے مگر اس کا answer بھی available ہو گا بعد میں یعنی کہ علیحدہ pages کے اوپر کیونکہ بعض اوقات غلط بھی تو ہو جاتے ہیں نا اگر ہم کیونکہ میں نے ابھی آن لائن بھی کافی دو پچھلے دو دن میں آن لائن پاس paper نکال کے ان پہ ان کا کال کیا ہے مگر جو میں chat سے پوچھتا تھا وہ بھی لگاتا ہوں تو وہ بھی غلط ہو جاتا ہے اس وجہ سے میں آپ سے پوچھ رہا ہوں کہ وہ answer وغیرہ اس کے لیے ہوں گے یا نہیں
+Business: ossi ky sath answer bhe hoga or explanation bhe
+Business: {"image":{"image_id":"1075105018444175","caption":"sample"}}
+Context: ossi ky sath answer bhe hoga or explanation bhe
+You: Okay Sir
+You: Magar time 1 week ka reh gya hai
+Business: hojaigi preparation
+Context: hojaigi preparation
+You: Okay Sir
+You: Kitni Pdfs hain?
+Business: {"image":{"image_id":"929384153555728","caption":""}}
+Business: 1 se 2
+Business: 300 se 500 pages tk ho skti ha total
+You: Fee kitni hai?
+Business: 600rs
+Business: jazzcash muhammad sami 03039512277
+You: wait Sir
+You: Sir?
+Business: g
+You: Woh pdf files kitni hain?
+You: Main apko sadapay ker raha hoon
+Business: 2
+Business: total 1000 ky qareeb mcqs hongy
+Business: zyada bhe ho skty hain
+You: Sadapay hai apka.
+You: ?
+Business: sadapay se meezan bank ma krdo
+You: {"image":{"image_id":"2298934477619158","caption":""}}
+Business: ni
+Business: 01990112309796
+Business: meezan bank
+Business: sami name ayeg
+You: Wait
+You: Sir IBan number send ker dein
+Business: PK69MEZN0001990112309796
+You: {"image":{"image_id":"1996153554434101","caption":""}}
+Business: g
+You: {"image":{"image_id":"4688623031458786","caption":""}}
+Business: wait kro
+You: Okay Sir
+You: Kitna wait kerna hai?
+Business: 2 pdf de rha hon
+Business: 3sra programing ky topis die thy apko onper apki post ky mutabik bana rha hon
+Context: 3sra programing ky topis die thy apko onper apki post ky mutabik bana rha hon
+You: Okay Sir
+Business: 2. World General Knowledge
+Countries, Capitals, Currencies, Continents, Major Cities, Seas, Oceans & Geography
+Countries & Currencies
+Continents
+Oceans & Seas
+Major Cities & Important Geography
+International Organizations
+United Nations (UN)
+World Health Organization (WHO)
+International Monetary Fund (IMF)
+World Bank
+UNESCO
+UNICEF
+OIC
+SAARC
+SCO
+NATO
+Famous Personalities, Books & Inventions
+Famous Personalities
+Scientists & Discoveries
+Inventors & Inventions
+Famous Books & Authors
+Pakistani Authors / Important Books
+Awards
+Important Titles
+World Geography & Important Places
+Mountains
+Rivers
+Lakes
+Deserts
+Straits
+Canals
+Waterfalls
+Islands
+Important Landmarks
+3. Pakistan & General Static GK
+Pakistan & General Static GK
+National Symbols
+National Institutions & Important Facts
+Important Pakistani Personalities
+Provinces, Capitals & Major Cities
+Rivers
+Dams
+Mountains & Geography
+National Days & Basic Facts
+4. Computer
+Computer Fundamentals
+Computer Basics
+Generations of Computers
+Hardware & Software
+Input Devices
+Output Devices
+CPU
+RAM & ROM
+Cache & Storage
+Bits & Bytes
+Operating Systems & Windows
+Operating System
+Windows Basics
+Files & Folders
+File Extensions
+Desktop, Taskbar & System Utilities
+Basic Shortcuts
+MS Word & MS Excel
+MS Word — Interface & Basic Functions
+Formatting & Paragraph
+Tables
+Page Setup
+Printing & Word Shortcuts
+MS Excel — Rows, Columns & Cells
+Formulas & Functions
+Sorting, Filtering & References
+Internet, Email, Networking & Security
+Internet & Browser
+URL, HTTP & HTTPS
+Email
+LAN / WAN / Networking
+IP Address & DNS
+Malware & Virus
+Phishing & Firewall
+Password Security
+5. Islamic Studies
+Basic Islamic Studies
+Arkan-e-Islam
+Iman / Basic Beliefs
+Tauheed & Risalat
+Akhirat
+Namaz / Salah
+Roza
+Zakat
+Hajj
+Islamic Terminology
+Quran & Hadith
+Quran Basics
+Surahs
+Makki & Madani
+Revelation / Wahi
+Hadith
+Important Islamic Concepts
+Seerat-un-Nabi ﷺ
+Birth & Early Life
+Prophethood & Revelation
+Early Islamic Period
+Hijrah
+Madinah
+Ghazwat
+Sulah Hudaibiya
+Fatah Makkah
+Last Sermon & Important Events
+Khulafa & Islamic History
+Hazrat Abu Bakr (RA)
+Hazrat Umar (RA)
+Hazrat Usman (RA)
+Hazrat Ali (RA)
+Sahaba
+Islamic Calendar
+Important Islamic Events
+Islamic Institutions / Concepts
+6. Pakistan Studies / Pakistan Movement
+Pakistan Movement
+Two-Nation Theory
+Sir Syed Ahmad Khan
+Aligarh Movement
+Allama Iqbal
+Quaid-e-Azam Muhammad Ali Jinnah
+All-India Muslim League
+Lahore Resolution
+Pakistan Movement
+Constitutional & Political History
+Pakistan: 1947 Onwards
+Objectives Resolution
+1956 Constitution
+1962 Constitution
+Constitutional Development Before 1973
+1973 Constitution
+Basic Political Institutions
+Important Amendments & 2026 Position
+7. Pakistan Geography
+Provinces & Capitals
+Rivers
+Dams & Water Resources
+Mountains
+Passes
+Deserts
+Lakes
+Borders & Neighboring Countries
+8. National & Administrative GK
+National Symbols
+National Language & Currency
+Administrative Divisions
+Important Institutions
+National Days
+Historical Places
+Important Pakistani Facts
+9. Reasoning / IQ
+Number & Alphabet Series
+Number Series
+Mixed / Missing Number Patterns
+Alphabet Series
+Sequence Completion
+Analogy, Classification & Odd One Out
+Verbal Analogy
+Number Analogy
+Alphabet Analogy
+Classification
+Odd One Out
+Coding-Decoding & Word Problems
+Coding-Decoding
+Reverse / Position Coding
+Number Coding
+Word Formation
+Symbol-Based Reasoning
+Mixed Coding-Decoding
+Replacement
+Directions, Blood Relations & Ranking
+Direction Sense
+Blood Relations
+Family Tree
+Ranking & Position
+Position & Order
+Analytical Reasoning
+Logical Statements
+Basic Puzzles
+Pattern Recognition
+Figure / Symbol Reasoning
+Percentage
+Ratio
+Average
+Basic Arithmetic Reasoning
+10. Constitution / Civics
+Constitution Basics & Fundamental Rights
+Constitution 1973 & Basic Concepts
+Preamble
+Fundamental Rights
+Principles of Policy
+Citizenship & Basic Constitutional Concepts
+President, PM & Parliament
+President of Pakistan
+Prime Minister
+Federal Cabinet
+Parliament
+National Assembly
+Senate
+Legislative Process
+Election of Prime Minister & Constitutional Structure
+Provinces & Judiciary
+Provincial Government
+Chief Minister
+Provincial Assembly
+Dissolution & Provincial Executive
+Judiciary — Supreme Court
+High Courts
+Judiciary & Judicial Structure
+Federal / Provincial Powers
+Important Constitutional Articles
+Article 41 — President
+Article 42 — President ka oath
+Article 44 — President ki term
+Article 50 — Parliament
+Article 51 — National Assembly
+Article 52 — NA ki duration
+Article 54 — Summoning
+Article 58 — Dissolution
+Article 59 — Senate
+Article 73 — Money Bills
+Article 90 — Federal executive / PM
+Article 91 — Cabinet & election of PM
+Business: <Unsupported Message>
+Business: is pdf ma ye sab ha
+You: Bas yeh 1 hie pdf hai?
+Business: .
+Business: .
+You: Okay Sir magar abhi apney sirf 1 hie pdf send kiya hai
+Business: kr rha hon current affairs hain osme 2 months ky all world
+Business: jitni oski tyari krogy acha ha apka faida hoga agr time hua to kr lena oski pori warna adhi kr lena
+Business: <Unsupported Message>
+Business: 1. Programming
+
+Programming Fundamentals
+C / C++ basics
+OOP
+Python basics
+Java basics
+Functions, arrays, strings, pointers
+Recursion
+Exception handling
+Memory concepts
+Code output / debugging
+
+2. Data Structures & Algorithms
+
+Arrays
+Linked Lists
+Stack
+Queue
+Trees / BST
+Graphs
+Hashing
+Searching
+Sorting
+Recursion
+Big-O / Time & Space Complexity
+Algorithm design
+
+3. Database / DBMS
+
+DBMS fundamentals
+ER Model
+Relational Model
+Primary / Foreign / Candidate Keys
+Normalization
+SQL
+SELECT, INSERT, UPDATE, DELETE
+JOINs
+GROUP BY / HAVING
+Subqueries
+Indexing
+Transactions
+ACID
+Views
+Basic database security
+
+4. Operating Systems
+
+Processes
+Threads
+CPU Scheduling
+Synchronization
+Deadlocks
+Memory Management
+Paging / Segmentation
+Virtual Memory
+File Systems
+I/O
+Linux / Windows basics
+
+5. Computer Networks
+
+OSI Model
+TCP/IP
+LAN / WAN / MAN
+IP Addressing
+IPv4 / IPv6
+Subnetting
+TCP / UDP
+HTTP / HTTPS
+DNS
+DHCP
+FTP
+SMTP
+Routing / Switching basics
+Network devices
+Network troubleshooting
+
+6. Software Engineering
+
+SDLC
+Waterfall
+Agile
+Scrum
+Requirements
+Design
+UML
+Testing
+Verification / Validation
+Debugging
+Maintenance
+Version Control / Git
+Software quality
+
+7. Web Development
+
+HTML
+CSS
+JavaScript
+DOM basics
+Client / Server architecture
+HTTP methods
+REST API basics
+JSON
+Cookies / Sessions
+Authentication basics
+Front-end / Back-end concepts
+
+8. Computer Architecture & Organization
+
+CPU
+ALU
+Registers
+Control Unit
+Instruction cycle
+Memory hierarchy
+Cache
+RAM / ROM
+Storage
+I/O
+Buses
+Binary / Hexadecimal
+Assembly basics
+
+9. Cyber Security / Information Security
+
+CIA Triad
+Authentication / Authorization
+Encryption
+Symmetric / Asymmetric Cryptography
+Hashing
+Digital Signatures
+Malware
+Virus / Worm / Trojan
+Phishing
+Spoofing
+Firewall
+IDS / IPS
+Common web attacks
+Password security
+Basic cybersecurity practices
+
+10. Discrete Mathematics / CS Math
+
+Sets
+Relations
+Functions
+Logic
+Propositions
+Truth tables
+Boolean algebra
+Combinations / Permutations
+Probability basics
+Graph theory basics
+Mathematical induction
+Recurrence basics
+Aur ye topics bhi add karo — important hain
+
+11. Artificial Intelligence — Basic
+
+AI fundamentals
+Intelligent agents
+Search algorithms
+BFS / DFS
+Heuristic search
+Machine Learning basics
+Supervised / Unsupervised learning
+Classification / Regression
+Training / Testing
+Basic neural-network concepts
+
+AI ko main high priority nahi, lekin medium priority dunga. BGNU ke current CS curriculum mein AI core course hai.
+
+12. Theory of Computation / Automata — Basic
+
+DFA
+NFA
+Regular Expressions
+Regular Languages
+CFG
+PDA
+Turing Machine basics
+
+13. Compiler Construction — Basic
+
+Compiler vs Interpreter
+Lexical Analysis
+Syntax Analysis
+Parsing basics
+Semantic Analysis
+Intermediate Code
+Optimization basics
+
+14. Digital Logic
+
+Logic Gates
+Boolean Algebra
+Combinational Circuits
+Sequential Circuits
+Flip-Flops
+Multiplexers / Demultiplexers
+Binary arithmetic
+
+15. Computer Graphics / HCI — Basic
+
+Graphics fundamentals
+Pixels / Resolution
+Raster vs Vector
+Basic transformations
+HCI principles
+Usability basics
+
+16. Parallel / Distributed Computing — Basic
+
+Parallel computing
+Distributed systems
+Concurrency
+Client-server
+Distributed processing basics
+Business: iska pdf bana kr 2 ghnty tak bhejta hon
+Context: iska pdf bana kr 2 ghnty tak bhejta hon
+You: Thk ho gya Sir
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: 1
+Business: 2
+Business: pora ek pdf ha ye
+You: Okay Sir, Thanks A lot
+Business: google per likho *trustpilot* website khulygi phir *test tayar* likho weebsite per trustpilot ki review do 5 star acha sa signup krne ko kahyg trustpilot kr lena

@@ -1,0 +1,28 @@
+Business: assalamOalaikum muja ek camera lagana ha lekin result bhut acha ho oska 8mp hmari gali patli ha 4mm lense ma chia
+You: Walaikumsalam
+Context: assalamOalaikum muja ek camera lagana ha lekin result bhut acha ho oska 8mp hmari gali patli ha 4mm lense ma chia
+You: IMOU Cruiser SC 4K 
+15,500
+Business: ye 8mp ha? or night ma kesa result hoga ?
+Business: memory card price bhe bta dein sath please jisme zyada days ki recordding save ho
+Context: ye 8mp ha? or night ma kesa result hoga ?
+You: Yes 8mp ha
+Context: ye 8mp ha? or night ma kesa result hoga ?
+You: Night Vision Color ha brother
+Business: memory card ky ki prices bhe batayen
+Context: memory card price bhe bta dein sath please jisme zyada days ki recordding save ho
+You: 128GB. 5500
+You: 256GB. 10,500
+Business: isme kitne days ki hogi rec?
+You: Almost 14 days ki
+Business: abhi order kron kab tk deliver hoga karachi ma?
+You: Maximum 1-2 days
+Business: azadi sale lagai hoi ha apne muja order krna ha lekin muja isse bhe acha camera btao koi
+You: https://youtu.be/2YgzP9aBapQ?si=zIDTMcJWX61EJ4b2
+Business: video pori dekh li ha meny muja smjh ni arha crouser sc 4k 8mp lena chia ya aurora titan 3k
+Business: patli gali ha
+Business: thora guide krdein sir please
+You: Aoa
+Bot: Walaikum Assalam! Hum aapki kis tarah madad kar sakte hain?
+You: Sorry for late response
+You: Kia bna apke order ka?

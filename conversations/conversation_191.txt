@@ -1,0 +1,189 @@
+Business: <Unsupported Message>
+Context: <Unsupported Message>
+You: Ai h ?
+Business: han
+Business: <Unsupported Message>
+You: Tu ne B'nai h
+Business: ha
+Business: samidev
+Business: samidev.pk
+Context: samidev.pk
+You: Ye Kia
+Business: websire
+Business: site
+You: Ahmed ki bna😂
+You: {"image":{"image_id":"1742286717143894","caption":""}}
+You: {"image":{"image_id":"2274536520038246","caption":""}}
+You: {"image":{"image_id":"1749931723031284","caption":""}}
+You: {"image":{"image_id":"1802266271185222","caption":""}}
+You: {"image":{"image_id":"1468848854451922","caption":""}}
+You: {"image":{"image_id":"1544249057219617","caption":""}}
+You: {"image":{"image_id":"4480756068837289","caption":""}}
+You: {"image":{"image_id":"994811219621471","caption":""}}
+You: {"image":{"image_id":"1519545736503241","caption":""}}
+You: {"image":{"image_id":"1515737123558085","caption":""}}
+You: {"image":{"image_id":"834203649380272","caption":""}}
+You: {"image":{"image_id":"35999611546320364","caption":""}}
+You: <Unsupported Message>
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"4081901175287782","caption":""}}
+Business: {"image":{"image_id":"1535895058088684","caption":""}}
+Business: {"image":{"image_id":"1440731667741018","caption":""}}
+Business: {"image":{"image_id":"2482679795516286","caption":""}}
+Business: {"image":{"image_id":"1292986986197258","caption":""}}
+Business: {"image":{"image_id":"1616168423203535","caption":""}}
+You: Ayra Ki trha LG rhi horain
+Business: {"image":{"image_id":"1247200270660569","caption":""}}
+Business: {"image":{"image_id":"1458992219247352","caption":""}}
+Context: {"image":{"image_id":"1247200270660569","caption":""}}
+You: Naya liya h ?
+Business: ha
+You: Pyara h
+You: .
+Business: bol
+You: Hina api k ghr ho
+Business: hn
+You: {"image":{"image_id":"1309872914189159","caption":""}}
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1913503469167778","caption":""}}
+Business: {"image":{"image_id":"1335664202088853","caption":""}}
+Business: {"image":{"image_id":"1534663205008825","caption":""}}
+Business: agy ki tarikh ki krwany per discount mil rha ha
+Business: ?
+Business: 23 tarikh ki 8000 or 30 tarikh ki 5600
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"956201597466672","caption":""}}
+Business: {"image":{"image_id":"1624765295286453","caption":""}}
+Business: ek 2 bajy phunchaigi or ek 7 bajy
+Business: abt fawarw chowk select krke krwana or jo time qareeb i
+Business: ho is time se  wo bata dena phir ma os time ki krwa loga
+You: Apni kB book kro gy TM log
+Business: 2 tarikh ki
+Context: 2 tarikh ki
+You: Kis din booking kro gy
+Business: kal
+Business: kal bata dena app ma dekh kr
+You: Thk h
+Business: .
+You: Sham 7
+Business: .
+You: Wo me bta dungi
+Business: suba
+Business: ek suba 7 ek dophr 2
+Business: fawara chowk abotabad
+You: Me TM logon SE pehle hi us Jaga pohanch jaungi
+You: Take agr late b hui to Phr b pehle pohanch jau
+Context: fawara chowk abotabad
+You: Ok
+Business: {"image":{"image_id":"2184639645664463","caption":""}}
+Business: ye 3 arhi hain
+Business: lahore thokar se
+You: Sahi h
+You: In me SE kon c me bethu k TM logo. SE pehle pohanch jau
+Business: 2:45  per a
+Business: sab se oper wali
+Business: ham 2 bajy phunchemgy or tum 3 tk
+Business: isme krwana
+You: Or TM log kB pohancho Gy phr
+Business: 2
+You: Dono 1 hi Jaga pohanchye gi ?
+Business: han
+You: Thk h
+Business: fawara chokk per
+Business: kal ticket krwaigi to 2000 ki hogi end time per krwaigi to 3000ki
+Context: kal ticket krwaigi to 2000 ki hogi end time per krwaigi to 3000ki
+You: Sahi h
+Business: Voice Transcription: اور کیا پتہ یہ سیم گاڑی ہو ہماری گاڑی کراچی سے نکلے اور ٹھوکر پہ تو میرے خیال میں نہیں رکے گی. لیکن کیا پتہ ٹھوکر پہ رک کے پھر تو اسی گاڑی پہ چڑھے اور یہی گاڑی ہو نہیں تو یہ گاڑی نہیں ہوئی تو ہم چودہ مطلب دو بجے بارہ کے بعد چودہ نا اور چودہ پینتالیس مطلب تین بجے تک دو تک ہماری اسی چوک پہ اترے گی اور تین بجے تمہاری اسی چوک پہ اترے گی.
+Context: Voice Transcription: اور کیا پتہ یہ سیم گاڑی ہو ہماری گاڑی کراچی سے نکلے اور ٹھوکر پہ تو میرے خیال میں نہیں رکے گی. لیکن کیا پتہ ٹھوکر پہ رک کے پھر تو اسی گاڑی پہ چڑھے اور یہی گاڑی ہو نہیں تو یہ گاڑی نہیں ہوئی تو ہم چودہ مطلب دو بجے بارہ کے بعد چودہ نا اور چودہ پینتالیس مطلب تین بجے تک دو تک ہماری اسی چوک پہ اترے گی اور تین بجے تمہاری اسی چوک پہ اترے گی.
+You: Alag gari Hogi JB time Alag h
+You: Bs Sahi h aesa
+You: TM log apni tickets kl book krlena me nh jarhi Mera plane cancel hogya
+Business: {"image":{"image_id":"2933224310383334","caption":""}}
+Business: hamari ha ye
+Business: {"image":{"image_id":"3428248767345263","caption":""}}
+Business: ye ticket available hain konsi seat chia
+Context: {"image":{"image_id":"3428248767345263","caption":""}}
+You: Agey walo me SE Krlo koi b
+You: Sth krna dono
+Business: 4 . 5
+You: Book kr k btana kok c ki h
+Context: 4 . 5
+You: Sahi h
+You: Voice Transcription: तुमने हमारी दो तारीख की बुक की है, हमारी तीन तारीख की बुक करता ना क्योंकि तुम लोग तो एक दिन पहले निकलोगे ना दो जुलाई को तो तुम लोग अगले दिन तीन को पहुँचोगे तो हमारा यहाँ से छह घंटे का रास्ता है, हम सुबह नौ बजे बैठेंगे और दोपहर को तीन बजे हम लोग पहुँचेंगे तो तुमने दो तारीख करवाई हम लोग एक दिन तुम लोगों से आप पहले पहुँचेंगे क्या वहाँ पे तुमने टिकट करवाई है या नहीं करवाई हमारा तो सफर कम है हम लोग सुबह निकलेंगे नौ बजे और उसी दिन हम लोग पहुँच जाएँगे छह घंटे का। .
+Business: kal jabi ni krwai 3 tarikh ni arha tha aj ayega 3 tarikj
+Business: h
+You: AJ krwa li
+Business: krwaonga abhi 3 tarikh ki
+You: Kr k btana
+Business: kr die
+Business: {"image":{"image_id":"1526741595799279","caption":""}}
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"4543290082581384","caption":""}}
+Business: {"image":{"image_id":"1545436980270932","caption":""}}
+You: Peeche ki q krwai itni
+Business: {"image":{"image_id":"1582724176722217","caption":""}}
+Business: agy ki mehengi ho rhi thi 1200 rupe
+You: Ok
+Business: beth gaye gari ma
+You: Chal gai ya nh
+Business: Voice Transcription: حکومت پاکستان کی قوانین کے مطابق
+You: Sukkur NH Aya abhi tk
+Business: ni
+You: Itni door to nh h sukkur
+You: Location bhej
+You: .
+Business: <Unsupported Message>
+You: Nh khul rhi
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1017353834020494","caption":""}}
+You: Pohanch gye sukkur
+Business: han
+You: Location bhej apni Kahan tk pohanche
+You: Hum log TM logon ne peeche h ya agey
+Business: <Unsupported Message>
+You: Hum log agey hn tmse
+Business: ach
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1566370201808021","caption":""}}
+Business: {"image":{"image_id":"2020286511962353","caption":""}}
+Business: {"image":{"image_id":"1070327385946337","caption":""}}
+Business: {"image":{"image_id":"980399098326130","caption":""}}
+Business: {"image":{"image_id":"2674434522950594","caption":""}}
+Business: {"image":{"image_id":"1530134845186811","caption":""}}
+Business: {"image":{"image_id":"2249986312485901","caption":""}}
+Business: {"image":{"image_id":"1380654873956257","caption":""}}
+Business: {"image":{"image_id":"3470799979756688","caption":""}}
+Business: {"image":{"image_id":"2038132360150721","caption":""}}
+Business: {"image":{"image_id":"1596709438452871","caption":""}}
+Business: {"image":{"image_id":"1068778528836387","caption":""}}
+Business: {"image":{"image_id":"1544447984050691","caption":""}}
+Business: {"image":{"image_id":"2037322080218071","caption":""}}
+Business: {"image":{"image_id":"27428316586822042","caption":""}}
+Business: {"image":{"image_id":"1329726166009066","caption":""}}
+Business: <Unsupported Message>
+Business: https://quickshare.samsungcloud.com/nkGwyTFg7Wgj
+Business: <Unsupported Message>
+Business: mama.ko bata dena ma beth gaya gari ma 30mint pehle
+Business: {"image":{"image_id":"1050878557471037","caption":""}}
+Business: babusar ki video bhej status laga rha hon
+You: <Unsupported Message>
+You: <Unsupported Message>
+You: <Unsupported Message>
+Business: kitne pwsy lie
+You: <Unsupported Message>
+You: <Unsupported Message>
+You: <Unsupported Message>
+You: Hazar ki or hazar Ka drone shot
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1004530539037190","caption":""}}
+Business: {"image":{"image_id":"1791233272250455","caption":""}}
+Business: {"image":{"image_id":"27501809359482388","caption":""}}
+Business: {"image":{"image_id":"3114608902071790","caption":""}}
+You: Daewoo app me Dekh k bta mere sth wali seat book hui h ya khali h
+You: Screenshot bhej Dekh kr
+Business: {"image":{"image_id":"1547566213730616","caption":""}}
+Business: abhi tk ni hoi
+You: Sahi
+Business: Voice Transcription: اچھا یہ اب تمہاری ٹوٹل پانچ ٹکٹیں صحیح ہے پہلے چھ تھی جو میں نے ابو کو پرچی دی ہے نا اس میں چھ ٹکٹ ہیں اب ان سب ٹکٹوں کو تو دیکھ اس کے اوپر ٹکٹوں کو دیکھ اس پہ ایک code لکھا ہوا ہے اوپر اس پرچی پہ ایک زیادہ ہو گا یہ جو پانچ ٹکٹیں تیرے پاس بھیجیے نا یہ پانچوں کا code چھوڑ دے اور جو ایک ہو گا نا جو اس اس پہ پرچی پہ لکھا ہے لیکن اس تصویروں میں جو ہے وہ code نہیں ہے اس کو کاٹ دیو

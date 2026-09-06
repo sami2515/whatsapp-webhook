@@ -1,0 +1,19 @@
+You: Hello, I would like to get solved PDF notes from TestTayar.
+Bot: Hello mh! We offer complete solved PDF preparation books for *Rs. 300* each.
+These materials include solved MCQs, past papers, laws, and current affairs tailored to your specific department. Which post are you preparing for?
+You: Junior executive
+Bot: We have the *Junior Executive* solved PDF guide ready for you.
+It includes solved MCQs, past papers, laws, and general knowledge tailored for this post for *Rs. 300*. Would you like to get these notes now?
+Business: chia hain ?
+Context: chia hain ?
+You: Junior executive ka paper is me se hi aye ga?
+Business: yes
+You: Typing test ka Kya scene hoya hai, tough wording Hoti hai ya easy wording Hoti hai? Koi idea hai?
+Business: nadra acts nadra ordinance nadra acts
+Business: touch type
+Business: pc keyboard se krna typing.practice
+Context: pc keyboard se krna typing.practice
+You: Gg wohi kar rha ho me poch rha ho tough Hoti hai wording ya easy wording Hoti hai...
+Business: mix
+Context: mix
+You: Okay 👍

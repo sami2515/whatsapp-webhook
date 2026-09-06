@@ -1,0 +1,23 @@
+You: Assalam O Alaikum Sami you there..
+You: Received your CV..
+Business: walaikum assalam yes
+You: Currently what you doing ?
+You: ??????
+Business: I'm  pursuing diploma in software engineering  and recently done my intermediate in CS
+Context: I'm  pursuing diploma in software engineering  and recently done my intermediate in CS
+You: Job ?
+You: I mean currently you are working any where ?
+Business: not searching for..
+Business: <Unsupported Message>
+Business: nop
+Context: not searching for..
+You: Okay calling you in a bit
+Business: okay sure
+Business: will you please share the location?
+Context: will you please share the location?
+You: Matric Board Office Nazimabad
+Business: Voice Transcription: सलाम वालेकुम, exact लोकेशन बताओ, गेट नंबर कौन सा? यूनिवर्सिटी का या कॉलेज का गेट नंबर?
+You: ???????
+Business: agaya hon
+You: Pick my Call
+Business: <Unsupported Message>

@@ -1,0 +1,597 @@
+You: Sami
+You: Hlo
+Business: han
+Business: hotel
+Context: hotel
+You: Kia seen ha
+Business: <Unsupported Message>
+Business: chor osko
+Business: number dy
+Business: Voice Transcription: ایڈمن نے بند کیا ہے ایڈمن کو میسج کر اس کو نمبر دے وہی ایڈ کر سکتا ہے ہم نہیں کر سکتے بند کیا ہے اس نے.
+You: 03213297190
+You: Add kryga osky pas approval jayega
+Business: ni ha option add krne ka band ha
+You: Acha
+You: sticker ommitted
+You: {"image":{"image_id":"1003379599010732","caption":""}}
+Business: <Unsupported Message>
+Business: khair mubarak
+Context: khair mubarak
+You: ♥️
+Business: Follow this link to join my WhatsApp group: https://chat.whatsapp.com/LQct0JnAP1r0bTEGCadQR4
+Business: 2000chiq urgent laptop le rhq ho
+You: Abhi
+Business: han
+Business: 3000 bhej ghr jakr bhej donga
+You: Easypaisa?
+Business: {"image":{"image_id":"36795681956712149","caption":""}}
+Business: jazzcash
+Business: 03039512277
+You: Ok
+Business: jldi bhej na
+You: {"image":{"image_id":"1521350923052314","caption":""}}
+Business: <Unsupported Message>
+You: Sami
+You: Koi data cable ha xtra??
+You: C type
+Business: c to c ha
+Business: teri wali
+Business: tune jo di thi
+Business: or ek black wali ha
+You: Data cable ?
+You: C type
+You: ?
+Business: teri samsung wali ha
+You: Free ha?
+You: Woh to dosri type ha
+Business: kam kr rha ho
+Business: han na
+You: Koi or ni??
+Business: {"image":{"image_id":"1317119147299232","caption":""}}
+Business: ni
+Context: ni
+You: Ok
+Business: {"image":{"image_id":"1395503435976931","caption":"500 bad ma bhejonga thori der bad"}}
+Context: {"image":{"image_id":"1395503435976931","caption":"500 bad ma bhejonga thori der bad"}}
+You: 👍
+You: <Unsupported Message>
+Business: group ma bhejon
+Business: 4no
+You: Ni
+You: 1 mint
+Business: q
+Business: acha
+You: {"image":{"image_id":"1743734083650361","caption":""}}
+You: {"image":{"image_id":"27182428548035892","caption":""}}
+You: {"image":{"image_id":"1655559762230628","caption":""}}
+You: Isy janta ha??
+Business: ha
+Business: pechy gali ma rehta ha
+You: Hn
+You: Dekha video me?
+Business: han
+Business: bhejna dy group ma
+You: Ye cashier ha??
+Business: pta ni
+You: Shift incharge
+You: Hoga
+Business: han
+You: Group me ni bhej janny waly heh sab
+Business: acha
+You: Hmm
+Business: koi or bhej degq
+You: Admin ko bhej dy
+Business: video to ayi hogi oron k pas
+Context: video to ayi hogi oron k pas
+You: Hn shyd
+Business: wo kya krega
+Context: wo kya krega
+You: Woh khud bhej dega
+Business: acha
+You: Hn
+Business: <Unsupported Message>
+Business: yar 500 rupe jazzcash ma pary hain abhi abhi hath se mbl gira rakha tha oper light jala kr toot gaya
+You: Koi baat ni jb huye krdena...
+Business: {"image":{"image_id":"1035891112160870","caption":""}}
+Context: {"image":{"image_id":"1035891112160870","caption":""}}
+You: JazakAllah ♥️
+Business: <Unsupported Message>
+You: {"image":{"image_id":"889589477487868","caption":""}}
+Business: Voice Transcription: مسئلہ یہ ہے نا میری جو پچھلی بار بھی آئی تھی نا میں اپلائے کر رہا تھا اس میں میرا اپلائے نہیں ہو رہا تھا میں کیوں کہ بیس بیس وہ ایج مانگ رہا تھا جولائی تک اور میری مئی میں ایج بیس پوری ہو رہی تھی یعنی کہ جولائی میں میری بیس سے زیادہ ہو رہی تھی مئی میں بیس پوری ہو رہی تھی اور جولائی میں بیس سال ایک منتھ ہو رہی تھی تو میرین میں اپلائے ہو رہا تھا اور باقیوں میں نہیں ہو رہا تھا پھر میں نے میرین میں بھی اپلائے نہیں کیا میں نے بولا میری آنکھ کا تھوڑا سا مسئلہ بالکل باریک سا اتنا باریک جو test والا جس نے test کیا اس نے بولا مسئلہ کرنا تو نہیں چاہیے لیکن مسئلہ کر رہے ہیں تو اس میری ان میں میرے کو پتا تھا مسئلہ کریں گے بالکل ان کو چھ چھ چاہیے تو میں نے پھر apply کیا ہی نہیں تھا اس بار اگر enter ہو ہی نہیں رہی ہے اتنی jobs آ گئی ہیں کہ enter دو سال سے انتظار کر رہا ہوں ابھی تک ابھی paper ہوا ہوں result پتا نہیں کب آئے گا پھر کب آئے گی پھر کب کروں گا سمجھ میں نہیں آ رہا پھنسا ہوا ہوں گندہ
+You: Sindh Police ki bhi chek krna...
+You: Or FIA me apply kia tha?
+Business: ni
+Business: ai ha
+Context: ni
+You: Q
+Business: Voice Transcription: اپلائے کیا تھا دو پوسٹوں پہ کیا تھا لیکن چار ہزار روپے چالان بھرنا تھا اور چالان کے پیسے میرے پاس نہیں تھے میں نے دو تین جگہ میں اور بھی اپلائے کیا ہوا تھا ایم او ڈی میں بھی کیا ہوا تھا اس میں بھی سولہ سو بھرا ہوا تھا چالانوں میں قسم سے پیسے لگ رہے ہیں نا
+You: Chal sindh police me to krna...lazmi
+Business: ai hoi ha?
+You: Pta ni chek krlena..
+Business: koi sifaish waghera ha?
+Business: pesy lele
+Context: koi sifaish waghera ha?
+You: Kis me?
+Business: Marine
+You: Yarr apply krr
+You: Process krta ja
+You: Jidhr masla aya dekh leh gy...
+Business: acha
+You: Hn
+You: Delay ni krr
+Business: 21 hojaigi isme bhe n kar sakonga
+Business: lekin matric ha bs
+Business: inter ka results ni aya
+You: Marine me apply ho rha ha?
+Business: entry test ki tyari
+Business: han
+Business: 6mahine kam hain bs
+You: 21 age ha??
+Business: 20
+You: 20+
+Business: pori 20
+You: NP me apply ho ra ha?
+Business: ni
+You: Try kia?
+Business: Voice Transcription: نہیں ہو رہا وہ مسئلہ یہ ہے کہ وہ کہہ رہا ہے کہ بیس years on one one دو ہزار ستائیس اور میری بیس ہو گئی ہے ابھی بیس دن پہلے بیس ہوئی ہے میری اور چھ مہینے آگے کر کے بیس اس سے اس تاریخ تک بیس نہیں ہونی چاہیے اور ان لوگوں نے ایک تاریخ ایک ماہ مہینہ دو ہزار ستائیس دی ہے اور بولا ہے کہ اس تاریخ تک آپ کی بیس بیس بیس ہو
+Business: han
+Business: {"image":{"image_id":"1519917479832940","caption":""}}
+Business: {"image":{"image_id":"2541402472923340","caption":""}}
+You: Chal marine me apply krly phir.
+Business: {"image":{"image_id":"1643432473412409","caption":""}}
+Business: konsi kron
+You: 8 krdy
+You: {"image":{"image_id":"1293744889639254","caption":""}}
+You: Ye Mere czn nr apply kia
+You: Final merit list me not selected hua
+Business: acha
+Business: sab hogaya tha khaki final ma ni aya?
+You: Hmm
+Business: h
+You: Zahir shah ki TikTok I'd kia ha?
+Business: ni pata
+You: https://vt.tiktok.com/ZSQxomv3v/
+Business: inter ni ha
+You: Matric base pr bhi to ha na
+Business: sindh job portal per apply ho rha ha oske lie screning test ata ha saal ma ek bar agr wo dia hoga to apply hoga warna ni hoga
+You: Screening test?
+Business: han
+You: Assalam o alikum
+You: Kia haal ha bhai
+You: Kidhr ghom ra ha?
+Business: walaikum assalam
+Business: kaghan ma hon
+You: Ghomny gya hua ha?
+Business: han
+Business: bhut thak gaya hon so rha hon kal.bat krty hain
+You: With family
+Business: yes
+Business: ajaonga 1 hagty tk
+You: Ok
+You: Good
+Context: ajaonga 1 hagty tk
+You: Ok
+You: Enjoy krr♥️
+Business: koi kam wam ho nazar ma batana
+Business: govt job ka ata pata ni ha koi
+You: oK.
+You: Assalam o alikum
+You: Ki hal ha agya wapis?
+Business: walaikum assalam
+Business: hab agaya
+You: Ach
+You: Ziauddin wala combine k kitny lerha tha
+Business: 62
+You: Ok
+You: Yar original marksheet ni ha board office k ilawa koi or optiona ha??
+Business: Voice Transcription: ارے سات سو روپے خرچہ کر لے نا تو سات سو روپے خرچہ کیوں نہیں کر رہا? اور دوسری بات تیرے پاس اس کو اوریجنل کاپی نہیں چاہیے. اس کو خالی اس کی پکچر چاہیے. تیرے پاس پیکچر وغیرہ پڑی ہوئی ہے. چیک کر کے تیرے پاس ہو سکتا ہے پکچر ہو.
+Business: Voice Transcription: دوسری بات وہ جو certificate ہوتا ہے certificate میں اس سے پوچھ کے بتاتا ہوں تیرے کو
+Business: Voice Transcription: دیکھ اگر اس بار پوچھوں گا تو کنفرم تو کرے گا ورنہ بولے گا وہ تین چار بار میں نے ایسے کیا ہے پوچھا ہے اور پھر ہم نے admission نہیں لیا لیکن پھر admission تو لے لازمی اس طرح پھر نہیں کر
+Business: Voice Transcription: کا نمبر دیتا ہوں اس سے بات کر وہ کیا بولتا ہے تیرے کو پہلے کی policy change تھی ابھی کی change ہے نہ اس بار تیرے کو پتا ہے میں نے paper دیا ہے اس بار بہت سختی تھی ضیاءالدین میں بھی
+You: Yarr Mere 2 czn krrhy heh 5,000 per head
+You: 50,000
+Business: acha
+You: Combine
+Business: Voice Transcription: میرے خیال میں اس نے ففٹی ٹو بولے تھے میرے کو ایسا یاد اور یاد آ رہا ہے سکسٹی ٹو نہیں بولے تھے ففٹی ٹو ہوں گے پھر یا ففٹی ون یا ففٹی ٹو
+Business: Voice Transcription: صحیح کہہ رہا ہے تو اس نے ساٹھ تو منہ سے بولے تھے پھر ہم نے بیس کی تھی پھر اس نے کم کر دیے تھے. آہ ففٹی ٹو ہی ہوں گے.
+You: Hmm s
+Business: tu bhe krega?
+You: Ab rola marksheet kaha
+You: Original ki pic ninha
+Business: picture ni ha?
+Context: tu bhe krega?
+You: Hn irada to ha time zaya ho ra ha
+Context: picture ni ha?
+You: Ni na
+You: Copy kinha
+Business: copy ha photo?
+Business: apne kaghazat ma dekh
+Business: total kitne bandy kr rhy hain ya tu akela
+Context: copy ha photo?
+You: Photo
+Context: total kitne bandy kr rhy hain ya tu akela
+You: 2 woh 3rd me
+Business: photocopy ha na to hojaiga shayad
+Business: pakka kr phir bat kronga
+Business: warna chor
+Business: Voice Transcription: اس کی گارنٹی ہے کہ بندہ صحیح ہے ایسا نہیں ہے کہ اچھا دانیال لے کر آیا تھا اس کا اس بندے نے انرولمنٹ نہیں ہوتا اکثر ایسے ہوتے ہیں. کیونکہ ابجیکشن آجاتا ہے پیچھے سے اور ان کے پاس ایک ہی سکول ہوتا ہے اس کے پاس اس طرح نہیں ہے اس کے پاس دو تین سکول ہیں. اگر تیرا ایک مہینے ہو گئے دوسرے سکول سے پھر کرے گا. تیسرے سے کرے گا پھر کنفرم تیرا ہو جائے گا مطلب ٹینشن والی بات نہیں ہو گی کہ پیسے لے لیے اور رول نمبر نہیں آ رہا انرولمنٹ نہیں آ رہا وہ والا سین نہیں ہو گا.
+You: Hn yarr czn krrhy heh dekh kr...
+Business: g
+You: Yar me gawadar aya huh kam se
+You: Sara masla yhi ha
+Business: acha
+You: Hn
+You: Me hota board office se
+You: Duplicate niklwa leta
+You: Or ajkal me admission bhijwana. Ha
+Business: han phir late fees lag jaigi
+Context: han phir late fees lag jaigi
+You: Hn na☹️
+Business: voice krdi meny jawab dega bata donga
+Context: voice krdi meny jawab dega bata donga
+You: Kia bola
+Business: jawab ni dia dekhyga natayega
+Context: jawab ni dia dekhyga natayega
+You: To ny kia poocha
+Business: dekh lia ha sbr kar bata dega
+Business: pesy
+You: Acha
+You: Or marksheet wala bhi pata krr
+You: Original zaroori ha?
+Business: ni
+Business: photocopy ha na tery pas?
+Context: photocopy ha na tery pas?
+You: Hmm
+Business: <Unsupported Message>
+Business: bol ab
+Business: tu lele marsheet bol admission k lie chia dety hain wo picture lele or color photo print krwa kr jama krwa dy wapis
+Context: tu lele marsheet bol admission k lie chia dety hain wo picture lele or color photo print krwa kr jama krwa dy wapis
+You: Yarr woh bhi karachi me ha na
+Business: lele na
+You: Me gwadar aya hua huh
+Business: kab ayega
+You: August
+Business: muja photocopy dedy or pesy dede ma dublicate nikalwa lomga
+Business: msla ni ha
+You: Chakkar lgyga board office ki taraf
+You: ?
+Business: han laga longa msla ni ha
+Business: qareeb hi ha
+Context: han laga longa msla ni ha
+You: Yarr special marksheet k liye..
+Pareshani hogi yar. Tujhy..
+Business: qareeb ha msla.ni ha
+Business: chala.jaonga
+You: Process pata ha??
+Business: pta kr lomga abhi
+Business: batata hon phir
+Context: batata hon phir
+You: Ok
+You: Marksheet ki info mili?
+Business: {"image":{"image_id":"1704991130734619","caption":""}}
+Context: {"image":{"image_id":"1704991130734619","caption":""}}
+You: sticker ommitted
+Business: Voice Transcription: گھر جا کے بات کرتا ہوں اس کا message آیا تھا کہہ رہا تھا کروانا ہے تو بتا دینا پتا نہیں کونسی تاریخ کہہ رہا ہے late فیس لگ جائے گی بیس یا بائیس پتہ نہیں کون سی تاریخ بتا رہا ہے وہ اور کہہ رہا ہے کہ mark sheet نکلوانی ہے تو میں نکلوا لوں گا وہ کہہ رہا ہے لیکن میں نے اس کو بولا میں جاؤں گا کل ویسے بھی پیر والے دن میں جاؤں گا نا میرا کام ہے میں نے بولا اس طرف میں نکلوا لوں گا اور پھر آپ کو بتا دوں گا اگر کروانا ہو گا تب ہی بتاؤں گا ورنہ نہیں بتاؤں گا تو بھی اپنے serious پوچھ لے کہ اگر کرنا ہے تو مجھے بتا نہیں کرنا پھر چھوڑ دے صحیح ہے پھر اگر تجھے کرنا ہے تو پھر بتا دے
+You: Good yarr
+You: Yarr Mere czn krrhy heh 2noh 
+50,000 meh.
+You: Sath me bhi krluhga
+You: Shi ha na??
+You: 50,000 per head
+Business: Voice Transcription: میں ادھر جا کے اس سے بات کرتا ہوں صحیح ہے تھوڑی دیر میں پھر تیرے کو بتا دوں گا لیکن کوشش کرتا ہوں پچاس سے کم میں کرتا ہے تو کم میں بات کرتا ہوں پھر اس سے پوچھتا ہوں کہ کتنے بول رہا ہے نا بولوں گا کہ پچھلی بار آپ باون بول رہے تھے اس بار تین لڑکے ہیں تو پھر دیکھتا ہوں کتنے بولتا ہے اور اس بار تھوڑی دیر اس سے اور اچھی جان پہچان بھی ہو گئی نا میں نے اس کو ویب سائٹ وغیرہ بنا کے بھی دی تھی تو اب کیا پتا اور کم کر لے
+Context: Voice Transcription: میں ادھر جا کے اس سے بات کرتا ہوں صحیح ہے تھوڑی دیر میں پھر تیرے کو بتا دوں گا لیکن کوشش کرتا ہوں پچاس سے کم میں کرتا ہے تو کم میں بات کرتا ہوں پھر اس سے پوچھتا ہوں کہ کتنے بول رہا ہے نا بولوں گا کہ پچھلی بار آپ باون بول رہے تھے اس بار تین لڑکے ہیں تو پھر دیکھتا ہوں کتنے بولتا ہے اور اس بار تھوڑی دیر اس سے اور اچھی جان پہچان بھی ہو گئی نا میں نے اس کو ویب سائٹ وغیرہ بنا کے بھی دی تھی تو اب کیا پتا اور کم کر لے
+You: Chor yarr minnat ni krr..
+You: Sirf marksheet ka pata kr
+Business: Student ka original CNIC/B-Form + 2 photocopies
+Purani marksheet ki photocopy, photo ya scan—agar available ho
+Admit card/enrolment card ki copy
+2 passport-size photographs
+School Leaving Certificate ya school admission record ki copy
+Marksheet gum hui hai to police loss report/FIR
+Business: 1000rupe
+Context: Student ka original CNIC/B-Form + 2 photocopies
+Purani marksheet ki photocopy, photo ya scan—agar available ho
+Admit card/enrolment card ki copy
+2 passport-size photographs
+School Leaving Certificate ya school admission record ki copy
+Marksheet gum hui hai to police loss report/FIR
+You: 😵‍💫
+Business: {"image":{"image_id":"1723521342310631","caption":""}}
+Context: {"image":{"image_id":"1723521342310631","caption":""}}
+You: Congratulations 🎊 👏 💐 🥳
+Business: <Unsupported Message>
+Business: CSD Rebate Card
+Business: tery pas ha?
+Context: CSD Rebate Card
+You: Nhi
+Business: ye banwa na apne li
+Business: lie
+Business: govt ka ha force ky Bandon k lie banta ha
+Business: https://www.csd.gov.pk/rebate-card/
+Context: govt ka ha force ky Bandon k lie banta ha
+You: Hmm
+You: Kbhi zaroorat hi nhi aya..
+You: https://vt.tiktok.com/ZS4YFhujp/
+Business: 4actober ko jaonga karachi rangers training school waha test hoga iska
+Context: 4actober ko jaonga karachi rangers training school waha test hoga iska
+You: Acha
+You: Apply krlia?
+Business: offline ha
+Context: 4actober ko jaonga karachi rangers training school waha test hoga iska
+You: 4 ko konsa test ha
+You: {"image":{"image_id":"1550747736552756","caption":""}}
+Business: fbr custom ha ye?
+You: Chek kr lena fake na ho
+Business: fak ha
+You: Assalam o alikum
+You: Hn sami
+Business: han
+Business: call.uthai thi?
+Business: ye wali
+You: Ye kia seen tha?
+You: 1 chutia ha idr osny attend krli
+Business: kon
+You: Mob room me tha
+Context: kon
+You: Dost ha osny attend krli
+You: Me bhi soch ra huh ye jese agai
+You: Call
+You: Ghalti se lagi thi???
+Business: han na
+You: Acha
+Business: jisne atend ki thi osne tuja kuch bola?
+Context: jisne atend ki thi osne tuja kuch bola?
+You: Nhi mene dekha cutt krdi
+You: Me smjha orangi Town waly group me hogi
+You: https://vt.tiktok.com/ZSVUeXruB/
+You: ..
+You: Baat sun
+You: By Kea to kr agar free ha to
+You: Dockyard wharf road kict near fishri
+Business: pesy kitne
+You: Dekh kitny arhy hn
+You: 300 k qareeb
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"2519879288491279","caption":""}}
+Business: pickup sai ha
+Context: pickup sai ha
+You: Dockyard near KICT
+You: Wharf road
+You: Ya near kE office
+You: Ya shipyard
+Business: apni location bhej
+Business: live
+You: Net nhi chal rha
+Business: <Unsupported Message>
+Business: ayse ajaigi
+You: Shipyard like
+You: Shared location (24.8373, 66.9744)
+You: ?
+You: Mili?
+Business: I mil rhi
+You: How much?
+Business: {"image":{"image_id":"951495664696294","caption":""}}
+Context: {"image":{"image_id":"951495664696294","caption":""}}
+You: 4th wala
+You: Shipyard
+You: ??
+You: Arhi koi??
+Business: Voice Transcription: Select ہی نہیں ہو رہا عبدل یار دیکھ تو network چلا اپنا میرے پاس وہ option ہی select کر رہا ہوں وہ ہو ہی نہیں رہا بار بار کر رہا ہوں پھر غائب ہو رہا ہے
+You: Location??
+Context: {"image":{"image_id":"951495664696294","caption":""}}
+You: Koi bhi select nhi horhi?
+Business: ha na
+You: Q
+Business: pta ni
+You: PMSA near shipyard likh
+You: Ya fishry near shipyard
+Business: ni arha
+You: Chal chordy
+You: JazakAllah
+Business: mil gaya
+Business: offline
+You: Hn krrha huh
+You: Yaha se
+You: Ok
+Business: hogaya?
+You: Hn
+You: Metroville
+You: Me hu
+Business: avha
+You: Sami
+Business: han
+You: Yar laptop ki screen repair krwani ha
+You: Sajid k pas le jauh?
+Business: kya hua screen ko
+You: Btaya to tha screen black hogai
+Business: acha
+You: Hm
+Business: han maloom kar
+Business: kitne pesy boltaha
+You: Kab open hogi shop?
+You: Abhi hoga?
+Business: abhi khuli hogi
+Business: 10tk rat ko
+Business: jumma chutti
+You: Ok
+Business: {"image":{"image_id":"29258692467064309","caption":""}}
+Context: {"image":{"image_id":"29258692467064309","caption":""}}
+You: Qualification graduation
+Business: ha na yar
+You: Ajayegi
+You: sticker ommitted
+Business: net ha?
+Business: Aap ki website TestTayar.pk ka pura codebase, content structure, sitemap, Googlebot rendering, search console traffic graph, aur AdSense policies ka complete in-depth technical audit kiya hai.
+
+Yahan woh asli aur technical wajohat (Root Causes) hain jin ki wajah se Google AdSense ne "Low value content" ka rejection diya hai, aur iska 100% working solution kya hai:
+
+1. "Low Value Content" ka Asal Matlab (AdSense AI + Human Reviewer Perspective)
+Google AdSense jab kisi education / quiz / typing website ko "Low value content" bolta hai, to iska matlab yeh nahi hota ke aap ki website kharab hai. Iska technical matlab yeh hota hai:
+
+"Website par interactive tools (Typing, Quizzes) to hain, lekin ads lagane ke liye Googlebot ko deep, unique, long-form text content aur unique value nahi mil rahi."
+
+2. Aap ki Website par 7 Main Wajohat (Detailed Analysis)
+🔴 Wajah 1: Programmatic / Duplicate URL Patterns (Sab se Bada Trigger)
+Aap ke codebase mein aik hi cheez ke liye 3 mukhtalif URLs bane hue hain jo Googlebot ko duplicate / thin content lagte hain:
+
+/ldc-test (Exam Landing Page)
+/typing-test/ldc (Typing Mode Page)
+/exams/ldc (Exam Mock Room Page)
+Yahi pattern UDC, MOD, NADRA, FPSC, PPSC, NTS sab ke liye repeat ho raha hai (~21 URLs).
+
+Masla: In sab pages par intro, bullet points, tips aur FAQs taqreeban 80% same hain (sirf "LDC" ki jagah "UDC" replace kiya gaya hai).
+Googlebot ka reaction: Google ka algorithm isay "Templated / Programmatic / Doorway Pages" samajhta hai jo AdSense policy ke khilaf hai.
+🔴 Wajah 2: 19 Guides ki Tadad aur Length
+Aap ke paas 19 guides hain. Google AdSense approval ke liye standard recommendation 30 se 50+ detailed articles hoti hai.
+Codebase check karne par minimumPublicGuideWords 220 words rakha gaya tha.
+Agar kuch guides 400–600 words ki short generic tips hain ("Start with accuracy", "Use backspace carefully"), to Google ka NLP classifier isay "Thin Content" categorize kar deta hai. Har guide kam az kam 1,200 se 1,800+ words ki comprehensive honi chahiye jis mein real syllabus breakdowns, past paper analysis, aur topic-wise study strategies hon.
+🔴 Wajah 3: Question Bank (5,927 MCQs) vs Web Replicated Content
+Pakistani job test prep niche (FPSC, PPSC, NTS, Islamiat, Pak Studies) mein lakhoon MCQs pehle se internet par mojood hain (PakMcqs, TestPoint, Gotest, etc.).
+Jab Googlebot aap ke /mcqs/[subject] pages crawl karta hai, agar MCQs ke sath bohot lambi aur unique conceptual explanation na ho, to Google ka duplicate detection engine un sawaalat ko "Replicated / Scraped Content" samajhta hai kyunke wahi exact lines 50 doosri websites par pehle se indexed hain.
+🔴 Wajah 4: Interactive JS Web App vs Static Crawlable Content
+Googlebot aur khas tor par Mediapartners-Google (AdSense crawler) buttons click nahi karta, typing test mein type nahi karta, aur na hi quiz solve karta hai.
+Jab crawler /typing-test, /daily-drill, ya /dashboard par aata hai, to usay mostly JavaScript components aur empty states milte hain. AdSense text-heavy blogs/articles par ads serve karne ke liye design hua hai, is liye web apps ko text content add kiye baghair approval nahi milti.
+🔴 Wajah 5: /jobs vs /exams URL Confusions
+/exams par jane se website /jobs par redirect hoti hai.
+/jobs page par real live job advertisements ki jagah static preparation tracks hain.
+Jab AdSense ka human reviewer /jobs menu link par click karta hai aur usay live government jobs ki list nahi milti (sirf prep boxes milti hain), to woh isay "Confusing Site Navigation / Misleading Content" flag kar deta hai.
+🔴 Wajah 6: Commercial / Paywall Prominence (Rs. 300 PDF Downloads)
+Har subject page aur exam page par "Get Complete Solved PDF - Rs. 300 (Meezan / JazzCash)" ka checkout box prominent hai.
+AdSense review ke dauran jab reviewer dekhta hai ke main value PDF sale ke peechay hai aur on-page free content limited hai, to woh site ko informational publisher ke bajaye e-commerce landing page samajh kar reject kar dete hain.
+🔴 Wajah 7: Author & E-E-A-T (Experience, Expertise, Authoritativeness)
+About page aur metadata mein author sirf "TestTayar.pk editorial team" likha hai.
+Education aur job exam niche mein Google real subject experts / mentors ki profile (Name, Experience, Qualification, Photo) dekhna chahta hai taake credibility establish ho sake.
+3. Search Console Traffic ka Reality Check (3.61k Clicks / 25.9k Impressions)
+Aap ke screenshot mein:
+
+28 Days: 3.61k Clicks, 25.9k Impressions, Avg Position 4.5.
+Graph: 30 July se 3 August ke beech aik bara spike aaya (~300 clicks/day), phir traffic normalize hoke ~50–100 clicks/day par chal rahi hai.
+Positive Point: 13.9% CTR aur 4.5 average position bohot achi hai! Iska matlab hai Google search aap ki site ko trust karta hai aur rank kar raha hai.
+AdSense Point: AdSense approval ke liye traffic kaafi hai (unhein roz ke 50–100 organic visitors se masla nahi hota). Masla sirf aur sirf On-Page Text Depth aur Content Structure ka hai.
+4. Step-by-Step Action Plan (AdSense Approval ke Liye)
+Code mein abhi koi change nahi kiya gaya (aap ke kehne ke mutabiq). Jab aap approve karoge, to hum ye exact steps follow karenge:
+
+Guides ki tadad 19 se barha kar 35+ karein:
+Har guide ko deep aur unique banayein (1,200+ words, authentic syllabus analysis, subject-wise weightage, solved sample questions with deep reasoning).
+Topics: "FPSC Phase 4 Exam Strategy 2026", "PPSC Junior Clerk Complete Typing + MCQ Syllabus Guide", "MOD Screening Test Preparation Blueprint", etc.
+Programmatic Pages ko consolidate karein:
+/ldc-test, /typing-test/ldc, /exams/ldc ke duplicate text ko unify karein ya canonicalize karein taake doorway pages ka signal khatam ho.
+MCQ Solved Tab par Explanations enhance karein:
+Har question ke neeche 2-3 lines ki unique background explanation honi chahiye taake woh scraper-flagged na ho.
+Header Navigation ko crystal clear banayein:
+/jobs ka label agar "Exam Syllabus" ya "Career Tracks" kar diya jaye to reviewer ko confusion nahi hogi.
+About Us aur Editorial Policy par real author details add karein:
+Editorial team ka introduction, qualification, aur mission transparent karein.
+Re-submit to AdSense:
+Yeh fixes complete karne ke baad jab resubmit karenge to 100% clean approval milega.
+Business: {"image":{"image_id":"1049005771074650","caption":""}}
+Business: agai muja lag rha ha sindh polie kijob
+Context: net ha?
+You: WhatsApp
+Business: {"image":{"image_id":"1073627631746997","caption":""}}
+Business: shaheed kota ha
+Context: {"image":{"image_id":"1049005771074650","caption":""}}
+You: 30.04.
+Context: {"image":{"image_id":"1049005771074650","caption":""}}
+You: 2024 ki ha
+Business: video 15mint purani ha
+Business: lekin ad 2024
+You: Faka na ho..
+Business: lag rha ha
+You: Agar ai to pata chal jayega sab jaga yhi bateh hongi
+Business: ni ai old ha
+Context: ni ai old ha
+You: Hmm
+You: ..
+You: Jaag rha ha?
+Business: abhi utha
+You: Bahir chakkar lgyga?
+Business: han abhi
+You: Kidhr
+Business: wp bataya tha meny tuja
+Business: naib qasid k lie document submit krne hain
+You: Acha
+Business: tcs se ya
+Business: lepoerd
+You: 🤔
+You: Yar koi idea nhi ha
+Business: kaha jana ha
+Context: kaha jana ha
+You: Fuel lana ha
+Business: aja
+You: Bike bnd hogai
+You: Idhr arha ha?
+Business: ma kapre pehen rha hon phir bike nikalta hon jab tk tu ata 2mijt ma
+Business: ya ruk ja ma ajata hon 5mint
+You: Ok
+Context: ya ruk ja ma ajata hon 5mint
+You: Me nichy hi hun
+Business: acha
+You: Sami Bykea kr
+You: Keamari tak
+You: Keamari jetty
+You: Keamari
+You: Keamari port
+You: Kuch bhi likh de
+You: Bas Keamari jana ha jaha boats hoti hn
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1410427754613865","caption":""}}
+Business: {"image":{"image_id":"1505471434911147","caption":""}}
+Business: {"image":{"image_id":"1656697302836891","caption":""}}
+Context: {"image":{"image_id":"1656697302836891","caption":""}}
+You: Ok
+Business: 03280458818
+You: Hogai?
+Business: han banaras ma ha arha ga
+Business: 342
+You: Ok
+You: Mera num dede
+Business: bs ayeya muja call krrga
+Business: Junaid ki dukan ya dood waly k pas hoga khara
+Business: oper pic ma numberplate dekh ly ma tuja whtsapp per call kronga tu chala jana
+Business: de dia
+Context: oper pic ma numberplate dekh ly ma tuja whtsapp per call kronga tu chala jana
+You: Okk
+Business: agaya dekh
+You: Sami
+Business: hn bol
+Business: وعلیکم السلام مجیب بھائی! ہم ضرور آپ کی مدد کر سکتے ہیں۔
+ہم KPT اپرنٹس شپ (B class trade) کے ٹیسٹ اور انٹرویو کے لیے مکمل *solved PDF preparation book* فراہم کرتے ہیں۔ اس میں اپڈیٹڈ نوٹس، پاسٹ پیپرز، جنرل نالج، اور کرنٹ افیئرز شامل ہوتے ہیں جو خاص طور پر آپ کی پوسٹ کے لیے تیار کیے گئے ہیں۔
+یہ کتاب *300 روپے* میں دستیاب ہے۔ کیا آپ یہ حاصل کرنا چاہیں گے تاکہ آپ اپنی تیاری شروع کر سکیں؟
+Business: iska test tune dia ha mcqs khali aty hain paper ma ya phir essay applications bhe ati ha mcqs base hota ha ya objective?
+Context: iska test tune dia ha mcqs khali aty hain paper ma ya phir essay applications bhe ati ha mcqs base hota ha ya objective?
+You: Mcqs aty hn matric k
+You: 10 years se tyrai krr
+You: Or current updates yad krr
+You: Itna muahkil nhi hota
+Business: mcqs type hota ha pora?
+Context: mcqs type hota ha pora?
+You: Ni sab
+You: Mixx
+You: Ata huh
+Business: essay letter application bhe?
+You: Btata huh phir
+Business: kam kr rha hon abdul
+Context: essay letter application bhe?
+You: Hn
+Context: kam kr rha hon abdul
+You: Chal free hokr btana
+You: Ok
+Business: kal milty hain voice kr dio bad ma
+Context: kal milty hain voice kr dio bad ma
+You: Ok
+Business: bta de yse hi sab
+Business: natana
+Business: batana
+Business: {"image":{"image_id":"1133729259315415","caption":""}}
+You: Matric ki 10 years se mcqs dekh 
+Chemistry physics 
+Or English k tenses
+You: Or current affairs
+Context: {"image":{"image_id":"1133729259315415","caption":""}}
+You: Form fill kia???
+You: Form headoffice se milega. KPT
+You: ..
+You: Kidhr ha
+Business: kam kr rha hon ghr pr
+You: Okk

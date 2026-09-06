@@ -1,0 +1,121 @@
+Business: .
+You: Ha
+You: <Unsupported Message>
+You: <Unsupported Message>
+You: {"image":{"image_id":"1903100657062534","caption":""}}
+Business: konsa zyada sai ha
+Business: fold ha
+Business: ye bech wala
+Business: fold ya bech wala
+Context: fold ya bech wala
+You: Nhi
+You: Voice Transcription: جو بیچے ہوئے ہیں یہ وہ والے
+You: Voice Transcription: अभी और आने दे, रुक जा, सब्र एक दो दिन रुक आएंगे, मैं बताऊंगा तुझे।
+Business: ok
+Business: ?
+Business: jo mobile hain wi dikha
+Business: <Unsupported Message>
+You: Yarr abi tak nhi Aya Jo ha
+You: Wo be kar ha
+You: Voice Transcription: صحیح chance میں کوئی peace آئے گا میں تب بتاؤں گا تیرے کو یہ ابھی تھوڑے وہ زیادہ heavy موبائل بھی نہیں ہیں اور android ہیں صحیح صحیح چیز آئے گی نا پھر بول دیجیے
+Business: Voice Transcription: تو کہہ رہا ہے جو ہے وہ کیا
+Business: ok
+You: H
+Business: han
+Business: aya mobile
+You: Baat sunoo
+You: Sameer NAHI ha
+Business: acha
+You: Us ka Whatsapp mere pass
+You: Khola ha
+Business: acha
+You: Us na khah tha
+You: Is sa baat kar la na
+You: Khud
+Business: kis bary ma
+You: Wo baat ya ha
+You: Mobile ka bare ma
+You: 11 kar lo ga
+Business: bethna ha
+Business: bechna
+You: NAHI Bhai Jan khol na ha
+Business: konsa ha
+You: Ip 11
+Business: <Unsupported Message>
+You: Dakho ab mere baat Suno
+You: Apko chaiyee iphone ma
+Business: bolo
+Business: g
+You: Apko la ka da donga price pa
+You: Lakin lock ho ga
+You: Abe filhall ka Liye 11 ha aur NAHI ha
+Business: ye dena ha to batao
+You: Aur wo be ma apna Liye khol Raha hoo
+Business: lock dedy
+Context: ye dena ha to batao
+You: Roko ma poch tha hoo agla koi ha ya NAHI
+Business: pochlo
+Business: <Unsupported Message>
+Context: <Unsupported Message>
+You: H
+You: Ha aik aur be ha
+Business: konsa
+You: Iphone 13 ha pro ya max NAHI ha
+Business: ok
+You: Chaiye
+Business: g
+You: Kitna ma Liga
+Business: color konsa ha
+You: Wo 30k bol Raha ha
+You: Pata NAHI ha
+Business: gb
+You: Lock ma kaise. Gb show hote ha
+Business: <Unsupported Message>
+Business: pechy sticker laga ho agr
+Context: pechy sticker laga ho agr
+You: Kiya Kiya
+Business: <Unsupported Message>
+Context: <Unsupported Message>
+You: Abe mere pass na 13 ha aur na hii 11 ha
+You: Ma Sirf poch Raha tha kar loga ya NAHI
+Business: kiske pas ha
+You: Chalo ma lata hoo
+Context: kiske pas ha
+You: Banda ka pass
+Business: Sameer ko bol le lega osse
+Context: Sameer ko bol le lega osse
+You: Wo us ka Banda NAHI ha mera Banda ha
+Business: acha
+You: Chalo sai ha dakh tha ha
+You: Karloga na
+You: Aise NAHI phir bolo NAHI ho ga
+Business: 11 nu kronga
+Business: 13 kharedonga bs
+Context: 11 nu kronga
+You: Kiyu NAHI karonga
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+You: Acha apna waka kar loga aur hamara Wala NAHI
+You: Chalo sai ha Sameer sa baat kar Lena
+Business: <Unsupported Message>
+Business: ok
+Business: <Unsupported Message>
+You: Bhai Jan Tum apna faida NAHI dakho ja
+You: Na
+You: Hammara kaam karo ga to ham Tumhe danga
+Business: <Unsupported Message>
+You: Voice Transcription: 
+You: Voice Transcription: میرے پاس موبائل نہیں ہوتا میں تیرے سے بات کروں ابھی اس سے میں نے لیا بات
+Business: Voice Transcription: کرنا یہ جو دو بول رہے ہیں یہ دونوں لے کر آ میرے پاس میں دیکھتا ہوں ٹھیک ہے صحیح ہے
+You: Voice Transcription: چل صحیح ہے میں اس کو بول دیتا ہوں کہ یہ الیون اور تھرٹین اگر تیرے پاس ہیں تو ابھی میرے کو دے میں تیرے پاس لے آتا ہوں ٹھیک ہے
+Business: lea
+Business: 30k bol rha ha 13 kky ye
+You: Voice Transcription: مطلب اس طرح نہیں اس کو تو کھول کے دے دے.
+Business: Voice Transcription: ڈیٹا cable بھی اس کی لے آ آئی فون کی اور thirteen اور eleven لے آ ٹھیک ہے اگر eleven کھل گیا تو اس کو eleven لے جائیو واپس اور thirteen کے پھر میرے سے پیسے لے جا تیس ہزار یہ بول رہا ہے کچھ کم کرلیو اس کو وہ کرو باقی جو پیسے ہیں وہ لے جا اور eleven جو کھلا ہے وہ بھی پھر کھلا ہوا لے جائیو thirteen تک چھوڑ
+You: Voice Transcription: یہ بیچنا نہیں ہے یہ ابھی جو آیا ہوا ہے نا تو میں نے اس کے پاس نہیں دیکھا ہے لیکن یہ بیچنا نہیں ہے یہ موبائل یہ بول رہا ہے میرے کو خالی کھلوا کے دے اگر بیچنے کا جب آئے گا تیرے کو یہ بتا دے گا یہ کیا نام ہے اپنے لیے استعمال میں لا رہا ہے
+Business: Voice Transcription: اس نے بولا کہ thirteen بھی ہے, eleven بھی ہے, thirteen بیچ رہا ہوں اور eleven کھولنا ہے. اور تو کہہ رہا ہے کہ خالی eleven ہے. Thirteen اگر اس کے پاس پڑا ہے اور دونوں پھر لے آ, ایک کھول دوں گا اور ایک لے جائی, ایک لے جائیو, پھر ایک چھوڑ دیو.
+You: Voice Transcription: اچھا وہ بیچ رہا ہے تو پھر میں بات کرتا ہوں اس سے کیا
+You: Voice Transcription: ابھی یہ اس کا موبائل اس کو واپس کروں گا نا پھر اس سے بات کر لوں گا.
+Business: Voice Transcription: تو یہ اس سے بات ہوئی ہے میری وہ کہہ رہا ہے کہ دو ہیں وہ بات کر لے دونوں لے آئے ایک لے جائے.
+Business: Voice Transcription: ہاں بات کر لے اس سے وہ کہہ رہا ہے کہ دونوں ہیں اور ایک کھولنا ہے اور ایک جو ہے بیچنا ہے بیچنا ہے کہ تیس کہہ رہا ہے thirteen کہہ رہا ہے بیچنا ہے اور جی پی نہیں پتا باقی وہ میں دیکھ لوں گا دونوں لے آ پھر اگر یہ بولتا ہے صحیح ہے بھائی بیچنا ہے دوسرا پھر دونوں لیا ایک کھول دوں گا اور ایک لے جائیے اور ایک پھر چھوڑ دو اس سے پھر پوری بات کر لو یہ والی ٹھیک ہے
+Business: ?

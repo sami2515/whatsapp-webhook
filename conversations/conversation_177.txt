@@ -1,0 +1,9 @@
+Business: AssalamOalaikum
+You: Thank you for contacting Legal Eagles! If you need legal consultation then find it in our services.
+لیگل ایگلز سے رابطے کے لیے شکریہ! اگر کوئی قانونی مشورہ درکار ہے تو ہماری سروسز میں سے دیکھ سکتے ہیں۔
+You: Thank you for contacting Legal Eagles! Mention your name, city name and let us know how we can help you? 
+
+لیگل ایگلز ک ساتھ رابطے کے لیے شکریہ.
+برائے مہربانی اپنا نام، شہر کا نام اور اپنا مسئلہ بتائیں، ہم کیسے آپکی مدد کر سکتے ہیں؟
+Business: name : sami city : karachi
+Business: nikah krna ha security ky sath kal ko nuksan na ho koi larki ky walid  rangers ma hain

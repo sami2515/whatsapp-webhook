@@ -1,0 +1,383 @@
+You: .
+Bot: Hello! I'm here to help. Is there anything specific you'd like to know about our web development services or projects today?
+You: Hn bdske
+Business: hafeez
+Context: hafeez
+You: Hn hn harami hafeez hum
+You: Kidhar hai
+Business: ghr pr
+Context: ghr pr
+You: Bike chahiye
+You: Hospital jana hai
+Business: konsy
+You: Ziauddin
+Business: kheriyat
+You: Hn yrr bhai ki tabiyat ni thik
+You: Card Dena hai
+You: 1 ghnte ke liye chahiye
+Business: late hojaiga
+Business: muja jana bhe ha
+You: Abee jldi ajaunga yrr
+You: Time ni lagega
+Business: rasta bhe to ha
+You: Bdske 5 mint k rasta hai
+Business: mara wa hoga kahi
+Business: 5mint ka ni ha
+You: Abee dede yrr jldi araha hun
+Business: aja jldi.ana wapis
+Business: or bike ka khayal rakhna chori ni hojai
+Business: chori hoi new dila dio
+You: 2 dila dunga yara
+You: Abhi urgent hai
+Business: aja
+You: Aya
+You: {"image":{"image_id":"1024390267146071","caption":""}}
+You: Aya acha thori der me
+Business: ajana bsdk
+Business: 10: 30 Ajana
+Context: 10: 30 Ajana
+You: Hn shi hai
+Business: kya hus tery bhai ko
+Context: kya hus tery bhai ko
+You: Abeyy jisam me nishan aye hue hai
+You: Voice Transcription: الرجی ہوئی ہے جسم مطلب کہ پورا جسم الرجی ہوا ہے اس کا تو وہ میرے پاس پاس بول گیا تھا پاس ہوتا ہے نا تو ضیاالدین میں پاس ہوتا ہے میرا وہ میرے ساتھ میں گھر لے آیا تھا تو وہ میرے پاس ادھر بائک نہیں تھی بس اس لیے وہ ادھر چاہیے تھا طارق باہر کھڑا ہوتا آہ ہسپتال کے باہر کھڑا ہوتا پاس نہیں تھا بس میرے پاس تھا اس لیے میں وہ پاس دینے گیا تھا
+Business: pass se kya hota ua
+Business: ha
+You: Voice Transcription: بھوسڑی کے ہاسپٹل کبھی نہیں گیا ہے کیا ضیاءالدین ہسپتال میں پاس ہوتا ہے? مطلب ایک پاس ہوتا ہے نا اس وہ پاس دکھائے گا تب ہی تیرے کو اندر چھوڑیں گے ہسپتال میں پاس کے بغیر نہیں چھوڑیں گے تو وہ پاس میں اپنے ساتھ گھر لے آیا تھا.
+Business: ma kabhi kisi hospital ni gaya
+Business: allah ka shukr ha
+You: Voice Transcription: بھوسڑی کے کبھی کسی مریض سے تو ملنے گیا ہوگا نا لوڑے. تو بھی عجیب نائی بچوں والی باتیں کر رہا ہے. نائی ہے تو پورا کا پورا نائی ہے.
+Business: kabhi apne k lie bhe mi gaya
+Business: kabhi kucy ni hua apne ko
+You: Voice Transcription: چل ابھی تیرے کو میں کیا بول سکتا ہوں ابھی بچوں والی باتیں کر رہے ہیں اللہ ہر کسی کو اس کو hospital سے دور رکھے ابھی اس کو بس یہ یہ مطلب کہ دکان کی طرف میں آغا خانی لوگ آتے ہیں وہ تو ہر ٹائم ہسپتال میں ہوتے ہیں. ان کو تو بیماریاں ہوتی ہیں ان کو تو یہاں لگتا ہے مگر اس کو ہو گیا تھا پورا الرجی ہو گیا تھا یہ اتنے خاص بیماری نہیں ہے مگر پھر بھی ابھی اگر علاج نہیں کریں پھر تو خراب ہو گا.
+You: Kya hai
+You: Show ni hora
+Business: kuch ni
+You: Ohoo Mubarak 🎉🥳
+Business: <Unsupported Message>
+You: Bdske react ni kar mithai kila
+Business: react se kam chala abhi
+Business: job ky bad mithai ni khana khilaonga
+You: Nahh nahh Bhai wo bad me dekha jayega
+You: Or job KYa karega
+Business: dekhonga
+Context: dekhonga
+You: Ach phir bhi Kya socha hai
+Business: govt
+Business: clerical posts
+Context: clerical posts
+You: Ye Kya hai
+Business: clerk
+Business: computer operator
+Business: ldc udc
+You: Voice Transcription: भड़वे ऐसे ही समझा ना क्या है ये?
+Business: lower division clerk upper division clerk
+Business: sbr kar sahi se smjhata hon
+You: Voice Transcription: ہاں تو میرے سے مل لے میرے کو سمجھا پھر. سمجھ میں آیا میں ابا سے بات کر لوں گا. کیا پیسوں پہ کام ہو گیا? محنت وحنت کریں گے. اس کے لیے بھی آگے اور بھی پڑے گا.
+You: Hn
+You: Voice Transcription: سمیع بھائی دیکھ لے صحیح تو مشرف سے بات کر جس سے بھی گھر جا اس سے کر بائیک دے کے. وہی نا تیرے کو میں نے بتایا انڈین سے او کے اور باقی خود بنا لوں گا بس تو اس سے بات کر وہ کیا بولنا ہے.
+Business: ok
+You: Voice Transcription: بات سن تیرے کو ایک وہ بھیج رہا ہوں نا نمبر بھیج رہا ہوں اس سے بات کر یہ کال سنٹر کا گلشن اقبال میں کوئی جگہ ہے اگر انٹرویو تیرا بھی ہوا دونوں ساتھ میں چلے جائیں گے انٹرویو دے کے آ جائیں گے.
+You: <Unsupported Message>
+Business: {"image":{"image_id":"1593829008830490","caption":""}}
+Business: Voice Transcription: تو نے نمبر دیا ہے نا یہ یہ ادھر کام ہے ٹریفک designing تھری ڈی ماڈل and figure تینوں مشکل ہے بہت skills والے کام ہیں ادھر enjoy ہی نہیں چھوڑتے call center تھوڑی ہے یہ تو وہ site بناتے ہیں وہ جگہ ہے
+You: Voice Transcription: ابے تو جائیں گے نا کچھ دنوں میں سیکھ جائیں گے اگر تھوڑا سا آسان ہے تو چلے جائیں گے کچھ دنوں میں سیکھ جائیں گے
+Business: mushil h mua pata ha
+Business: call center dekh
+You: Voice Transcription: ابھی اس کے لیے پھر بکری کو پکڑنا پڑے گا نا بکری بہن چود کا نمبر بھی نہیں تیرے پاس ہے اس کا نمبر اس کو message کر یا میرے کو دے اس کا نمبر میں بات کرتا ہوں اس سے
+Business: Voice Transcription: وہ جہاں پہلے جاتا تھا نا اس نے ادھر سے چھوڑ دیا اس کو بولا ہم اس جگہ بتا دیں ہم دونوں چلے جائیں گے
+Business: number ni ha
+You: Voice Transcription: نہیں ہے اس نے وہ نہیں کیا ہے اس نے چھوڑا نہیں ہے ان کو کسی وجہ سے ختم ہوا ہے کہیں اور گیا ہے بھئی ادھر ناظم آباد میں بہت office ہے یار کال center اس کو پتا ہے بھڑوے کول جگہ کا پتہ ہے اس سے پوچھیں گے نہ میں بھی شام کو نماز پڑھنے جاؤں گا عصر کی تو پھر آجائیں اس کو پکڑ کے پوچھ لیں گے اس سے ابے کرنا ہے کیا کریں گھر میں یار ہم
+You: Voice Transcription: Day میں اگر وہ day میں کر لیں گے نہیں تو night میں کر لیں گے مسئلہ تو نہیں
+Business: osne purana khtam kia ha kahi new jaga per shuru kia ha new jaga per chaly jaingy
+You: Voice Transcription: ہاں ہاں میں ابھی نکلوں گا نا نماز نماز کا ٹائم اس سے مل لوں گا. پھر اس سے پوچھوں گا تیرے کو میں بتا دوں گا کیا کرنا ہے پھر?
+Business: chala ja
+Business: tune osko bola ha tuja kam ni ata?
+Context: tune osko bola ha tuja kam ni ata?
+You: Nhi mene bola ata hai 😂
+Business: pagal ha to
+Business: jab wo sawal krega phir kya bolyga osko
+You: Voice Transcription: ابھی میں نے ان سے ایک دفعہ بول دیا میرے کو کام آتا ہے. اب وہ بہن چود روز میسج کرتا ہے السلام علیکم سر آپ کا انٹرویو کو مطلب شیڈول فکس ہو گیا. اگلے دن پھر یہ بولتا ہے سر میں درد کر گیا.
+Business: {"image":{"image_id":"2210054816460374","caption":"*Tomorrow Last date Reminder, (Everyone must apply) \u00f0\u009f\u008e\u0097\u00ef\u00b8\u008f*\n*Pakistan Air Force PAF Jobs 2026*\n\n\u00d9\u00be\u00d8\u00a7\u00da\u00a9\u00d8\u00b3\u00d8\u00aa\u00d8\u00a7\u00d9\u0086 \u00d8\u00a7\u00db\u008c\u00d8\u00a6\u00d8\u00b1 \u00d9\u0081\u00d9\u0088\u00d8\u00b1\u00d8\u00b3 \u00d9\u0085\u00db\u008c\u00da\u00ba \u00d8\u00a8\u00da\u00be\u00d8\u00b1\u00d8\u00aa\u00db\u008c \u00d8\u00b4\u00d8\u00b1\u00d9\u0088\u00d8\u00b9\n\u00d9\u00b9\u00db\u008c\u00da\u0086\u00d9\u0086\u00da\u00af \u00d8\u00ac\u00d8\u00a7\u00d8\u00a8\u00d8\u00b2 \u00d8\u00b3\u00d9\u0085\u00db\u008c\u00d8\u00aa \u00d9\u0085\u00d8\u00ae\u00d8\u00aa\u00d9\u0084\u00d9\u0081 \u00da\u00a9\u00db\u008c\u00d9\u00b9\u00da\u00af\u00d8\u00b1\u00db\u008c\u00d8\u00b2 \u00d9\u0085\u00db\u008c\u00da\u00ba \u00d8\u00a2\u00d8\u00b3\u00d8\u00a7\u00d9\u0085\u00db\u008c\u00d8\u00a7\u00da\u00ba \u00d8\u00ae\u00d8\u00a7\u00d9\u0084\u00db\u008c- \n\u00d9\u0085\u00d8\u00b1\u00d8\u00af \u00d8\u00a7\u00d9\u0088\u00d8\u00b1 \u00d8\u00ae\u00d9\u0088\u00d8\u00a7\u00d8\u00aa\u00db\u008c\u00d9\u0086 \u00d8\u00af\u00d9\u0088\u00d9\u0086\u00d9\u0088\u00da\u00ba \u00d8\u00a7\u00d9\u00be\u00d9\u0084\u00d8\u00a7\u00d8\u00a6\u00db\u008c \u00da\u00a9\u00d8\u00b1 \u00d8\u00b3\u00da\u00a9\u00d8\u00aa\u00db\u0092 \u00db\u0081\u00db\u008c\u00da\u00ba\n \u00d8\u00b1\u00d8\u00ac\u00d8\u00b3\u00d9\u00b9\u00d8\u00b1\u00db\u008c\u00d8\u00b4\u00d9\u0086: 22 \u00d8\u00ac\u00d9\u0088\u00d9\u0084\u00d8\u00a7\u00d8\u00a6\u00db\u008c \u00d8\u00b3\u00db\u0092 03 \u00d8\u00a7\u00da\u00af\u00d8\u00b3\u00d8\u00aa \u00d8\u008c 2026 \u00d8\u00aa\u00da\u00a9 \u00db\u0081\u00d9\u0088\u00da\u00af\u00db\u008c\n\u00d8\u00a7\u00d8\u00b3 \u00da\u00a9\u00d9\u0088 \u00d8\u00b2\u00db\u008c\u00d8\u00a7\u00d8\u00af\u00db\u0081 \u00d8\u00b3\u00db\u0092 \u00d8\u00b2\u00db\u008c\u00d8\u00a7\u00d8\u00af\u00db\u0081 \u00d8\u00b4\u00db\u008c\u00d8\u00a6\u00d8\u00b1 \u00da\u00a9\u00d8\u00b1\u00db\u008c\u00da\u00ba \u00d8\u00aa\u00d8\u00a7\u00da\u00a9\u00db\u0081 \u00da\u00a9\u00d8\u00b3\u00db\u008c \u00da\u00a9\u00d8\u00a7 \u00d8\u00a8\u00da\u00be\u00d9\u0084\u00d8\u00a7 \u00db\u0081\u00d9\u0088 \u00d8\u00ac\u00d8\u00a7\u00d8\u00a6\u00db\u0092-\n\u00d8\u00a7\u00d8\u00b3 \u00d9\u00be\u00db\u0081 \u00d8\u00aa\u00d9\u0085\u00d8\u00a7\u00d9\u0085 \u00d9\u00be\u00d8\u00a7\u00da\u00a9\u00d8\u00b3\u00d8\u00aa\u00d8\u00a7\u00d9\u0086 \u00d8\u00b3\u00db\u0092 \u00d8\u00aa\u00d9\u0085\u00d8\u00a7\u00d9\u0085 \u00d8\u00b5\u00d9\u0088\u00d8\u00a8\u00db\u0092\u00d8\u008c \u00da\u00a9\u00d8\u00b4\u00d9\u0085\u00db\u008c\u00d8\u00b1 GB \u00d8\u00b3\u00d8\u00a8 \u00d9\u0084\u00d9\u0088\u00da\u00af \u00d8\u00a7\u00d9\u00be\u00d9\u0084\u00d8\u00a7\u00d8\u00a6\u00db\u008c \u00da\u00a9\u00d8\u00b1 \u00d8\u00b3\u00da\u00a9\u00d8\u00aa\u00db\u0092 \u00db\u0081\u00db\u008c\u00da\u00ba-"}}
+You: Voice Transcription: म्हणून आपल्या
+You: Bat sun
+You: Sale executive Kya chiz hai
+Business: chezen bechne wala
+You: Ye ham kar sakte hai
+Business: ni
+You: Kyuu
+Business: behne ka kam ha
+You: Online
+Business: samny ya online jesi job hogi
+You: Tu bat karke dekh na
+Business: kar
+You: Abe tere ko smjh ajayegi na
+Business: bakri ne kya bola
+You: Bdske tu ni aya wo gaya phir
+Business: axha
+You: Voice Transcription: भड़वे बात कर ले उससे ना चूतिया बात कर उससे
+You: Voice Transcription: تو بات کرو سو بول رہا ہے میں بھی چلا جاؤں گا تمہارے ساتھ. بولتا ہے میں بھی اکیلا ہوں نائٹ سے میرے کو بھی دل نہیں لگتا. جب تم لوگ بھی آؤ گے پھر صحیح ہوتا ہے.
+You: Voice Transcription: یہ سمیع یہ چارٹ بیس سیل کیا ہے? میں نے سے بات کی وہ بولتا ہے ہمارا کام جو ہے نا میں نے بولا کہیں کول سینٹر ہے وہ بول رہا ہے نہیں. وہ بول رہا ہے ڈسکور ڈی آئی ایس سی او آر ڈیسکورٹ چارٹ بیس سیل یہ کیا ہے?
+Business: Voice Transcription: تیرے پاس سراسر کا ہے سر سمیع کا نمبر ہے تیری امی ٹیچر ہے نا اس کو بول کہ اپنی امی کو بول کہ سر کو بولو کہ وہ جو دو سال بعد metric کا certificate آتا ہے نا وہ certificate چاہیے وہ آیا ہوا ہوگا لازمی کیونکہ دو سال سے بھی اوپر ہوگا اگست چل رہا ہے مئی میں ہم لوگوں نے paper دیے تھے دو ہزار چوبیس میں صحیح ہے اس کو بول وہ چاہیے ہو مجھے اس کو بول کب تک آئے گا وہ آیا ہو گا مجھے پتا ہے
+You: Voice Transcription: تو ابھی چلے جائیں گے.
+Business: acha
+You: Voice Transcription: نہ نہ اگر ابھی جا رہے ہیں چلو ابھی چلے جائیں گے معلومات کر لیں گے. اور یہ دونوں چلے جائیں گے.
+Business: aja jaty hain
+You: Voice Transcription: ابھی لیٹ ہو گیا. پیر والے دن پیر نہیں پیر منگل چلے جائیں گے. یا کل چلے جائیں گے یا منگل والے دن چلے جائیں گے.
+You: Voice Transcription: یہ بھوسڑی کے آج ایک جگہ پہ انٹرویو ہے میرا. وہ یہ ایگزیکیوٹڈ ہے مگر وہ بولے پہلے ہم آپ کو وائٹ کریں گے.
+You: Voice Transcription: ان لوگوں نے اپنی location بھی بھیج دیا اور وہ بھی وہ بھی کیا ہے کیا بولتے ہیں یار او ان کا جو office ہے نا گھر ہے office ہے مطلب وہ گھر سے office بھر آیا ہوا ہے نا اس کی تصویریں بھیج دی بولتے ہیں یہ ہمارا office ہے
+You: .
+You: Kidhar hai
+Business: ghr ma
+You: Qatar jana hai yrr
+You: Aja dono chlte hai
+Business: bike ma bhe msla.ha or ma ja bhe ni skta
+Business: kal ma gaya tha numaish cluch ma msla aya waha sai krwaya meny lekin ni hua
+You: Voice Transcription: ابے یار یہ ناخن دکھانا تھا نا وہ ذیشان ادھر ہوتا ہے. تو اس نے بولا تھا آجا ناخن ناخون پھر سے خراب ہو گیا ہے بہن چود میرے اس نے بولا آج آ جا مجھے ایک ڈاکٹر ہے کینیڈا سے آیا ہے. بولتا ہے اس سے علاج کروا دے. چل میں دیکھتا ہوں پھر
+Business: sir sami ka number dy
+You: Nhi hai
+You: Bdske aj chale jate certificate le ate
+You: Bat sun
+You: Aj interview hai
+Business: acha chala ja
+You: Voice Transcription: میں تیرے کو ان کا نمبر بھیجتا ہوں میں ان کو بھی تیرا بتا دیتا ہوں تو ان سے بات کر لینا پھر دونوں ساتھ انٹرویو دینے چلے جائیں گے وہی ہے بولتا ہے پہلے ہم آپ کو گائیڈ کریں گے پہلے ہم آپ کو سیکھائیں گے بولتا ہے دو تین دن میں سیکھ جائیں گے پھر آپ ارننگ کرنا چلے جائیں گے
+Business: Voice Transcription: اوپر پوچھ لیں کیا کام ہے? بعد میں اپنے لیے بھی خواری اور ہمارے لیے بھی نہیں بنا. اس کو بول دیں کیا بیچنا ہے کیا کرنا ہے.
+You: Voice Transcription: یہ چوتیا گھر بیٹھنے سے کچھ نہیں ہوتا آج رات چلے جائیں گے دیکھ لیں گے تو بھی صحیح چست بندہ ہے. تیرے کو نمبر دے رہا ہوں نا ان سے بات کر
+Business: dy
+Business: osse poch commission base salary ha ya fix?
+You: <Unsupported Message>
+Business: Voice Transcription: 
+You: Bat kar tu
+Business: kaha ha number aya tery pas
+Business: wo link bhej
+You: Kya
+You: <Unsupported Message>
+You: Msg kar na
+Business: <Unsupported Message>
+Business: isko kar
+You: Ye Kya hai
+Business: wohi sales waala
+You: Tu karega
+Business: bat krke dekh
+Business: hn
+You: Kiya msg
+You: Mene
+Business: saddar ja rha?
+You: .
+You: 10.30 baje bike chahiye
+You: Hospital jana hai
+You: Bat sub
+Bot: Hello 𝑯𝑲 𝑷𝒂𝒏چھی 🦅! Hum aapki kaise madad kar sakte hain?
+You: Ek jagah hai wahi sales executive wala
+You: Unko salery bhi 30+ hai
+You: Wo keh Rahe hai pehle ham guide karenge apko
+Business: acha
+You: Arckon Digital is looking for a Sales Executive to join our team!
+
+It's a software house providing services to clients abroad, specializing in web app development and art.
+
+
+Interview timing: 11:30 PM
+Office Timing: 11:00 PM to 7:00 AM (Night Shift)
+
+Basic Salary: 30,000 + Punctuality Incentive included in basic
+
+Locations:
+1. Sector 10, North Karachi
+2. Block D, North Nazimabad
+3. Bufferzone, Sector 15 A/4
+
+Requirements:
+Freshers can apply 
+Only for males 
+- Fluent English
+- Excellent Communication Skills
+- Experience in Sales
+
+If interested, please fill the following details:
+
+Name:
+Complete Address:
+Age:
+Education:
+Phone Number:
+Info about your experience:
+
+Send your details to apply!"
+Business: kaha ha
+Context: kaha ha
+You: Kya
+Business: ye
+Business: number dy
+Business: jaty hain krty hain
+You: Hn 2 ya 3 din me jate hai interview ke liye
+You: Mene nakhun nikale hai phir se dono
+You: <Unsupported Message>
+Business: kya msla ha tery nakhun ka
+You: Wahi Purana Wala
+Business: acha
+Context: acha
+You: Hn tu bat kar inse
+You: Bat sun
+Business: bol
+You: Subah chalega hospital
+You: Qatar hospital
+Business: q
+You: Nakhun dikhane
+You: Doctor ko
+Business: ma nj jaonga
+You: Kyu bdske
+You: Me akela hun nahh
+You: Bat sun
+You: Phir apni bike dede 10 baje ke time
+Business: ma 1 per uthonga
+You: Koi or bike ni hai nahh
+You: Rat ko dede bike Kisi ko le jaunga sath
+You: Abba bhi jayega dukan
+You: Bdske bataya ni tune
+Business: koshish kr kisi or se krne ki
+Business: meri bike ma kam ha thora har chez awaz kr rhi ha
+You: Nhi hoga
+You: Chl dekhte hai
+You: Bat ki unsee
+Bot: Xin chào 𝑯𝑲 𝑷𝒂𝒏چھی 🦅! Rất vui được hỗ trợ bạn từ TestTayar.
+Chúng tôi chuyên cung cấp tài liệu ôn thi công chức và hỗ trợ ứng tuyển các vị trí như LDC, UDC, GHQ, NADRA... Bạn đang quan tâm đến việc ôn thi cho vị trí nào hay cần luyện tập đánh máy ạ?
+You: Voice Transcription: ان سے بات کر کل کی انٹرویو اپنی ویڈیو میں کر میں بھی ان سے بات کر دوں گا کل میں بھی چلا جاؤں گا دونوں چلے جائیں گے ساتھ میں انٹرویو دے کے آ جائیں گے ویسے بھی رات کو انٹرویو ہوتا ہے ان کا
+Business: han
+Business: Available for interview
+Tonight at 11:30 pm ?
+Business: North nazimabad
+Business: Which branch is nearest to you sir?
+Business: kal rakh lo
+Business: kal jaty hain interv dety hain
+You: Voice Transcription: وہ ہاں یہ صحیح ہے یہ صحیح ہے تو نے بات کی تو کل ڈن کر اکتیس ہے نا کل ڈن کر رات کو انٹرویو ہو گیا اچھا تو پتہ ہے نا تیرے کو انٹرویو دینے کل چلے جائیں گے جو ہو گا پھر دیکھا جائے گا دونوں ساتھ میں جائیں گے
+Business: ok
+Business: boldy tu bhe
+You: Hn
+You: Jayega aj
+Business: Hey,
+
+We are glad to inform you that you have been scheduled for a walk-in interview at Arckon Digital. Kindly report at 11:30 PM along with your CV.
+
+Office location: https://maps.app.goo.gl/aF43Pe7RzSUV3wEX8?g_st=iw
+Block D
+North Nazimabad 
+House B-226
+
+Come prepared, We wish you the best of luck!
+Regards,
+HR (Ravia)
+Business: {"image":{"image_id":"1080747567943881","caption":""}}
+Business: {"image":{"image_id":"955609437556349","caption":""}}
+Business: {"image":{"image_id":"2286410055486114","caption":""}}
+Business: rat ko jaingy 11 30 per
+You: Confirm hai nah tera
+You: Map bhi hai nahh
+You: Voice Transcription: میپ بھی ہے نا میپ پہ کلک کر کے ڈائریکشن سلیکٹ کر لیں گے پھر میپ میپ کے حساب سے چلے جائیں گے.
+Business: hn
+You: Voice Transcription: ساڑھے دس بجے میسج کر دیں صحیح ہے. ہمم ساڑھے گیارہ, گیارہ, پندرہ پہ نکل جائیں گے. بس پھر پہنچ جائیں گے. جائے گا نا میرے کو پہلے سے بتا دیں اسی لیے میں تیار بیٹھا ہوں تو پھر نہیں جائے.
+Business: ok
+Business: han jaonga
+Business: Voice Transcription: ساری سی وی لے کے جانی ہو گی
+You: Voice Transcription: ہاں صحیح ہے صحیح میری بنی ہوئی لے جائیں گے. تو میرے کو سارے میسج کر بس پھر چلے جائیں گے ساڑھے گیارہ تک.
+Business: <Unsupported Message>
+Business: Voice Transcription: کام کر اس کا پرنٹ نکال کے اپنے پاس رکھ لے. جائیں گے گیارہ بجے تو. ساتھ لے کے چلے جائیں گے. دکانیں پھر بند ہو جائیں گی. گیارہ بجے بند ہوں گی. اور ابھی بھی جا نہیں سکتا. ابھی تو نکال لے. اپنے لیے بھی کچھ نکالنا ہے نکال لے. اور یہ بھی ساتھ نکال کے اپنے پاس رکھ لے.
+You: Voice Transcription: او بھائی میرا پڑا ہوا ہے اور میں جا بھی نہیں سکتا. جہاں کیا لائٹ ہی نہیں ہے ادھر لائٹ نہیں ہے تو ادھر پاس بک سینٹر کے پاس ہے باہر آجاؤ دونوں چلے جائیں گے. پرنٹ کروا لیں گے.
+Business: acha
+You: Hn aja chale jayenge
+Business: 10bajy jaty ha
+You: Bdske band hoga us time
+Business: acha
+You: Hn jaraha hai
+Business: acha ma krwa donga chor
+Business: khana kha kr 9 30 tk jaonga krwa kr ajaonga phir 11 bajy tuja call kronga jaigy
+You: Hn okk
+You: .
+Business: 20mint bad jaingy
+You: Bat sun
+Business: hn
+You: Voice Transcription: میرے گھر والے اگر بولے نا کیا ہے میں بول رہا ہوں board آفس میں صحیح ہے دل پسند کے پاس ہے اور بول میں نے پہلے بھی ادھر کام کیا ہے تو اپنا بول بول یہ legal ہے مطلب کال center کا ان کو پتا چلا ہے کہ وہ legal نہیں ہے وہ وہ ہے مطلب چوری کا کام ہے تو پھر ان کو بتا دیو کہ یہ legal تھا میں نے ادھر پہلے بھی کیا ہے صحیح ہے
+Business: Call center nahi ha software house ha
+Business: ok
+You: Voice Transcription: ہاں ہاں ٹھیک ہے جو بھی ہے. بس تو ان کو بتا دیو نا اگر پوچھے تیرے سے. تو بول یہ بول ہم کوشش کریں گے ڈیم میں شفٹ ہو جائے. صحیح ہے ایسے بول. اور پھر بس تو بول دینا بول یہ لیگل ہے یہ وہ ہے. ابھی میرے کو جانے نہیں دیں گے اس لیے. میں تو بولتا ہوں چل نکلتے ہیں بھائی نہیں ہے. نکلتے ہیں ادھر بیٹھ جائیں گے روڈ پہ.
+You: Voice Transcription: ہونا بھی سب کچھ میرا کینسل کروا دیں گے.
+Business: kon pohyga
+Context: kon pohyga
+You: Voice Transcription: मेरी अम्मी है, अब कोई भी पूछे ना, बस।
+Business: aha
+Business: ok
+You: Voice Transcription: चल ना चलते हैं, बस आ जा तू तैयार हो जा, मैं भी खाना खा रहा हूँ, बस फिर चलते
+Business: 15mint tk jaty hian
+You: Ok
+Business: medy ghr waly mana kr rhy ha
+Business: chor dy
+You: Abee Bahar a
+You: Jldi kar
+You: Voice Transcription: بات سن کوئی کام دیکھ جلدی کر یار قسم سے ادھر ایک دفعہ میرے امی ابو نے میرے کو اجازت نہیں دی نا پھر نہیں دیں گے نا نائٹ کا کام مسئلہ یہ ہے میں اس نے آج ان لوگوں کو میں نے تیرے کو بتایا وہ بولتا ہے اچھا تیرے کو جانتے نہیں امی جانتی ہے تیرے کو تو میں نے تیرا بنایا بولتا ہے صحیح ہے. ابھی تو جلدی سے کوئی کام دیکھ بھائی نہیں جلدی جائیں گے انٹرویو دے کے آئیں گے بس پھر جو ہو گا دیکھا جائے گا.
+You: Voice Transcription: راکٹ چلا دائرہ گھما دائرہ گھما جلدی کر کسی سے معلومات کر
+Business: muja kab dekha
+You: Voice Transcription: میں نے مجھ سے بہانہ کیا میں نے بولا یہ ہے وہ سیلری کم ہے. اور کام مشکل ہے یہ وہ میں نے بولتی ہے سمیع جو پہلے کرتا تھا میں نے اس کو بولا سمیع ادھر پہلے کام کرتا تھا. پھر کہتی ہے کہ وہ پھر کہتی ہے میں نے بولا اس ٹائم اس کی سیلری زیادہ تھی. ابھی کم ہو گئی بولتی ہے اچھا اچھا.
+Business: dekh rha hon domiile ha ?
+Context: muja kab dekha
+You: Voice Transcription: اوئے میرے ساتھ نائن میٹرک میں تھا نا دیکھا ہوگا اس ٹائم تیرے کو
+Context: dekh rha hon domiile ha ?
+You: Mera
+Business: ha
+Context: ha
+You: Hn hai
+Business: grade 1 ma apply kr rha ha naib qais?
+Business: qasid?
+Business: sindh governemtn am?
+You: Voice Transcription: یہ کیا چیز ہے? میرا ہو گا میرا سیکنڈ year complete ہے میرا ہو گا یا نہیں
+Business: han hojaiga domicile ki nic ki copy 1 pic or matric or inter marsheet photocopy nikal
+Business: or ibrahim ali bhai govt school ja waha per medam se sign or stamp laagwa le
+You: Voice Transcription: تو بھی کرے گا یا صرف میرے کو بولنا ہے. اور اپلائے گھر سے ہی کریں گے نا.
+Business: {"image":{"image_id":"1583840826518613","caption":""}}
+You: Voice Transcription: او بھوسڑی کے میرے کو لنک نہیں پتہ ہے. تو کروائے گا نا تو چلے گا میرے ساتھ. دونوں ساتھ جا رہے ہیں چھوڑ گورنمنٹ گورنمنٹ کو میرا میرا پکا کام کروا رہا ہے. میرے کو پتہ ہے یہ گورنمنٹ میں پکا ہے مگر وہ میرا صحیح کام کروا رہا ہے فی الحال چار پانچ چھ مہینے سے میرے پاس ہے میں ادھر بولتا ہوں ادھر صحیح بندہ جائے نا تو وہ ساتھ ہی ہو جائے کام
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"2334126314106413","caption":""}}
+Business: mera rishtydar ha osnne bheja ha ye
+You: Ye Kya hai
+Business: cource
+You: Voice Transcription: ابے نہیں یار core source نہیں کرنا کام دیکھ کام ادھر تو جا رہے تھے بھوسڑی کے تو نے گانڈ مراد دی
+Business: https://www.saylanimit.com/enroll
+Business: free ha
+You: Nhi bey
+You: Kam dek Kam 💵🤑
+Business: pesy ky pechy ni bhag
+Business: agar pechy ky pchy bhagyga wo tujhse bhagyga
+Business: ye course krle 6mahine isko dede itna kamayega na
+Context: pesy ky pechy ni bhag
+You: Bhai puri duniya hi usi ke Piche bhag Rahi hai
+You: Voice Transcription: کے تو نے بھی تو اچھا کورس کیا ہے نا. تو نے کیا کیا تو نے کتنا کما لیا.
+Business: acha
+You: Call center dekh yr
+You: https://www.instagram.com/reel/Dbk2i1qMafb
+You: Voice Transcription: او بھوسڑی کے ان کا اوئے salary تیس ہزار fix ہے ان کا بھی میں نے ایک اور ویڈیو دیکھی ہے انسٹاگرام پہ کہتے ہیں یہ لوگ کہ کیا بولتے ہیں ہاں بولتا ہے weekly اور مگلی کمیشن ہے عجیب چوتیا تو گھر میں بات کر یار کل ادھر ہی چلے جائیں گے دوبارہ
+Business: oh bhai inki chezen bechni ha agr 2month kuch ni kia nikal lengy
+You: Voice Transcription: ہاں ہاں صحیح ہے ہم لوگ کونسا پرمننٹ جا رہے ہیں یار. ہم ہم بھی چلے جائیں گے ابھی میں اکیلا ہوں قسم سے اکیلا میرے کو میرے گھر والے چھوڑیں گے مسئلہ سارا یہ
+Business: https://www.youtube.com/watch?v=n6ytywdTSPg
+You: sticker ommitted
+You: O Bhai 🤣
+You: Voice Transcription: سمیع بات سنیے medicine company ادھر کوئی جان پہچان ہے کہ نہیں کوئی تمہارا کوئی ہے بندہ
+Business: konsi company type krke bta
+You: Searle ya gsk
+Business: searle m h pechy gali ma rehta ha
+Business: retire police wala ha
+You: Abw bol Mera period laga na
+Business: lekin searle ma farm dengy wo or 3 mahine bad oske bbulingy or 85 din k lie rakkhengy sirf
+Business: 75  din ka ha 85 ni
+You: Voice Transcription: ہاں ہاں وہ پتہ ہے تین مہینے کے لیے رکھتے ہیں تین مہینے کا پیریڈ ہوتا ہے. تو بات کر نا یار بول یہ کیا بولتے ہیں? بول ابھی
+You: Voice Transcription: तू उसको बोल ना बोल अभी लगा कोशिश करना
+Business: milyga to bolonga apna bhe bolong tera bhe
+You: Voice Transcription: بہن چود تیرے سے ڈھیر بندہ میں نے نہیں دیکھا یار جو ملے گا بہن چود ابھی تیرے کو کون سے سن میں ملے گا گھر بتا دونوں چلے جائیں گے بات کر لیں گے یار ٹائم نہیں جایا کرنا
+Business: namaz ma milyga na bssdk rooz milta ha
+Business: masjid ma
+You: Voice Transcription: ہاں نا یار ابھی عشاء کی نماز کو ایک ٹائم ہو گیا ہے جا دیکھ اگر آیا ہو تو اس سے بات کر لے. لازمی بات کر بول جلدی لگوا لے بول اگر ٹائم لگے گا تو پھر وہ بھی بتا دینا تجھے ایسے نہیں بولے ہاں یار میں تیرے کو بتا دوں گا. وہ نمبر بھی لے لے میرے کو بھی دے دے اپنے پاس بھی پھر اس کا نمبر رکھ دے.
+Business: jldi ni lagwa skta wo 1 2 hfty m lekr jiga wo search tuesdy ko sirf form milta ha oska
+Business: oske 3 mhine bd joining hogi phir
+You: Voice Transcription: وہی تو تیرے کو بول رہا ہوں نا ویسے تو ہم بھی چلے جائیں گے ہمیں بھی فارم دے دیں گے. اس سے بات کرے گا بولا کر جلدی لگا لے. میں تیرے کو یہ بول رہا ہوں.
+Business: jldi ni laga skta bol to raha hon
+Business: kkal call krong number ha mery pas oska bat kronga bolonga leja form dilwa dy
+Business: agr wo leja rha hoga to tuja matrovil se rasty ma hi le long
+You: Voice Transcription: ہاں تو بھی میرے ساتھ ہی جائے گا نا.

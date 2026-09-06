@@ -1,0 +1,45 @@
+Business: AssalamOalaikum
+Business: ham aye thy makan ka bayana dia ha 5lack 50gazz ky
+Business: <Unsupported Message>
+You: Voice Transcription: ठीक है, इस तरीके से कर लेते हैं इसको transfer कर लेते हैं, मैं तो loss नहीं हूँ, और आप time बता दे, बस ग्यारह बारह बजे के time पे setting कर लेते हैं, जैसे आप लगे आपको।
+Business: theek ha 12 tk ya 12:30 tk chale jaingy
+Business: ap photocopy mamgwao kaghazat ki
+You: Voice Transcription: 
+Business: theek ha
+Business: {"image":{"image_id":"875269662015711","caption":""}}
+Business: {"image":{"image_id":"877349988458697","caption":""}}
+Business: {"image":{"image_id":"1612212587183320","caption":""}}
+You: Voice Transcription: اسلام علیکم کیا حال ہے بھائی خیریت سے ہیں? ٹھیک ہیں? اچھا کیا پروگرام بنایا? امی اور ابو نے بات کر لی آپ سے تو مجھے بتانا
+Business: Voice Transcription: وعلیکم السلام ٹھیک میں تھوڑی دیر تک بتاتا ہوں آپ کو ٹھیک ہے.
+Business: Voice Transcription: السلام علیکم آپ نے کہا تھا کہ پیر والے دن جائیں گے نا تو آج بولتے ہیں آج جانا ہے کہ نہیں جانا آپ بتائیں
+You: Voice Transcription: اسلام علیکم کیا حال ہیں بھائی خیریت سے ہیں انشاءاللہ منگل کو جانا ہے papa سے بات ہو رہی ہے لیکن ان کو فائلر کا جو ہے وہ ٹیکس جمع کرا دینا آپ نے جو کرانا تھا اماں کا نا اپنی یاد سے جمع کرا دینا
+Business: pehle ap bata dety to ma last weak hi krwa deta
+Business: abhi kr deta hon abhi ky abhi
+You: Voice Transcription: 
+Business: {"image":{"image_id":"1760724825057477","caption":""}}
+Business: <Unsupported Message>
+Business: {"image":{"image_id":"1068790425566997","caption":""}}
+Business: <Unsupported Message>
+Business: return file kar dia ha
+Business: {"image":{"image_id":"1237948708435033","caption":""}}
+Business: Voice Transcription: सलाम वालेकुम, ये कल रात तक था और अभी हो गया, ठीक है, मतलब बन गई।
+You: Voice Transcription: ٹھیک کہا آپ نے ٹھیک ہیں?
+Business: AssalamOalaikum makan ki chabi chia ha
+You: Voice Transcription: والسلام بڑے بھائی چابی لے لیں بالکل. اور بیس تاریخ کو کہا تھا آپ نے پیمنٹ دینے کا. اکیس ہو گئی ہے آج. تو آج لیتے ہوئے بھی آ جائیں چابی بھی لے لیں کوئی مسئلہ نہیں ہے. بلکہ ایک تالا لے کر آئے ہیں نیا.
+Business: Voice Transcription: علیکم السلام ہو سکتا ہے آج گھر والے آئیں گے بھی آپ سے بات واک کرنی ہے کہ ہاں وہ تالا میں دیکھتا ہوں کیا پتہ میرے پاس ہو گا نیا تالا وہ میں لے آؤں گا پھر.
+You: Voice Transcription: السلام علیکم کیا حال ہے بھائی? میں کہہ رہا ہوں کہ ابو کو مغرب کے فورا بعد بھیج دینا. پھر رات میں میں نے جانا ہو گا. ملاقات نہیں ہو گی.
+Business: Voice Transcription: ابو تو میرے ابھی تک کام سے آئے نہیں ہیں آج تک میرے خیال میں آتے ہیں اور پھوپھو کے گھر پہ دعوت ہے تو گھر والے وہاں گئے ہوئے ہیں ابو بھی آئیں گے تو کیا پتا direct وہاں جائیں تو ابھی ملاقات کیا پتا نہیں ہو سکے پھر رات کو جب آپ آؤ گے نا تب ہو جائے گی کیا پتا یا کل اتوار ہے کل ہو جائے گی
+You: Voice Transcription: ဓိပ္ပာယ်.
+You: Voice Transcription: अस्सलाम वालेकुम, क्या हाल है? अच्छा, रात को तो आए नहीं, ये कब तक आएँगे? मेरे पास।
+Business: walaikumassalam rat tk ayengy
+You: Voice Transcription: اچھا میں کہہ رہا تھا کہ دیکھیں payment کا میں نے بیس تاریخ کو کہا تھا نا تو ابھی تک بھی میں نے بولنا تھا تو ابھی بندے کی میرے پاس کال آئی ہے تو میں نے اس کو کل کا کہا ہے تو یہ ہے کہ کل شام کو لگ کے انشاءاللہ کوشش کر کے دے دیں
+Business: Voice Transcription: ओके रे कल शाम तक तो नहीं हो सकता, एक दो तीन दिन रुक जाए।
+You: Voice Transcription: ठीक है, मैं कल तरक्की टालने की कोशिश करता हूँ, लेकिन ये है कि परसों ना कोई टाइम से कर देना, ठीक है।
+You: Voice Transcription: اسلام علیکم. کیا حال ہے بھائی? خیریت سے ہیں? ٹھیک ہیں? تو ہو گئے آج بندوبست. یہ کل بھی جائے گی بات. کل ہو جائیں گے انشاءاللہ.
+Business: Voice Transcription: وعلیکم السلام مولا تو ہی بندے کو کل بھیجے گا نا اس نے بولا ہے کل تک ہو جائیں گے پھر
+You: Voice Transcription: السلام علیکم کیا حال ہے بھائی خیریت سے ہیں ٹھیک ہیں تو آج آ رہے ہیں ابو کے ساتھ آ رہے ہیں آج payment لے کے اب
+You: Voice Transcription: क्या है? क्या हाल है भाई? जवाब नहीं दिया आपने।
+Business: walaikumAssalam
+Business: abu keh rhy hin nahi hue pesy ek sath dengy kar rhy hin
+You: Voice Transcription: भाई मैं कह रहा था सात जो है वो बाद में दे देना लेकिन पाँच मेरे को कल दे दो आगे बात खराब हो रही है बंदे को दे रहे हैं
+Business: AssalamOalaikum sath wala adha jisne lia ha oska number do

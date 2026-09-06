@@ -1,0 +1,32 @@
+Business: {"image":{"image_id":"1356346463261028","caption":""}}
+Business: apply krle dono sath chaly jaingy test deny
+You: Kis mai jyna hy ?
+You: Technical Sahi hy ?
+Business: han
+You: Ok
+You: Or test date kia daali hy tune ?
+Business: apply abhi ni krna end ma krengy
+Business: date agy hojaingi end ki krengi zyada time mil jaiga
+Business: abhi krna ha to krly
+Business: shayad ham gaon jain jabi
+Context: abhi krna ha to krly
+You: Abhi Sahi hy abyy
+Business: agr tuja krna ha to krlw
+Context: shayad ham gaon jain jabi
+You: Phir wapas kab ayega ?
+Business: aonga phir kronga apply end ma tarikj agy ki.mil jaigi
+Context: aonga phir kronga apply end ma tarikj agy ki.mil jaigi
+You: Yhi dates hy
+You: {"image":{"image_id":"2016740162326940","caption":""}}
+Business: or ajaingi end ma
+You: 7 se 14 mai daal dety hy
+Business: ye book hojaingu
+Context: ye book hojaingu
+You: Tu kab tak ayega
+Business: pata ni ha
+Context: pata ni ha
+You: Chal 1 ko kr lengy
+You: Ya 3 ko
+Business: Voice Transcription: ابو کی کال آ گئی تھی یار تو پھر کل ہو گا نا ابھی چاہیے ابھی دینا ہے کسی کو تین بجے
+You: Voice Transcription: یہ تو صبح بارہ تک ہی ہوتا ہے. وہ پانچ نمبر والے سکول میں پتہ نہیں پرنسپل ہو کہ نہیں ہو. ابھی وہ دیکھنا پڑے گا.
+You: Voice Transcription: ایک کام کر یہ نعمان آ گیا نیچے نعمان کو نیچے ہی آ گیا اس کو پکڑ اس کو بولی sign کیسے کریں

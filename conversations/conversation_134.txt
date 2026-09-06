@@ -1,0 +1,38 @@
+You: Bht bht mubarak apko...
+Business: <Unsupported Message>
+Business: ghr pr ho?
+You: Mami kaha h
+You: Bolo
+You: Kaha ho
+You: Hmm
+You: Jawab do.
+Business: g
+Context: g
+You: Dall k leye msg kar rahi thi apne jawab nahi dia.
+Business: net ni tha
+Context: net ni tha
+You: Acha.
+Business: ggr per hoM
+Business: ?
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: Voice Transcription: السلام علیکم میں نے آپ کو بولا تھا کہ شہزاد کی شہزاد کا این آئی سی چاہیے اور وہ قبرستان کی رسید چاہیے وہ آپ نے ڈھونڈی کہ نہیں ڈھونڈی?
+You: {"image":{"image_id":"1668955187705229","caption":""}}
+You: Voice Transcription: ये मैंने ले लिया है ok उस्ताद की पर्ची को तो पता ही नहीं है बताओ क्या करना है
+Business: Voice Transcription: وہ تو کچی پرچی تھی نا ناصر بھائی نے میرے کو بولا تھا وہ کچی پرچی پکی پرچی وہ دے گا تین مہینے بعد دیتا ہے نا وہ وہ جو آپ کو پرچی دے دی وہ کچی تھی اس کو پانچ سو ہزار دو گے وہ کچی پرچی کے بغیر آپ کو پکی پرچی دے دے گا ناصر بھائی نے اپنی امی کی بھی پرچی بنوائی ہو گی نا پکی تو وہ بھی وہ لیں گے تو ساتھ یہ والی بھی وہ لے لیں گے
+Business: 9500
+Business: orignal panel
+Business: Voice Transcription: आप लोगों के पास जो power bank है वो आप लोग इस्तेमाल करते हो कि ऐसे ही रखा हुआ है, अगर इस्तेमाल करते हो फिर छोड़ दो, लेकिन अगर ऐसे ही रखा हुआ है use नहीं करते मिसाल के तौर पे तो मुझे देना, कल मैं जाऊँगा ना अपने साथ लेके जाऊँगा, दस पंद्रह दिन बाद आऊँगा, फिर दे दूँगा वापिस।
+You: Voice Transcription: میرے سسر گاؤں گئے تھے نا تو وہ اپنے ساتھ لے کے چلے گئے تھے. تو میں نے ابھی تمہاری وہی سنی ہے. تو میں ابھی ناصر کو میں بولتی ہوں. تو یہ کہ اگر وہ جاگ رہے ہوئے ہیں. تو حیا تو انہوں نے کمرے میں رکھا ہوا ہے نکال کے تو وہ ناصر ابھی لے کر آ جائیں گے. تو یہ اگر لے کر آ گیا تو میں تمہیں ہاتھ کا جواب دے دوں گی. صحیح ہے?
+Business: kal suba tk bata dena
+You: Voice Transcription: मैंने अभी फोन कर दिया नासिर को तो वो अपने अब्बू को बोल देंगे तो वो ये कि जब वो रात को आएंगे तो वो लेते हुए आ जाएंगे ठीक है वो जैसे ही रात को लेते हुए आएंगे मैं तुम्हें फौरन बता दूंगी कि अभी वो लेकर आ गए हैं तो फिर ये कि तो आप सुबह किसी भी टाइम आ के ना हमारे घर से ले जाना ठीक है अगर नासिर रात को लेकर आया ना मेरे पास तो मैं उसको चार्जिंग पे लगा दूंगी ठीक है ना ताकि वो सुबह तक फुल चार्ज हो जाए ठीक है
+Business: ok
+Business: ماشاءاللہ
+You: Mani nikal gaya kia.
+Business: han 15mint hogaye
+You: Thek hai
+Business: https://youtube.com/shorts/lCdWe3A__kQ?si=qRbRASHkTuqXDDS0
+Business: https://youtube.com/shorts/lCdWe3A__kQ?si=qRbRASHkTuqXDDS0
+Context: https://youtube.com/shorts/lCdWe3A__kQ?si=qRbRASHkTuqXDDS0
+You: 🤣🤣😂😂😂
+You: {"image":{"image_id":"1380959670209165","caption":""}}

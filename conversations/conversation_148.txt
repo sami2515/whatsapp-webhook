@@ -1,0 +1,17 @@
+Business: hi
+Business: ma sami
+Business: orangi 4 number karachi wala
+Context: ma sami
+You: Kon
+Business: gujjar Osama ho ap?
+Context: gujjar Osama ho ap?
+You: Jia
+You: App kon
+Business: sami
+Context: sami
+You: Kaun sa
+Business: <Unsupported Message>
+Business: pehchana
+Context: <Unsupported Message>
+You: Nahin pahchana
+Business: gujjarr ha tu?

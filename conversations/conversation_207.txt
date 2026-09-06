@@ -1,0 +1,7 @@
+Business: AssalamOalaikum
+Business: {"image":{"image_id":"2713819055686703","caption":"*Only male*"}}
+You: Only male
+Business: g
+Business: location
+You: CV send me
+Business: <Unsupported Message>

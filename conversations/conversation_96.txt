@@ -1,0 +1,79 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://testtayar.pk/typing-test
+Bot: Walaikum Assalam! I've connected you with our team regarding the typing test page. Someone will be with you shortly to help.
+
+Walaikum Assalam! I've connected you with our team regarding the typing test page. Someone will be with you shortly to help.
+Business: walaikumAssalam
+You: Bhai typing test ki practice Karni hai aik BAAT poochni thi
+Business: g poch lein
+You: Ye Jo typing test hota wo typing master par hota jiss main paragraph ooper aur neeche typing Karni Hoti hai box main aaur jab space den to Galt word ko sai bhi nai kar sakte
+Business: g
+You: Ya typing.com ki tarh HOTA jiss main text ki line Hoti hai sir uss par text type karna HOTA aur Galat word foran theek bhi kar sakte
+Business: post kya ha
+Business: kisper apply kia ha islamabad police ya nadra
+Context: kisper apply kia ha islamabad police ya nadra
+You: Fia
+Business: acha
+You: G
+Business: dekho ye websites hoti hain na wo apko sikhany k lie hoti hian khali
+Business: chahy wo typing.com ho ya koi bhe ho
+Business: jo apka test hoga wo onka khudka software hota ha osper hota ha kisi websites per ni hota
+Context: jo apka test hoga wo onka khudka software hota ha osper hota ha kisi websites per ni hota
+You: To best Kya hai kiss par practice karain?
+Business: apki speed kitni ha
+Context: apki speed kitni ha
+You: 30 wpm
+Business: hamari per kr lein ap
+Business: accuracy?
+Context: accuracy?
+You: 85 to 90
+Business: 30 to requirement hai agr apne ldc ma apply ki aha
+Business: lekin speed se zyada accuracy dekhi jati ha
+You: Ok
+Business: 100% kro acuracy ko
+Business: or WPM 35 kam se kam ldc ky lie sath 100% acuracy
+Business: typing kesy krti ho kitni fingers se
+Context: typing kesy krti ho kitni fingers se
+You: 10
+Business: theek ha
+Business: Sami likha ho misal kesy likhogi
+You: Kiss type ke paragraphs hote hn?
+Business: type ni hoti koi onki random hoty
+Business: lekin agr apko pata ho ky konsa alphabet kaha ha to ap likh skty aram se
+Business: bagair dekhy likh skti ho?
+You: Ok
+You: 👍 thanks
+Business: ye to batao
+Context: ye to batao
+You: Maslan?
+You: Samj nai aayu
+Business: ek word ha apko likhna ha oska pehle alphabet bara ha
+Business: ap kesy type krogi
+You: Shift ke Saath pehla lafz capital kar dnge
+Business: shift daba kr rakhogi wo alpha dabaogi
+Context: shift daba kr rakhogi wo alpha dabaogi
+You: Kya?
+Business: theek ha good
+Business: typing kis keyboard per kr rhi ya laptop?
+Context: typing kis keyboard per kr rhi ya laptop?
+You: G
+Business: laptop ?
+You: G laptop
+Business: laptop per ni kro
+You: Keyboard online order Kiya hua wo ajai ga
+Business: konsa
+Business: 500ka ha phir ma smjh jaonga?
+Context: konsa
+You: Dell Wala wo Jo Purana keyboard hota
+Business: g sahi kia
+Business: kisne kaha tha mangwany ka?
+Business: apko pata tha?
+You: Theek hai to phir typing ki practice Kahan par karoon ?
+Business: multiple websites per kro
+Business: baki websites speed berhany k lie hi hain
+Business: hamari govt jobs ko target krke barhany ki ha
+You: Ok phir 👍 thanks
+You: Have a nice day
+Business: apna experience share kr skti hain ap testtayar ka ?
+Business: ya koi cheez jo apki nazar se sahi ni ha ya apko typing test ma koi msla aya ho ya ui/ux sahi ni ho ya koi error aya ho?

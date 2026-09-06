@@ -1,0 +1,72 @@
+You: Assalam-o-Alaikum TestTayar.pk team, I want to contact you regarding:
+
+Page Link: https://www.testtayar.pk/mcqs/current-affairs
+You: Aoa
+You: can i call you
+Business: walaikumAssalam
+Business: reason
+You: details
+Business: pohlo yahi
+You: konsy notes dy rhy ha
+Business: post btao
+You: ldc udc
+Business: oske mutabik dengy bana kr
+Business: kis department ma
+You: police fia and ghq i have applied
+Business: Police konsi
+You: islamabad police
+Business: ghq ma.laws acts Islamabad ma bhe same
+Business: fia ma bhe same
+Business: current affairs to hongt same.sabky
+Business: baki laws acts  computer knowledge
+Business: har depart k alag
+You: ok
+You: quantity kitni hoge mcqs ki
+You: and price
+Business: kiska btaon
+Business: Islamabad ka ldc udc ka bana hua ha mcqs kitne hain batata hon
+Context: Islamabad ka ldc udc ka bana hua ha mcqs kitne hain batata hon
+You: Ok
+Business: <Unsupported Message>
+Business: Islamabad police e ka 630 mcqs without current affairs
+Business: 300 only updated mcqs hain sary
+Business: per post
+Business: quality mcqs hongy sab
+You: ok
+You: ok ma btata hu
+You: Aoa
+You: Give me an account number so I sent you the amount for notes
+Business: <Unsupported Message>
+Business: jazzcash muhammad sami 03039512277
+You: Ok
+You: {"image":{"image_id":"1817680156265322","caption":""}}
+You: Please send me
+Business: konsa
+You: Ldc UDC
+Business: konsa
+Business: depart
+You: Police
+Business: ict
+You: G
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+You: Ok
+You: Aoa
+Bot: Walaikum Assalam! I'm here to help you with information about our test preparation materials and services.
+What would you like to know more about?
+Context: <Unsupported Message>
+You: Only current affairs ha?
+Business: yes
+You: Aur material b send kr dy like islamait pak study English etc..
+Business: isme ha
+Business: thori der ma krta hon or
+You: Ok thanks
+You: Aoa
+You: Yr notes
+Business: bhol gaya tha bhej donga bàd ma bana kr
+You: Monday morning test ha
+Business: <Unsupported Message>
+You: Thankful
+Business: https://www.trustpilot.com/review/testtayar.pk
+hamari website ka url dal kr review dal do acha sa please
+You: Ok

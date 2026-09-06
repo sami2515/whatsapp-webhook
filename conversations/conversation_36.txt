@@ -1,0 +1,22 @@
+You: I want the GHQ UDC complete book for preparation
+Bot: I've connected you with our team to help you get the *GHQ UDC preparation materials*. Someone will be with you shortly to provide the details.
+
+I've connected you with our team to help you get the GHQ UDC preparation materials. Someone will be with you shortly to provide the details.
+Business: walaikumAssalam
+Context: I want the GHQ UDC complete book for preparation
+You: ?
+Business: mil jaiga
+You: Fees Hy koi ?
+Business: 300
+Business: jazzcash muhammad sami 03039512277
+You: Kia hoga books main ?
+You: Sylabbus ?
+Business: {"image":{"image_id":"923829446750362","caption":""}}
+Business: namaz ky bad bhejta
+You: Oky
+Business: July 2026  ky current affairs GHQ knowledge hogi laws hongy past paper se zaroori sawalat
+Business: complete hoga
+Business: computer knowlede
+Business: chia?
+You: Jee chhaye
+You: Abhi test ki date ajaye to phr longa apsy

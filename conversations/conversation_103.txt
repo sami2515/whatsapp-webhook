@@ -1,0 +1,439 @@
+You: Aoa
+Bot: Walaikum Assalam! Welcome to *samidev.pk*! I'm here to help you with your web development needs, whether it's websites, portals, or dashboards. How can I assist you today?
+Business: assalamOalaikum kon
+You: Sir government jobs Jo hoti unki preparation krwatay hain
+Business: number kisne dia
+You: Google py video check ke
+Business: konsi
+Business: link bhejo
+You: {"image":{"image_id":"1325200149820937","caption":""}}
+You: Ya
+You: Sorry agar ap ni krawatay tu apko disturb kea mazrat
+Business: video thori ha ye
+Business: website ha hamari
+You: Sorry
+You: Agar apki academy Waly krty hon nmb mil jay ga unka
+Business: seperate academy ni ha website per pushlish krty hain ham sirf 50mcqs allow hain 1 din k lie download krne ke lie
+You: G
+Business: agr zyada chia to to oske 500charges hain
+You: Ni tiyari full ho jti hy
+Business: g ho jati ha
+You: Sarray subject k krty hn
+Business: lekin khud krni parti ha koi apka hath pakar kr ni krwaye khali apko provide kie jaingy
+Context: lekin khud krni parti ha koi apka hath pakar kr ni krwaye khali apko provide kie jaingy
+You: Krni TU khud he hy
+Context: lekin khud krni parti ha koi apka hath pakar kr ni krwaye khali apko provide kie jaingy
+You: Aisay pass thori ho jta
+Business: g
+Business: kis chez ka test ha
+You: Website ki samjh ni a rhi thi
+Business: kkya smjh ni arha batao
+Context: kis chez ka test ha
+You: ASI UDC LDC teen post in Islamabad police
+Context: kkya smjh ni arha batao
+You: Mcq niklay gay kaisay bht zyada option hain udr
+Business: mukammal tyari krni ha agar 3no ki to ma apko proper pdf provide kr donga tyari achi hojaigi osse apki lekin 1000deny parengy apko phir or shaam tk apko pdf tyar kronga jisme current affairs aj ky bhe hongy
+Business: https://testtayar.pk/mcqs
+Business: subject select krogy to download ka option ayega phir topic select krke donwlaod kr lena
+Context: mukammal tyari krni ha agar 3no ki to ma apko proper pdf provide kr donga tyari achi hojaigi osse apki lekin 1000deny parengy apko phir or shaam tk apko pdf tyar kronga jisme current affairs aj ky bhe hongy
+You: Current affairs math jk waghiera sb
+Business: sab hoga kehne ka maqsad ye ha ky new current affiars koi nahi deta
+Business: ma donga
+Context: mukammal tyari krni ha agar 3no ki to ma apko proper pdf provide kr donga tyari achi hojaigi osse apki lekin 1000deny parengy apko phir or shaam tk apko pdf tyar kronga jisme current affairs aj ky bhe hongy
+You: Main fee pay kr dn ge
+You: Lekin chahiya sb Kuch acha test clear ho jay bus
+Business: acha hojaiga sab
+You: G
+You: Apka ya he nmb Hy ya koi or bhi
+Business: pesy bhejogi ap shaam tk apko mil jaiga new sab paper patern ky hisaab se
+Business: ek hi ha bs yhi
+Context: ek hi ha bs yhi
+You: Acha
+Context: pesy bhejogi ap shaam tk apko mil jaiga new sab paper patern ky hisaab se
+You: Koi proof TU daikha dy pdf ka just one page
+Business: pori wesite proove ha itni bari website ha itne candidiates hain
+Context: pori wesite proove ha itni bari website ha itne candidiates hain
+You: Acha thk hy
+You: Lekin main pdf say krn ge Sham ko fee pay kr k
+Business: ap fees pay krogi jab apko 1,2 ghnty ma mil jaiga
+You: Apka Naam
+Business: apki post k hisab se milyga force ky ayse nahi ha ky apko koi bhe material de donga
+Business: sami
+Context: apki post k hisab se milyga force ky ayse nahi ha ky apko koi bhe material de donga
+You: G thk hy
+Context: apki post k hisab se milyga force ky ayse nahi ha ky apko koi bhe material de donga
+You: Okay thank you
+Business: test kab ha
+Context: test kab ha
+You: Test abhi 15 last date thi apply ki
+Business: slips ayengi kuch time bad
+You: 4 din ho gay uper
+Context: slips ayengi kuch time bad
+You: G
+Business: ldc udc typing test websites se kar lena
+Business: speed se zyada accuracy mater krti ha
+Context: ldc udc typing test websites se kar lena
+You: G thk hy
+Context: speed se zyada accuracy mater krti ha
+You: G blkl
+Business: agr kuch smjh ni aye website ma koi msla ho feedback de dena
+You: G thk hy
+Business: typing speed laptop per nahi krna normal pc keyboard per krna
+You: Thora UDC LDC ka samjha dy na website py ja kia krna Hy kidr say nikla ga test preparation
+Context: typing speed laptop per nahi krna normal pc keyboard per krna
+You: G main ussi py krti hn
+Business: dekho apko pehle patern smjhna ha achi trha ky kitne percent kya ayega misal ky tor per 100mcqs hain to 10% math ka ha kitna kiska ha
+Context: dekho apko pehle patern smjhna ha achi trha ky kitne percent kya ayega misal ky tor per 100mcqs hain to 10% math ka ha kitna kiska ha
+You: G thk hy
+Business: phir mcqs page per subjects hain sary osme se topic apna select krke tyari krni ha download bhe kr skti ho
+Context: phir mcqs page per subjects hain sary osme se topic apna select krke tyari krni ha download bhe kr skti ho
+You: G thk hy main check krti hn
+You: {"image":{"image_id":"908100292329789","caption":""}}
+Context: {"image":{"image_id":"908100292329789","caption":""}}
+You: Idr say open krna Hy
+Business: realated pages ko chor do wo backlinks hain
+You: Screen shot baijh do na ap ek bar
+You: Samjh ni a rhi mujhay first time website open ki Hy Maine
+Business: <Unsupported Message>
+Business: acha hamy website easay to use easy to understand krni prygi jis trha apko smjh ni arhi oron ko be kya pata ni arhi hogi
+You: G
+Business: signun kia ha apne?
+Context: <Unsupported Message>
+You: Mera ya ni ho rha
+Business: dikhao
+Business: account banaya ha apne?
+You: Ni
+Business: banao phir download hoga
+Context: banao phir download hoga
+You: Acha
+You: Ni ho rha
+You: Ap Jo pdf baijho gay us main McQ waghiera bhi hon gay na
+Business: kainat name ha na apka
+You: G
+Business: apne account to bana lia lekin pdf ni download kia
+Business: g
+Context: apne account to bana lia lekin pdf ni download kia
+You: Woh he ni ho rha
+Business: https://testtayar.pk/mcqs/everyday-science?tab=downloads
+Business: ni ho rha to chor do apko sab sham ko de donga
+You: G thk hy
+You: Website TU demage ghooma daite
+Business: 03039512277 jazzcash muhammad sami
+Context: 03039512277 jazzcash muhammad sami
+You: G thk hy baijh dn ge
+Business: in sha allah iske oper kam krengy finhal ek project ha oske bad isko sai krty hain easy to use krengy baki apko tyari krni ho ossi se krna phir apni doston ko bhe batana
+Context: in sha allah iske oper kam krengy finhal ek project ha oske bad isko sai krty hain easy to use krengy baki apko tyari krni ho ossi se krna phir apni doston ko bhe batana
+You: G thk hy
+You: Website account delete krna Hy
+Business: q krna ha
+Business: delete to nahi hota account kisi website ma bhe nahi hota koi msla ni hota account banany se ulta apko advantage milta ha
+You: G
+Context: delete to nahi hota account kisi website ma bhe nahi hota koi msla ni hota account banany se ulta apko advantage milta ha
+You: Waisay koi issue TU ni na hota
+Business: bhejy ni pesy apnw
+You: Woh abhi niklwanay thy
+Business: har mcqs ky nechy explanation english ma chia ya roman urdu ma?
+Context: har mcqs ky nechy explanation english ma chia ya roman urdu ma?
+You: English main thk hy
+Business: smjh ati ha english?
+You: G atti Hy website first time visit ki iss liay issue ho rha tha
+Business: acha
+You: G
+You: Her subject k kitny McQ hon gay
+You: Jo ap send karain gay
+Business: 50
+You: Udc LDC ki preparation main bhi McQ atty
+Business: yes
+Business: khali written test hot
+Context: Udc LDC ki preparation main bhi McQ atty
+You: In dono ka kn kn sa test hota ek TU typing test
+You: Or kn sa hota
+Context: khali written test hot
+You: Ni Khali written ni hota ek screening test
+Business: 2mint
+You: Ok
+Business: pdf de rha hon osme likha hua ha sab
+You: Acha
+Business: <Unsupported Message>
+Context: <Unsupported Message>
+You: Thank you
+Business: apke mcqs ready hain 30mint tk hojaingy ready 700 ky qareeb mcqs hain total sary high quality ky pesy bhej dein ap jab tk
+Business: tyar ha chia ha ya nahi?
+Context: tyar ha chia ha ya nahi?
+You: Maine AJ paisay ni niklway subha tk baijh dn ge
+You: Phr ap mujhay send kr daina
+Business: nikalwaye ya dalwaye?
+Context: nikalwaye ya dalwaye?
+You: Mtlb api ny baijhay ATM say
+Business: ma pdf bhej deta hon ap suba bhej dena pesy
+Context: ma pdf bhej deta hon ap suba bhej dena pesy
+You: Ni ni
+You: Aisay ni Lena
+Business: bhej dena suba msla ni ha
+You: Ni aisay acha ni lagta
+You: 700 McQ kafi hon gy preparation k liay
+Business: 630 hain kafi hain
+Business: or bhe ha iske ilawa mcqs sirf ni hain essay bhe hain  Descriptive Writing & Translation
+ bhe hain
+Business: Police and Public Cooperation
+Context: or bhe ha iske ilawa mcqs sirf ni hain essay bhe hain  Descriptive Writing & Translation
+ bhe hain
+You: Eassy atty
+Business: yes
+You: Acha phr thk hy
+Business: AssalamOalaikum bhejy ni apne
+You: W Salam
+You: Paisay lay k i thi Lekin Abu ny dukan py jidr Saman letay ghr k liay udr deay or cement Lea tha shop say udr deay
+You: Ap aisay ni kr saktay pdf save kr lain or mujhay jb zaroorat hoi paisay arrange hoay lay ln ge
+Business: theek ha
+Business: pdf lelo tyari krlo 2,3 din ma hafty ma jab hue de dena
+Context: pdf lelo tyari krlo 2,3 din ma hafty ma jab hue de dena
+You: G thk hy
+Context: pdf lelo tyari krlo 2,3 din ma hafty ma jab hue de dena
+You: Thanks
+Business: <Unsupported Message>
+Business: 03039512277 jazzcash muhammad sami
+Business: jab bhe hon to bhej dena isqper
+Context: jab bhe hon to bhej dena isqper
+You: G main baijh dn ge
+Context: <Unsupported Message>
+You: Bht shukriya
+Business: meny website per kaam kia ha thora or easy to use banany ki koshish ki ha ap check krna dobara or feedback dena lazmi
+Context: meny website per kaam kia ha thora or easy to use banany ki koshish ki ha ap check krna dobara or feedback dena lazmi
+You: G thk hy main check kr k batati hon
+You: Aoa
+Business: walaikumAssalam
+Context: meny website per kaam kia ha thora or easy to use banany ki koshish ki ha ap check krna dobara or feedback dena lazmi
+You: Ab thk hy Sahi samjh a rhi website py
+You: Maine ab check ke hy
+Business: acha
+You: G
+Business: {"image":{"image_id":"1517222086167543","caption":""}}
+Business: bagair account login kie test kia ha ?
+Business: muja dikh rha ky 19june ko last login thi apa
+Context: bagair account login kie test kia ha ?
+You: Test Maine Shahid Phelay dfa check kea tha TB ho gia ho us time pta ni tha
+Context: muja dikh rha ky 19june ko last login thi apa
+You: G
+Business: https://npftas.pk/slip
+Business: bhejy nu apne abhi tk
+Business: slip download
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Context: slip download
+You: Maine krni thi error a rha tha
+Business: acha
+Business: pesy kab bhejogi ap
+You: Kal inshallah
+You: Baijh dn ge apko
+Business: in sha allah
+Business: kal website ma july 2025 ky curent affairs dalengy tyari kr lena
+Context: <Unsupported Message>
+You: Ya wali constable walon ki tiyari k liay Hy na mere post ni ya
+Business: tyari krlo acha ha jitki bhe ha knowledge ha
+Context: kal website ma july 2025 ky curent affairs dalengy tyari kr lena
+You: Ap mujhay idr send kr daina na please
+Business: bad ma kronga
+Context: bad ma kronga
+You: Challo jb bhi kro Lekin Jo kro gay website bd he krty rehna sath
+Context: Challo jb bhi kro Lekin Jo kro gay website bd he krty rehna sath
+You: Mujhay mtlb
+Business: aksar 1 hi paper hota ha contable asi udc ldc ka
+Business: mod ka test isi trha hua tha ek hi paper tha sab ka
+Context: aksar 1 hi paper hota ha contable asi udc ldc ka
+You: Acha
+Context: mod ka test isi trha hua tha ek hi paper tha sab ka
+You: Acha
+Business: website ma dal die hain publish ni kie sirf
+Context: website ma dal die hain publish ni kie sirf
+You: Sahi hy
+Business: ap konsy city se ho
+Context: ap konsy city se ho
+You: Main chakwal
+Business: sindh ma ha?
+Context: sindh ma ha?
+You: Ni ni Punjab main
+You: Ap kahan say ho ?
+Business: karachi
+Context: karachi
+You: Acha
+You: Islamabad tu suna ho ga capital
+Business: suna kya hoga pata ha
+You: Udr say do ghantay chakwal lagtay or agay
+Business: punjab ni dekha bs kpk dekh aha
+Context: punjab ni dekha bs kpk dekh aha
+You: Acha
+Business: 15din pehle hi aya hon kpk gaya tha ghomny
+Context: 15din pehle hi aya hon kpk gaya tha ghomny
+You: Piyara ho ga kpk
+Business: g
+You: Karachi humaray relatives hoty bus
+Business: kis area ma
+Context: kis area ma
+You: Main un k sath itna detail main bt ni krti
+You: Waisay Karachi hotay
+Business: chakwal city ha ?
+You: G city
+Business: dikhao kesa ha
+You: Ab main kaisay daikhon apko ghr baith k room k andr
+Business: video to hogi
+Context: video to hogi
+You: Acha
+You: Ek mint
+Business: room hi dikha do
+Business: ma to punjab ki tarakki dekh rha tha
+Context: room hi dikha do
+You: 😏
+Context: ma to punjab ki tarakki dekh rha tha
+You: Acha tarakki daikhni search kr lo 🤣🤣
+Business: video ni mili
+Context: video ni mili
+You: Meray pass ni Hy aisay banati ni family thori sakht mijaz Hy or share bhi cheezein ni krti koi .
+Business: ghr waly sakht hain?
+Context: room hi dikha do
+You: Allow ni Hy or room woh tu aisay kn daikhta .
+Business: acha ha na sakht hain
+Context: acha ha na sakht hain
+You: G
+Context: ghr waly sakht hain?
+You: Hmmm
+Business: ap kya chahti ho sakht ni hoty ya sai ha?
+Context: ap kya chahti ho sakht ni hoty ya sai ha?
+You: Ni honay chahiya maa baap ka dar hona chahiya her bachay ko han understanding bhi sath ho parents main sath
+Business: mobile kesy chalati ho jab sakht hain
+Business: namaz perhti ho ?
+Context: mobile kesy chalati ho jab sakht hain
+You: Mobile bahir Kisi ko koi cheez aisay baijh dy
+Business: acha
+Context: namaz perhti ho ?
+You: Kitna ajeeb question hy Musalman hain sb namaz farz Hy parhni tu Hy na
+Business: sab musalman hain to sab namaz perhty hongy?
+You: G
+Business: ni perhty
+You: Kuch Kam main busy hoty Jo paisay ki lalach hoti or sath gunah ka shikar ho jayn phr Allah sajday ki taufeeq bhi ni daita AJ Kal log bus aisay hain zyada
+Business: g\
+You: G
+Business: tyari krli?
+You: Kr rhi hon sath
+Business: sath kesy
+Business: 2 mobile hain kya
+You: Ni msg ka reply dy k sath he parh rhi
+Context: 2 mobile hain kya
+You: Ek he hy
+Business: reply q de rhi ho
+Business: phir test k lie bethi rehna ni ayega
+You: Ok byeeee parh ln main
+Business: <Unsupported Message>
+Business: kab ha test apka?
+Context: kab ha test apka?
+You: 4 august physical
+Business: ap log kab soty ho
+You: Kun
+Business: ayse hi
+You: 10 bjy tk
+Business: uthta kab ho
+You: 5 kbhi Phelay
+Business: ham 2,3 bajy soty hain
+Context: ham 2,3 bajy soty hain
+You: Itni late Kun
+Business: karachi kyarky
+Context: ham 2,3 bajy soty hain
+You: Of jagtay kb
+Business: 11
+You: Or
+Context: 11
+You: Gud
+Business: ma kal.3:30 per soya
+Context: ma kal.3:30 per soya
+You: Waisay Sona jaldi chahiya uthna bhi jaldi chahiya
+Business: <Unsupported Message>
+Business: <Unsupported Message>
+Business: pata ha
+Business: mahool aysa bana hua ha ab
+Business: 4 bajy tk dukan khuli hoti hamary ghr ky pas
+Business: cheez ki
+You: Acha challo phr mahool main dhal jao ap bhi
+Business: punjab ma.10bajy band hojati ha
+Context: punjab ma.10bajy band hojati ha
+You: Han Lekin itni jaldi ni ab bund hoti
+You: 11 ya 12 bjy tk sher main
+Business: g
+Business: force q join krna chahti ho shoq ha?
+Context: force q join krna chahti ho shoq ha?
+You: Bht zyada
+Business: uniform ka ?
+You: Yes
+You: Dua krna ho jay inshallah
+Business: ijazat di hoi ghr walon ne?
+Business: gg
+Context: ijazat di hoi ghr walon ne?
+You: Mil he gai mushkal say he mili
+Business: education kitni ha
+Context: education kitni ha
+You: Graduation
+Business: ma sha allah
+Business: graduation pee asi apply kia h?
+You: Yes
+Business: kis chez ma subject
+Context: kis chez ma subject
+You: Simple BA tha bus Ami ki wajah say Maine open main study ki api Spain challi gai study visa py or do sister hain bus Bhai ni phr main Ami Abu k pass ghr
+Business: height kitni ha or weight
+Context: height kitni ha or weight
+You: 5 2 height
+Business: api ko Spain ki ijazat kesy dedi
+Context: height kitni ha or weight
+You: Weight filhal ni krwaya
+Business: krwana tha bmi check krni thi
+Business: height weight dono pta ho phir pata.chalta ha over weight ho ya normal ya under weight forces ma dekha jata ha sab
+Business: patli ho moti os hisab se khudi andaza laga lena normal.hoga ya over
+Context: api ko Spain ki ijazat kesy dedi
+You: Ek mint
+You: Ami
+Business: 😂
+Context: patli ho moti os hisab se khudi andaza laga lena normal.hoga ya over
+You: Na moti na patli
+You: Normal
+Context: 😂
+You: Hans Kun rhy ho ap
+Business: pitogi
+Business: age height weight dalkr pta. chal jaiga apko website per kisi bhe bmi calculator search krna bs
+Context: age height weight dalkr pta. chal jaiga apko website per kisi bhe bmi calculator search krna bs
+You: Acha
+Business: https://www.calculator.net/bmi-calculator.html
+Business: underwight or overwight ko medical ma fail kr dety hain
+Business: ya time de dety hain
+You: Acha
+Business: age batao
+You: 24
+Business: 46 se 62 ky bech hoga apka weight
+Business: to ap nomal ho
+Business: https://npftas.pk/slip asi ky written test ki slip download krlo
+Context: to ap nomal ho
+You: Hahaha 😂😂😂
+Business: ma kitne saal ka honga
+Business: guess kro
+You: 25 ya 26
+Business: <Unsupported Message>
+Business: pakka
+You: Pakka
+Business: itni hoti to abhi tk shadi kr leta ma
+Business: 20ha
+You: Qualification?
+Business: inte
+Business: inter
+You: Ok
+Business: diploma ha 3saal ka
+Context: diploma ha 3saal ka
+You: Kis cheez ka diploma
+Business: software enginering
+You: Gud phr tu thk hy
+Business: pesy ni bhejy apne
+Business: sony ka time.hogaya apke sogai hogi
+Business: koi msla ha agr to batao
+You: {"image":{"image_id":"2623603958153596","caption":""}}
+Business: msla ni ha agr bi hain to rehna do
+Business: 600 theek hain bs
+Business: or ni bhejna
+Context: or ni bhejna
+You: Sath ek sir hain unko baijhy hain woh Islamabad k woh preparation krwatay hain
+Business: g

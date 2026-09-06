@@ -1,0 +1,5 @@
+Business: AssalamOalaikum
+You: Moiz khan h
+Business: kon
+Business: kon ha moiz khan
+Business: wrong num.hoga

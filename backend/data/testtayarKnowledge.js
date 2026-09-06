@@ -1,3 +1,5 @@
+import { LEARNED_COUNSELOR_KNOWLEDGE } from './learnedConversationsKnowledge.js';
+
 export const TESTTAYAR_KNOWLEDGE = {
     platformName: 'TestTayar.pk',
     urduName: 'ٹیسٹ تیار',
@@ -157,7 +159,9 @@ export const TESTTAYAR_KNOWLEDGE = {
         'User asks to talk to support or human representative',
         'User reports a technical issue or payment query',
         'User is confused, angry, or asks repeatedly off-topic questions'
-    ]
+    ],
+
+    learnedFromCandidateChats: LEARNED_COUNSELOR_KNOWLEDGE
 };
 
 // Aliases for backwards compatibility

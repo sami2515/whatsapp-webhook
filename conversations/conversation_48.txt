@@ -1,0 +1,31 @@
+Business: assalamOalaikum ma sami asia ka beta
+You: Walaikum assalam
+You: G
+Business: meri ami ne lala se bat ki thi onho ne kam ka bataya tha apke
+You: G g hukum
+Business: kaha se sekhna ha ye kya kam ha smjhao thora
+Business: sylani se course krna ha?
+You: Me apse contact karta hu detail leta hu
+Business: course ka name to btao
+You: {"image":{"image_id":"1394482728774603","caption":""}}
+Business: 30 aug guzar gai apne kya kia ha ?
+You: Admission hosakta he abhi bhi
+Business: kisme lon
+Business: online ya onsite?
+You: As your interest
+You: Onsite
+You: Me apko call karta hu
+Business: ok
+Business: <Unsupported Message>
+Business: ye bhar kr admit card download krlon phir wo entry test k lie bulaingy?
+You: Visit paposh campus for fee and attestation
+Business: ok
+You: https://www.facebook.com/share/1DNeuaXVXn/
+Bot: Ibrahim, LDC Test solved PDF guide book ki price *Rs. 300* hai. Maine aapko hamari team se connect kar diya hai jo aapko ye book online hasil karne mein madad karenge. Koi jald hi aap se baat karega.
+Business: {"image":{"image_id":"1059127777101721","caption":""}}
+Business: <Unsupported Message>
+You: ok done
+You: fee payed?
+Business: yes
+Business: ab wo msg krengy test ky lie ?
+You: ok you will receive entry test msg as soon
