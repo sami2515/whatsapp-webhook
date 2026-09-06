@@ -285,21 +285,30 @@ const sendWhatsAppText = async ({ phoneNumberId, to, text, token }) => {
 };
 
 const sendAndSaveAssistantText = async ({ phoneNumberId, to, text, token }) => {
-    const response = await sendWhatsAppText({ phoneNumberId, to, text, token });
+    try {
+        const idToUse = phoneNumberId || process.env.WHATSAPP_PHONE_NUMBER_ID;
+        const response = await sendWhatsAppText({ phoneNumberId: idToUse, to, text, token });
 
-    if (response.data?.messages && response.data.messages.length > 0) {
-        await Message.create({
-            from: phoneNumberId,
-            to,
-            messageId: response.data.messages[0].id,
-            type: 'text',
-            text,
-            status: 'sent',
-            timestamp: new Date()
-        });
+        if (response.data?.messages && response.data.messages.length > 0) {
+            await Message.create({
+                from: idToUse,
+                to,
+                messageId: response.data.messages[0].id,
+                type: 'text',
+                text,
+                status: 'sent',
+                timestamp: new Date()
+            });
+            console.log(`[Auto-Reply Sent] Successfully sent reply to ${to}`);
+        } else {
+            console.warn(`[Auto-Reply Warning] Meta API returned unexpected response for ${to}:`, response.data);
+        }
+
+        return response;
+    } catch (err) {
+        console.error(`[Auto-Reply Send Error] Failed sending WhatsApp text to ${to}:`, err.response?.data || err.message);
+        return null;
     }
-
-    return response;
 };
 
 const markManualReply = async (phoneNumber) => {
@@ -513,7 +522,7 @@ export const handleIncomingMessage = async (req, res) => {
                 body.entry[0].changes[0].value.messages[0]
             ) {
                 const messageObj = body.entry[0].changes[0].value.messages[0];
-                const phoneNumberId = body.entry[0].changes[0].value.metadata.phone_number_id;
+                const phoneNumberId = body.entry[0].changes[0].value.metadata?.phone_number_id || process.env.WHATSAPP_PHONE_NUMBER_ID;
                 const from = messageObj.from;
                 const messageId = messageObj.id;
                 const msgType = messageObj.type || 'text';
@@ -547,7 +556,7 @@ export const handleIncomingMessage = async (req, res) => {
                     msgBody = `[Unsupported message type: ${msgType}]`;
                 }
 
-                console.log(`Received ${msgType} message from ${from}`);
+                console.log(`[Incoming Webhook] Received ${msgType} message from ${from}: "${msgBody.slice(0, 50)}"`);
 
                 if (messageId && await Message.exists({ messageId })) {
                     console.log(`Duplicate WhatsApp message ignored: ${messageId}`);
@@ -565,6 +574,11 @@ export const handleIncomingMessage = async (req, res) => {
                     status: 'received',
                     contextMessageId: contextMessageId
                 });
+
+                // Acknowledge Meta immediately to prevent 15-20s timeout & retry loops
+                if (!res.headersSent) {
+                    res.status(200).send('EVENT_RECEIVED');
+                }
 
                 void notifyAdminsOfIncomingMessage({
                     phone: from,
@@ -710,7 +724,7 @@ export const handleIncomingMessage = async (req, res) => {
 
                         // If AI is paused, remain completely silent so human admin can chat manually
                         if (isAIPaused) {
-                            console.log(`[AI PAUSED] Silence maintained for ${from}. Message recorded for human admin.`);
+                            console.log(`[AI PAUSED] Silence maintained for ${from}. isAIPaused: ${userContext.isAIPaused}, aiPaused: ${userContext.aiPaused}, status: ${userContext.status}, reason: "${userContext.handoffReason || 'N/A'}". Click 'Resume AI' in Dashboard to re-enable.`);
                         }
 
                         if (!isAIPaused) {
@@ -813,6 +827,8 @@ export const handleIncomingMessage = async (req, res) => {
                             await sendAndSaveAssistantText({ phoneNumberId, to: from, text: aiReply, token });
                         }
                     }
+                } else {
+                    console.warn(`[Auto-Reply Skipped] Global Bot is OFF (BOT_CONFIG.ENABLED = false). Turn ON in Dashboard header.`);
                 }
 
             } else if (
@@ -838,13 +854,19 @@ export const handleIncomingMessage = async (req, res) => {
                 );
                 console.log(`Message ${statusObj.id} status updated to: ${statusObj.status}`);
             }
-            res.sendStatus(200);
+            if (!res.headersSent) {
+                res.sendStatus(200);
+            }
         } else {
-            res.sendStatus(404);
+            if (!res.headersSent) {
+                res.sendStatus(404);
+            }
         }
     } catch (error) {
         console.error('Error handling webhook:', error.message);
-        res.sendStatus(500);
+        if (!res.headersSent) {
+            res.sendStatus(500);
+        }
     }
 };
 

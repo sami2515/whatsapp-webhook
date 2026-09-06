@@ -292,7 +292,7 @@ export const generateAIResponse = async (
             const groqModels = [
                 process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
                 'llama-3.3-70b-versatile',
-                'gemma2-9b-it'
+                'llama-3.1-70b-versatile'
             ];
 
             let groqResponse = null;
@@ -308,11 +308,12 @@ export const generateAIResponse = async (
                         max_tokens: 800
                     });
                     if (groqResponse?.choices?.[0]?.message?.content) {
+                        console.log(`[Groq AI Success] Generated reply using model: ${modelName}`);
                         break;
                     }
                 } catch (err) {
                     lastError = err;
-                    console.warn(`Groq Model ${modelName} returned error: ${err.message}. Trying next model...`);
+                    console.warn(`[Groq AI Warning] Model ${modelName} returned error: ${err.message}. Trying next model...`);
                 }
             }
 
