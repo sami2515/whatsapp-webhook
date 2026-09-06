@@ -639,15 +639,18 @@ export const handleIncomingMessage = async (req, res) => {
                     }
                 }
 
+                const parsedLead = parseWebsiteLeadMessage(msgBody);
                 const inferredLeadUpdate = inferLeadUpdateFromMessage(msgBody);
                 let incomingIntent = detectIntent(msgBody);
 
                 // If user sends an image, check if it's a payment screenshot/slip
                 if (msgType === 'image') {
+                    const textNormalized = (msgBody || '').toLowerCase();
+                    const paymentKeywords = ['paid', 'done', 'slip', 'screenshot', 'payment', 'pavement', 'photo'];
                     const isLikelyPaymentSlip = userContext?.bookInterested ||
                         userContext?.paymentSubmitted ||
                         ['ask_pdf_book', 'buy_pdf_book', 'ask_discount'].includes(userContext?.intent) ||
-                        includesAny(normalizeLoose(msgBody), ['paid', 'done', 'slip', 'screenshot', 'payment', 'pavement', 'photo']);
+                        paymentKeywords.some((k) => textNormalized.includes(k));
                     if (isLikelyPaymentSlip) {
                         incomingIntent = 'payment_proof_submitted';
                         inferredLeadUpdate.paymentSubmitted = true;

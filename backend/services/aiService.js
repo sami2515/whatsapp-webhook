@@ -290,10 +290,11 @@ export const generateAIResponse = async (
             messages.push({ role: 'user', content: latestText });
 
             const groqModels = [
-                process.env.GROQ_MODEL || 'llama-3.1-8b-instant',
-                'llama-3.3-70b-versatile',
-                'llama-3.1-70b-versatile'
-            ];
+                'llama-3.1-8b-instant',
+                'llama3-8b-8192',
+                'llama-3.1-70b-versatile',
+                process.env.GROQ_MODEL
+            ].filter(Boolean);
 
             let groqResponse = null;
             let lastError = null;
@@ -335,37 +336,41 @@ export const generateAIResponse = async (
 
     // 6. Gemini Fallback
     if (geminiApiKey && genAI) {
-        try {
-            const model = genAI.getGenerativeModel({
-                model: 'gemini-1.5-flash',
-                systemInstruction: systemPrompt
-            });
-
-            let fullPrompt = `${contextBlock}\n\n`;
-            if (history && history.length > 0) {
-                fullPrompt += 'Recent Conversation History:\n';
-                history.slice(-4).forEach((msg) => {
-                    fullPrompt += `${msg.role}: ${msg.content}\n`;
+        const geminiModels = ['gemini-1.5-flash-latest', 'gemini-1.5-flash', 'gemini-pro'];
+        for (const modelName of geminiModels) {
+            try {
+                const model = genAI.getGenerativeModel({
+                    model: modelName,
+                    systemInstruction: systemPrompt
                 });
-                fullPrompt += '\n';
-            }
-            fullPrompt += `Incoming User Message:\n${userMessage || 'Attached media'}\n\nRemember to strictly return valid JSON format matching schema.`;
 
-            let contents = [fullPrompt];
-            if (base64Image) {
-                contents.push({
-                    inlineData: {
-                        mimeType: 'image/jpeg',
-                        data: base64Image
-                    }
-                });
-            }
+                let fullPrompt = `${contextBlock}\n\n`;
+                if (history && history.length > 0) {
+                    fullPrompt += 'Recent Conversation History:\n';
+                    history.slice(-4).forEach((msg) => {
+                        fullPrompt += `${msg.role}: ${msg.content}\n`;
+                    });
+                    fullPrompt += '\n';
+                }
+                fullPrompt += `Incoming User Message:\n${userMessage || 'Attached media'}\n\nRemember to strictly return valid JSON format matching schema.`;
 
-            const result = await model.generateContent(contents);
-            const rawText = result.response.text();
-            return parseAIResponse(rawText);
-        } catch (geminiErr) {
-            console.error(`Gemini Fallback Error: ${geminiErr.message}`);
+                let contents = [fullPrompt];
+                if (base64Image) {
+                    contents.push({
+                        inlineData: {
+                            mimeType: 'image/jpeg',
+                            data: base64Image
+                        }
+                    });
+                }
+
+                const result = await model.generateContent(contents);
+                const rawText = result.response.text();
+                console.log(`[Gemini Fallback Success] Generated reply using model: ${modelName}`);
+                return parseAIResponse(rawText);
+            } catch (geminiErr) {
+                console.warn(`[Gemini Fallback Warning] Model ${modelName} failed: ${geminiErr.message}. Trying next...`);
+            }
         }
     }
 
