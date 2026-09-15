@@ -2196,3 +2196,64 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Floating Scroll to Bottom Button */
+.scroll-to-bottom-floating-btn {
+  position: absolute;
+  bottom: 85px;
+  right: 24px;
+  background-color: #2563EB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  cursor: pointer;
+  z-index: 30;
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  animation: popInScrollBtn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.scroll-to-bottom-floating-btn:hover {
+  background-color: #1D4ED8;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+}
+
+.scroll-to-bottom-floating-btn:active {
+  transform: translateY(0) scale(0.95);
+}
+
+.scroll-to-bottom-floating-btn .scroll-arrow {
+  line-height: 1;
+  display: inline-block;
+  transform: translateY(-1px);
+}
+
+@keyframes popInScrollBtn {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-to-bottom-floating-btn {
+    bottom: 80px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+

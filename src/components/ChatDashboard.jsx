@@ -63,9 +63,53 @@ export default function ChatDashboard() {
     const messagesEndRef = useRef(null);
     const messagesContainerRef = useRef(null);
     const shouldForceScrollRef = useRef(true);
+    const isAtBottomRef = useRef(true);
+    const [showScrollBottomButton, setShowScrollBottomButton] = useState(false);
+    const prevMessagesLengthRef = useRef(0);
     const fileInputRef = useRef(null);
     const conversationSnapshotRef = useRef(new Map());
     const hasLoadedConversationsRef = useRef(false);
+
+    // Reliable scroll to bottom helper that guarantees visibility even for tall messages/images
+    const scrollToBottom = (smooth = true) => {
+        const container = messagesContainerRef.current;
+        if (!container) return;
+
+        const targetTop = container.scrollHeight;
+        if (smooth) {
+            container.scrollTo({ top: targetTop, behavior: 'smooth' });
+        } else {
+            container.scrollTop = targetTop;
+        }
+
+        // Run in requestAnimationFrame and delayed tick to handle DOM paint & image expansions
+        requestAnimationFrame(() => {
+            if (container) {
+                if (smooth) {
+                    container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+                } else {
+                    container.scrollTop = container.scrollHeight;
+                }
+            }
+        });
+
+        setTimeout(() => {
+            if (container) {
+                container.scrollTop = container.scrollHeight;
+            }
+        }, 120);
+    };
+
+    const handleMessagesScroll = () => {
+        const container = messagesContainerRef.current;
+        if (!container) return;
+
+        const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+        const atBottom = distanceFromBottom <= 180;
+
+        isAtBottomRef.current = atBottom;
+        setShowScrollBottomButton(distanceFromBottom > 220);
+    };
 
     // Initial load
     useEffect(() => {
@@ -80,6 +124,9 @@ export default function ChatDashboard() {
     useEffect(() => {
         if (activeNumber) {
             shouldForceScrollRef.current = true;
+            isAtBottomRef.current = true;
+            setShowScrollBottomButton(false);
+            prevMessagesLengthRef.current = 0;
             setChatControlMessage('');
             setIsLeadDetailsOpen(false);
             fetchMessages(activeNumber);
@@ -120,22 +167,28 @@ export default function ChatDashboard() {
         }
     }, [conversations, activeNumber]);
 
-    // Auto scroll to bottom
+    // Auto scroll to bottom when messages change or new message arrives
     useEffect(() => {
-        const container = messagesContainerRef.current;
-        
-        if (!container || shouldForceScrollRef.current) {
-            messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
-            if (messages.length > 0) {
-                shouldForceScrollRef.current = false;
+        if (!messages || messages.length === 0) return;
+
+        const isNewMessage = messages.length > prevMessagesLengthRef.current;
+        const isFirstLoad = prevMessagesLengthRef.current === 0;
+        prevMessagesLengthRef.current = messages.length;
+
+        if (shouldForceScrollRef.current || isFirstLoad) {
+            scrollToBottom(false);
+            shouldForceScrollRef.current = false;
+            isAtBottomRef.current = true;
+            setShowScrollBottomButton(false);
+        } else if (isNewMessage) {
+            // New message arrived while chat is open:
+            // If user was viewing near the bottom, scroll down to reveal it immediately!
+            if (isAtBottomRef.current) {
+                scrollToBottom(true);
+            } else {
+                // If user was scrolled up reading old history, alert with floating button
+                setShowScrollBottomButton(true);
             }
-            return;
-        }
-
-        const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 300;
-
-        if (isNearBottom) {
-            messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
         }
     }, [messages]);
 
@@ -369,7 +422,18 @@ export default function ChatDashboard() {
     async function fetchMessages(phoneNumber) {
         try {
             const data = await getChatHistory(phoneNumber);
-            setMessages(data);
+            setMessages((prev) => {
+                if (
+                    prev &&
+                    data &&
+                    prev.length === data.length &&
+                    prev[prev.length - 1]?._id === data[data.length - 1]?._id &&
+                    prev[prev.length - 1]?.status === data[data.length - 1]?.status
+                ) {
+                    return prev;
+                }
+                return data;
+            });
         } catch (error) {
             console.error('Failed to load messages', error);
         }
@@ -390,7 +454,11 @@ export default function ChatDashboard() {
                 timestamp: new Date().toISOString(),
                 contextMessageId: replyingTo?.messageId
             };
+            shouldForceScrollRef.current = true;
+            isAtBottomRef.current = true;
+            setShowScrollBottomButton(false);
             setMessages(prev => [...prev, tempMsg]);
+            scrollToBottom(true);
 
             const textToSend = inputText;
             const contextId = replyingTo?.messageId;
@@ -1046,7 +1114,7 @@ export default function ChatDashboard() {
                         </div>
                     )}
 
-                    <div className="messages-list" ref={messagesContainerRef}>
+                    <div className="messages-list" ref={messagesContainerRef} onScroll={handleMessagesScroll}>
                         {messages.filter(m => m.type !== 'reaction').map((msg, index) => {
                             const isSentByMe = msg.from !== activeNumber;
                             const isSelected = selectedMessageId === msg._id;
@@ -1091,6 +1159,9 @@ export default function ChatDashboard() {
                                                     <img
                                                         src={`${BASE_URL}/media/${msg.mediaId}`}
                                                         alt="Photo"
+                                                        onLoad={() => {
+                                                            if (isAtBottomRef.current) scrollToBottom(false);
+                                                        }}
                                                     />
                                                 ) : (
                                                     <div className="media-placeholder">
@@ -1129,6 +1200,21 @@ export default function ChatDashboard() {
                         })}
                         <div ref={messagesEndRef} />
                     </div>
+
+                    {showScrollBottomButton && (
+                        <button
+                            type="button"
+                            className="scroll-to-bottom-floating-btn"
+                            onClick={() => {
+                                isAtBottomRef.current = true;
+                                setShowScrollBottomButton(false);
+                                scrollToBottom(true);
+                            }}
+                            title="Scroll to latest message"
+                        >
+                            <span className="scroll-arrow">↓</span>
+                        </button>
+                    )}
                     <div className="composer-shell">
                         {replyingTo && (
                             <div className="replying-to-banner">
