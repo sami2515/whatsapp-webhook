@@ -32,3 +32,49 @@ VAPID_SUBJECT=mailto:your-email@example.com
 ```
 
 The public key must be the generated P-256 VAPID public key. Do not commit the private key.
+
+---
+
+## 🚀 100% Free Setup Guide (Zero Developer Cost)
+
+Agar aap direct Meta Cloud se API loge to first **1,000 messages/conversations** jo apko receive honge wo har month bilkul **FREE** honge aur developer cost **0** hogi!
+
+🔗 **Repository:** [https://github.com/sami2515/whatsapp-webhook](https://github.com/sami2515/whatsapp-webhook)
+
+### 🛠️ Step-by-Step Setup:
+
+1. **Repo Download / Clone:**
+   - Ye repository download / clone kar lena:
+     ```bash
+     git clone https://github.com/sami2515/whatsapp-webhook.git
+     cd whatsapp-webhook
+     ```
+
+2. **Frontend Hosting (Vercel):**
+   - Frontend ko **Vercel** per host karna (`vercel.json` already configured hai, easy 1-click deploy).
+
+3. **Backend Hosting (VPS Free Hosting):**
+   - Backend ko VPS free hosting per host karna (e.g. Ubuntu VPS).
+   - Backend folder mein ja kar dependencies install aur start karein:
+     ```bash
+     cd backend
+     npm install
+     pm2 start server.js --name whatsapp-bot
+     ```
+
+4. **MongoDB Free Cluster:**
+   - Messages aur leads save karne ke liye **MongoDB** free cluster banana aur uski connection API / URI string copy karna.
+
+5. **`.env` Setup:**
+   - Backend folder mein `.env` file bana lena jisme API keys aur database URI rakhna:
+     ```env
+     PORT=5000
+     MONGODB_URI=your_mongodb_cluster_uri
+     WHATSAPP_TOKEN=your_meta_cloud_api_token
+     VERIFY_TOKEN=your_webhook_verify_token
+     GROQ_API_KEY=your_groq_api_key
+     PHONE_NUMBER_ID=your_whatsapp_phone_number_id
+     ```
+
+100% free setup ban jaiga, bahut easy setup hai!
+
