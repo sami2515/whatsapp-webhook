@@ -78,3 +78,9 @@ Agar aap direct Meta Cloud se API loge to first **1,000 messages/conversations**
 
 100% free setup ban jaiga, bahut easy setup hai!
 
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
