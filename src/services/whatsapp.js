@@ -1,126 +1,72 @@
 import axios from 'axios';
+import { io } from 'socket.io-client';
 
-export const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/whatsapp';
-export const PUSH_BASE_URL = import.meta.env.VITE_PUSH_BASE_URL ||
-  (BASE_URL.endsWith('/api/whatsapp')
-    ? BASE_URL.replace(/\/api\/whatsapp$/, '/api/push')
-    : '/api/push');
+export const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api/messages';
+// For Socket.io: if VITE_SOCKET_URL is set, use it; otherwise use current origin or localhost:5000 in dev
+export const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || (
+    typeof window !== 'undefined' && window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : (import.meta.env.VITE_API_BASE_URL || window.location.origin)
+);
 
-// Fetch all unique conversations
+// Initialize real-time Socket.io client with auto reconnect
+export const socket = io(SOCKET_URL, {
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    reconnectionDelay: 1000,
+    timeout: 10000
+});
+
+// Fetch all conversations
 export const getConversations = async () => {
-  const response = await axios.get(`${BASE_URL}/conversations`);
-  return response.data;
+    const res = await axios.get(`${API_BASE}/conversations`);
+    return res.data;
 };
 
-// Fetch chat history for a specific phone number
-export const getChatHistory = async (phoneNumber) => {
-  const response = await axios.get(`${BASE_URL}/messages/${phoneNumber}`);
-  return response.data;
+// Fetch chat messages for a specific phone number
+export const getChatHistory = async (phone) => {
+    const res = await axios.get(`${API_BASE}/messages/${phone}`);
+    return res.data;
 };
 
-// Send a WhatsApp template message (e.g. 'hello_world')
-export const sendTemplateMessage = async (toPhoneNumber, templateName = 'hello_world') => {
-  const payload = {
-    to: toPhoneNumber,
-    type: 'template',
-    templateName: templateName
-  };
-  const response = await axios.post(`${BASE_URL}/send`, payload);
-  return response.data;
+// Send a plain text message
+export const sendTextMessage = async (to, text, senderName = 'Admin') => {
+    const res = await axios.post(`${API_BASE}/messages`, {
+        to,
+        from: 'me',
+        senderName,
+        text,
+        type: 'text',
+        direction: 'outgoing'
+    });
+    return res.data;
 };
 
-// Send a free-form text message (only works if user messaged you within 24h)
-export const sendTextMessage = async (toPhoneNumber, textBody, contextMessageId = null) => {
-  const payload = {
-    to: toPhoneNumber,
-    type: 'text',
-    textBody: textBody
-  };
+// Send an image message (uploaded to Cloudinary by backend)
+export const sendImageMessage = async (to, imageFile, caption = '', senderName = 'Admin') => {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+    formData.append('to', to);
+    formData.append('from', 'me');
+    formData.append('senderName', senderName);
+    formData.append('text', caption);
+    formData.append('direction', 'outgoing');
 
-  if (contextMessageId) {
-    payload.contextMessageId = contextMessageId;
-  }
-
-  const response = await axios.post(`${BASE_URL}/send`, payload);
-  return response.data;
+    const res = await axios.post(`${API_BASE}/messages/send-image`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    return res.data;
 };
 
-// Send a voice/audio message
-export const sendAudioMessage = async (toPhoneNumber, audioBlob) => {
-  const formData = new FormData();
-  formData.append('audio', audioBlob, 'voice_message.ogg');
-  formData.append('to', toPhoneNumber);
-
-  const response = await axios.post(`${BASE_URL}/send-audio`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-  return response.data;
-};
-
-// Send an image message
-export const sendImageMessage = async (toPhoneNumber, imageFile) => {
-  const formData = new FormData();
-  formData.append('image', imageFile);
-  formData.append('to', toPhoneNumber);
-
-  const response = await axios.post(`${BASE_URL}/send-image`, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-  return response.data;
-};
-
-// Send a reaction to a specific message
-export const sendReaction = async (toPhoneNumber, messageId, emoji) => {
-  const payload = {
-    to: toPhoneNumber,
-    messageId: messageId,
-    emoji: emoji
-  };
-  const response = await axios.post(`${BASE_URL}/send-reaction`, payload);
-  return response.data;
-};
-
-// Delete a message locally from the MongoDB dashboard
+// Delete a message
 export const deleteLocalMessage = async (messageId) => {
-  const response = await axios.delete(`${BASE_URL}/messages/${messageId}`);
-  return response.data;
+    const res = await axios.delete(`${API_BASE}/messages/${messageId}`);
+    return res.data;
 };
 
-export const resumeAI = async (phoneNumber) => {
-  const response = await axios.post(`${BASE_URL}/users/${phoneNumber}/resume-ai`);
-  return response.data;
-};
-
-export const pauseAI = async (phoneNumber) => {
-  const response = await axios.post(`${BASE_URL}/users/${phoneNumber}/pause-ai`);
-  return response.data;
-};
-
-export const resetUserContext = async (phoneNumber) => {
-  const response = await axios.post(`${BASE_URL}/users/${phoneNumber}/reset-details`);
-  return response.data;
-};
-
-export const getUserContext = async (phoneNumber) => {
-  const response = await axios.get(`${BASE_URL}/users/${phoneNumber}/context`);
-  return response.data;
-};
-
-export const getPushPublicKey = async () => {
-  const response = await axios.get(`${PUSH_BASE_URL}/public-key`);
-  return response.data;
-};
-
-export const subscribeToPush = async (subscription) => {
-  const response = await axios.post(`${PUSH_BASE_URL}/subscribe`, subscription);
-  return response.data;
-};
-
-export const unsubscribeFromPush = async (endpoint) => {
-  const response = await axios.post(`${PUSH_BASE_URL}/unsubscribe`, { endpoint });
-  return response.data;
+// Save / update contact details
+export const saveContact = async (phone, name) => {
+    const res = await axios.post(`${API_BASE}/contacts`, { phone, name });
+    return res.data;
 };

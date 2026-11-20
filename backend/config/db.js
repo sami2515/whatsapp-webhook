@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 
 const connectDB = async () => {
     try {
-        // Connect to local MongoDB by default if no URI is provided.
-        const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/whatsapp-bot');
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        const uri = process.env.MONGO_URI || process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/whatsapp-chats';
+        const conn = await mongoose.connect(uri);
+        console.log(`[MongoDB] Connected successfully: ${conn.connection.host} (${conn.connection.name})`);
     } catch (error) {
-        console.error(`Error connecting to MongoDB: ${error.message}`);
-        process.exit(1);
+        console.error(`[MongoDB Connection Error] ${error.message}`);
+        // Do not crash server completely if MongoDB is temporarily down, but log clearly
     }
 };
 

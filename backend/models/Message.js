@@ -4,29 +4,44 @@ const messageSchema = new mongoose.Schema({
     from: {
         type: String,
         required: true,
+        index: true
     },
     to: {
         type: String,
         required: true,
+        index: true
     },
-    messageId: {
+    senderName: {
         type: String,
-        required: true,
-        unique: true
+        default: ''
     },
     text: {
-        type: String, // To store message body if it's a text message
+        type: String,
+        default: ''
     },
     type: {
         type: String,
-        enum: ['text', 'audio', 'voice', 'image', 'video', 'document', 'template', 'interactive', 'reaction', 'media_unavailable', 'unsupported', 'sticker', 'location', 'contacts', 'button', 'unknown'],
+        enum: ['text', 'image', 'audio', 'video', 'document', 'system', 'sticker', 'interactive', 'unsupported'],
         default: 'text'
     },
-    contextMessageId: {
-        type: String, // To store the ID of the message being replied to
+    mediaUrl: {
+        type: String,
+        default: ''
     },
-    mediaId: {
-        type: String, // To store WhatsApp Media ID for audio/image/video
+    cloudinaryPublicId: {
+        type: String,
+        default: ''
+    },
+    messageId: {
+        type: String,
+        unique: true,
+        sparse: true,
+        index: true
+    },
+    direction: {
+        type: String,
+        enum: ['incoming', 'outgoing'],
+        default: 'incoming'
     },
     status: {
         type: String,
@@ -35,9 +50,15 @@ const messageSchema = new mongoose.Schema({
     },
     timestamp: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        index: true
     }
+}, {
+    timestamps: true
 });
+
+// Compound index for fast conversation retrieval
+messageSchema.index({ from: 1, to: 1, timestamp: -1 });
 
 const Message = mongoose.model('Message', messageSchema);
 
